@@ -43,5 +43,11 @@
                 {{ __('Log in') }}
             </x-primary-button>
         </div>
+        <br>
+        <a href="{{ route('google.login') }}"
+            class="w-full flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
+            <img src="https://developers.google.com/identity/images/g-logo.png" class="h-5 mr-2" alt="Google logo">
+            Login dengan Google
+        </a>
     </form>
 </x-guest-layout>
