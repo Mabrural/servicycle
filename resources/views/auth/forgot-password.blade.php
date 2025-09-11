@@ -102,7 +102,7 @@
               <div class="text-center">
                 <a href="{{ route('login') }}" class="d-flex align-items-center justify-content-center">
                   <i class="bx bx-chevron-left scaleX-n1-rtl bx-sm"></i>
-                  Kembali ke Login
+                  Kembali 
                 </a>
               </div>
             </div>
