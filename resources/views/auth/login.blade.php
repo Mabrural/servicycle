@@ -95,7 +95,7 @@
                             class="form-control"
                             id="email"
                             name="email"
-                            placeholder="Masukkan email Anda" required
+                            placeholder="Masukkan email Anda" value="{{ old('email') }}" required
                             autofocus
                         />
                         @error('email')

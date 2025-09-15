@@ -95,10 +95,10 @@
                             class="form-control"
                             id="name"
                             name="name"
-                            placeholder="Masukkan nama Anda" required
+                            placeholder="Masukkan nama Anda" value="{{ old('name') }}" required
                             autofocus
                         />
-                        @error('email')
+                        @error('name')
                             <div class="text-danger mt-1">{{ $message }}</div>
                         @enderror
                     </div>
@@ -109,7 +109,7 @@
                             class="form-control"
                             id="email"
                             name="email"
-                            placeholder="Masukkan email Anda" required
+                            placeholder="Masukkan email Anda" value="{{ old('email') }}" required
                             autofocus
                         />
                         @error('email')
@@ -150,7 +150,7 @@
                             />
                             <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
                         </div>
-                        @error('password')
+                        @error('password_confirmation')
                             <div class="text-danger mt-1">{{ $message }}</div>
                         @enderror
                     </div>
