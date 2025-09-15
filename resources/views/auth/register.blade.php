@@ -75,7 +75,7 @@
             <div class="card-body">
               <!-- Logo -->
                 <div class="app-brand justify-content-center">
-                    <a href="{{ route('login') }}" class="app-brand-link gap-2">
+                    <a href="{{ route('register') }}" class="app-brand-link gap-2">
                         <span class="app-brand-logo demo">
                             <img src="{{ asset('img/favicon/favicon.ico') }}" alt="">
                         </span>
