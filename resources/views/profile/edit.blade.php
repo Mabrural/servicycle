@@ -46,11 +46,14 @@
   <body>
     <div class="container-xxl flex-grow-1 container-p-y">
         <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Akun /</span> Profile</h4>
-
+        <br>
+        <a href="{{ url('/dashboard') }}" class="btn btn-secondary mb-2">
+                <i class="bx bx-arrow-back me-1"></i> Kembali ke Dashboard
+            </a>
         <!-- Update Profile Information -->
         <div class="card mb-4">
             <div class="card-header">
-                <h5 class="mb-0">Update Profile Information</h5>
+                <h5 class="mb-0">Perbarui Informasi Profil</h5>
             </div>
             <div class="card-body">
                 <form method="POST" action="{{ route('profile.update') }}">
@@ -58,7 +61,7 @@
                     @method('PATCH')
 
                     <div class="mb-3">
-                        <label class="form-label" for="name">Name</label>
+                        <label class="form-label" for="name">Nama</label>
                         <input id="name" type="text" class="form-control" name="name" value="{{ old('name', auth()->user()->name) }}" required autofocus autocomplete="name" />
                         @error('name')
                           <div class="text-danger mt-1">{{ $message }}</div>
@@ -74,7 +77,7 @@
                     </div>
 
                     <div class="mb-3">
-                        <button class="btn btn-primary" type="submit">Save</button>
+                        <button class="btn btn-primary" type="submit">Simpan</button>
                     </div>
                 </form>
             </div>
@@ -83,7 +86,7 @@
         <!-- Update Password -->
         <div class="card mb-4">
             <div class="card-header">
-                <h5 class="mb-0">Update Password</h5>
+                <h5 class="mb-0">Perbarui Kata Sandi</h5>
             </div>
             <div class="card-body">
                 <form method="POST" action="{{ route('password.update') }}">
@@ -91,7 +94,7 @@
                     @method('PUT')
 
                     <div class="mb-3">
-                        <label class="form-label" for="current_password">Current Password</label>
+                        <label class="form-label" for="current_password">Kata Sandi Saat Ini</label>
                         <input id="current_password" type="password" class="form-control" name="current_password" required autocomplete="current-password" />
                         @error('current_password')
                           <div class="text-danger mt-1">{{ $message }}</div>
@@ -99,7 +102,7 @@
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label" for="password">New Password</label>
+                        <label class="form-label" for="password">Kata Sandi Baru</label>
                         <input id="password" type="password" class="form-control" name="password" required autocomplete="new-password" />
                         @error('password')
                           <div class="text-danger mt-1">{{ $message }}</div>
@@ -107,12 +110,12 @@
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label" for="password_confirmation">Confirm Password</label>
+                        <label class="form-label" for="password_confirmation">Konfirmasi Kata Sandi Baru</label>
                         <input id="password_confirmation" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password" />
                     </div>
 
                     <div class="mb-3">
-                        <button class="btn btn-primary" type="submit">Update Password</button>
+                        <button class="btn btn-primary" type="submit">Perbarui Kata Sandi</button>
                     </div>
                 </form>
             </div>
@@ -121,24 +124,24 @@
         <!-- Delete Account -->
         <div class="card">
             <div class="card-header">
-                <h5 class="mb-0 text-danger">Delete Account</h5>
+                <h5 class="mb-0 text-danger">Hapus Akun</h5>
             </div>
             <div class="card-body">
-                <p class="mb-3">Once your account is deleted, all of its resources and data will be permanently deleted. Please download any data or information that you wish to retain before deleting your account.</p>
+                <p class="mb-3">Begitu akun Anda dihapus, semua sumber daya dan data yang terkait akan dihapus secara permanen. Silakan unduh data atau informasi apa pun yang ingin Anda simpan sebelum menghapus akun Anda.</p>
                 <form method="POST" action="{{ route('profile.destroy') }}">
                     @csrf
                     @method('DELETE')
 
                     <div class="mb-3">
-                        <label class="form-label" for="password_delete">Password</label>
-                        <input id="password_delete" type="password" class="form-control" name="password" required placeholder="Enter your password to confirm" />
+                        <label class="form-label" for="password_delete">Kata Sandi</label>
+                        <input id="password_delete" type="password" class="form-control" name="password" required placeholder="Masukkan kata sandi untuk konfirmasi" />
                         @error('password')
                           <div class="text-danger mt-1">{{ $message }}</div>
                         @enderror
                     </div>
 
                     <div>
-                        <button class="btn btn-danger" type="submit">Delete Account</button>
+                        <button class="btn btn-danger" type="submit">Hapus Akun</button>
                     </div>
                 </form>
             </div>
