@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Sep 03, 2025 at 02:04 PM
+-- Generation Time: Sep 17, 2025 at 03:29 PM
 -- Server version: 8.0.30
 -- PHP Version: 8.3.6
 
@@ -32,6 +32,18 @@ CREATE TABLE `cache` (
   `value` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `expiration` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `cache`
+--
+
+INSERT INTO `cache` (`key`, `value`, `expiration`) VALUES
+('laravel-cache-mabrur@mitramaritim.com|127.0.0.1', 'i:1;', 1757584616),
+('laravel-cache-mabrur@mitramaritim.com|127.0.0.1:timer', 'i:1757584616;', 1757584616),
+('laravel-cache-mabruralmutaqi@gmail.com|127.0.0.1', 'i:1;', 1757582407),
+('laravel-cache-mabruralmutaqi@gmail.com|127.0.0.1:timer', 'i:1757582407;', 1757582407),
+('servicycle-cache-mabruralmutaqi@gmail.com|127.0.0.1', 'i:1;', 1758089847),
+('servicycle-cache-mabruralmutaqi@gmail.com|127.0.0.1:timer', 'i:1758089847;', 1758089847);
 
 -- --------------------------------------------------------
 
@@ -116,7 +128,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (1, '0001_01_01_000000_create_users_table', 1),
 (2, '0001_01_01_000001_create_cache_table', 1),
 (3, '0001_01_01_000002_create_jobs_table', 1),
-(4, '2025_09_03_135224_add_google_id_to_users_table', 2);
+(4, '2025_09_03_135224_add_google_id_to_users_table', 2),
+(5, '2025_09_17_152314_add_role_to_users_table', 3),
+(6, '2025_09_17_152730_add_is_set_role_to_users_table', 4);
 
 -- --------------------------------------------------------
 
@@ -150,9 +164,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('8Sxr9w1ZMZSIgw9H9hWMP3thSpUuS40ka2tm8ZHK', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36 Edg/139.0.0.0', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiUEtjYmUyVFFkb1ZnUzJZZmRZZ2ZKYXlHWUtZZGxJcDJVQjlnMTVjTSI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzE6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9kYXNoYm9hcmQiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjUwOiJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aToxO30=', 1756902917),
-('TchvBxOazwLxW8kTelYYoYGi6H5h9M3WZO4YGZyg', 2, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36 Edg/139.0.0.0', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiaHU3VHc4NjlhU3kyc2RNVVRFRHFZODM0WERNT2laWUR4OWxMQWtocyI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzE6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9kYXNoYm9hcmQiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjUwOiJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aToyO30=', 1756908117),
-('VNvxoRdLH1QojW7uisyOzgC0k3Gdrqn7TknW2f30', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36 Edg/139.0.0.0', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiSjhRTWRVTlVGSFk1eU01Vjl6VHJKRXQxTjg5R2locHAyZWtIelpUWSI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MjE6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMCI7fX0=', 1756907986);
+('HZLRyooFPenEk2TIMt2UV0hg5Z0iTaqhDabDY8WS', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoicVZRWFhTNEFWNlE1MERjOFB5bDdvY3lKb1Q3dGNaVjFNRk94VmdFMyI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mjc6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9sb2dpbiI7fX0=', 1758122961);
 
 -- --------------------------------------------------------
 
@@ -170,15 +182,17 @@ CREATE TABLE `users` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `google_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `avatar` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+  `avatar` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `role` enum('admin','vehicle_owner','workshop') COLLATE utf8mb4_unicode_ci DEFAULT 'vehicle_owner',
+  `is_set_role` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `google_id`, `avatar`) VALUES
-(2, 'Mabrur Almutaqi', 'mabruralmutaqi@gmail.com', NULL, '$2y$12$4LGQxBIf4SXyA1NU7XS1KO1zAykhcIVPzd5dJwqYmWX6ryGDfAQgK', NULL, '2025-09-03 06:57:48', '2025-09-03 07:01:57', '115306521754361552074', 'https://lh3.googleusercontent.com/a/ACg8ocLXVt_ohIcbr_8xWVQIq39i4FKTUn5e3xepI-QIAMe7D6tCXuk=s96-c');
+INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `google_id`, `avatar`, `role`, `is_set_role`) VALUES
+(2, 'Mabrur Almutaqi', 'mabruralmutaqi@gmail.com', NULL, '$2y$12$d1Cdv0TfoyR0RMcP1U7bZOne4JKmB7mUjRX/HtTAag.Avw8EAdpm.', 'tsRxpKWg0uVd2hiEFq8W18LSw5AE0ZNV0ZtyxjgQw95xU89bF540COVu5kS3', '2025-09-03 06:57:48', '2025-09-17 05:48:55', '115306521754361552074', 'https://lh3.googleusercontent.com/a/ACg8ocLXVt_ohIcbr_8xWVQIq39i4FKTUn5e3xepI-QIAMe7D6tCXuk=s96-c', 'vehicle_owner', 0);
 
 --
 -- Indexes for dumped tables
@@ -264,13 +278,13 @@ ALTER TABLE `jobs`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
