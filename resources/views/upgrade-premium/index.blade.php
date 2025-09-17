@@ -1,0 +1,1 @@
+ini adalah halaman upgrade ke premium

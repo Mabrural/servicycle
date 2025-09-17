@@ -69,28 +69,28 @@
         </li>
         <!-- Manajemen Pengguna -->
         <li class="menu-item ">
-            <a href="index.html" class="menu-link">
+            <a href="{{ route('manajemen-pengguna') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-group"></i>
                 <div data-i18n="Analytics">Manajemen Pengguna</div>
             </a>
         </li>
         <!-- Manajemen Langganan -->
         <li class="menu-item">
-            <a href="index.html" class="menu-link">
+            <a href="{{ route('manajemen-langganan') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-receipt"></i>
                 <div data-i18n="Analytics">Manajemen Langganan</div>
             </a>
         </li>
         <!-- Laporan & Analitik -->
         <li class="menu-item">
-            <a href="index.html" class="menu-link">
+            <a href="{{ route('laporan-analitik') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-bar-chart"></i>
                 <div data-i18n="Analytics">Laporan & Analitik</div>
             </a>
         </li>
         <!-- Manajemen Notifikasi Sistem -->
         <li class="menu-item">
-            <a href="index.html" class="menu-link">
+            <a href="{{ route('manajemen-notifikasi') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-bell"></i>
                 <div data-i18n="Analytics">Manajemen Notifikasi</div>
             </a>
@@ -98,7 +98,7 @@
 
         <!-- Pengaturan Aplikasi -->
         <li class="menu-item">
-            <a href="index.html" class="menu-link">
+            <a href="{{ route('pengaturan-aplikasi') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-cog"></i>
                 <div data-i18n="Analytics">Pengaturan Aplikasi</div>
             </a>
@@ -110,7 +110,7 @@
 
         <!-- Kendaraan Saya -->
         <li class="menu-item">
-            <a href="index.html" class="menu-link">
+            <a href="{{ route('kendaraan-saya') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-car"></i>
                 <div data-i18n="Analytics">Kendaraan Saya</div>
             </a>
@@ -118,7 +118,7 @@
 
         <!-- Riwayat Servis -->
         <li class="menu-item">
-            <a href="index.html" class="menu-link">
+            <a href="{{ route('riwayat-servis') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-wrench"></i>
                 <div data-i18n="Analytics">Riwayat Servis</div>
             </a>
@@ -126,7 +126,7 @@
 
         <!-- Jadwal Servis -->
         <li class="menu-item">
-            <a href="index.html" class="menu-link">
+            <a href="{{ route('jadwal-servis') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-calendar"></i>
                 <div data-i18n="Analytics">Jadwal Servis</div>
             </a>
@@ -134,7 +134,7 @@
 
         <!-- Notifikasi Servis -->
         <li class="menu-item">
-            <a href="index.html" class="menu-link">
+            <a href="{{ route('notifikasi-servis') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-bell"></i>
                 <div data-i18n="Analytics">Notifikasi Servis</div>
             </a>
@@ -142,7 +142,7 @@
 
         <!-- Catatan Masalah -->
         <li class="menu-item">
-            <a href="index.html" class="menu-link">
+            <a href="{{ route('catatan-masalah') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-error"></i>
                 <div data-i18n="Analytics">Catatan Masalah</div>
             </a>
@@ -150,7 +150,7 @@
 
         <!-- Upgrade Premium -->
         <li class="menu-item">
-            <a href="index.html" class="menu-link">
+            <a href="{{ route('upgrade-premium') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-crown"></i>
                 <div data-i18n="Analytics">Upgrade Premium</div>
             </a>
@@ -162,7 +162,7 @@
 
         <!-- Profil Bengkel -->
         <li class="menu-item">
-            <a href="index.html" class="menu-link">
+            <a href="{{ route('profil-bengkel') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-store"></i>
                 <div data-i18n="Analytics">Profil Bengkel</div>
             </a>
@@ -170,7 +170,7 @@
 
         <!-- Booking Servis -->
         <li class="menu-item">
-            <a href="index.html" class="menu-link">
+            <a href="{{ route('booking-servis') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-calendar-check"></i>
                 <div data-i18n="Analytics">Booking Servis</div>
             </a>
@@ -178,7 +178,7 @@
 
         <!-- Servis & Sparepart -->
         <li class="menu-item">
-            <a href="index.html" class="menu-link">
+            <a href="{{ route('servis-dan-sparepart') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-wrench"></i>
                 <div data-i18n="Analytics">Servis & Sparepart</div>
             </a>
@@ -186,7 +186,7 @@
 
         <!-- Invoice Servis -->
         <li class="menu-item">
-            <a href="index.html" class="menu-link">
+            <a href="{{ route('invoice-servis') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-receipt"></i>
                 <div data-i18n="Analytics">Invoice Servis</div>
             </a>
@@ -194,7 +194,7 @@
 
         <!-- Promosi Bengkel (Premium) -->
         <li class="menu-item">
-            <a href="index.html" class="menu-link">
+            <a href="{{ route('promosi-bengkel') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-gift"></i>
                 <div data-i18n="Analytics">Promosi Bengkel </div>
             </a>
