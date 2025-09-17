@@ -11,6 +11,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/pilih-role', function () {
+    return view('pilih-role.index');
+})->middleware(['auth', 'verified'])->name('pilih-role');
+
 Route::get('/dashboard', function () {
     return view('dashboard.index');
 })->middleware(['auth', 'verified'])->name('dashboard');
