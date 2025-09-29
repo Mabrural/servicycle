@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Sep 17, 2025 at 03:29 PM
+-- Generation Time: Sep 29, 2025 at 10:41 AM
 -- Server version: 8.0.30
 -- PHP Version: 8.3.6
 
@@ -130,7 +130,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (3, '0001_01_01_000002_create_jobs_table', 1),
 (4, '2025_09_03_135224_add_google_id_to_users_table', 2),
 (5, '2025_09_17_152314_add_role_to_users_table', 3),
-(6, '2025_09_17_152730_add_is_set_role_to_users_table', 4);
+(6, '2025_09_17_152730_add_is_set_role_to_users_table', 4),
+(7, '2025_09_29_103846_add_is_active_to_users_table', 5);
 
 -- --------------------------------------------------------
 
@@ -164,7 +165,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('HZLRyooFPenEk2TIMt2UV0hg5Z0iTaqhDabDY8WS', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoicVZRWFhTNEFWNlE1MERjOFB5bDdvY3lKb1Q3dGNaVjFNRk94VmdFMyI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mjc6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9sb2dpbiI7fX0=', 1758122961);
+('fBaxBFK9ROfodo9HyPTV7ykfO0GzgmC6BGDz9QSz', 9, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0', 'YTo1OntzOjY6Il90b2tlbiI7czo0MDoiVGlMaG1IU0NYWDVsbFhmTzJtdWE4RnJUaGtRVkJNcDF1RGNnZGZhVSI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzE6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9kYXNoYm9hcmQiO31zOjUwOiJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aTo5O3M6MzoidXJsIjthOjA6e319', 1759142449);
 
 -- --------------------------------------------------------
 
@@ -184,15 +185,16 @@ CREATE TABLE `users` (
   `google_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `avatar` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `role` enum('admin','vehicle_owner','workshop') COLLATE utf8mb4_unicode_ci DEFAULT 'vehicle_owner',
-  `is_set_role` tinyint(1) NOT NULL DEFAULT '0'
+  `is_set_role` tinyint(1) NOT NULL DEFAULT '0',
+  `is_active` tinyint(1) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `google_id`, `avatar`, `role`, `is_set_role`) VALUES
-(2, 'Mabrur Almutaqi', 'mabruralmutaqi@gmail.com', NULL, '$2y$12$d1Cdv0TfoyR0RMcP1U7bZOne4JKmB7mUjRX/HtTAag.Avw8EAdpm.', 'tsRxpKWg0uVd2hiEFq8W18LSw5AE0ZNV0ZtyxjgQw95xU89bF540COVu5kS3', '2025-09-03 06:57:48', '2025-09-17 05:48:55', '115306521754361552074', 'https://lh3.googleusercontent.com/a/ACg8ocLXVt_ohIcbr_8xWVQIq39i4FKTUn5e3xepI-QIAMe7D6tCXuk=s96-c', 'vehicle_owner', 0);
+INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `google_id`, `avatar`, `role`, `is_set_role`, `is_active`) VALUES
+(9, 'Mabrur Almutaqi', 'mabruralmutaqi@gmail.com', NULL, '$2y$12$txelUF42BUCzMPPg9TTC9.0WKtGzUl3w7h7ct6zyHbqdHUaK5IAO6', NULL, '2025-09-29 03:32:54', '2025-09-29 03:36:50', '115306521754361552074', 'https://lh3.googleusercontent.com/a/ACg8ocLXVt_ohIcbr_8xWVQIq39i4FKTUn5e3xepI-QIAMe7D6tCXuk=s96-c', 'vehicle_owner', 1, 1);
 
 --
 -- Indexes for dumped tables
@@ -278,13 +280,13 @@ ALTER TABLE `jobs`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

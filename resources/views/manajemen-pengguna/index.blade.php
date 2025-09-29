@@ -28,7 +28,7 @@
                             <td>{{ $user->name }}</td>
                             <td>{{ $user->email }}</td>
                             <td>
-                                @if ($user->status === 'active')
+                                @if ($user->is_active == true)
                                     <span class="badge bg-label-success">Aktif</span>
                                 @else
                                     <span class="badge bg-label-danger">Nonaktif</span>
