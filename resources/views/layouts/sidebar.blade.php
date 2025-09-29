@@ -76,7 +76,7 @@
         </li>
         <!-- Manajemen Pengguna -->
         <li class="menu-item ">
-            <a href="{{ route('manajemen-pengguna') }}" class="menu-link">
+            <a href="{{ route('manajemen-pengguna.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-group"></i>
                 <div data-i18n="Analytics">Manajemen Pengguna</div>
             </a>

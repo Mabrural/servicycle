@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GoogleController;
 
@@ -19,9 +20,7 @@ Route::get('/dashboard', function () {
     return view('dashboard.index');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/manajemen-pengguna', function () {
-    return view('manajemen-pengguna.index');
-})->middleware(['auth', 'verified'])->name('manajemen-pengguna');
+Route::resource('manajemen-pengguna', UserController::class)->middleware(['auth', 'verified']);
 
 Route::get('/manajemen-langganan', function () {
     return view('manajemen-langganan.index');
