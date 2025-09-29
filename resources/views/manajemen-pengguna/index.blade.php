@@ -58,27 +58,65 @@
                                 </td>
                                 <td>
                                     <div class="dropdown">
-                                        <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
-                                            data-bs-toggle="dropdown">
-                                            <i class="bx bx-dots-vertical-rounded"></i>
+                                        <button type="button" class="btn btn-sm btn-light p-1 shadow-none"
+                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                            <i class="bx bx-dots-horizontal-rounded fs-5"></i>
                                         </button>
-                                        <div class="dropdown-menu">
-                                            <a class="dropdown-item"
-                                                href="{{ route('manajemen-pengguna.edit', $user->id) }}">
-                                                <i class="bx bx-edit-alt me-1"></i> Edit
-                                            </a>
-                                            <form action="{{ route('manajemen-pengguna.destroy', $user->id) }}"
-                                                method="POST"
-                                                onsubmit="return confirm('Yakin ingin menghapus pengguna ini?')">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="dropdown-item text-danger">
-                                                    <i class="bx bx-trash me-1"></i> Delete
-                                                </button>
-                                            </form>
-                                        </div>
+                                        <ul class="dropdown-menu dropdown-menu-end">
+                                            {{-- Edit --}}
+                                            <li>
+                                                <a class="dropdown-item d-flex align-items-center"
+                                                    href="{{ route('manajemen-pengguna.edit', $user->id) }}">
+                                                    <i class="bx bx-edit-alt me-2 fs-5 text-primary"></i> Edit
+                                                </a>
+                                            </li>
+
+                                            {{-- Hapus --}}
+                                            <li>
+                                                <form action="{{ route('manajemen-pengguna.destroy', $user->id) }}"
+                                                    method="POST"
+                                                    onsubmit="return confirm('Yakin ingin menghapus pengguna ini?')">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit"
+                                                        class="dropdown-item d-flex align-items-center text-danger">
+                                                        <i class="bx bx-trash me-2 fs-5"></i> Hapus
+                                                    </button>
+                                                </form>
+                                            </li>
+
+                                            {{-- Ubah Hak Akses --}}
+                                            <li>
+                                                <form action="{{ route('manajemen-pengguna.toggleRole', $user->id) }}"
+                                                    method="POST"
+                                                    onsubmit="return confirm('Yakin ingin mengubah hak akses pengguna ini?')">
+                                                    @csrf
+                                                    @method('PATCH')
+                                                    <button type="submit" class="dropdown-item d-flex align-items-center">
+                                                        <i class="bx bx-shield-quarter me-2 fs-5 text-warning"></i>
+                                                        {{ $user->role === 'admin' ? 'Cabut Admin' : 'Jadikan Admin' }}
+                                                    </button>
+                                                </form>
+                                            </li>
+
+                                            {{-- Aktifkan / Nonaktifkan --}}
+                                            <li>
+                                                <form action="{{ route('manajemen-pengguna.toggleStatus', $user->id) }}"
+                                                    method="POST"
+                                                    onsubmit="return confirm('Yakin ingin mengubah status pengguna ini?')">
+                                                    @csrf
+                                                    @method('PATCH')
+                                                    <button type="submit" class="dropdown-item d-flex align-items-center">
+                                                        <i
+                                                            class="bx {{ $user->is_active ? 'bx-user-x text-danger' : 'bx-user-check text-success' }} me-2 fs-5"></i>
+                                                        {{ $user->is_active ? 'Nonaktifkan' : 'Aktifkan' }}
+                                                    </button>
+                                                </form>
+                                            </li>
+                                        </ul>
                                     </div>
                                 </td>
+
                             </tr>
                             @empty
                                 <tr>

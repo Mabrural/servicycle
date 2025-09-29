@@ -11,11 +11,11 @@
         <div class="layout-container">
 
             @include('layouts.sidebar')
-            
+
             <!-- Layout container -->
             <div class="layout-page">
 
-               @include('layouts.navbar')
+                @include('layouts.navbar')
 
                 <!-- Content wrapper -->
                 <div class="content-wrapper">
@@ -38,12 +38,37 @@
     </div>
     <!-- / Layout wrapper -->
 
-    {{-- <div class="buy-now">
-        <a href="https://themeselection.com/products/sneat-bootstrap-html-admin-template/" target="_blank"
-            class="btn btn-danger btn-buy-now">Upgrade ke Premium</a>
-    </div> --}}
 
     @include('layouts.script')
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        @if (session('success'))
+            Swal.fire({
+                toast: true,
+                icon: 'success',
+                title: "{{ session('success') }}",
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+            });
+        @endif
+
+        @if (session('error'))
+            Swal.fire({
+                toast: true,
+                icon: 'error',
+                title: "{{ session('error') }}",
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+            });
+        @endif
+    </script>
+
 </body>
 
 </html>

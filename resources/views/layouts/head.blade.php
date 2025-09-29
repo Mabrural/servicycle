@@ -38,4 +38,16 @@
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="{{ asset('js/config.js') }}"></script>
+    <style>
+        /* Pastikan SweetAlert toast selalu di atas navbar */
+        .swal2-container {
+            z-index: 99999 !important;
+        }
+
+        /* Opsional: beri jarak agar tidak terlalu nempel di atas */
+        .swal2-top-end {
+            top: 1rem !important;
+            right: 1rem !important;
+        }
+    </style>
 </head>

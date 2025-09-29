@@ -16,6 +16,29 @@ class UserController extends Controller
         return view('manajemen-pengguna.index', compact('users'));
     }
 
+    public function toggleRole($id)
+    {
+        $user = User::findOrFail($id);
+
+        // Toggle antara admin dan user biasa
+        $user->role = $user->role === 'admin' ? 'vehicle_owner' : 'admin';
+        $user->save();
+
+        return redirect()->back()->with('success', 'Hak akses pengguna berhasil diperbarui.');
+    }
+
+    public function toggleStatus($id)
+    {
+        $user = User::findOrFail($id);
+
+        // Toggle status aktif / nonaktif
+        $user->is_active = !$user->is_active;
+        $user->save();
+
+        return redirect()->back()->with('success', 'Status pengguna berhasil diperbarui.');
+    }
+
+
     /**
      * Show the form for creating a new resource.
      */
@@ -59,8 +82,16 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        //
+        // Cari user berdasarkan ID
+        $user = User::findOrFail($id);
+
+        // Hapus user
+        $user->delete();
+
+        // Redirect kembali dengan pesan sukses
+        return redirect()->route('manajemen-pengguna.index')
+            ->with('success', 'Pengguna berhasil dihapus.');
     }
 }
