@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GoogleController;
@@ -12,15 +13,22 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/pilih-role', function () {
-    return view('pilih-role.index');
-})->middleware(['auth', 'verified'])->name('pilih-role');
 
-Route::get('/dashboard', function () {
-    return view('dashboard.index');
-})->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::resource('manajemen-pengguna', UserController::class)->middleware(['auth', 'verified']);
+
+
+Route::middleware(['auth', 'verified', ])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard.index');
+    })->name('dashboard');
+
+    Route::resource('manajemen-pengguna', UserController::class);
+
+    Route::get('/pilih-role', [RoleController::class, 'selectRole'])->name('pilih-role');
+    Route::post('/pilih-role', [RoleController::class, 'setRole'])->name('set.role');
+
+});
+
 
 Route::get('/manajemen-langganan', function () {
     return view('manajemen-langganan.index');
@@ -91,4 +99,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
