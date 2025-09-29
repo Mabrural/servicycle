@@ -68,14 +68,14 @@
             </a>
         </li>
         <!-- Dashboard -->
-        <li class="menu-item active">
+        <li class="menu-item {{ Route::is('dashboard') ? 'active' : '' }}">
             <a href="{{ route('dashboard') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
                 <div data-i18n="Analytics">Dashboard</div>
             </a>
         </li>
         <!-- Manajemen Pengguna -->
-        <li class="menu-item ">
+        <li class="menu-item {{ Route::is('manajemen-pengguna.*') ? 'active' : '' }}">
             <a href="{{ route('manajemen-pengguna.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-group"></i>
                 <div data-i18n="Analytics">Manajemen Pengguna</div>
