@@ -20,18 +20,71 @@
          <!-- /Search -->
 
          <ul class="navbar-nav flex-row align-items-center ms-auto">
-             <!-- Place this tag where you want the button to render. -->
-             <li class="nav-item lh-1 me-3">
-                 <a class="github-button" href="https://github.com/themeselection/sneat-html-admin-template-free"
-                     data-icon="octicon-star" data-size="large" data-show-count="true"
-                     aria-label="Star themeselection/sneat-html-admin-template-free on GitHub">Star</a>
+             <!-- Notifikasi Bell Dropdown -->
+             <li class="nav-item dropdown lh-1 me-3">
+                 <a class="nav-link position-relative" href="#" id="notificationDropdown" role="button"
+                     data-bs-toggle="dropdown" aria-expanded="false">
+                     <i class="bx bx-bell fs-4"></i>
+                     <!-- Badge jumlah notifikasi -->
+                     <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                         3
+                     </span>
+                 </a>
+                 <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="notificationDropdown"
+                     style="min-width: 300px;">
+                     <li class="dropdown-header fw-semibold text-center">Notifikasi</li>
+                     <li>
+                         <hr class="dropdown-divider">
+                     </li>
+
+                     <li>
+                         <a class="dropdown-item d-flex align-items-start" href="#">
+                             <i class="bx bx-wrench me-2 text-primary fs-5"></i>
+                             <div>
+                                 <div class="fw-semibold">Servis kendaraan selesai</div>
+                                 <small class="text-muted">2 jam lalu</small>
+                             </div>
+                         </a>
+                     </li>
+
+                     <li>
+                         <a class="dropdown-item d-flex align-items-start" href="#">
+                             <i class="bx bx-user-plus me-2 text-success fs-5"></i>
+                             <div>
+                                 <div class="fw-semibold">Pengguna baru terdaftar</div>
+                                 <small class="text-muted">5 jam lalu</small>
+                             </div>
+                         </a>
+                     </li>
+
+                     <li>
+                         <a class="dropdown-item d-flex align-items-start" href="#">
+                             <i class="bx bx-error me-2 text-warning fs-5"></i>
+                             <div>
+                                 <div class="fw-semibold">Perlu perawatan mesin</div>
+                                 <small class="text-muted">1 hari lalu</small>
+                             </div>
+                         </a>
+                     </li>
+
+                     <li>
+                         <hr class="dropdown-divider">
+                     </li>
+                     <li class="text-center">
+                         <a class="dropdown-item text-primary fw-semibold" href="#">Lihat semua notifikasi</a>
+                     </li>
+                 </ul>
              </li>
+
 
              <!-- User -->
              <li class="nav-item navbar-dropdown dropdown-user dropdown">
                  <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                      <div class="avatar avatar-online">
-                         <img src="{{ asset('img/avatars/1.png') }}" alt class="w-px-40 h-auto rounded-circle" />
+                         <div class="avatar avatar-online d-flex align-items-center justify-content-center rounded-circle bg-primary text-white fw-bold"
+                             style="width: 40px; height: 40px; font-size: 16px;">
+                             {{ collect(explode(' ', Auth::user()->name))->map(fn($word) => strtoupper(substr($word, 0, 1)))->join('') }}
+                         </div>
                      </div>
                  </a>
                  <ul class="dropdown-menu dropdown-menu-end">
@@ -39,9 +92,9 @@
                          <a class="dropdown-item" href="#">
                              <div class="d-flex">
                                  <div class="flex-shrink-0 me-3">
-                                     <div class="avatar avatar-online">
-                                         <img src="{{ asset('img/avatars/1.png') }}" alt
-                                             class="w-px-40 h-auto rounded-circle" />
+                                     <div class="avatar avatar-online d-flex align-items-center justify-content-center rounded-circle bg-primary text-white fw-bold"
+                                         style="width: 40px; height: 40px; font-size: 16px;">
+                                         {{ collect(explode(' ', Auth::user()->name))->map(fn($word) => strtoupper(substr($word, 0, 1)))->join('') }}
                                      </div>
                                  </div>
                                  <div class="flex-grow-1">
@@ -49,6 +102,7 @@
                                      <small class="text-muted">{{ Auth::user()->role }}</small>
                                  </div>
                              </div>
+
                          </a>
                      </li>
                      <li>
