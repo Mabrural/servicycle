@@ -13,21 +13,21 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+// ✅ Route pilih role TIDAK pakai middleware is_set_role
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/pilih-role', [RoleController::class, 'selectRole'])->name('pilih-role');
+    Route::post('/pilih-role', [RoleController::class, 'setRole'])->name('set.role');
+});
 
-
-
-
-Route::middleware(['auth', 'verified', ])->group(function () {
+// ✅ Route yang membutuhkan role baru dilindungi oleh is_set_role
+Route::middleware(['auth', 'verified', 'is_set_role'])->group(function () {
     Route::get('/dashboard', function () {
         return view('dashboard.index');
     })->name('dashboard');
 
     Route::resource('manajemen-pengguna', UserController::class);
-
-    Route::get('/pilih-role', [RoleController::class, 'selectRole'])->name('pilih-role');
-    Route::post('/pilih-role', [RoleController::class, 'setRole'])->name('set.role');
-
 });
+
 
 
 Route::get('/manajemen-langganan', function () {

@@ -320,10 +320,15 @@
                     </form>
 
                     <div class="auth-footer">
-                        <a href="{{ route('login') }}" class="back-link">
-                            <i class="fas fa-arrow-left"></i> Kembali ke halaman masuk
-                        </a>
+                        <form action="{{ route('logout') }}" method="POST" style="display: inline;">
+                            @csrf
+                            <button type="submit" class="back-link"
+                                style="background: none; border: none; cursor: pointer; padding: 0; font: inherit;">
+                                <i class="fas fa-arrow-left"></i> Kembali ke halaman masuk
+                            </button>
+                        </form>
                     </div>
+
                 </div>
             </div>
         </div>
