@@ -68,7 +68,7 @@ class UserController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        return view('manajemen-pengguna.edit');
     }
 
     /**
