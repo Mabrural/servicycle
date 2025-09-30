@@ -13,6 +13,9 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->alias([
             'is_set_role' => \App\Http\Middleware\IsSetRole::class,
+            'admin' => \App\Http\Middleware\AdminMiddleware::class,
+            'vehicle_owner' => \App\Http\Middleware\VehicleOwnerMiddleware::class,
+            'workshop' => \App\Http\Middleware\WorkshopMiddleware::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
