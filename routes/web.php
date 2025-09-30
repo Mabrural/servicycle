@@ -13,7 +13,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::middleware(['auth', 'verified'])->group(function () {
+Route::middleware(['auth', 'verified', 'is_set_role'])->group(function () {
     Route::get('/dashboard', function () {
         return view('dashboard.index');
     })->name('dashboard');
@@ -27,7 +27,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 // Route yang membutuhkan role baru dilindungi oleh is_set_role
 Route::middleware(['auth', 'verified', 'is_set_role', 'admin'])->group(function () {
-    
+
     Route::resource('manajemen-pengguna', UserController::class);
 
     Route::patch('/manajemen-pengguna/{id}/toggle-role', [UserController::class, 'toggleRole'])->name('manajemen-pengguna.toggleRole');
