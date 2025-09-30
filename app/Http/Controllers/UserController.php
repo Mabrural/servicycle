@@ -10,10 +10,50 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
+    // public function index()
+    // {
+    //     $users = User::all();
+    //     return view('manajemen-pengguna.index', compact('users'));
+    // }
     public function index()
     {
-        $users = User::all();
+        $users = User::orderBy('created_at', 'desc')->paginate(10);
         return view('manajemen-pengguna.index', compact('users'));
+    }
+
+
+    public function getData(Request $request)
+    {
+
+        $query = User::query();
+
+        // 🔍 Pencarian
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                    ->orWhere('email', 'like', "%{$search}%");
+            });
+        }
+
+        // 🔐 Filter role
+        if ($request->filled('role')) {
+            $query->where('role', $request->role);
+        }
+
+        // 🟢 Filter status
+        if ($request->filled('status')) {
+            $query->where('is_active', $request->status === 'active' ? 1 : 0);
+        }
+
+        // 📄 Pagination
+        $perPage = $request->perPage ?? 10;
+        $users = $query->orderBy('created_at', 'desc')->paginate($perPage);
+
+        return response()->json([
+            'html' => view('manajemen-pengguna.partials.table', compact('users'))->render(),
+            'pagination' => (string) $users->appends($request->except('page'))->links()
+        ]);
     }
 
     public function toggleRole($id)

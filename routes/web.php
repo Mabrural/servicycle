@@ -29,8 +29,9 @@ Route::middleware(['auth', 'verified', 'is_set_role'])->group(function () {
 
     Route::patch('/manajemen-pengguna/{id}/toggle-role', [UserController::class, 'toggleRole'])->name('manajemen-pengguna.toggleRole');
     Route::patch('/manajemen-pengguna/{id}/toggle-status', [UserController::class, 'toggleStatus'])->name('manajemen-pengguna.toggleStatus');
-});
 
+    
+});
 
 
 Route::get('/manajemen-langganan', function () {
