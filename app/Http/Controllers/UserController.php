@@ -44,7 +44,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('manajemen-pengguna.create');
     }
 
     /**
@@ -52,8 +52,33 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|min:6|confirmed',
+            'role' => 'required|in:admin,vehicle_owner,workshop,user',
+        ], [
+            'name.required' => 'Nama wajib diisi.',
+            'email.required' => 'Email wajib diisi.',
+            'email.email' => 'Format email tidak valid.',
+            'email.unique' => 'Email ini sudah terdaftar.',
+            'password.required' => 'Password wajib diisi.',
+            'password.min' => 'Password minimal 6 karakter.',
+            'password.confirmed' => 'Konfirmasi password tidak cocok.',
+            'role.required' => 'Hak akses wajib dipilih.',
+            'role.in' => 'Hak akses tidak valid.',
+        ]);
+
+        $validated['password'] = bcrypt($validated['password']);
+        $validated['is_active'] = 1; // ✅ Status default: Aktif
+
+        User::create($validated);
+
+        return redirect()->route('manajemen-pengguna.index')->with('success', 'Pengguna berhasil ditambahkan!');
     }
+
+
+
 
     /**
      * Display the specified resource.

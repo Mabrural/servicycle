@@ -5,6 +5,12 @@
         <h4 class="fw-bold py-3 mb-4">
             Manajemen Pengguna
         </h4>
+        <div class="mb-3">
+            <a href="{{ route('manajemen-pengguna.create') }}" class="btn btn-primary">
+                <i class="bx bx-plus"></i> Tambah Pengguna
+            </a>
+        </div>
+
 
         <!-- Hoverable Table rows -->
         <div class="card">
