@@ -99,7 +99,18 @@
                                  </div>
                                  <div class="flex-grow-1">
                                      <span class="fw-semibold d-block">{{ Auth::user()->name }}</span>
-                                     <small class="text-muted">{{ Auth::user()->role }}</small>
+                                     <small class="text-muted">
+                                         @if (Auth::user()->role === 'admin')
+                                             Admin
+                                         @elseif(Auth::user()->role === 'vehicle_owner')
+                                             Pemilik Kendaraan
+                                         @elseif(Auth::user()->role === 'workshop')
+                                             Bengkel
+                                         @else
+                                             User
+                                         @endif
+                                     </small>
+
                                  </div>
                              </div>
 
