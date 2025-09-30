@@ -6,7 +6,7 @@
             Manajemen Pengguna
         </h4>
         <div class="mb-3">
-            <a href="{{ route('manajemen-pengguna.create') }}" class="btn btn-primary">
+            <a href="{{ route('manajemen-pengguna.create') }}" class="btn btn-primary btn-sm">
                 <i class="bx bx-plus"></i> Tambah Pengguna
             </a>
         </div>

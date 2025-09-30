@@ -91,18 +91,51 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($id)
     {
-        return view('manajemen-pengguna.edit');
+        // Ambil data user berdasarkan ID
+        $user = User::findOrFail($id);
+
+        // Kirim ke view edit
+        return view('manajemen-pengguna.edit', compact('user'));
     }
+
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        //
+        $user = User::findOrFail($id);
+
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,' . $user->id,
+            'password' => 'nullable|min:6|confirmed', // ✅ nullable artinya boleh kosong
+            'role' => 'required|in:admin,vehicle_owner,workshop,user',
+        ], [
+            'name.required' => 'Nama wajib diisi.',
+            'email.required' => 'Email wajib diisi.',
+            'email.email' => 'Format email tidak valid.',
+            'email.unique' => 'Email ini sudah terdaftar.',
+            'password.min' => 'Password minimal 6 karakter.',
+            'password.confirmed' => 'Konfirmasi password tidak cocok.',
+            'role.required' => 'Hak akses wajib dipilih.',
+            'role.in' => 'Hak akses tidak valid.',
+        ]);
+
+        // ✅ Jika password diisi, update password
+        if ($request->filled('password')) {
+            $validated['password'] = bcrypt($request->password);
+        } else {
+            unset($validated['password']); // agar tidak menimpa password lama dengan null
+        }
+
+        $user->update($validated);
+
+        return redirect()->route('manajemen-pengguna.index')->with('success', 'Data pengguna berhasil diperbarui!');
     }
+
 
     /**
      * Remove the specified resource from storage.
