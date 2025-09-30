@@ -20,7 +20,7 @@ Route::middleware(['auth', 'verified', 'is_set_role'])->group(function () {
 });
 
 // Route pilih role TIDAK pakai middleware is_set_role
-Route::middleware(['auth', 'verified'])->group(function () {
+Route::middleware(['auth', 'verified', 'redirect_if_role_set'])->group(function () {
     Route::get('/pilih-role', [RoleController::class, 'selectRole'])->name('pilih-role');
     Route::post('/pilih-role', [RoleController::class, 'setRole'])->name('set.role');
 });
