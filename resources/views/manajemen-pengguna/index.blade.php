@@ -60,7 +60,7 @@
                                     @endif
                                 </td>
                                 <td>
-                                    {{ $user->created_at->format('d M Y') }}
+                                    {{ $user->created_at->format('d M Y, H:i') }}
                                 </td>
                                 <td>
                                     <div class="dropdown">
