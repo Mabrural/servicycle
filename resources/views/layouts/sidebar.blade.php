@@ -172,7 +172,7 @@
             </li>
 
             <!-- Profil Bengkel -->
-            <li class="menu-item">
+            <li class="menu-item {{ Route::is('profil-bengkel') ? 'active' : '' }}">
                 <a href="{{ route('profil-bengkel') }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-store"></i>
                     <div data-i18n="Analytics">Profil Bengkel</div>
