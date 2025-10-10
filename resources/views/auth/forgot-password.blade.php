@@ -65,7 +65,7 @@
               </div>
               <!-- /Logo -->
 
-              <h4 class="mb-2">Lupa Kata Sandi? 🔒</h4>
+              <h4 class="mb-2">Lupa Kata Sandi? </h4>
               <p class="mb-4">
                 Masukkan email Anda dan kami akan mengirimkan link untuk mereset kata sandi Anda.
               </p>

@@ -83,7 +83,7 @@
                     </a>
                 </div>
                 <!-- /Logo -->
-                <h4 class="mb-2">Buat Akun Baru! 👋</h4>
+                <h4 class="mb-2">Buat Akun Baru! </h4>
                 <p class="mb-4">Silahkan isi data berikut untuk membuat akun ServiCycle</p>
 
                 <form id="formAuthentication" class="mb-3" action="{{ route('register') }}" method="POST">
@@ -137,7 +137,7 @@
                     </div>
                     <div class="mb-3 form-password-toggle">
                         <div class="d-flex justify-content-between">
-                            <label class="form-label" for="password_confirmation">Konfirmsi Kata Sandi</label>
+                            <label class="form-label" for="password_confirmation">Konfirmasi Kata Sandi</label>
                         </div>
                         <div class="input-group input-group-merge">
                             <input

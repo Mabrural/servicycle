@@ -83,7 +83,7 @@
                     </a>
                 </div>
                 <!-- /Logo -->
-                <h4 class="mb-2">Selamat Datang di ServiCycle! 👋</h4>
+                <h4 class="mb-2">Selamat Datang di ServiCycle! </h4>
                 <p class="mb-4">Masuk ke akun Anda untuk mulai mengelola servis kendaraan dengan mudah</p>
 
                 <form id="formAuthentication" class="mb-3" action="{{ route('login') }}" method="POST">
