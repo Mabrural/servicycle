@@ -44,6 +44,7 @@
         body {
             font-family: 'Poppins', sans-serif;
             scroll-behavior: smooth;
+            padding-bottom: 80px; /* Space for bottom nav */
         }
 
         .hero-bg {
@@ -94,91 +95,133 @@
             box-shadow: 0 0 20px rgba(79, 70, 229, 0.6);
         }
 
-        .mobile-menu {
+        /* Bottom Navigation Styles */
+        .bottom-nav {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: white;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 50;
+            padding: 8px 0;
+        }
+
+        .bottom-nav.active {
+            display: flex;
+        }
+
+        .bottom-nav-item {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 4px;
+            text-decoration: none;
+            color: #6b7280;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .bottom-nav-item.active {
+            color: #4f46e5;
+        }
+
+        .bottom-nav-item i {
+            font-size: 20px;
+            margin-bottom: 4px;
+        }
+
+        .bottom-nav-item span {
+            font-size: 10px;
+            font-weight: 500;
+        }
+
+        .bottom-nav-item.active::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30px;
+            height: 3px;
+            background-color: #4f46e5;
+            border-radius: 0 0 3px 3px;
+        }
+
+        /* Bottom Nav Dropdown */
+        .bottom-nav-dropdown {
+            position: absolute;
+            bottom: 100%;
+            left: 0;
+            width: 100%;
+            background-color: white;
+            border-radius: 12px 12px 0 0;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+            z-index: 49;
+        }
+
+        .bottom-nav-dropdown.active {
+            transform: translateY(0);
+        }
+
+        .bottom-nav-dropdown-item {
+            display: flex;
+            align-items: center;
+            padding: 16px 20px;
+            text-decoration: none;
+            color: #4b5563;
+            border-bottom: 1px solid #f3f4f6;
+            transition: all 0.3s;
+        }
+
+        .bottom-nav-dropdown-item:last-child {
+            border-bottom: none;
+        }
+
+        .bottom-nav-dropdown-item:hover {
+            background-color: #f9fafb;
+            color: #4f46e5;
+        }
+
+        .bottom-nav-dropdown-item i {
+            margin-right: 12px;
+            font-size: 18px;
+            width: 20px;
+            text-align: center;
+        }
+
+        /* Overlay for dropdown */
+        .bottom-nav-overlay {
             display: none;
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: white;
-            z-index: 40;
-            padding: 80px 20px 20px;
-            transform: translateX(-100%);
-            transition: transform 0.3s ease-in-out;
-            overflow-y: auto;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 48;
         }
 
-        .mobile-menu.active {
-            transform: translateX(0);
+        .bottom-nav-overlay.active {
             display: block;
-        }
-
-        .mobile-menu ul {
-            list-style: none;
-        }
-
-        .mobile-menu ul li {
-            margin-bottom: 15px;
-        }
-
-        .mobile-menu ul li a {
-            display: block;
-            padding: 12px 15px;
-            color: #374151;
-            font-weight: 500;
-            text-decoration: none;
-            border-radius: 8px;
-            transition: all 0.3s;
-        }
-
-        .mobile-menu ul li a:hover {
-            background-color: #f3f4f6;
-            color: #4f46e5;
-        }
-
-        .menu-toggle {
-            display: none;
-            flex-direction: column;
-            justify-content: space-between;
-            width: 30px;
-            height: 21px;
-            cursor: pointer;
-            z-index: 50;
-        }
-
-        .menu-toggle span {
-            display: block;
-            height: 3px;
-            width: 100%;
-            background-color: #4f46e5;
-            border-radius: 3px;
-            transition: all 0.3s;
-        }
-
-        .menu-toggle.active span:nth-child(1) {
-            transform: rotate(45deg) translate(5px, 5px);
-        }
-
-        .menu-toggle.active span:nth-child(2) {
-            opacity: 0;
-        }
-
-        .menu-toggle.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(7px, -6px);
         }
 
         @media (max-width: 768px) {
-            .menu-toggle {
-                display: flex;
-            }
-
-            nav.desktop-nav {
+            .desktop-nav {
                 display: none;
             }
 
             .header-login {
                 display: none;
+            }
+
+            .bottom-nav {
+                display: flex;
             }
         }
 
@@ -318,13 +361,6 @@
                 <a href="#mitra" class="nav-link text-gray-600 hover:text-primary">Gabung Mitra</a>
             </nav>
 
-            <!-- Mobile Menu Toggle -->
-            <div class="menu-toggle" id="menuToggle">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-
             <div class="hidden md:flex items-center space-x-4">
                 <a href="/login" class="text-gray-600 hover:text-primary font-medium transition-all duration-300">
                     Masuk
@@ -337,40 +373,40 @@
         </div>
     </header>
 
-    <!-- Overlay -->
-    <div class="overlay" id="overlay"></div>
-
-    <!-- Mobile Menu -->
-    <div class="mobile-menu" id="mobileMenu">
-        <ul>
-            <li class="dropdown-mobile">
-                <a href="#" class="mobile-nav-link flex justify-between items-center">
-                    <span>Bengkel</span>
-                    <i class="fas fa-chevron-down"></i>
-                </a>
-                <div class="ml-4 mt-2 hidden dropdown-mobile-content">
-                    <a href="#motor-workshops" class="mobile-nav-link flex items-center">
-                        <i class="fas fa-motorcycle text-primary mr-3"></i> Bengkel Motor
-                    </a>
-                    <a href="#mobil-workshops" class="mobile-nav-link flex items-center">
-                        <i class="fas fa-car text-primary mr-3"></i> Bengkel Mobil
-                    </a>
-                </div>
-            </li>
-            <li><a href="#promo" class="mobile-nav-link">Promo</a></li>
-            <li><a href="#mitra" class="mobile-nav-link">Gabung Mitra</a></li>
-            <li class="border-t border-gray-200 pt-4 mt-4">
-                <a href="/login" class="mobile-nav-link text-center bg-gray-100 hover:bg-gray-200">
-                    Masuk
-                </a>
-            </li>
-            <li>
-                <a href="/register" class="mobile-nav-link text-center bg-primary text-white hover:bg-secondary">
-                    Daftar
-                </a>
-            </li>
-        </ul>
+    <!-- Bottom Navigation for Mobile -->
+    <div class="bottom-nav" id="bottomNav">
+        <a href="#workshops" class="bottom-nav-item active" data-section="workshops">
+            <i class="fas fa-map-marker-alt"></i>
+            <span>Bengkel</span>
+        </a>
+        <a href="#promo" class="bottom-nav-item" data-section="promo">
+            <i class="fas fa-tags"></i>
+            <span>Promo</span>
+        </a>
+        <a href="#mitra" class="bottom-nav-item" data-section="mitra">
+            <i class="fas fa-handshake"></i>
+            <span>Mitra</span>
+        </a>
+        <a href="/login" class="bottom-nav-item" data-section="login">
+            <i class="fas fa-user"></i>
+            <span>Akun</span>
+        </a>
     </div>
+
+    <!-- Bottom Nav Dropdown for Bengkel -->
+    <div class="bottom-nav-dropdown" id="bottomNavDropdown">
+        <a href="#motor-workshops" class="bottom-nav-dropdown-item">
+            <i class="fas fa-motorcycle text-primary"></i>
+            Bengkel Motor
+        </a>
+        <a href="#mobil-workshops" class="bottom-nav-dropdown-item">
+            <i class="fas fa-car text-primary"></i>
+            Bengkel Mobil
+        </a>
+    </div>
+
+    <!-- Overlay for Bottom Nav Dropdown -->
+    <div class="bottom-nav-overlay" id="bottomNavOverlay"></div>
 
     <!-- Location Permission Modal -->
     <div class="location-permission-modal" id="locationPermissionModal">
@@ -408,7 +444,7 @@
                     <span>Platform Terbaik untuk Perawatan Kendaraan</span>
                 </div>
                 <h2 class="text-4xl md:text-5xl font-bold leading-tight">
-                    Kelola Servis Kendaraan Jadi Lebih Mudah <span class="text-yellow-300">🚗🔧</span>
+                    Kelola Servis Kendaraan Jadi Lebih Mudah
                 </h2>
                 <p class="mt-4 text-lg text-indigo-100 max-w-xl">
                     Catat, pantau, dan atur perawatan kendaraan Anda dengan ServiCycle.
@@ -436,8 +472,7 @@
                 </div>
             </div>
             <div class="flex-1 mt-10 md:mt-0 animate-float">
-                <img src="https://placehold.co/600x400/4f46e5/white?text=ServiCycle+Illustration"
-                    alt="Ilustrasi ServiCycle" class="w-full rounded-xl shadow-2xl" />
+                <img src="{{ asset('img/ilustrasi.png') }}" alt="Ilustrasi ServiCycle" class="w-full " />
             </div>
         </div>
     </section>
@@ -942,49 +977,76 @@
     </footer>
 
     <script>
-        // Toggle mobile menu
-        const menuToggle = document.getElementById('menuToggle');
-        const mobileMenu = document.getElementById('mobileMenu');
-        const overlay = document.getElementById('overlay');
+        // Bottom Navigation Functionality
+        const bottomNav = document.getElementById('bottomNav');
+        const bottomNavItems = document.querySelectorAll('.bottom-nav-item');
+        const bottomNavDropdown = document.getElementById('bottomNavDropdown');
+        const bottomNavOverlay = document.getElementById('bottomNavOverlay');
 
-        menuToggle.addEventListener('click', function() {
-            this.classList.toggle('active');
-            mobileMenu.classList.toggle('active');
-            overlay.classList.toggle('active');
-            document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
-        });
-
-        // Close mobile menu when clicking on overlay
-        overlay.addEventListener('click', function() {
-            menuToggle.classList.remove('active');
-            mobileMenu.classList.remove('active');
-            this.classList.remove('active');
-            document.body.style.overflow = '';
-        });
-
-        // Close mobile menu when clicking on a link
-        const mobileLinks = document.querySelectorAll('.mobile-nav-link');
-        mobileLinks.forEach(link => {
-            link.addEventListener('click', function() {
-                menuToggle.classList.remove('active');
-                mobileMenu.classList.remove('active');
-                overlay.classList.remove('active');
-                document.body.style.overflow = '';
+        // Set active nav item based on scroll position
+        function setActiveNavItem() {
+            const sections = document.querySelectorAll('section');
+            let currentSection = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 100;
+                const sectionHeight = section.clientHeight;
+                if (window.scrollY >= sectionTop && window.scrollY < sectionTop + sectionHeight) {
+                    currentSection = section.id;
+                }
             });
-        });
 
-        // Mobile dropdown functionality
-        const mobileDropdowns = document.querySelectorAll('.dropdown-mobile > a');
-        mobileDropdowns.forEach(dropdown => {
-            dropdown.addEventListener('click', function(e) {
+            bottomNavItems.forEach(item => {
+                item.classList.remove('active');
+                if (item.getAttribute('data-section') === currentSection) {
+                    item.classList.add('active');
+                }
+            });
+        }
+
+        // Scroll to section when bottom nav item is clicked
+        bottomNavItems.forEach(item => {
+            item.addEventListener('click', function(e) {
                 e.preventDefault();
-                const content = this.nextElementSibling;
-                content.classList.toggle('hidden');
-                const icon = this.querySelector('i');
-                icon.classList.toggle('fa-chevron-down');
-                icon.classList.toggle('fa-chevron-up');
+                const targetSection = this.getAttribute('data-section');
+                
+                if (targetSection === 'workshops') {
+                    // Toggle dropdown for bengkel
+                    bottomNavDropdown.classList.toggle('active');
+                    bottomNavOverlay.classList.toggle('active');
+                } else if (targetSection === 'login') {
+                    // Redirect to login page
+                    window.location.href = '/login';
+                } else {
+                    // Scroll to section
+                    const targetElement = document.getElementById(targetSection);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                }
             });
         });
+
+        // Close dropdown when overlay is clicked
+        bottomNavOverlay.addEventListener('click', function() {
+            bottomNavDropdown.classList.remove('active');
+            this.classList.remove('active');
+        });
+
+        // Close dropdown when dropdown item is clicked
+        const dropdownItems = document.querySelectorAll('.bottom-nav-dropdown-item');
+        dropdownItems.forEach(item => {
+            item.addEventListener('click', function() {
+                bottomNavDropdown.classList.remove('active');
+                bottomNavOverlay.classList.remove('active');
+            });
+        });
+
+        // Update active nav item on scroll
+        window.addEventListener('scroll', setActiveNavItem);
 
         // Location permission and workshops functionality
         const locationPermissionModal = document.getElementById('locationPermissionModal');
