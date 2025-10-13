@@ -5,7 +5,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ServiCycle - Kelola Servis Kendaraan</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script>
@@ -28,12 +29,8 @@
                     },
                     keyframes: {
                         float: {
-                            '0%, 100%': {
-                                transform: 'translateY(0)'
-                            },
-                            '50%': {
-                                transform: 'translateY(-20px)'
-                            },
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
                         }
                     }
                 }
@@ -196,94 +193,6 @@
         .overlay.active {
             display: block;
         }
-
-        .workshop-card {
-            transition: all 0.3s ease;
-        }
-
-        .workshop-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-        }
-
-        .tab-button.active {
-            background-color: #4f46e5;
-            color: white;
-        }
-
-        .location-permission-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            z-index: 100;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .location-permission-modal.active {
-            display: flex;
-        }
-
-        .location-permission-content {
-            background-color: white;
-            border-radius: 12px;
-            padding: 30px;
-            max-width: 500px;
-            width: 90%;
-            text-align: center;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-        }
-
-        .location-icon {
-            font-size: 48px;
-            color: #4f46e5;
-            margin-bottom: 20px;
-        }
-
-        /* Dropdown Styles */
-        .dropdown {
-            position: relative;
-        }
-
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            top: 100%;
-            left: 0;
-            background-color: white;
-            min-width: 200px;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-            z-index: 100;
-            padding: 8px 0;
-        }
-
-        .dropdown:hover .dropdown-content {
-            display: block;
-        }
-
-        .dropdown-content a {
-            display: flex;
-            align-items: center;
-            padding: 10px 16px;
-            color: #4b5563;
-            text-decoration: none;
-            transition: all 0.3s;
-        }
-
-        .dropdown-content a:hover {
-            background-color: #f3f4f6;
-            color: #4f46e5;
-        }
-
-        .dropdown-content i {
-            width: 20px;
-            margin-right: 8px;
-        }
     </style>
 </head>
 
@@ -300,22 +209,12 @@
             </div>
 
             <!-- Desktop Navigation -->
-            <nav class="desktop-nav hidden md:flex space-x-8 items-center">
-                <div class="dropdown">
-                    <a href="#" class="nav-link text-gray-600 hover:text-primary flex items-center">
-                        Bengkel <i class="fas fa-chevron-down ml-1 text-xs"></i>
-                    </a>
-                    <div class="dropdown-content">
-                        <a href="#motor-workshops">
-                            <i class="fas fa-motorcycle text-primary"></i> Bengkel Motor
-                        </a>
-                        <a href="#mobil-workshops">
-                            <i class="fas fa-car text-primary"></i> Bengkel Mobil
-                        </a>
-                    </div>
-                </div>
-                <a href="#promo" class="nav-link text-gray-600 hover:text-primary">Promo</a>
-                <a href="#mitra" class="nav-link text-gray-600 hover:text-primary">Gabung Mitra</a>
+            <nav class="desktop-nav hidden md:flex space-x-8">
+                <a href="#features" class="nav-link text-gray-600 hover:text-primary">Fitur</a>
+                <a href="#pricing" class="nav-link text-gray-600 hover:text-primary">Harga</a>
+                <a href="#testimoni" class="nav-link text-gray-600 hover:text-primary">Testimoni</a>
+                <a href="#faq" class="nav-link text-gray-600 hover:text-primary">FAQ</a>
+                <a href="#contact" class="nav-link text-gray-600 hover:text-primary">Kontak</a>
             </nav>
 
             <!-- Mobile Menu Toggle -->
@@ -325,15 +224,10 @@
                 <span></span>
             </div>
 
-            <div class="hidden md:flex items-center space-x-4">
-                <a href="/login" class="text-gray-600 hover:text-primary font-medium transition-all duration-300">
-                    Masuk
-                </a>
-                <a href="/register"
-                    class="bg-primary text-white px-5 py-2.5 rounded-lg font-medium hover:bg-secondary transition-all duration-300 btn-glow">
-                    Daftar
-                </a>
-            </div>
+            <a href="/login"
+                class="ml-6 bg-primary text-white px-5 py-2.5 rounded-lg font-medium hover:bg-secondary transition-all duration-300 btn-glow hidden md:flex items-center header-login">
+                <i class="fas fa-sign-in-alt mr-2"></i> Masuk
+            </a>
         </div>
     </header>
 
@@ -343,55 +237,16 @@
     <!-- Mobile Menu -->
     <div class="mobile-menu" id="mobileMenu">
         <ul>
-            <li class="dropdown-mobile">
-                <a href="#" class="mobile-nav-link flex justify-between items-center">
-                    <span>Bengkel</span>
-                    <i class="fas fa-chevron-down"></i>
-                </a>
-                <div class="ml-4 mt-2 hidden dropdown-mobile-content">
-                    <a href="#motor-workshops" class="mobile-nav-link flex items-center">
-                        <i class="fas fa-motorcycle text-primary mr-3"></i> Bengkel Motor
-                    </a>
-                    <a href="#mobil-workshops" class="mobile-nav-link flex items-center">
-                        <i class="fas fa-car text-primary mr-3"></i> Bengkel Mobil
-                    </a>
-                </div>
-            </li>
-            <li><a href="#promo" class="mobile-nav-link">Promo</a></li>
-            <li><a href="#mitra" class="mobile-nav-link">Gabung Mitra</a></li>
-            <li class="border-t border-gray-200 pt-4 mt-4">
-                <a href="/login" class="mobile-nav-link text-center bg-gray-100 hover:bg-gray-200">
-                    Masuk
-                </a>
-            </li>
-            <li>
-                <a href="/register" class="mobile-nav-link text-center bg-primary text-white hover:bg-secondary">
-                    Daftar
-                </a>
-            </li>
+            <li><a href="#features" class="mobile-nav-link">Fitur</a></li>
+            <li><a href="#pricing" class="mobile-nav-link">Harga</a></li>
+            <li><a href="#testimoni" class="mobile-nav-link">Testimoni</a></li>
+            <li><a href="#faq" class="mobile-nav-link">FAQ</a></li>
+            <li><a href="#contact" class="mobile-nav-link">Kontak</a></li>
+            <li><a href="/login"
+                    class="bg-primary text-white px-5 py-2.5 rounded-lg font-medium hover:bg-secondary transition-all duration-300 flex items-center justify-center mt-4">
+                    <i class="fas fa-sign-in-alt mr-2"></i> Masuk
+                </a></li>
         </ul>
-    </div>
-
-    <!-- Location Permission Modal -->
-    <div class="location-permission-modal" id="locationPermissionModal">
-        <div class="location-permission-content">
-            <div class="location-icon">
-                <i class="fas fa-map-marker-alt"></i>
-            </div>
-            <h3 class="text-2xl font-bold mb-4">Izinkan Akses Lokasi</h3>
-            <p class="text-gray-600 mb-6">ServiCycle memerlukan akses lokasi Anda untuk menampilkan bengkel terdekat dan
-                memberikan rekomendasi yang lebih akurat.</p>
-            <div class="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4">
-                <button id="allowLocation"
-                    class="bg-primary text-white px-6 py-3 rounded-lg font-medium hover:bg-secondary transition-all duration-300 btn-glow flex-1">
-                    Izinkan
-                </button>
-                <button id="denyLocation"
-                    class="bg-gray-200 text-gray-800 px-6 py-3 rounded-lg font-medium hover:bg-gray-300 transition-all duration-300 flex-1">
-                    Nanti Saja
-                </button>
-            </div>
-        </div>
     </div>
 
     <!-- Hero Section -->
@@ -415,9 +270,9 @@
                     Hemat biaya, terorganisir, dan selalu siap diingatkan servis berikutnya.
                 </p>
                 <div class="mt-8 flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
-                    <a href="#workshops"
+                    <a href="#pricing"
                         class="bg-white text-primary px-8 py-4 rounded-lg font-medium hover:bg-gray-100 transition-all duration-300 flex items-center justify-center btn-glow">
-                        <i class="fas fa-map-marker-alt mr-2"></i> Cari Bengkel Terdekat
+                        <i class="fas fa-rocket mr-2"></i> Mulai Sekarang
                     </a>
                     <a href="#features"
                         class="bg-transparent border-2 border-white px-8 py-4 rounded-lg font-medium hover:bg-white hover:text-primary transition-all duration-300 flex items-center justify-center">
@@ -500,8 +355,7 @@
                         <i class="fas fa-bell text-3xl text-accent"></i>
                     </div>
                     <h4 class="text-xl font-semibold mb-4">Notifikasi Otomatis</h4>
-                    <p class="text-gray-600">Dapatkan pengingat jadwal servis kendaraan Anda secara otomatis via email
-                        &
+                    <p class="text-gray-600">Dapatkan pengingat jadwal servis kendaraan Anda secara otomatis via email &
                         notifikasi.</p>
                 </div>
                 <div class="bg-white p-8 rounded-xl shadow-lg feature-card">
@@ -511,137 +365,6 @@
                     <h4 class="text-xl font-semibold mb-4">Booking Bengkel</h4>
                     <p class="text-gray-600">Pesan jadwal servis langsung dari aplikasi dengan bengkel rekanan
                         terpercaya.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Bengkel Section -->
-    <section id="workshops" class="py-20 bg-white">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="text-center max-w-2xl mx-auto">
-                <h3 class="text-3xl font-bold mb-4">Cari Bengkel Terdekat</h3>
-                <p class="text-gray-600">Temukan bengkel terpercaya di dekat lokasi Anda</p>
-            </div>
-
-            <!-- Location Status -->
-            <div id="locationStatus" class="mt-8 bg-blue-50 border border-blue-200 rounded-lg p-4 flex items-center">
-                <i class="fas fa-info-circle text-blue-500 text-xl mr-3"></i>
-                <p class="text-blue-700">Klik tombol di bawah untuk mengizinkan akses lokasi dan melihat bengkel
-                    terdekat</p>
-            </div>
-
-            <!-- Location Controls -->
-            <div class="mt-6 flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4">
-                <button id="getLocationBtn"
-                    class="bg-primary text-white px-6 py-3 rounded-lg font-medium hover:bg-secondary transition-all duration-300 btn-glow flex items-center justify-center">
-                    <i class="fas fa-map-marker-alt mr-2"></i> Dapatkan Lokasi Saya
-                </button>
-                <div class="flex-1">
-                    <div class="flex border border-gray-300 rounded-lg overflow-hidden">
-                        <input type="text" id="searchWorkshop" placeholder="Cari bengkel..."
-                            class="flex-1 px-4 py-3 focus:outline-none">
-                        <button class="bg-gray-100 px-4 hover:bg-gray-200 transition-colors">
-                            <i class="fas fa-search text-gray-600"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Vehicle Type Tabs -->
-            <div class="mt-8 flex border-b border-gray-200">
-                <button class="tab-button active px-6 py-3 font-medium" data-type="all">Semua</button>
-                <button class="tab-button px-6 py-3 font-medium" data-type="motor">Motor</button>
-                <button class="tab-button px-6 py-3 font-medium" data-type="mobil">Mobil</button>
-            </div>
-
-            <!-- Workshops List -->
-            <div id="workshopsList" class="mt-8 grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- Static workshop cards will be populated here -->
-            </div>
-
-            <!-- No Results Message -->
-            <div id="noResults" class="mt-8 text-center hidden">
-                <div class="bg-gray-100 rounded-lg p-8">
-                    <i class="fas fa-search text-gray-400 text-4xl mb-4"></i>
-                    <h4 class="text-xl font-semibold text-gray-600">Tidak ada bengkel ditemukan</h4>
-                    <p class="text-gray-500 mt-2">Coba ubah pencarian atau filter Anda</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Promo Section -->
-    <section id="promo" class="py-20 bg-gradient-to-r from-primary to-secondary text-white">
-        <div class="max-w-7xl mx-auto px-6 text-center">
-            <h3 class="text-3xl font-bold mb-4">Promo Spesial</h3>
-            <p class="text-indigo-100 mb-8">Dapatkan penawaran menarik untuk servis kendaraan Anda</p>
-            <div class="grid md:grid-cols-3 gap-8 mt-12">
-                <div class="bg-white/10 backdrop-blur-sm p-6 rounded-xl">
-                    <div class="bg-white/20 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <i class="fas fa-tags text-2xl"></i>
-                    </div>
-                    <h4 class="text-xl font-semibold mb-2">Diskon 20%</h4>
-                    <p class="text-indigo-100">Servis pertama di bengkel mitra kami</p>
-                </div>
-                <div class="bg-white/10 backdrop-blur-sm p-6 rounded-xl">
-                    <div class="bg-white/20 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <i class="fas fa-gift text-2xl"></i>
-                    </div>
-                    <h4 class="text-xl font-semibold mb-2">Gratis Pemeriksaan</h4>
-                    <p class="text-indigo-100">Pemeriksaan gratis untuk kendaraan baru</p>
-                </div>
-                <div class="bg-white/10 backdrop-blur-sm p-6 rounded-xl">
-                    <div class="bg-white/20 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <i class="fas fa-star text-2xl"></i>
-                    </div>
-                    <h4 class="text-xl font-semibold mb-2">Cashback 10%</h4>
-                    <p class="text-indigo-100">Untuk setiap transaksi melalui aplikasi</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Gabung Mitra Section -->
-    <section id="mitra" class="py-20 bg-gray-50">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="text-center max-w-2xl mx-auto">
-                <h3 class="text-3xl font-bold mb-4">Gabung Menjadi Mitra</h3>
-                <p class="text-gray-600">Tingkatkan bisnis bengkel Anda dengan bergabung sebagai mitra ServiCycle</p>
-            </div>
-            <div class="grid md:grid-cols-2 gap-12 mt-12">
-                <div class="bg-white p-8 rounded-xl shadow-lg">
-                    <h4 class="text-2xl font-semibold mb-6 text-primary">Keuntungan Menjadi Mitra</h4>
-                    <ul class="space-y-4 text-gray-600">
-                        <li class="flex items-start">
-                            <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
-                            <span>Jangkauan pelanggan yang lebih luas</span>
-                        </li>
-                        <li class="flex items-start">
-                            <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
-                            <span>Sistem booking otomatis</span>
-                        </li>
-                        <li class="flex items-start">
-                            <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
-                            <span>Manajemen inventaris yang mudah</span>
-                        </li>
-                        <li class="flex items-start">
-                            <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
-                            <span>Laporan keuangan terintegrasi</span>
-                        </li>
-                        <li class="flex items-start">
-                            <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
-                            <span>Dukungan teknis 24/7</span>
-                        </li>
-                    </ul>
-                </div>
-                <div class="bg-primary text-white p-8 rounded-xl">
-                    <h4 class="text-2xl font-semibold mb-6">Daftar Sekarang</h4>
-                    <p class="mb-6">Isi formulir pendaftaran untuk bergabung sebagai mitra ServiCycle</p>
-                    <a href="/mitra/register"
-                        class="bg-white text-primary px-6 py-3 rounded-lg font-medium hover:bg-gray-100 transition-all duration-300 btn-glow inline-block">
-                        Daftar sebagai Mitra
-                    </a>
                 </div>
             </div>
         </div>
@@ -694,8 +417,7 @@
         <div class="max-w-7xl mx-auto px-6 text-center">
             <div class="max-w-2xl mx-auto">
                 <h3 class="text-3xl font-bold mb-4">Paket Berlangganan</h3>
-                <p class="text-gray-600">Pilih paket yang sesuai dengan kebutuhan Anda, mulai dari gratis hingga
-                    premium
+                <p class="text-gray-600">Pilih paket yang sesuai dengan kebutuhan Anda, mulai dari gratis hingga premium
                 </p>
             </div>
             <div class="grid md:grid-cols-2 gap-8 mt-12 max-w-4xl mx-auto">
@@ -709,11 +431,9 @@
                     <ul class="mt-8 space-y-4 text-gray-600 text-left">
                         <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i> Catat
                             riwayat servis</li>
-                        <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i>
-                            Notifikasi
+                        <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i> Notifikasi
                             servis otomatis</li>
-                        <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i> Maksimal
-                            2
+                        <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i> Maksimal 2
                             kendaraan</li>
                         <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i> Dukungan
                             email</li>
@@ -739,8 +459,7 @@
                             fitur Gratis</li>
                         <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i> Jumlah
                             kendaraan tanpa batas</li>
-                        <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i> Booking
-                            &
+                        <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i> Booking &
                             promosi bengkel</li>
                         <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i> Laporan
                             detail & invoice</li>
@@ -866,8 +585,7 @@
     <section class="py-20 bg-primary text-white">
         <div class="max-w-4xl mx-auto px-6 text-center">
             <h3 class="text-3xl font-bold mb-6">Siap Mengelola Servis Kendaraan Anda?</h3>
-            <p class="text-indigo-100 mb-10">Bergabunglah dengan ribuan pengguna lainnya dan rasakan kemudahan
-                mengelola
+            <p class="text-indigo-100 mb-10">Bergabunglah dengan ribuan pengguna lainnya dan rasakan kemudahan mengelola
                 perawatan kendaraan</p>
             <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
                 <a href="/register"
@@ -904,10 +622,9 @@
                 <h4 class="text-white font-semibold mb-4 text-lg">Navigasi</h4>
                 <ul class="space-y-2">
                     <li><a href="#features" class="hover:text-white">Fitur</a></li>
-                    <li><a href="#workshops" class="hover:text-white">Bengkel</a></li>
-                    <li><a href="#promo" class="hover:text-white">Promo</a></li>
-                    <li><a href="#mitra" class="hover:text-white">Gabung Mitra</a></li>
                     <li><a href="#pricing" class="hover:text-white">Harga</a></li>
+                    <li><a href="#testimoni" class="hover:text-white">Testimoni</a></li>
+                    <li><a href="#faq" class="hover:text-white">FAQ</a></li>
                 </ul>
             </div>
             <div>
@@ -947,7 +664,7 @@
         const mobileMenu = document.getElementById('mobileMenu');
         const overlay = document.getElementById('overlay');
 
-        menuToggle.addEventListener('click', function() {
+        menuToggle.addEventListener('click', function () {
             this.classList.toggle('active');
             mobileMenu.classList.toggle('active');
             overlay.classList.toggle('active');
@@ -955,7 +672,7 @@
         });
 
         // Close mobile menu when clicking on overlay
-        overlay.addEventListener('click', function() {
+        overlay.addEventListener('click', function () {
             menuToggle.classList.remove('active');
             mobileMenu.classList.remove('active');
             this.classList.remove('active');
@@ -965,278 +682,13 @@
         // Close mobile menu when clicking on a link
         const mobileLinks = document.querySelectorAll('.mobile-nav-link');
         mobileLinks.forEach(link => {
-            link.addEventListener('click', function() {
+            link.addEventListener('click', function () {
                 menuToggle.classList.remove('active');
                 mobileMenu.classList.remove('active');
                 overlay.classList.remove('active');
                 document.body.style.overflow = '';
             });
         });
-
-        // Mobile dropdown functionality
-        const mobileDropdowns = document.querySelectorAll('.dropdown-mobile > a');
-        mobileDropdowns.forEach(dropdown => {
-            dropdown.addEventListener('click', function(e) {
-                e.preventDefault();
-                const content = this.nextElementSibling;
-                content.classList.toggle('hidden');
-                const icon = this.querySelector('i');
-                icon.classList.toggle('fa-chevron-down');
-                icon.classList.toggle('fa-chevron-up');
-            });
-        });
-
-        // Location permission and workshops functionality
-        const locationPermissionModal = document.getElementById('locationPermissionModal');
-        const allowLocationBtn = document.getElementById('allowLocation');
-        const denyLocationBtn = document.getElementById('denyLocation');
-        const getLocationBtn = document.getElementById('getLocationBtn');
-        const locationStatus = document.getElementById('locationStatus');
-        const workshopsList = document.getElementById('workshopsList');
-        const noResults = document.getElementById('noResults');
-        const searchWorkshop = document.getElementById('searchWorkshop');
-        const tabButtons = document.querySelectorAll('.tab-button');
-
-        let userLocation = null;
-        let workshops = [{
-                id: 1,
-                name: "Bengkel Motor Maju Jaya",
-                type: "motor",
-                address: "Jl. Sudirman No. 123, Jakarta",
-                distance: 1.2,
-                rating: 4.8,
-                open: true,
-                services: ["Ganti Oli", "Service Rutin", "Ganti Ban"]
-            },
-            {
-                id: 2,
-                name: "AutoCare Center",
-                type: "mobil",
-                address: "Jl. Thamrin No. 45, Jakarta",
-                distance: 2.5,
-                rating: 4.6,
-                open: true,
-                services: ["Tune Up", "Ganti Oli", "Service AC"]
-            },
-            {
-                id: 3,
-                name: "Bengkel Sejahtera Motor",
-                type: "motor",
-                address: "Jl. Gatot Subroto No. 78, Jakarta",
-                distance: 3.1,
-                rating: 4.9,
-                open: false,
-                services: ["Service Rutin", "Ganti Kampas Rem", "Ganti Aki"]
-            },
-            {
-                id: 4,
-                name: "Mobil Plus Service",
-                type: "mobil",
-                address: "Jl. Rasuna Said No. 99, Jakarta",
-                distance: 4.7,
-                rating: 4.7,
-                open: true,
-                services: ["Service Berkala", "Ganti Oli", "Perbaikan Mesin"]
-            },
-            {
-                id: 5,
-                name: "Bengkel Motor Andalan",
-                type: "motor",
-                address: "Jl. Kemang No. 56, Jakarta",
-                distance: 5.3,
-                rating: 4.5,
-                open: true,
-                services: ["Ganti Oli", "Service Rutin", "Ganti Ban"]
-            },
-            {
-                id: 6,
-                name: "Auto Service Pro",
-                type: "mobil",
-                address: "Jl. Kuningan No. 32, Jakarta",
-                distance: 6.2,
-                rating: 4.9,
-                open: true,
-                services: ["Tune Up", "Ganti Oli", "Service AC", "Perbaikan Body"]
-            }
-        ];
-
-        // Show location permission modal when page loads
-        window.addEventListener('load', function() {
-            setTimeout(() => {
-                locationPermissionModal.classList.add('active');
-            }, 1000);
-        });
-
-        // Handle location permission
-        allowLocationBtn.addEventListener('click', function() {
-            locationPermissionModal.classList.remove('active');
-            getLocation();
-        });
-
-        denyLocationBtn.addEventListener('click', function() {
-            locationPermissionModal.classList.remove('active');
-            locationStatus.innerHTML = `
-                <i class="fas fa-exclamation-triangle text-yellow-500 text-xl mr-3"></i>
-                <p class="text-yellow-700">Akses lokasi ditolak. Anda masih dapat melihat daftar bengkel tanpa filter lokasi.</p>
-            `;
-            displayWorkshops();
-        });
-
-        // Get user location
-        getLocationBtn.addEventListener('click', getLocation);
-
-        function getLocation() {
-            if (navigator.geolocation) {
-                locationStatus.innerHTML = `
-                    <i class="fas fa-spinner fa-spin text-blue-500 text-xl mr-3"></i>
-                    <p class="text-blue-700">Mendapatkan lokasi Anda...</p>
-                `;
-
-                navigator.geolocation.getCurrentPosition(
-                    function(position) {
-                        userLocation = {
-                            latitude: position.coords.latitude,
-                            longitude: position.coords.longitude
-                        };
-
-                        locationStatus.innerHTML = `
-                            <i class="fas fa-check-circle text-green-500 text-xl mr-3"></i>
-                            <p class="text-green-700">Lokasi berhasil didapatkan! Menampilkan bengkel terdekat.</p>
-                        `;
-
-                        displayWorkshops();
-                    },
-                    function(error) {
-                        console.error("Error getting location:", error);
-                        locationStatus.innerHTML = `
-                            <i class="fas fa-exclamation-triangle text-red-500 text-xl mr-3"></i>
-                            <p class="text-red-700">Gagal mendapatkan lokasi. Pastikan Anda mengizinkan akses lokasi.</p>
-                        `;
-                        displayWorkshops();
-                    }
-                );
-            } else {
-                locationStatus.innerHTML = `
-                    <i class="fas fa-exclamation-triangle text-red-500 text-xl mr-3"></i>
-                    <p class="text-red-700">Browser Anda tidak mendukung geolokasi.</p>
-                `;
-                displayWorkshops();
-            }
-        }
-
-        // Display workshops
-        function displayWorkshops(filterType = 'all', searchTerm = '') {
-            let filteredWorkshops = workshops;
-
-            // Filter by type
-            if (filterType !== 'all') {
-                filteredWorkshops = filteredWorkshops.filter(workshop => workshop.type === filterType);
-            }
-
-            // Filter by search term
-            if (searchTerm) {
-                filteredWorkshops = filteredWorkshops.filter(workshop =>
-                    workshop.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                    workshop.address.toLowerCase().includes(searchTerm.toLowerCase())
-                );
-            }
-
-            // Sort by distance if location is available
-            if (userLocation) {
-                filteredWorkshops.sort((a, b) => a.distance - b.distance);
-            }
-
-            // Clear workshops list
-            workshopsList.innerHTML = '';
-
-            // Show no results message if no workshops found
-            if (filteredWorkshops.length === 0) {
-                noResults.classList.remove('hidden');
-                return;
-            } else {
-                noResults.classList.add('hidden');
-            }
-
-            // Display workshops
-            filteredWorkshops.forEach(workshop => {
-                const workshopCard = document.createElement('div');
-                workshopCard.className = 'bg-white rounded-xl shadow-lg p-6 workshop-card';
-
-                const statusClass = workshop.open ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800';
-                const statusText = workshop.open ? 'Buka' : 'Tutup';
-
-                workshopCard.innerHTML = `
-                    <div class="flex justify-between items-start mb-4">
-                        <div>
-                            <h4 class="text-xl font-semibold">${workshop.name}</h4>
-                            <div class="flex items-center mt-1">
-                                <i class="fas fa-map-marker-alt text-gray-400 mr-1"></i>
-                                <span class="text-gray-600 text-sm">${workshop.address}</span>
-                            </div>
-                        </div>
-                        <span class="px-3 py-1 rounded-full text-sm font-medium ${statusClass}">${statusText}</span>
-                    </div>
-                    
-                    <div class="flex justify-between items-center mb-4">
-                        <div class="flex items-center">
-                            <i class="fas fa-star text-yellow-400 mr-1"></i>
-                            <span class="font-medium">${workshop.rating}</span>
-                        </div>
-                        <div class="flex items-center">
-                            <i class="fas fa-road text-gray-400 mr-1"></i>
-                            <span class="font-medium">${workshop.distance} km</span>
-                        </div>
-                    </div>
-                    
-                    <div class="mb-4">
-                        <h5 class="font-medium mb-2">Layanan:</h5>
-                        <div class="flex flex-wrap gap-2">
-                            ${workshop.services.map(service => 
-                                `<span class="bg-gray-100 text-gray-800 px-2 py-1 rounded text-xs">${service}</span>`
-                            ).join('')}
-                        </div>
-                    </div>
-                    
-                    <div class="flex space-x-3">
-                        <button class="flex-1 bg-primary text-white py-2 rounded-lg font-medium hover:bg-secondary transition-all duration-300">
-                            <i class="fas fa-calendar-alt mr-2"></i> Booking
-                        </button>
-                        <button class="flex-1 bg-gray-200 text-gray-800 py-2 rounded-lg font-medium hover:bg-gray-300 transition-all duration-300">
-                            <i class="fas fa-info-circle mr-2"></i> Detail
-                        </button>
-                    </div>
-                `;
-
-                workshopsList.appendChild(workshopCard);
-            });
-        }
-
-        // Tab functionality
-        tabButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                // Remove active class from all buttons
-                tabButtons.forEach(btn => btn.classList.remove('active'));
-                // Add active class to clicked button
-                this.classList.add('active');
-
-                // Get filter type
-                const filterType = this.getAttribute('data-type');
-
-                // Display workshops with filter
-                displayWorkshops(filterType, searchWorkshop.value);
-            });
-        });
-
-        // Search functionality
-        searchWorkshop.addEventListener('input', function() {
-            const activeTab = document.querySelector('.tab-button.active');
-            const filterType = activeTab ? activeTab.getAttribute('data-type') : 'all';
-
-            displayWorkshops(filterType, this.value);
-        });
-
-        // Initial display of workshops
-        displayWorkshops();
     </script>
 </body>
 
