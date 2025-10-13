@@ -99,17 +99,17 @@
                             autofocus
                         />
                         @error('email')
-                            <div class="text-danger mt-1">{{ $message }}</div>
-                        @enderror
+    <div class="text-danger mt-1">{{ $message }}</div>
+@enderror
                     </div>
                     <div class="mb-3 form-password-toggle">
                         <div class="d-flex justify-content-between">
                             <label class="form-label" for="password">Kata Sandi</label>
                             @if (Route::has('password.request'))
-                                <a href="{{ route('password.request') }}">
+<a href="{{ route('password.request') }}">
                                 <small>Lupa Kata Sandi?</small>
                                 </a>
-                            @endif
+@endif
                         </div>
                         <div class="input-group input-group-merge">
                             <input
@@ -123,8 +123,8 @@
                             <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
                         </div>
                         @error('password')
-                            <div class="text-danger mt-1">{{ $message }}</div>
-                        @enderror
+    <div class="text-danger mt-1">{{ $message }}</div>
+@enderror
                     </div>
                     <div class="mb-3">
                         <div class="form-check">
@@ -157,6 +157,11 @@
                         <span class="text-muted" style="font-size: 12px;">Lebih cepat & praktis</span>
                     </a>
                 </div>
+
+                <center><a href="/" class="align-items-center">
+                  <i class='bx bx-arrow-back me-0'></i> Kembali ke Beranda
+                </a>
+                </center>
 
             </div>
 
