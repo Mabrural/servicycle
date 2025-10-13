@@ -319,12 +319,9 @@
             </nav>
 
             <div class="hidden md:flex items-center space-x-4">
-                <a href="/login" class="text-gray-600 hover:text-primary font-medium transition-all duration-300">
-                    Masuk
-                </a>
-                <a href="/register"
+                <a href="/login"
                     class="bg-primary text-white px-5 py-2.5 rounded-lg font-medium hover:bg-secondary transition-all duration-300 btn-glow">
-                    Daftar
+                    Masuk
                 </a>
             </div>
         </div>
