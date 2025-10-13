@@ -18,182 +18,178 @@
   dir="ltr"
   data-theme="theme-default"
   data-assets-path="{{ asset('') }}"
-  data-template="vertical-menu-template-free"
->
-  <head>
-    <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
-    />
+  data-template="vertical-menu-template-free">
 
-    <title>Login | ServiCycle</title>
+<head>
+  <meta charset="utf-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-    <meta name="description" content="" />
+  <title>Login | ServiCycle</title>
 
-    <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="{{ asset('img/favicon/favicon.ico') }}" />
+  <meta name="description" content="" />
 
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
-      rel="stylesheet"
-    />
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="{{ asset('img/icon-servicycle.png') }}" />
 
-    <!-- Icons. Uncomment required icon fonts -->
-    <link rel="stylesheet" href="{{ asset('vendor/fonts/boxicons.css') }}" />
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
+    rel="stylesheet" />
 
-    <!-- Core CSS -->
-    <link rel="stylesheet" href="{{ asset('vendor/css/core.css') }}" class="template-customizer-core-css" />
-    <link rel="stylesheet" href="{{ asset('vendor/css/theme-default.css') }}" class="template-customizer-theme-css" />
-    <link rel="stylesheet" href="{{ asset('css/demo.css') }}" />
+  <!-- Icons. Uncomment required icon fonts -->
+  <link rel="stylesheet" href="{{ asset('vendor/fonts/boxicons.css') }}" />
 
-    <!-- Vendors CSS -->
-    <link rel="stylesheet" href="{{ asset('vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}" />
+  <!-- Core CSS -->
+  <link rel="stylesheet" href="{{ asset('vendor/css/core.css') }}" class="template-customizer-core-css" />
+  <link rel="stylesheet" href="{{ asset('vendor/css/theme-default.css') }}" class="template-customizer-theme-css" />
+  <link rel="stylesheet" href="{{ asset('css/demo.css') }}" />
 
-    <!-- Page CSS -->
-    <!-- Page -->
-    <link rel="stylesheet" href="{{ asset('vendor/css/pages/page-auth.css') }}" />
-    <!-- Helpers -->
-    <script src="{{ asset('vendor/js/helpers.js') }}"></script>
+  <!-- Vendors CSS -->
+  <link rel="stylesheet" href="{{ asset('vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}" />
 
-    <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
-    <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
-    <script src="{{ asset('js/config.js') }}"></script>
-  </head>
+  <!-- Page CSS -->
+  <!-- Page -->
+  <link rel="stylesheet" href="{{ asset('vendor/css/pages/page-auth.css') }}" />
+  <!-- Helpers -->
+  <script src="{{ asset('vendor/js/helpers.js') }}"></script>
 
-  <body>
-    <!-- Content -->
+  <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
+  <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
+  <script src="{{ asset('js/config.js') }}"></script>
+</head>
 
-    <div class="container-xxl">
-      <div class="authentication-wrapper authentication-basic container-p-y">
-        <div class="authentication-inner">
-          <!-- Register -->
-          <div class="card">
-            <div class="card-body">
-              <!-- Logo -->
-                <div class="app-brand justify-content-center">
-                    <a href="{{ route('login') }}" class="app-brand-link gap-2">
-                        <span class="app-brand-logo demo">
-                            <img src="{{ asset('img/favicon/favicon.ico') }}" alt="">
-                        </span>
-                        <span class="app-brand-text demo text-body fw-bolder">ServiCycle</span>
-                    </a>
+<body>
+  <!-- Content -->
+
+  <div class="container-xxl">
+    <div class="authentication-wrapper authentication-basic container-p-y">
+      <div class="authentication-inner">
+        <!-- Register -->
+        <div class="card">
+          <div class="card-body">
+            <!-- Logo -->
+            <div class="app-brand justify-content-center">
+              <a href="{{ route('login') }}" class="app-brand-link gap-2">
+                <span class="app-brand-logo demo">
+                  <img src="{{ asset('img/logo-servicycle.png') }}" alt="">
+                </span>
+              </a>
+            </div>
+            <!-- /Logo -->
+            <h4 class="mb-2">Selamat Datang di ServiCycle! </h4>
+            <p class="mb-4">Masuk ke akun Anda untuk mulai mengelola servis kendaraan dengan mudah</p>
+
+            <form id="formAuthentication" class="mb-3" action="{{ route('login') }}" method="POST">
+              @csrf
+              <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="email"
+                  name="email"
+                  placeholder="Masukkan email Anda" value="{{ old('email') }}" required
+                  autofocus />
+                @error('email')
+                <div class="text-danger mt-1">{{ $message }}</div>
+                @enderror
+              </div>
+              <div class="mb-3 form-password-toggle">
+                <div class="d-flex justify-content-between">
+                  <label class="form-label" for="password">Kata Sandi</label>
+                  @if (Route::has('password.request'))
+                  <a href="{{ route('password.request') }}">
+                    <small>Lupa Kata Sandi?</small>
+                  </a>
+                  @endif
                 </div>
-                <!-- /Logo -->
-                <h4 class="mb-2">Selamat Datang di ServiCycle! </h4>
-                <p class="mb-4">Masuk ke akun Anda untuk mulai mengelola servis kendaraan dengan mudah</p>
-
-                <form id="formAuthentication" class="mb-3" action="{{ route('login') }}" method="POST">
-                    @csrf
-                    <div class="mb-3">
-                        <label for="email" class="form-label">Email</label>
-                        <input
-                            type="text"
-                            class="form-control"
-                            id="email"
-                            name="email"
-                            placeholder="Masukkan email Anda" value="{{ old('email') }}" required
-                            autofocus
-                        />
-                        @error('email')
-    <div class="text-danger mt-1">{{ $message }}</div>
-@enderror
-                    </div>
-                    <div class="mb-3 form-password-toggle">
-                        <div class="d-flex justify-content-between">
-                            <label class="form-label" for="password">Kata Sandi</label>
-                            @if (Route::has('password.request'))
-<a href="{{ route('password.request') }}">
-                                <small>Lupa Kata Sandi?</small>
-                                </a>
-@endif
-                        </div>
-                        <div class="input-group input-group-merge">
-                            <input
-                            type="password"
-                            id="password"
-                            class="form-control"
-                            name="password"
-                            placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
-                            aria-describedby="password" required
-                            />
-                            <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
-                        </div>
-                        @error('password')
-    <div class="text-danger mt-1">{{ $message }}</div>
-@enderror
-                    </div>
-                    <div class="mb-3">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="remember_me" name="remember"/>
-                            <label class="form-check-label" for="remember_me"> Ingat Saya </label>
-                        </div>
-                    </div>
-                    <div class="mb-3">
-                        <button class="btn btn-primary d-grid w-100" type="submit">Masuk</button>
-                    </div>
-                </form>
-
-                <p class="text-center">
-                    <span>Baru di platform kami?</span>
-                    <a href="{{ route('register') }}">
-                    <span>Buat akun</span>
-                    </a>
-                </p>
-                <center>
-                    <p>- Atau -</p>
-                </center>
-                <div class="mb-3">
-                    <a href="{{ route('google.login') }}"
-                        class="btn btn-outline-secondary d-flex flex-column align-items-center justify-content-center gap-1 w-100 py-2">
-                        <div class="d-flex align-items-center gap-2">
-                            <img src="https://developers.google.com/identity/images/g-logo.png"
-                                alt="Google logo" style="height:20px; width:20px;">
-                            <span>Masuk dengan Google</span>
-                        </div>
-                        <span class="text-muted" style="font-size: 12px;">Lebih cepat & praktis</span>
-                    </a>
+                <div class="input-group input-group-merge">
+                  <input
+                    type="password"
+                    id="password"
+                    class="form-control"
+                    name="password"
+                    placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
+                    aria-describedby="password" required />
+                  <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
                 </div>
+                @error('password')
+                <div class="text-danger mt-1">{{ $message }}</div>
+                @enderror
+              </div>
+              <div class="mb-3">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="remember_me" name="remember" />
+                  <label class="form-check-label" for="remember_me"> Ingat Saya </label>
+                </div>
+              </div>
+              <div class="mb-3">
+                <button class="btn btn-primary d-grid w-100" type="submit">Masuk</button>
+              </div>
+            </form>
 
-                <center><a href="/" class="align-items-center">
-                  <i class='bx bx-arrow-back me-0'></i> Kembali ke Beranda
-                </a>
-                </center>
-
+            <p class="text-center">
+              <span>Baru di platform kami?</span>
+              <a href="{{ route('register') }}">
+                <span>Buat akun</span>
+              </a>
+            </p>
+            <center>
+              <p>- Atau -</p>
+            </center>
+            <div class="mb-3">
+              <a href="{{ route('google.login') }}"
+                class="btn btn-outline-secondary d-flex flex-column align-items-center justify-content-center gap-1 w-100 py-2">
+                <div class="d-flex align-items-center gap-2">
+                  <img src="https://developers.google.com/identity/images/g-logo.png"
+                    alt="Google logo" style="height:20px; width:20px;">
+                  <span>Masuk dengan Google</span>
+                </div>
+                <span class="text-muted" style="font-size: 12px;">Lebih cepat & praktis</span>
+              </a>
             </div>
 
+            <center><a href="/" class="align-items-center">
+                <i class='bx bx-arrow-back me-0'></i> kembali ke beranda
+              </a>
+            </center>
 
           </div>
-          <!-- /Register -->
+
+
         </div>
+        <!-- /Register -->
       </div>
     </div>
+  </div>
 
-    <!-- / Content -->
+  <!-- / Content -->
 
-    
 
-    <!-- Core JS -->
-    <!-- build:js assets/vendor/js/core.js -->
-    <script src="{{ asset('vendor/libs/jquery/jquery.js') }}"></script>
-    <script src="{{ asset('vendor/libs/popper/popper.js') }}"></script>
-    <script src="{{ asset('vendor/js/bootstrap.js') }}"></script>
-    <script src="{{ asset('vendor/libs/perfect-scrollbar/perfect-scrollbar.js') }}"></script>
 
-    <script src="{{ asset('vendor/js/menu.js') }}"></script>
-    <!-- endbuild -->
+  <!-- Core JS -->
+  <!-- build:js assets/vendor/js/core.js -->
+  <script src="{{ asset('vendor/libs/jquery/jquery.js') }}"></script>
+  <script src="{{ asset('vendor/libs/popper/popper.js') }}"></script>
+  <script src="{{ asset('vendor/js/bootstrap.js') }}"></script>
+  <script src="{{ asset('vendor/libs/perfect-scrollbar/perfect-scrollbar.js') }}"></script>
 
-    <!-- Vendors JS -->
+  <script src="{{ asset('vendor/js/menu.js') }}"></script>
+  <!-- endbuild -->
 
-    <!-- Main JS -->
-    <script src="{{ asset('js/main.js') }}"></script>
+  <!-- Vendors JS -->
 
-    <!-- Page JS -->
+  <!-- Main JS -->
+  <script src="{{ asset('js/main.js') }}"></script>
 
-    <!-- Place this tag in your head or just before your close body tag. -->
-    <script async defer src="https://buttons.github.io/buttons.js"></script>
-  </body>
+  <!-- Page JS -->
+
+  <!-- Place this tag in your head or just before your close body tag. -->
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+</body>
+
 </html>
