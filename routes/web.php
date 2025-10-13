@@ -84,6 +84,9 @@ Route::middleware(['auth', 'verified', 'is_set_role', 'workshop'])->group(functi
     Route::get('/profil-bengkel', function () {
         return view('profil-bengkel.index');
     })->name('profil-bengkel');
+    Route::get('/profil-bengkel/create', function () {
+        return view('profil-bengkel.create');
+    })->name('profil-bengkel.create');
 
     Route::get('/booking-servis', function () {
         return view('booking-servis.index');
