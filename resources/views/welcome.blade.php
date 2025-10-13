@@ -44,7 +44,7 @@
         body {
             font-family: 'Poppins', sans-serif;
             scroll-behavior: smooth;
-            padding-bottom: 80px; /* Space for bottom nav */
+            padding-bottom: 0px; /* Space for bottom nav */
         }
 
         .hero-bg {
@@ -150,69 +150,6 @@
             height: 3px;
             background-color: #4f46e5;
             border-radius: 0 0 3px 3px;
-        }
-
-        /* Bottom Nav Dropdown */
-        .bottom-nav-dropdown {
-            position: fixed;
-            bottom: 100%;
-            left: 0;
-            width: 100%;
-            background-color: white;
-            border-radius: 12px 12px 0 0;
-            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
-            transform: translateY(100%);
-            transition: transform 0.3s ease;
-            z-index: 49;
-            max-height: 0;
-            overflow: hidden;
-        }
-
-        .bottom-nav-dropdown.active {
-            transform: translateY(0);
-            max-height: 200px;
-        }
-
-        .bottom-nav-dropdown-item {
-            display: flex;
-            align-items: center;
-            padding: 16px 20px;
-            text-decoration: none;
-            color: #4b5563;
-            border-bottom: 1px solid #f3f4f6;
-            transition: all 0.3s;
-        }
-
-        .bottom-nav-dropdown-item:last-child {
-            border-bottom: none;
-        }
-
-        .bottom-nav-dropdown-item:hover {
-            background-color: #f9fafb;
-            color: #4f46e5;
-        }
-
-        .bottom-nav-dropdown-item i {
-            margin-right: 12px;
-            font-size: 18px;
-            width: 20px;
-            text-align: center;
-        }
-
-        /* Overlay for dropdown */
-        .bottom-nav-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            z-index: 48;
-        }
-
-        .bottom-nav-overlay.active {
-            display: block;
         }
 
         @media (max-width: 768px) {
@@ -346,63 +283,9 @@
             margin-bottom: 20px;
         }
 
-        /* Improved Dropdown Styles */
-        .dropdown {
-            position: relative;
-        }
-
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            top: 100%;
-            left: 0;
-            background-color: white;
-            min-width: 200px;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-            z-index: 100;
-            padding: 8px 0;
-        }
-
-        .dropdown:hover .dropdown-content {
-            display: block;
-        }
-
-        .dropdown-content a {
-            display: flex;
-            align-items: center;
-            padding: 10px 16px;
-            color: #4b5563;
-            text-decoration: none;
-            transition: all 0.3s;
-        }
-
-        .dropdown-content a:hover {
-            background-color: #f3f4f6;
-            color: #4f46e5;
-        }
-
-        .dropdown-content i {
-            width: 20px;
-            margin-right: 8px;
-        }
-
-        /* Mobile dropdown for desktop nav on smaller screens */
-        @media (max-width: 1024px) {
-            .dropdown-content {
-                position: fixed;
-                top: auto;
-                bottom: 70px;
-                left: 50%;
-                transform: translateX(-50%);
-                width: 90%;
-                max-width: 300px;
-            }
-        }
-
         /* Touch improvements for mobile */
         @media (max-width: 768px) {
-            .nav-link, .dropdown-content a, .bottom-nav-item, .bottom-nav-dropdown-item {
+            .nav-link, .bottom-nav-item {
                 -webkit-tap-highlight-color: transparent;
             }
             
@@ -427,19 +310,7 @@
 
             <!-- Desktop Navigation -->
             <nav class="desktop-nav hidden md:flex space-x-8 items-center">
-                <div class="dropdown">
-                    <a href="#" class="nav-link text-gray-600 hover:text-primary flex items-center">
-                        Bengkel <i class="fas fa-chevron-down ml-1 text-xs"></i>
-                    </a>
-                    <div class="dropdown-content">
-                        <a href="#motor-workshops">
-                            <i class="fas fa-motorcycle text-primary"></i> Bengkel Motor
-                        </a>
-                        <a href="#mobil-workshops">
-                            <i class="fas fa-car text-primary"></i> Bengkel Mobil
-                        </a>
-                    </div>
-                </div>
+                <a href="#workshops" class="nav-link text-gray-600 hover:text-primary">Bengkel</a>
                 <a href="#promo" class="nav-link text-gray-600 hover:text-primary">Promo</a>
                 <a href="#mitra" class="nav-link text-gray-600 hover:text-primary">Gabung Mitra</a>
             </nav>
@@ -475,21 +346,6 @@
             <span>Akun</span>
         </a>
     </div>
-
-    <!-- Bottom Nav Dropdown for Bengkel -->
-    <div class="bottom-nav-dropdown" id="bottomNavDropdown">
-        <a href="#motor-workshops" class="bottom-nav-dropdown-item">
-            <i class="fas fa-motorcycle text-primary"></i>
-            Bengkel Motor
-        </a>
-        <a href="#mobil-workshops" class="bottom-nav-dropdown-item">
-            <i class="fas fa-car text-primary"></i>
-            Bengkel Mobil
-        </a>
-    </div>
-
-    <!-- Overlay for Bottom Nav Dropdown -->
-    <div class="bottom-nav-overlay" id="bottomNavOverlay"></div>
 
     <!-- Location Permission Modal -->
     <div class="location-permission-modal" id="locationPermissionModal">
@@ -689,6 +545,7 @@
         </div>
     </section>
 
+
     <!-- Promo Section -->
     <section id="promo" class="py-16 md:py-20 bg-gradient-to-r from-primary to-secondary text-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -807,72 +664,6 @@
         </div>
     </section>
 
-    <!-- Pricing -->
-    <section id="pricing" class="py-16 md:py-20 bg-gray-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <div class="max-w-2xl mx-auto">
-                <h3 class="text-2xl md:text-3xl font-bold mb-4">Paket Berlangganan</h3>
-                <p class="text-gray-600 text-sm md:text-base">Pilih paket yang sesuai dengan kebutuhan Anda, mulai dari gratis hingga
-                    premium
-                </p>
-            </div>
-            <div class="grid md:grid-cols-2 gap-6 md:gap-8 mt-8 md:mt-12 max-w-4xl mx-auto">
-                <div class="bg-white p-6 md:p-8 rounded-xl shadow-lg pricing-card border border-gray-200">
-                    <div class="bg-gray-100 py-3 px-4 md:py-4 md:px-6 rounded-lg mb-4 md:mb-6">
-                        <h4 class="text-lg md:text-xl font-semibold text-gray-800">Gratis</h4>
-                        <p class="text-gray-600 text-sm md:text-base">Cocok untuk pengguna individu</p>
-                    </div>
-                    <p class="text-3xl md:text-4xl font-bold mt-4">Rp 0<span
-                            class="text-sm md:text-base font-normal text-gray-600">/selamanya</span></p>
-                    <ul class="mt-6 md:mt-8 space-y-3 md:space-y-4 text-gray-600 text-left text-sm md:text-base">
-                        <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i> Catat
-                            riwayat servis</li>
-                        <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i>
-                            Notifikasi
-                            servis otomatis</li>
-                        <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i> Maksimal
-                            2
-                            kendaraan</li>
-                        <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i> Dukungan
-                            email</li>
-                        <li class="flex items-center"><i class="fas fa-times-circle text-gray-400 mr-3"></i> <span
-                                class="text-gray-400">Booking bengkel</span></li>
-                    </ul>
-                    <a href="/register"
-                        class="mt-6 md:mt-8 inline-block w-full bg-gray-200 text-gray-800 px-4 py-3 md:px-6 md:py-3 rounded-lg font-medium hover:bg-gray-300 transition-all duration-300 text-sm md:text-base">Mulai
-                        Gratis</a>
-                </div>
-                <div class="bg-white p-6 md:p-8 rounded-xl shadow-2xl pricing-card border-2 border-primary relative">
-                    <div
-                        class="absolute top-0 right-0 bg-primary text-white px-3 py-1 md:px-4 md:py-1 rounded-bl-lg rounded-tr-lg text-xs md:text-sm font-medium">
-                        POPULER</div>
-                    <div class="bg-primary/10 py-3 px-4 md:py-4 md:px-6 rounded-lg mb-4 md:mb-6">
-                        <h4 class="text-lg md:text-xl font-semibold text-primary">Premium</h4>
-                        <p class="text-gray-600 text-sm md:text-base">Untuk perusahaan atau bengkel</p>
-                    </div>
-                    <p class="text-3xl md:text-4xl font-bold mt-4">Rp 99.000<span
-                            class="text-sm md:text-base font-normal text-gray-600">/bulan</span></p>
-                    <ul class="mt-6 md:mt-8 space-y-3 md:space-y-4 text-gray-600 text-left text-sm md:text-base">
-                        <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i> Semua
-                            fitur Gratis</li>
-                        <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i> Jumlah
-                            kendaraan tanpa batas</li>
-                        <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i> Booking
-                            &
-                            promosi bengkel</li>
-                        <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i> Laporan
-                            detail & invoice</li>
-                        <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i> Dukungan
-                            prioritas 24/7</li>
-                    </ul>
-                    <a href="/register"
-                        class="mt-6 md:mt-8 inline-block w-full bg-primary text-white px-4 py-3 md:px-6 md:py-3 rounded-lg font-medium hover:bg-secondary transition-all duration-300 btn-glow text-sm md:text-base">Upgrade
-                        ke Premium</a>
-                </div>
-            </div>
-            <p class="mt-6 md:mt-8 text-gray-600 text-sm md:text-base">*Harga belum termasuk PPN</p>
-        </div>
-    </section>
 
     <!-- Testimoni -->
     <section id="testimoni" class="py-16 md:py-20 bg-white">
@@ -1023,6 +814,8 @@
                 <ul class="space-y-2 text-sm md:text-base">
                     <li><a href="#features" class="hover:text-white">Fitur</a></li>
                     <li><a href="#workshops" class="hover:text-white">Bengkel</a></li>
+                    <li><a href="#motor-workshops" class="hover:text-white">Bengkel Motor</a></li>
+                    <li><a href="#mobil-workshops" class="hover:text-white">Bengkel Mobil</a></li>
                     <li><a href="#promo" class="hover:text-white">Promo</a></li>
                     <li><a href="#mitra" class="hover:text-white">Gabung Mitra</a></li>
                     <li><a href="#pricing" class="hover:text-white">Harga</a></li>
@@ -1063,8 +856,6 @@
         // Bottom Navigation Functionality
         const bottomNav = document.getElementById('bottomNav');
         const bottomNavItems = document.querySelectorAll('.bottom-nav-item');
-        const bottomNavDropdown = document.getElementById('bottomNavDropdown');
-        const bottomNavOverlay = document.getElementById('bottomNavOverlay');
 
         // Set active nav item based on scroll position
         function setActiveNavItem() {
@@ -1093,11 +884,7 @@
                 e.preventDefault();
                 const targetSection = this.getAttribute('data-section');
                 
-                if (targetSection === 'workshops') {
-                    // Toggle dropdown for bengkel
-                    bottomNavDropdown.classList.toggle('active');
-                    bottomNavOverlay.classList.toggle('active');
-                } else if (targetSection === 'login') {
+                if (targetSection === 'login') {
                     // Redirect to login page
                     window.location.href = '/login';
                 } else {
@@ -1113,58 +900,8 @@
             });
         });
 
-        // Close dropdown when overlay is clicked
-        bottomNavOverlay.addEventListener('click', function() {
-            bottomNavDropdown.classList.remove('active');
-            this.classList.remove('active');
-        });
-
-        // Close dropdown when dropdown item is clicked
-        const dropdownItems = document.querySelectorAll('.bottom-nav-dropdown-item');
-        dropdownItems.forEach(item => {
-            item.addEventListener('click', function() {
-                bottomNavDropdown.classList.remove('active');
-                bottomNavOverlay.classList.remove('active');
-            });
-        });
-
         // Update active nav item on scroll
         window.addEventListener('scroll', setActiveNavItem);
-
-        // Desktop dropdown functionality for touch devices
-        const desktopDropdown = document.querySelector('.dropdown');
-        if (desktopDropdown) {
-            const dropdownTrigger = desktopDropdown.querySelector('a');
-            const dropdownContent = desktopDropdown.querySelector('.dropdown-content');
-            
-            // Close dropdown when clicking outside
-            document.addEventListener('click', function(e) {
-                if (!desktopDropdown.contains(e.target)) {
-                    dropdownContent.style.display = 'none';
-                }
-            });
-            
-            // Toggle dropdown on click for touch devices
-            dropdownTrigger.addEventListener('click', function(e) {
-                if (window.innerWidth <= 1024) {
-                    e.preventDefault();
-                    dropdownContent.style.display = dropdownContent.style.display === 'block' ? 'none' : 'block';
-                }
-            });
-            
-            // Show on hover for desktop
-            desktopDropdown.addEventListener('mouseenter', function() {
-                if (window.innerWidth > 1024) {
-                    dropdownContent.style.display = 'block';
-                }
-            });
-            
-            desktopDropdown.addEventListener('mouseleave', function() {
-                if (window.innerWidth > 1024) {
-                    dropdownContent.style.display = 'none';
-                }
-            });
-        }
 
         // Location permission and workshops functionality
         const locationPermissionModal = document.getElementById('locationPermissionModal');
