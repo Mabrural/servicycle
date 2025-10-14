@@ -84,6 +84,32 @@
             box-shadow: 0 2px 10px rgba(0,0,0,0.3);
         }
 
+        /* GPS Loading Overlay */
+        .gps-loading {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255,255,255,0.9);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            border-radius: 8px;
+        }
+
+        .gps-loading-spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #4f46e5;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin-bottom: 15px;
+        }
+
         /* Mobile Optimizations */
         @media (max-width: 768px) {
             .mobile-padding {
@@ -399,7 +425,14 @@
                                 <!-- Map Section -->
                                 <div class="mt-4">
                                     <label class="block text-sm font-medium text-gray-700 mb-2">Pin Lokasi di Peta</label>
-                                    <div class="bg-gray-100 p-4 rounded-lg">
+                                    <div class="bg-gray-100 p-4 rounded-lg relative">
+                                        <!-- GPS Loading Overlay -->
+                                        <div id="gpsLoading" class="gps-loading">
+                                            <div class="gps-loading-spinner"></div>
+                                            <p class="text-gray-600 font-medium">Mengambil lokasi Anda...</p>
+                                            <p class="text-sm text-gray-500 mt-2">Pastikan GPS aktif dan berikan izin akses lokasi</p>
+                                        </div>
+                                        
                                         <p class="text-sm text-gray-600 mb-3">Tentukan lokasi tepat bengkel Anda di peta:</p>
                                         <div id="map"></div>
                                         <div class="mt-3 flex items-center">
@@ -671,6 +704,7 @@
         let map;
         let marker;
         let userLocationCircle;
+        let userLocationObtained = false;
 
         let userHasRegistered = false;
         let registeredWorkshopData = {
@@ -692,11 +726,12 @@
             updateMobileStepIndicator();
             loadProvinces(); // Load provinces on page load
             initMap(); // Initialize Leaflet map
+            getCurrentLocation(); // Get user's current location on page load
         });
 
         // Initialize Leaflet Map
         function initMap() {
-            // Default location (Jakarta)
+            // Default location (Jakarta) - will be updated by GPS
             const defaultLocation = [-6.2088, 106.8456];
             
             // Create map
@@ -712,6 +747,94 @@
                 placeMarker(e.latlng);
                 updateCoordinates(e.latlng);
             });
+        }
+
+        // Get current location using GPS
+        function getCurrentLocation() {
+            if (!navigator.geolocation) {
+                alert('Browser Anda tidak mendukung geolocation. Silakan gunakan browser yang lebih modern.');
+                hideGpsLoading();
+                return;
+            }
+
+            // Show GPS loading overlay
+            document.getElementById('gpsLoading').classList.remove('hidden');
+
+            navigator.geolocation.getCurrentPosition(
+                function(position) {
+                    const userLocation = [
+                        position.coords.latitude,
+                        position.coords.longitude
+                    ];
+                    
+                    // Remove existing location circle
+                    if (userLocationCircle) {
+                        map.removeLayer(userLocationCircle);
+                    }
+                    
+                    // Add accuracy circle
+                    userLocationCircle = L.circle(userLocation, {
+                        color: '#4f46e5',
+                        fillColor: '#4f46e5',
+                        fillOpacity: 0.1,
+                        radius: position.coords.accuracy
+                    }).addTo(map);
+                    
+                    // Place marker at user's location
+                    placeMarker(L.latLng(userLocation));
+                    map.setView(userLocation, 16);
+                    
+                    // Update coordinates display
+                    updateCoordinates(L.latLng(userLocation));
+                    
+                    // Mark that we have obtained user location
+                    userLocationObtained = true;
+                    
+                    // Hide GPS loading overlay
+                    hideGpsLoading();
+                    
+                    console.log('Lokasi berhasil didapatkan:', userLocation);
+                },
+                function(error) {
+                    hideGpsLoading();
+                    
+                    let errorMessage = 'Tidak dapat mengakses lokasi Anda. ';
+                    
+                    switch(error.code) {
+                        case error.PERMISSION_DENIED:
+                            errorMessage += 'Izin lokasi ditolak. Silakan aktifkan izin lokasi di browser Anda dan refresh halaman.';
+                            break;
+                        case error.POSITION_UNAVAILABLE:
+                            errorMessage += 'Informasi lokasi tidak tersedia. Pastikan GPS aktif.';
+                            break;
+                        case error.TIMEOUT:
+                            errorMessage += 'Permintaan lokasi timeout. Coba lagi.';
+                            break;
+                        default:
+                            errorMessage += 'Terjadi error yang tidak diketahui.';
+                            break;
+                    }
+                    
+                    alert(errorMessage);
+                    console.error('Geolocation error:', error);
+                    
+                    // Fallback to default location (Jakarta)
+                    const defaultLocation = [-6.2088, 106.8456];
+                    placeMarker(L.latLng(defaultLocation));
+                    map.setView(defaultLocation, 12);
+                    updateCoordinates(L.latLng(defaultLocation));
+                },
+                {
+                    enableHighAccuracy: true,
+                    timeout: 15000,
+                    maximumAge: 60000
+                }
+            );
+        }
+
+        // Hide GPS loading overlay
+        function hideGpsLoading() {
+            document.getElementById('gpsLoading').classList.add('hidden');
         }
 
         // Place marker on map
@@ -751,44 +874,16 @@
             document.getElementById('longitude').value = lng;
         }
 
-        // Use current location
+        // Use current location (manual trigger)
         function locateUser() {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(
-                    function(position) {
-                        const userLocation = [
-                            position.coords.latitude,
-                            position.coords.longitude
-                        ];
-                        
-                        // Remove existing location circle
-                        if (userLocationCircle) {
-                            map.removeLayer(userLocationCircle);
-                        }
-                        
-                        // Add accuracy circle
-                        userLocationCircle = L.circle(userLocation, {
-                            color: '#4f46e5',
-                            fillColor: '#4f46e5',
-                            fillOpacity: 0.1,
-                            radius: position.coords.accuracy
-                        }).addTo(map);
-                        
-                        placeMarker(L.latLng(userLocation));
-                        map.setView(userLocation, 16);
-                    },
-                    function(error) {
-                        alert('Tidak dapat mengakses lokasi Anda. Pastikan izin lokasi sudah diberikan.');
-                        console.error('Geolocation error:', error);
-                    },
-                    {
-                        enableHighAccuracy: true,
-                        timeout: 10000,
-                        maximumAge: 60000
-                    }
-                );
+            if (userLocationObtained && userLocationCircle) {
+                // If we already have location, just center on it
+                const userLocation = userLocationCircle.getLatLng();
+                placeMarker(userLocation);
+                map.setView(userLocation, 16);
             } else {
-                alert('Browser Anda tidak mendukung geolocation.');
+                // Otherwise, get fresh location
+                getCurrentLocation();
             }
         }
 
