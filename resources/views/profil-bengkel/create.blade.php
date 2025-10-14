@@ -43,6 +43,21 @@
             background: linear-gradient(135deg, #10b981 0%, #059669 100%);
         }
 
+        /* Loading animation */
+        .loading-spinner {
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid #4f46e5;
+            border-radius: 50%;
+            width: 16px;
+            height: 16px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
         /* Mobile Optimizations */
         @media (max-width: 768px) {
             .mobile-padding {
@@ -71,24 +86,22 @@
             }
             
             .mobile-form-input {
-                font-size: 16px; /* Prevent zoom on iOS */
+                font-size: 16px;
             }
         }
 
-        /* Custom scrollbar for mobile */
-        @media (max-width: 768px) {
-            ::-webkit-scrollbar {
-                width: 4px;
-            }
-            
-            ::-webkit-scrollbar-track {
-                background: #f1f1f1;
-            }
-            
-            ::-webkit-scrollbar-thumb {
-                background: #c5c5c5;
-                border-radius: 2px;
-            }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #c5c5c5;
+            border-radius: 2px;
         }
 
         /* Touch-friendly buttons */
@@ -104,7 +117,6 @@
             }
         }
 
-        /* Hide number input spinners */
         input[type="number"]::-webkit-outer-spin-button,
         input[type="number"]::-webkit-inner-spin-button {
             -webkit-appearance: none;
@@ -137,7 +149,7 @@
     <div class="min-h-screen py-4 sm:py-8">
         <div class="max-w-4xl mx-auto mobile-padding">
             
-            <!-- Success Message (akan muncul jika sudah pernah daftar) -->
+            <!-- Success Message -->
             <div id="alreadyRegistered" class="hidden mb-6 sm:mb-8">
                 <div class="success-card text-white rounded-xl shadow-lg p-4 sm:p-6 md:p-8">
                     <div class="flex items-start sm:items-center mobile-stack sm:flex-row">
@@ -191,7 +203,7 @@
                 </div>
 
                 <form id="workshopForm" class="bg-white rounded-xl shadow-lg p-4 sm:p-6 md:p-8">
-                    <!-- Progress Steps - Mobile Optimized -->
+                    <!-- Progress Steps -->
                     <div class="mb-6 sm:mb-8">
                         <div class="flex items-center justify-between mb-4 overflow-x-auto">
                             <!-- Step 1 -->
@@ -251,29 +263,59 @@
                                     placeholder="Jl. Contoh No. 123, Kecamatan, Kota"></textarea>
                             </div>
 
-                            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">Provinsi *</label>
-                                    <select id="province" name="province" required
-                                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300 mobile-form-input">
-                                        <option value="">Pilih Provinsi</option>
-                                        <option value="dki-jakarta">DKI Jakarta</option>
-                                        <option value="jawa-barat">Jawa Barat</option>
-                                        <option value="jawa-tengah">Jawa Tengah</option>
-                                        <option value="jawa-timur">Jawa Timur</option>
-                                        <option value="banten">Banten</option>
-                                    </select>
+                            <!-- Wilayah Indonesia Section -->
+                            <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                                <h3 class="text-lg font-semibold text-blue-800 mb-3 flex items-center">
+                                    <i class="fas fa-map-marker-alt mr-2"></i>Lokasi Bengkel
+                                </h3>
+                                
+                                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-2">Provinsi *</label>
+                                        <div class="relative">
+                                            <select id="province" name="province" required
+                                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300 mobile-form-input appearance-none">
+                                                <option value="">Memuat provinsi...</option>
+                                            </select>
+                                            <div id="provinceLoading" class="loading-spinner absolute right-3 top-1/2 transform -translate-y-1/2"></div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-2">Kota/Kabupaten *</label>
+                                        <div class="relative">
+                                            <select id="city" name="city" required disabled
+                                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300 mobile-form-input appearance-none bg-gray-100">
+                                                <option value="">Pilih provinsi terlebih dahulu</option>
+                                            </select>
+                                            <div id="cityLoading" class="loading-spinner absolute right-3 top-1/2 transform -translate-y-1/2 hidden"></div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-2">Kecamatan *</label>
+                                        <div class="relative">
+                                            <select id="district" name="district" required disabled
+                                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300 mobile-form-input appearance-none bg-gray-100">
+                                                <option value="">Pilih kota terlebih dahulu</option>
+                                            </select>
+                                            <div id="districtLoading" class="loading-spinner absolute right-3 top-1/2 transform -translate-y-1/2 hidden"></div>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-2">Kelurahan *</label>
+                                        <div class="relative">
+                                            <select id="village" name="village" required disabled
+                                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300 mobile-form-input appearance-none bg-gray-100">
+                                                <option value="">Pilih kecamatan terlebih dahulu</option>
+                                            </select>
+                                            <div id="villageLoading" class="loading-spinner absolute right-3 top-1/2 transform -translate-y-1/2 hidden"></div>
+                                        </div>
+                                    </div>
                                 </div>
                                 
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">Kota/Kabupaten *</label>
-                                    <select id="city" name="city" required
-                                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300 mobile-form-input">
-                                        <option value="">Pilih Kota/Kabupaten</option>
-                                    </select>
-                                </div>
-                                
-                                <div>
+                                <div class="mt-3">
                                     <label class="block text-sm font-medium text-gray-700 mb-2">Kode Pos</label>
                                     <input type="text" id="postalCode" name="postalCode"
                                         class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300 mobile-form-input"
@@ -482,8 +524,18 @@
     </div>
 
     <script>
-        // Simulasi data - dalam implementasi nyata, ini akan diambil dari backend
-        let userHasRegistered = false; // Ubah ke true untuk melihat tampilan sudah terdaftar
+        // API Configuration - Using Mabrural GitHub API
+        const API_BASE_URL = 'https://mabrural.github.io/api-wilayah-indonesia/api';
+
+        // Cache untuk menyimpan data yang sudah di-load
+        const regionCache = {
+            provinces: null,
+            cities: {},
+            districts: {},
+            villages: {}
+        };
+
+        let userHasRegistered = false;
         let registeredWorkshopData = {
             name: "Bengkel Motor Maju Jaya",
             type: "motor",
@@ -500,52 +552,376 @@
             checkRegistrationStatus();
             setupEventListeners();
             updateMobileStepIndicator();
+            loadProvinces(); // Load provinces on page load
         });
 
-        // Check if user has already registered a workshop
-        function checkRegistrationStatus() {
-            if (userHasRegistered) {
-                document.getElementById('registrationForm').classList.add('hidden');
-                document.getElementById('alreadyRegistered').classList.remove('hidden');
-                displayRegisteredWorkshopInfo();
+        // ===============================
+        // API FUNCTIONS - MABRURAL GITHUB API
+        // ===============================
+
+        // Load semua provinsi
+        async function loadProvinces() {
+            const provinceSelect = document.getElementById('province');
+            const loadingSpinner = document.getElementById('provinceLoading');
+            
+            try {
+                // Show loading
+                provinceSelect.innerHTML = '<option value="">Memuat provinsi...</option>';
+                loadingSpinner.classList.remove('hidden');
+
+                // Check cache first
+                if (regionCache.provinces) {
+                    populateProvinces(regionCache.provinces);
+                    return;
+                }
+
+                // Using Mabrural GitHub API
+                const response = await fetch(`${API_BASE_URL}/provinces.json`);
+                
+                if (!response.ok) {
+                    throw new Error('Failed to fetch provinces');
+                }
+
+                const data = await response.json();
+                
+                // Transform data to match our needs
+                const provinces = data.map(province => ({
+                    id: province.id,
+                    name: province.name
+                }));
+
+                // Sort provinces alphabetically
+                provinces.sort((a, b) => a.name.localeCompare(b.name));
+
+                // Cache the data
+                regionCache.provinces = provinces;
+                
+                populateProvinces(provinces);
+                
+            } catch (error) {
+                console.error('Error loading provinces:', error);
+                provinceSelect.innerHTML = '<option value="">Gagal memuat provinsi</option>';
+                // Fallback to static data
+                loadStaticProvinces();
+            } finally {
+                loadingSpinner.classList.add('hidden');
             }
         }
 
-        // Display registered workshop information
-        function displayRegisteredWorkshopInfo() {
-            const infoContainer = document.getElementById('registeredWorkshopInfo');
-            infoContainer.innerHTML = `
-                <div class="bg-white/10 rounded p-2">
-                    <p class="text-white/70 text-xs">Nama Bengkel</p>
-                    <p class="font-semibold text-sm">${registeredWorkshopData.name}</p>
-                </div>
-                <div class="bg-white/10 rounded p-2">
-                    <p class="text-white/70 text-xs">Jenis Bengkel</p>
-                    <p class="font-semibold text-sm">${registeredWorkshopData.type === 'motor' ? 'Bengkel Motor' : 'Bengkel Mobil'}</p>
-                </div>
-                <div class="bg-white/10 rounded p-2">
-                    <p class="text-white/70 text-xs">Alamat</p>
-                    <p class="font-semibold text-sm">${registeredWorkshopData.address}</p>
-                </div>
-                <div class="bg-white/10 rounded p-2">
-                    <p class="text-white/70 text-xs">Telepon</p>
-                    <p class="font-semibold text-sm">${registeredWorkshopData.phone}</p>
-                </div>
-                <div class="bg-white/10 rounded p-2">
-                    <p class="text-white/70 text-xs">Layanan</p>
-                    <p class="font-semibold text-sm">${registeredWorkshopData.services.join(', ')}</p>
-                </div>
-                <div class="bg-white/10 rounded p-2">
-                    <p class="text-white/70 text-xs">Status</p>
-                    <p class="font-semibold text-sm">
-                        <span class="bg-white/20 px-2 py-1 rounded-full text-xs">${registeredWorkshopData.status}</span>
-                    </p>
-                </div>
-            `;
+        // Load kota/kabupaten berdasarkan provinsi
+        async function loadCities(provinceId) {
+            const citySelect = document.getElementById('city');
+            const loadingSpinner = document.getElementById('cityLoading');
+            
+            try {
+                // Show loading
+                citySelect.innerHTML = '<option value="">Memuat kota/kabupaten...</option>';
+                citySelect.disabled = true;
+                loadingSpinner.classList.remove('hidden');
+
+                // Check cache first
+                if (regionCache.cities[provinceId]) {
+                    populateCities(regionCache.cities[provinceId]);
+                    return;
+                }
+
+                // Using Mabrural GitHub API
+                const response = await fetch(`${API_BASE_URL}/regencies/${provinceId}.json`);
+                
+                if (!response.ok) {
+                    throw new Error('Failed to fetch cities');
+                }
+
+                const data = await response.json();
+                
+                // Transform data
+                const cities = data.map(city => ({
+                    id: city.id,
+                    name: city.name
+                }));
+
+                // Sort cities alphabetically
+                cities.sort((a, b) => a.name.localeCompare(b.name));
+
+                // Cache the data
+                regionCache.cities[provinceId] = cities;
+                
+                populateCities(cities);
+                
+            } catch (error) {
+                console.error('Error loading cities:', error);
+                citySelect.innerHTML = '<option value="">Gagal memuat kota/kabupaten</option>';
+            } finally {
+                loadingSpinner.classList.add('hidden');
+            }
         }
 
-        // Setup event listeners
+        // Load kecamatan berdasarkan kota
+        async function loadDistricts(cityId) {
+            const districtSelect = document.getElementById('district');
+            const loadingSpinner = document.getElementById('districtLoading');
+            
+            try {
+                // Show loading
+                districtSelect.innerHTML = '<option value="">Memuat kecamatan...</option>';
+                districtSelect.disabled = true;
+                loadingSpinner.classList.remove('hidden');
+
+                // Check cache first
+                if (regionCache.districts[cityId]) {
+                    populateDistricts(regionCache.districts[cityId]);
+                    return;
+                }
+
+                // Using Mabrural GitHub API
+                const response = await fetch(`${API_BASE_URL}/districts/${cityId}.json`);
+                
+                if (!response.ok) {
+                    throw new Error('Failed to fetch districts');
+                }
+
+                const data = await response.json();
+                
+                // Transform data
+                const districts = data.map(district => ({
+                    id: district.id,
+                    name: district.name
+                }));
+
+                // Sort districts alphabetically
+                districts.sort((a, b) => a.name.localeCompare(b.name));
+
+                // Cache the data
+                regionCache.districts[cityId] = districts;
+                
+                populateDistricts(districts);
+                
+            } catch (error) {
+                console.error('Error loading districts:', error);
+                districtSelect.innerHTML = '<option value="">Gagal memuat kecamatan</option>';
+            } finally {
+                loadingSpinner.classList.add('hidden');
+            }
+        }
+
+        // Load kelurahan berdasarkan kecamatan
+        async function loadVillages(districtId) {
+            const villageSelect = document.getElementById('village');
+            const loadingSpinner = document.getElementById('villageLoading');
+            
+            try {
+                // Show loading
+                villageSelect.innerHTML = '<option value="">Memuat kelurahan...</option>';
+                villageSelect.disabled = true;
+                loadingSpinner.classList.remove('hidden');
+
+                // Check cache first
+                if (regionCache.villages[districtId]) {
+                    populateVillages(regionCache.villages[districtId]);
+                    return;
+                }
+
+                // Using Mabrural GitHub API
+                const response = await fetch(`${API_BASE_URL}/villages/${districtId}.json`);
+                
+                if (!response.ok) {
+                    throw new Error('Failed to fetch villages');
+                }
+
+                const data = await response.json();
+                
+                // Transform data
+                const villages = data.map(village => ({
+                    id: village.id,
+                    name: village.name
+                }));
+
+                // Sort villages alphabetically
+                villages.sort((a, b) => a.name.localeCompare(b.name));
+
+                // Cache the data
+                regionCache.villages[districtId] = villages;
+                
+                populateVillages(villages);
+                
+            } catch (error) {
+                console.error('Error loading villages:', error);
+                villageSelect.innerHTML = '<option value="">Gagal memuat kelurahan</option>';
+            } finally {
+                loadingSpinner.classList.add('hidden');
+            }
+        }
+
+        // ===============================
+        // POPULATE DROPDOWN FUNCTIONS
+        // ===============================
+
+        function populateProvinces(provinces) {
+            const provinceSelect = document.getElementById('province');
+            
+            provinceSelect.innerHTML = '<option value="">Pilih Provinsi</option>';
+            
+            provinces.forEach(province => {
+                const option = document.createElement('option');
+                option.value = province.id;
+                option.textContent = province.name;
+                provinceSelect.appendChild(option);
+            });
+        }
+
+        function populateCities(cities) {
+            const citySelect = document.getElementById('city');
+            
+            citySelect.innerHTML = '<option value="">Pilih Kota/Kabupaten</option>';
+            
+            cities.forEach(city => {
+                const option = document.createElement('option');
+                option.value = city.id;
+                option.textContent = city.name;
+                citySelect.appendChild(option);
+            });
+            
+            citySelect.disabled = false;
+            
+            // Reset district and village when city changes
+            resetDistrict();
+            resetVillage();
+        }
+
+        function populateDistricts(districts) {
+            const districtSelect = document.getElementById('district');
+            
+            districtSelect.innerHTML = '<option value="">Pilih Kecamatan</option>';
+            
+            districts.forEach(district => {
+                const option = document.createElement('option');
+                option.value = district.id;
+                option.textContent = district.name;
+                districtSelect.appendChild(option);
+            });
+            
+            districtSelect.disabled = false;
+            
+            // Reset village when district changes
+            resetVillage();
+        }
+
+        function populateVillages(villages) {
+            const villageSelect = document.getElementById('village');
+            
+            villageSelect.innerHTML = '<option value="">Pilih Kelurahan</option>';
+            
+            villages.forEach(village => {
+                const option = document.createElement('option');
+                option.value = village.id;
+                option.textContent = village.name;
+                villageSelect.appendChild(option);
+            });
+            
+            villageSelect.disabled = false;
+        }
+
+        function resetDistrict() {
+            const districtSelect = document.getElementById('district');
+            districtSelect.innerHTML = '<option value="">Pilih kota terlebih dahulu</option>';
+            districtSelect.disabled = true;
+        }
+
+        function resetVillage() {
+            const villageSelect = document.getElementById('village');
+            villageSelect.innerHTML = '<option value="">Pilih kecamatan terlebih dahulu</option>';
+            villageSelect.disabled = true;
+        }
+
+        // ===============================
+        // FALLBACK STATIC DATA
+        // ===============================
+
+        function loadStaticProvinces() {
+            const staticProvinces = [
+                { id: '11', name: 'Aceh' },
+                { id: '12', name: 'Sumatera Utara' },
+                { id: '13', name: 'Sumatera Barat' },
+                { id: '14', name: 'Riau' },
+                { id: '15', name: 'Jambi' },
+                { id: '16', name: 'Sumatera Selatan' },
+                { id: '17', name: 'Bengkulu' },
+                { id: '18', name: 'Lampung' },
+                { id: '19', name: 'Kepulauan Bangka Belitung' },
+                { id: '21', name: 'Kepulauan Riau' },
+                { id: '31', name: 'DKI Jakarta' },
+                { id: '32', name: 'Jawa Barat' },
+                { id: '33', name: 'Jawa Tengah' },
+                { id: '34', name: 'DI Yogyakarta' },
+                { id: '35', name: 'Jawa Timur' },
+                { id: '36', name: 'Banten' },
+                { id: '51', name: 'Bali' },
+                { id: '52', name: 'Nusa Tenggara Barat' },
+                { id: '53', name: 'Nusa Tenggara Timur' },
+                { id: '61', name: 'Kalimantan Barat' },
+                { id: '62', name: 'Kalimantan Tengah' },
+                { id: '63', name: 'Kalimantan Selatan' },
+                { id: '64', name: 'Kalimantan Timur' },
+                { id: '65', name: 'Kalimantan Utara' },
+                { id: '71', name: 'Sulawesi Utara' },
+                { id: '72', name: 'Sulawesi Tengah' },
+                { id: '73', name: 'Sulawesi Selatan' },
+                { id: '74', name: 'Sulawesi Tenggara' },
+                { id: '75', name: 'Gorontalo' },
+                { id: '76', name: 'Sulawesi Barat' },
+                { id: '81', name: 'Maluku' },
+                { id: '82', name: 'Maluku Utara' },
+                { id: '91', name: 'Papua Barat' },
+                { id: '92', name: 'Papua' },
+                { id: '93', name: 'Papua Selatan' },
+                { id: '94', name: 'Papua Tengah' },
+                { id: '95', name: 'Papua Pegunungan' }
+            ];
+            
+            populateProvinces(staticProvinces);
+        }
+
+        // ===============================
+        // EVENT HANDLERS
+        // ===============================
+
         function setupEventListeners() {
+            // Province change event
+            document.getElementById('province').addEventListener('change', function() {
+                const provinceId = this.value;
+                if (provinceId) {
+                    loadCities(provinceId);
+                } else {
+                    const citySelect = document.getElementById('city');
+                    citySelect.innerHTML = '<option value="">Pilih provinsi terlebih dahulu</option>';
+                    citySelect.disabled = true;
+                    
+                    resetDistrict();
+                    resetVillage();
+                }
+            });
+
+            // City change event
+            document.getElementById('city').addEventListener('change', function() {
+                const cityId = this.value;
+                if (cityId) {
+                    loadDistricts(cityId);
+                } else {
+                    resetDistrict();
+                    resetVillage();
+                }
+            });
+
+            // District change event
+            document.getElementById('district').addEventListener('change', function() {
+                const districtId = this.value;
+                if (districtId) {
+                    loadVillages(districtId);
+                } else {
+                    resetVillage();
+                }
+            });
+
             // Operating hours change
             document.getElementById('operatingHours').addEventListener('change', function() {
                 const customHoursDiv = document.getElementById('customHours');
@@ -566,33 +942,40 @@
             document.getElementById('editRequestBtn').addEventListener('click', function() {
                 requestEdit();
             });
-
-            // File input change handlers
-            document.getElementById('siup').addEventListener('change', function(e) {
-                handleFileSelect(e, 'SIUP');
-            });
-
-            document.getElementById('workshopPhoto').addEventListener('change', function(e) {
-                handleFileSelect(e, 'Foto Bengkel');
-            });
         }
 
-        // Handle file selection
-        function handleFileSelect(event, fileType) {
-            const file = event.target.files[0];
-            if (file) {
-                // Check file size (5MB max)
-                if (file.size > 5 * 1024 * 1024) {
-                    alert(`File ${fileType} terlalu besar. Maksimal 5MB.`);
-                    event.target.value = '';
-                    return;
-                }
-                
-                // Show file name
-                const button = event.target.previousElementSibling;
-                button.innerHTML = `<i class="fas fa-check text-green-500 mr-2"></i>${file.name}`;
-                button.classList.add('bg-green-100', 'text-green-700');
+        // ===============================
+        // REST OF THE FUNCTIONS
+        // ===============================
+
+        function checkRegistrationStatus() {
+            if (userHasRegistered) {
+                document.getElementById('registrationForm').classList.add('hidden');
+                document.getElementById('alreadyRegistered').classList.remove('hidden');
+                displayRegisteredWorkshopInfo();
             }
+        }
+
+        function displayRegisteredWorkshopInfo() {
+            const infoContainer = document.getElementById('registeredWorkshopInfo');
+            infoContainer.innerHTML = `
+                <div class="bg-white/10 rounded p-2">
+                    <p class="text-white/70 text-xs">Nama Bengkel</p>
+                    <p class="font-semibold text-sm">${registeredWorkshopData.name}</p>
+                </div>
+                <div class="bg-white/10 rounded p-2">
+                    <p class="text-white/70 text-xs">Jenis Bengkel</p>
+                    <p class="font-semibold text-sm">${registeredWorkshopData.type === 'motor' ? 'Bengkel Motor' : 'Bengkel Mobil'}</p>
+                </div>
+                <div class="bg-white/10 rounded p-2">
+                    <p class="text-white/70 text-xs">Alamat</p>
+                    <p class="font-semibold text-sm">${registeredWorkshopData.address}</p>
+                </div>
+                <div class="bg-white/10 rounded p-2">
+                    <p class="text-white/70 text-xs">Telepon</p>
+                    <p class="font-semibold text-sm">${registeredWorkshopData.phone}</p>
+                </div>
+            `;
         }
 
         // Mobile navigation handlers
@@ -636,7 +1019,6 @@
         }
 
         function updateProgress(currentStep) {
-            // Update step indicators
             const steps = document.querySelectorAll('.flex-shrink-0 .w-8');
             steps.forEach((step, index) => {
                 if (index < currentStep) {
@@ -667,6 +1049,10 @@
                 const type = document.getElementById('workshopType').value;
                 const address = document.getElementById('address').value;
                 const phone = document.getElementById('phone').value;
+                const province = document.getElementById('province').value;
+                const city = document.getElementById('city').value;
+                const district = document.getElementById('district').value;
+                const village = document.getElementById('village').value;
                 
                 if (!name) {
                     errorMessage = 'Nama bengkel harus diisi';
@@ -680,6 +1066,18 @@
                 } else if (!phone) {
                     errorMessage = 'Nomor telepon harus diisi';
                     document.getElementById('phone').focus();
+                } else if (!province) {
+                    errorMessage = 'Provinsi harus dipilih';
+                    document.getElementById('province').focus();
+                } else if (!city) {
+                    errorMessage = 'Kota/Kabupaten harus dipilih';
+                    document.getElementById('city').focus();
+                } else if (!district) {
+                    errorMessage = 'Kecamatan harus dipilih';
+                    document.getElementById('district').focus();
+                } else if (!village) {
+                    errorMessage = 'Kelurahan harus dipilih';
+                    document.getElementById('village').focus();
                 }
             } else if (step === 2) {
                 const services = document.querySelectorAll('input[name="services"]:checked');
@@ -719,8 +1117,10 @@
                 name: document.getElementById('workshopName').value,
                 type: document.getElementById('workshopType').value,
                 address: document.getElementById('address').value,
-                province: document.getElementById('province').value,
-                city: document.getElementById('city').value,
+                province: document.getElementById('province').selectedOptions[0].text,
+                city: document.getElementById('city').selectedOptions[0].text,
+                district: document.getElementById('district').selectedOptions[0].text,
+                village: document.getElementById('village').selectedOptions[0].text,
                 postalCode: document.getElementById('postalCode').value,
                 phone: document.getElementById('phone').value,
                 email: document.getElementById('email').value,
@@ -747,34 +1147,10 @@
         function requestEdit() {
             const reason = prompt('Mohon jelaskan alasan perubahan data bengkel:');
             if (reason) {
-                // Simulate API call to request edit
                 console.log('Edit request:', reason);
                 alert('Permohonan perubahan telah dikirim. Tim kami akan menghubungi Anda dalam 1-2 hari kerja.');
             }
         }
-
-        // Simple city data based on province
-        const cityData = {
-            'dki-jakarta': ['Jakarta Pusat', 'Jakarta Selatan', 'Jakarta Timur', 'Jakarta Barat', 'Jakarta Utara'],
-            'jawa-barat': ['Bandung', 'Bekasi', 'Bogor', 'Depok', 'Cimahi'],
-            'jawa-tengah': ['Semarang', 'Surakarta', 'Tegal', 'Pekalongan', 'Salatiga'],
-            'jawa-timur': ['Surabaya', 'Malang', 'Sidoarjo', 'Mojokerto', 'Pasuruan'],
-            'banten': ['Tangerang', 'Serang', 'Cilegon', 'Tangerang Selatan']
-        };
-
-        // Populate cities when province is selected
-        document.getElementById('province').addEventListener('change', function() {
-            const citySelect = document.getElementById('city');
-            const cities = cityData[this.value] || [];
-            
-            citySelect.innerHTML = '<option value="">Pilih Kota/Kabupaten</option>';
-            cities.forEach(city => {
-                const option = document.createElement('option');
-                option.value = city.toLowerCase().replace(/ /g, '-');
-                option.textContent = city;
-                citySelect.appendChild(option);
-            });
-        });
     </script>
 </body>
 
