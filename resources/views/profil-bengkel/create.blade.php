@@ -8,6 +8,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    
     <script>
         tailwind.config = {
             theme: {
@@ -63,6 +67,21 @@
             height: 300px;
             width: 100%;
             border-radius: 8px;
+            z-index: 1;
+        }
+
+        /* Leaflet custom styles */
+        .leaflet-container {
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .custom-marker {
+            background-color: #4f46e5;
+            border: 3px solid white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
         }
 
         /* Mobile Optimizations */
@@ -633,8 +652,8 @@
         </div>
     </div>
 
-    <!-- Google Maps API -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCA902AwIyLx2Y12VIuo3zDD5HyYAbQv2s&callback=initMap" async defer></script>
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
     <script>
         // API Configuration - Using Mabrural GitHub API
@@ -648,10 +667,10 @@
             villages: {}
         };
 
-        // Google Maps variables
+        // Leaflet variables
         let map;
         let marker;
-        let geocoder;
+        let userLocationCircle;
 
         let userHasRegistered = false;
         let registeredWorkshopData = {
@@ -672,83 +691,64 @@
             setupEventListeners();
             updateMobileStepIndicator();
             loadProvinces(); // Load provinces on page load
+            initMap(); // Initialize Leaflet map
         });
 
-        // Initialize Google Maps
+        // Initialize Leaflet Map
         function initMap() {
             // Default location (Jakarta)
-            const defaultLocation = { lat: -6.2088, lng: 106.8456 };
+            const defaultLocation = [-6.2088, 106.8456];
             
             // Create map
-            map = new google.maps.Map(document.getElementById('map'), {
-                zoom: 12,
-                center: defaultLocation,
-                mapTypeControl: false,
-                streetViewControl: false,
-                fullscreenControl: true
-            });
+            map = L.map('map').setView(defaultLocation, 12);
             
-            // Create geocoder
-            geocoder = new google.maps.Geocoder();
+            // Add OpenStreetMap tiles
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
             
             // Add click listener to map
-            map.addListener('click', function(event) {
-                placeMarker(event.latLng);
-                updateCoordinates(event.latLng);
-                
-                // Reverse geocode to get address
-                geocodeLatLng(event.latLng);
-            });
-            
-            // Create marker
-            marker = new google.maps.Marker({
-                map: map,
-                draggable: true,
-                animation: google.maps.Animation.DROP
-            });
-            
-            // Add drag listener to marker
-            marker.addListener('dragend', function() {
-                updateCoordinates(marker.getPosition());
-                geocodeLatLng(marker.getPosition());
+            map.on('click', function(e) {
+                placeMarker(e.latlng);
+                updateCoordinates(e.latlng);
             });
         }
 
         // Place marker on map
         function placeMarker(location) {
+            // Remove existing marker
             if (marker) {
-                marker.setPosition(location);
-            } else {
-                marker = new google.maps.Marker({
-                    position: location,
-                    map: map,
-                    draggable: true
-                });
+                map.removeLayer(marker);
             }
             
-            map.panTo(location);
+            // Create custom marker icon
+            const customIcon = L.divIcon({
+                className: 'custom-marker',
+                html: '',
+                iconSize: [20, 20],
+                iconAnchor: [10, 10]
+            });
+            
+            // Add new marker
+            marker = L.marker(location, { icon: customIcon, draggable: true }).addTo(map);
+            
+            // Add drag listener to marker
+            marker.on('dragend', function() {
+                updateCoordinates(marker.getLatLng());
+            });
+            
+            // Center map on marker
+            map.setView(location, Math.max(map.getZoom(), 15));
         }
 
         // Update coordinates display
-        function updateCoordinates(latLng) {
-            const lat = latLng.lat().toFixed(6);
-            const lng = latLng.lng().toFixed(6);
+        function updateCoordinates(latlng) {
+            const lat = latlng.lat.toFixed(6);
+            const lng = latlng.lng.toFixed(6);
             
             document.getElementById('coordinates').textContent = `${lat}, ${lng}`;
             document.getElementById('latitude').value = lat;
             document.getElementById('longitude').value = lng;
-        }
-
-        // Geocode latlng to get address
-        function geocodeLatLng(latLng) {
-            geocoder.geocode({ location: latLng }, function(results, status) {
-                if (status === 'OK') {
-                    if (results[0]) {
-                        // You can use the formatted address if needed
-                        // console.log(results[0].formatted_address);
-                    }
-                }
-            });
         }
 
         // Use current location
@@ -756,18 +756,35 @@
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(
                     function(position) {
-                        const userLocation = {
-                            lat: position.coords.latitude,
-                            lng: position.coords.longitude
-                        };
+                        const userLocation = [
+                            position.coords.latitude,
+                            position.coords.longitude
+                        ];
                         
-                        placeMarker(userLocation);
-                        updateCoordinates(userLocation);
-                        map.setZoom(16);
+                        // Remove existing location circle
+                        if (userLocationCircle) {
+                            map.removeLayer(userLocationCircle);
+                        }
+                        
+                        // Add accuracy circle
+                        userLocationCircle = L.circle(userLocation, {
+                            color: '#4f46e5',
+                            fillColor: '#4f46e5',
+                            fillOpacity: 0.1,
+                            radius: position.coords.accuracy
+                        }).addTo(map);
+                        
+                        placeMarker(L.latLng(userLocation));
+                        map.setView(userLocation, 16);
                     },
                     function(error) {
                         alert('Tidak dapat mengakses lokasi Anda. Pastikan izin lokasi sudah diberikan.');
                         console.error('Geolocation error:', error);
+                    },
+                    {
+                        enableHighAccuracy: true,
+                        timeout: 10000,
+                        maximumAge: 60000
                     }
                 );
             } else {
