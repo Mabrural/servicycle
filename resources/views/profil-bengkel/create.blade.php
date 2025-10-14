@@ -58,6 +58,13 @@
             100% { transform: rotate(360deg); }
         }
 
+        /* Map container */
+        #map {
+            height: 300px;
+            width: 100%;
+            border-radius: 8px;
+        }
+
         /* Mobile Optimizations */
         @media (max-width: 768px) {
             .mobile-padding {
@@ -87,6 +94,10 @@
             
             .mobile-form-input {
                 font-size: 16px;
+            }
+
+            #map {
+                height: 250px;
             }
         }
 
@@ -121,6 +132,46 @@
         input[type="number"]::-webkit-inner-spin-button {
             -webkit-appearance: none;
             margin: 0;
+        }
+
+        /* File upload preview */
+        .file-preview {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .file-preview-item {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .file-preview-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .file-preview-item .remove-btn {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: rgba(0,0,0,0.5);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 12px;
         }
     </style>
 </head>
@@ -246,21 +297,17 @@
                                 
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-2">Jenis Bengkel *</label>
-                                    <select id="workshopType" name="workshopType" required
-                                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300 mobile-form-input">
-                                        <option value="">Pilih Jenis Bengkel</option>
-                                        <option value="motor">Bengkel Motor</option>
-                                        <option value="mobil">Bengkel Mobil</option>
-                                        <option value="motor-mobil">Bengkel Motor & Mobil</option>
-                                    </select>
+                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                        <div class="flex items-center">
+                                            <input type="checkbox" id="type_motor" name="workshopType" value="motor" class="mr-3 mobile-touch-checkbox">
+                                            <label for="type_motor" class="text-gray-700 text-sm sm:text-base">Bengkel Motor</label>
+                                        </div>
+                                        <div class="flex items-center">
+                                            <input type="checkbox" id="type_mobil" name="workshopType" value="mobil" class="mr-3 mobile-touch-checkbox">
+                                            <label for="type_mobil" class="text-gray-700 text-sm sm:text-base">Bengkel Mobil</label>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-2">Alamat Lengkap *</label>
-                                <textarea id="address" name="address" required rows="3"
-                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300 mobile-form-input"
-                                    placeholder="Jl. Contoh No. 123, Kecamatan, Kota"></textarea>
                             </div>
 
                             <!-- Wilayah Indonesia Section -->
@@ -321,6 +368,34 @@
                                         class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300 mobile-form-input"
                                         placeholder="12345">
                                 </div>
+                                
+                                <!-- Alamat Lengkap -->
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Alamat Lengkap *</label>
+                                    <textarea id="address" name="address" required rows="3"
+                                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300 mobile-form-input"
+                                        placeholder="Jl. Contoh No. 123, RT/RW, Nama Jalan, dll."></textarea>
+                                </div>
+                                
+                                <!-- Map Section -->
+                                <div class="mt-4">
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Pin Lokasi di Peta</label>
+                                    <div class="bg-gray-100 p-4 rounded-lg">
+                                        <p class="text-sm text-gray-600 mb-3">Tentukan lokasi tepat bengkel Anda di peta:</p>
+                                        <div id="map"></div>
+                                        <div class="mt-3 flex items-center">
+                                            <button type="button" id="locateMeBtn" class="bg-primary text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-secondary transition-all duration-300 flex items-center">
+                                                <i class="fas fa-crosshairs mr-2"></i> Gunakan Lokasi Saya
+                                            </button>
+                                            <p class="text-xs text-gray-500 ml-3">Klik pada peta untuk menandai lokasi</p>
+                                        </div>
+                                        <div class="mt-2 text-xs text-gray-500">
+                                            <p>Koordinat: <span id="coordinates">Belum dipilih</span></p>
+                                        </div>
+                                        <input type="hidden" id="latitude" name="latitude">
+                                        <input type="hidden" id="longitude" name="longitude">
+                                    </div>
+                                </div>
                             </div>
 
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
@@ -380,6 +455,14 @@
                                         <input type="checkbox" id="service_body" name="services" value="Body Repair" class="mr-3 mobile-touch-checkbox">
                                         <label for="service_body" class="text-gray-700 text-sm sm:text-base">Body Repair</label>
                                     </div>
+                                    <div class="flex items-center">
+                                        <input type="checkbox" id="service_electrical" name="services" value="Kelistrikan" class="mr-3 mobile-touch-checkbox">
+                                        <label for="service_electrical" class="text-gray-700 text-sm sm:text-base">Servis Kelistrikan</label>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <input type="checkbox" id="service_transmission" name="services" value="Transmisi" class="mr-3 mobile-touch-checkbox">
+                                        <label for="service_transmission" class="text-gray-700 text-sm sm:text-base">Servis Transmisi</label>
+                                    </div>
                                 </div>
                             </div>
 
@@ -398,6 +481,7 @@
                                         <option value="">Pilih Jam Operasional</option>
                                         <option value="08:00-17:00">08:00 - 17:00</option>
                                         <option value="09:00-18:00">09:00 - 18:00</option>
+                                        <option value="07:00-21:00">07:00 - 21:00</option>
                                         <option value="24jam">24 Jam</option>
                                         <option value="custom">Custom</option>
                                     </select>
@@ -440,28 +524,54 @@
                                 <label class="block text-sm font-medium text-gray-700 mb-3 sm:mb-4">Upload Dokumen</label>
                                 
                                 <div class="space-y-4">
-                                    <div class="border-2 border-dashed border-gray-300 rounded-lg p-4 sm:p-6 text-center">
-                                        <i class="fas fa-file-upload text-2xl sm:text-3xl text-gray-400 mb-2 sm:mb-3"></i>
-                                        <p class="text-sm text-gray-600 mb-2">Upload SIUP (Surat Izin Usaha Perdagangan)</p>
-                                        <input type="file" id="siup" name="siup" accept=".pdf,.jpg,.jpeg,.png" 
-                                            class="hidden">
-                                        <button type="button" onclick="document.getElementById('siup').click()" 
-                                            class="bg-gray-100 text-gray-700 px-4 py-2 sm:py-3 rounded-lg font-medium hover:bg-gray-200 transition-all duration-300 mobile-touch-button">
-                                            Pilih File
-                                        </button>
-                                        <p class="text-xs text-gray-500 mt-2">Format: PDF, JPG, PNG (Maks. 5MB)</p>
+                                    <!-- SIUP Section -->
+                                    <div class="border-2 border-dashed border-gray-300 rounded-lg p-4 sm:p-6">
+                                        <div class="text-center mb-4">
+                                            <i class="fas fa-file-upload text-2xl sm:text-3xl text-gray-400 mb-2 sm:mb-3"></i>
+                                            <p class="text-sm text-gray-600 mb-2">Upload SIUP (Surat Izin Usaha Perdagangan)</p>
+                                            <input type="file" id="siup" name="siup" accept=".pdf,.jpg,.jpeg,.png" 
+                                                class="hidden">
+                                            <button type="button" onclick="document.getElementById('siup').click()" 
+                                                class="bg-gray-100 text-gray-700 px-4 py-2 sm:py-3 rounded-lg font-medium hover:bg-gray-200 transition-all duration-300 mobile-touch-button">
+                                                Pilih File
+                                            </button>
+                                            <p class="text-xs text-gray-500 mt-2">Format: PDF, JPG, PNG (Maks. 5MB)</p>
+                                        </div>
+                                        <div class="mt-3">
+                                            <div class="flex items-start">
+                                                <i class="fas fa-info-circle text-blue-500 mt-0.5 mr-2 text-sm"></i>
+                                                <p class="text-xs text-gray-600">
+                                                    <strong>Untuk bengkel kecil/tidak memiliki SIUP:</strong> Anda dapat mengupload surat keterangan usaha dari kelurahan atau dokumen identitas usaha lainnya.
+                                                </p>
+                                            </div>
+                                        </div>
                                     </div>
                                     
-                                    <div class="border-2 border-dashed border-gray-300 rounded-lg p-4 sm:p-6 text-center">
-                                        <i class="fas fa-file-upload text-2xl sm:text-3xl text-gray-400 mb-2 sm:mb-3"></i>
-                                        <p class="text-sm text-gray-600 mb-2">Upload Foto Bengkel</p>
-                                        <input type="file" id="workshopPhoto" name="workshopPhoto" accept=".jpg,.jpeg,.png" 
-                                            class="hidden">
-                                        <button type="button" onclick="document.getElementById('workshopPhoto').click()" 
-                                            class="bg-gray-100 text-gray-700 px-4 py-2 sm:py-3 rounded-lg font-medium hover:bg-gray-200 transition-all duration-300 mobile-touch-button">
-                                            Pilih File
-                                        </button>
-                                        <p class="text-xs text-gray-500 mt-2">Format: JPG, PNG (Maks. 5MB)</p>
+                                    <!-- Foto Bengkel Section -->
+                                    <div class="border-2 border-dashed border-gray-300 rounded-lg p-4 sm:p-6">
+                                        <div class="text-center mb-4">
+                                            <i class="fas fa-camera text-2xl sm:text-3xl text-gray-400 mb-2 sm:mb-3"></i>
+                                            <p class="text-sm text-gray-600 mb-2">Upload Foto Bengkel</p>
+                                            <input type="file" id="workshopPhoto" name="workshopPhoto" accept=".jpg,.jpeg,.png" 
+                                                class="hidden" multiple>
+                                            <button type="button" onclick="document.getElementById('workshopPhoto').click()" 
+                                                class="bg-gray-100 text-gray-700 px-4 py-2 sm:py-3 rounded-lg font-medium hover:bg-gray-200 transition-all duration-300 mobile-touch-button">
+                                                Pilih File
+                                            </button>
+                                            <p class="text-xs text-gray-500 mt-2">Format: JPG, PNG (Maks. 5MB per file)</p>
+                                        </div>
+                                        
+                                        <!-- Preview container -->
+                                        <div id="photoPreview" class="file-preview"></div>
+                                        
+                                        <div class="mt-3">
+                                            <div class="flex items-start">
+                                                <i class="fas fa-lightbulb text-yellow-500 mt-0.5 mr-2 text-sm"></i>
+                                                <p class="text-xs text-gray-600">
+                                                    <strong>Tips:</strong> Upload beberapa foto yang menunjukkan kondisi bengkel, area kerja, peralatan, dan tampilan depan bengkel untuk meningkatkan kepercayaan pelanggan.
+                                                </p>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -523,6 +633,9 @@
         </div>
     </div>
 
+    <!-- Google Maps API -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCA902AwIyLx2Y12VIuo3zDD5HyYAbQv2s&callback=initMap" async defer></script>
+
     <script>
         // API Configuration - Using Mabrural GitHub API
         const API_BASE_URL = 'https://mabrural.github.io/api-wilayah-indonesia/api';
@@ -535,6 +648,11 @@
             villages: {}
         };
 
+        // Google Maps variables
+        let map;
+        let marker;
+        let geocoder;
+
         let userHasRegistered = false;
         let registeredWorkshopData = {
             name: "Bengkel Motor Maju Jaya",
@@ -546,6 +664,7 @@
         };
 
         let currentStep = 1;
+        let uploadedPhotos = [];
 
         // Initialize page
         document.addEventListener('DOMContentLoaded', function() {
@@ -554,6 +673,107 @@
             updateMobileStepIndicator();
             loadProvinces(); // Load provinces on page load
         });
+
+        // Initialize Google Maps
+        function initMap() {
+            // Default location (Jakarta)
+            const defaultLocation = { lat: -6.2088, lng: 106.8456 };
+            
+            // Create map
+            map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 12,
+                center: defaultLocation,
+                mapTypeControl: false,
+                streetViewControl: false,
+                fullscreenControl: true
+            });
+            
+            // Create geocoder
+            geocoder = new google.maps.Geocoder();
+            
+            // Add click listener to map
+            map.addListener('click', function(event) {
+                placeMarker(event.latLng);
+                updateCoordinates(event.latLng);
+                
+                // Reverse geocode to get address
+                geocodeLatLng(event.latLng);
+            });
+            
+            // Create marker
+            marker = new google.maps.Marker({
+                map: map,
+                draggable: true,
+                animation: google.maps.Animation.DROP
+            });
+            
+            // Add drag listener to marker
+            marker.addListener('dragend', function() {
+                updateCoordinates(marker.getPosition());
+                geocodeLatLng(marker.getPosition());
+            });
+        }
+
+        // Place marker on map
+        function placeMarker(location) {
+            if (marker) {
+                marker.setPosition(location);
+            } else {
+                marker = new google.maps.Marker({
+                    position: location,
+                    map: map,
+                    draggable: true
+                });
+            }
+            
+            map.panTo(location);
+        }
+
+        // Update coordinates display
+        function updateCoordinates(latLng) {
+            const lat = latLng.lat().toFixed(6);
+            const lng = latLng.lng().toFixed(6);
+            
+            document.getElementById('coordinates').textContent = `${lat}, ${lng}`;
+            document.getElementById('latitude').value = lat;
+            document.getElementById('longitude').value = lng;
+        }
+
+        // Geocode latlng to get address
+        function geocodeLatLng(latLng) {
+            geocoder.geocode({ location: latLng }, function(results, status) {
+                if (status === 'OK') {
+                    if (results[0]) {
+                        // You can use the formatted address if needed
+                        // console.log(results[0].formatted_address);
+                    }
+                }
+            });
+        }
+
+        // Use current location
+        function locateUser() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    function(position) {
+                        const userLocation = {
+                            lat: position.coords.latitude,
+                            lng: position.coords.longitude
+                        };
+                        
+                        placeMarker(userLocation);
+                        updateCoordinates(userLocation);
+                        map.setZoom(16);
+                    },
+                    function(error) {
+                        alert('Tidak dapat mengakses lokasi Anda. Pastikan izin lokasi sudah diberikan.');
+                        console.error('Geolocation error:', error);
+                    }
+                );
+            } else {
+                alert('Browser Anda tidak mendukung geolocation.');
+            }
+        }
 
         // ===============================
         // API FUNCTIONS - MABRURAL GITHUB API
@@ -932,6 +1152,16 @@
                 }
             });
 
+            // Locate me button
+            document.getElementById('locateMeBtn').addEventListener('click', function() {
+                locateUser();
+            });
+
+            // Photo upload
+            document.getElementById('workshopPhoto').addEventListener('change', function(e) {
+                handlePhotoUpload(e.target.files);
+            });
+
             // Form submission
             document.getElementById('workshopForm').addEventListener('submit', function(e) {
                 e.preventDefault();
@@ -942,6 +1172,66 @@
             document.getElementById('editRequestBtn').addEventListener('click', function() {
                 requestEdit();
             });
+        }
+
+        // Handle photo upload and preview
+        function handlePhotoUpload(files) {
+            const previewContainer = document.getElementById('photoPreview');
+            
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                
+                // Check file size (max 5MB)
+                if (file.size > 5 * 1024 * 1024) {
+                    alert(`File ${file.name} terlalu besar. Maksimal 5MB.`);
+                    continue;
+                }
+                
+                // Check file type
+                if (!file.type.match('image/jpeg') && !file.type.match('image/png')) {
+                    alert(`File ${file.name} harus berupa gambar JPG atau PNG.`);
+                    continue;
+                }
+                
+                // Add to uploaded photos array
+                uploadedPhotos.push(file);
+                
+                // Create preview
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const previewItem = document.createElement('div');
+                    previewItem.className = 'file-preview-item';
+                    
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.alt = 'Preview foto bengkel';
+                    
+                    const removeBtn = document.createElement('button');
+                    removeBtn.className = 'remove-btn';
+                    removeBtn.innerHTML = '×';
+                    removeBtn.onclick = function() {
+                        removePhoto(file, previewItem);
+                    };
+                    
+                    previewItem.appendChild(img);
+                    previewItem.appendChild(removeBtn);
+                    previewContainer.appendChild(previewItem);
+                };
+                
+                reader.readAsDataURL(file);
+            }
+            
+            // Reset file input to allow selecting the same file again
+            document.getElementById('workshopPhoto').value = '';
+        }
+
+        // Remove photo from preview and array
+        function removePhoto(file, previewElement) {
+            const index = uploadedPhotos.indexOf(file);
+            if (index > -1) {
+                uploadedPhotos.splice(index, 1);
+            }
+            previewElement.remove();
         }
 
         // ===============================
@@ -1046,20 +1336,21 @@
 
             if (step === 1) {
                 const name = document.getElementById('workshopName').value;
-                const type = document.getElementById('workshopType').value;
+                const workshopTypes = document.querySelectorAll('input[name="workshopType"]:checked');
                 const address = document.getElementById('address').value;
                 const phone = document.getElementById('phone').value;
                 const province = document.getElementById('province').value;
                 const city = document.getElementById('city').value;
                 const district = document.getElementById('district').value;
                 const village = document.getElementById('village').value;
+                const latitude = document.getElementById('latitude').value;
+                const longitude = document.getElementById('longitude').value;
                 
                 if (!name) {
                     errorMessage = 'Nama bengkel harus diisi';
                     document.getElementById('workshopName').focus();
-                } else if (!type) {
-                    errorMessage = 'Jenis bengkel harus dipilih';
-                    document.getElementById('workshopType').focus();
+                } else if (workshopTypes.length === 0) {
+                    errorMessage = 'Pilih minimal satu jenis bengkel';
                 } else if (!address) {
                     errorMessage = 'Alamat lengkap harus diisi';
                     document.getElementById('address').focus();
@@ -1078,6 +1369,8 @@
                 } else if (!village) {
                     errorMessage = 'Kelurahan harus dipilih';
                     document.getElementById('village').focus();
+                } else if (!latitude || !longitude) {
+                    errorMessage = 'Tentukan lokasi bengkel di peta dengan mengeklik pada peta';
                 }
             } else if (step === 2) {
                 const services = document.querySelectorAll('input[name="services"]:checked');
@@ -1113,22 +1406,27 @@
             if (!validateStep(3)) return;
 
             // Collect form data
+            const workshopTypes = Array.from(document.querySelectorAll('input[name="workshopType"]:checked')).map(cb => cb.value);
+            
             const formData = {
                 name: document.getElementById('workshopName').value,
-                type: document.getElementById('workshopType').value,
+                types: workshopTypes,
                 address: document.getElementById('address').value,
                 province: document.getElementById('province').selectedOptions[0].text,
                 city: document.getElementById('city').selectedOptions[0].text,
                 district: document.getElementById('district').selectedOptions[0].text,
                 village: document.getElementById('village').selectedOptions[0].text,
                 postalCode: document.getElementById('postalCode').value,
+                latitude: document.getElementById('latitude').value,
+                longitude: document.getElementById('longitude').value,
                 phone: document.getElementById('phone').value,
                 email: document.getElementById('email').value,
                 services: Array.from(document.querySelectorAll('input[name="services"]:checked')).map(cb => cb.value),
                 specialization: document.getElementById('specialization').value,
                 operatingHours: document.getElementById('operatingHours').value === 'custom' ? 
                     document.getElementById('customHoursInput').value : document.getElementById('operatingHours').value,
-                description: document.getElementById('description').value
+                description: document.getElementById('description').value,
+                photos: uploadedPhotos.length
             };
 
             // Simulate API call
