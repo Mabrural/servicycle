@@ -321,7 +321,7 @@
                             <!-- Step 3 -->
                             <div class="flex-shrink-0 flex flex-col items-center mx-2">
                                 <div class="w-8 h-8 bg-gray-300 text-gray-600 rounded-full flex items-center justify-center font-bold text-sm">3</div>
-                                <p class="font-semibold text-xs mt-2 mobile-step-indicator text-center">Dokumen &<br>Persetujuan</p>
+                                <p class="font-semibold text-xs mt-2 mobile-step-indicator text-center">Foto<br>Bengkel</p>
                             </div>
                         </div>
                     </div>
@@ -567,93 +567,51 @@
                         </div>
                     </div>
 
-                    <!-- Step 3: Documents -->
+                    <!-- Step 3: Foto Bengkel -->
                     <div id="step3" class="step-content hidden">
-                        <h2 class="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-gray-800">Dokumen & Persetujuan</h2>
+                        <h2 class="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-gray-800">Foto Bengkel</h2>
                         
-                        <div class="space-y-4 sm:space-y-6">
+                        <div class="space-y-6">
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-3 sm:mb-4">Upload Dokumen</label>
+                                <label class="block text-sm font-medium text-gray-700 mb-4">Upload Foto Bengkel *</label>
                                 
-                                <div class="space-y-4">
-                                    <!-- SIUP Section -->
-                                    <div class="border-2 border-dashed border-gray-300 rounded-lg p-4 sm:p-6">
-                                        <div class="text-center mb-4">
-                                            <i class="fas fa-file-upload text-2xl sm:text-3xl text-gray-400 mb-2 sm:mb-3"></i>
-                                            <p class="text-sm text-gray-600 mb-2">Upload SIUP (Surat Izin Usaha Perdagangan)</p>
-                                            <input type="file" id="siup" name="siup" accept=".pdf,.jpg,.jpeg,.png" 
-                                                class="hidden">
-                                            <button type="button" onclick="document.getElementById('siup').click()" 
-                                                class="bg-gray-100 text-gray-700 px-4 py-2 sm:py-3 rounded-lg font-medium hover:bg-gray-200 transition-all duration-300 mobile-touch-button">
-                                                Pilih File
-                                            </button>
-                                            <p class="text-xs text-gray-500 mt-2">Format: PDF, JPG, PNG (Maks. 5MB)</p>
-                                        </div>
-                                        <div class="mt-3">
-                                            <div class="flex items-start">
-                                                <i class="fas fa-info-circle text-blue-500 mt-0.5 mr-2 text-sm"></i>
-                                                <p class="text-xs text-gray-600">
-                                                    <strong>Untuk bengkel kecil/tidak memiliki SIUP:</strong> Anda dapat mengupload surat keterangan usaha dari kelurahan atau dokumen identitas usaha lainnya.
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
+                                <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 sm:p-8 text-center">
+                                    <i class="fas fa-camera text-3xl sm:text-4xl text-gray-400 mb-3 sm:mb-4"></i>
+                                    <p class="text-lg font-medium text-gray-700 mb-2">Tambahkan Foto Bengkel Anda</p>
+                                    <p class="text-sm text-gray-600 mb-4">Upload beberapa foto untuk menunjukkan kondisi bengkel Anda</p>
                                     
-                                    <!-- Foto Bengkel Section -->
-                                    <div class="border-2 border-dashed border-gray-300 rounded-lg p-4 sm:p-6">
-                                        <div class="text-center mb-4">
-                                            <i class="fas fa-camera text-2xl sm:text-3xl text-gray-400 mb-2 sm:mb-3"></i>
-                                            <p class="text-sm text-gray-600 mb-2">Upload Foto Bengkel</p>
-                                            <input type="file" id="workshopPhoto" name="workshopPhoto" accept=".jpg,.jpeg,.png" 
-                                                class="hidden" multiple>
-                                            <button type="button" onclick="document.getElementById('workshopPhoto').click()" 
-                                                class="bg-gray-100 text-gray-700 px-4 py-2 sm:py-3 rounded-lg font-medium hover:bg-gray-200 transition-all duration-300 mobile-touch-button">
-                                                Pilih File
-                                            </button>
-                                            <p class="text-xs text-gray-500 mt-2">Format: JPG, PNG (Maks. 5MB per file)</p>
-                                        </div>
-                                        
-                                        <!-- Preview container -->
-                                        <div id="photoPreview" class="file-preview"></div>
-                                        
-                                        <div class="mt-3">
-                                            <div class="flex items-start">
-                                                <i class="fas fa-lightbulb text-yellow-500 mt-0.5 mr-2 text-sm"></i>
-                                                <p class="text-xs text-gray-600">
-                                                    <strong>Tips:</strong> Upload beberapa foto yang menunjukkan kondisi bengkel, area kerja, peralatan, dan tampilan depan bengkel untuk meningkatkan kepercayaan pelanggan.
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <input type="file" id="workshopPhoto" name="workshopPhoto" accept=".jpg,.jpeg,.png" 
+                                        class="hidden" multiple>
+                                    <button type="button" onclick="document.getElementById('workshopPhoto').click()" 
+                                        class="bg-primary text-white px-6 py-3 rounded-lg font-medium hover:bg-secondary transition-all duration-300 mobile-touch-button inline-flex items-center">
+                                        <i class="fas fa-cloud-upload-alt mr-2"></i> Pilih Foto
+                                    </button>
+                                    <p class="text-xs text-gray-500 mt-3">Format: JPG, PNG (Maks. 5MB per file)</p>
                                 </div>
-                            </div>
-
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-3 sm:mb-4">Persetujuan</label>
-                                <div class="space-y-3">
+                                
+                                <!-- Preview container -->
+                                <div id="photoPreview" class="file-preview mt-6"></div>
+                                
+                                <div class="mt-6 bg-blue-50 border border-blue-200 rounded-lg p-4">
                                     <div class="flex items-start">
-                                        <input type="checkbox" id="agreement1" name="agreements" required class="mr-3 mt-1 mobile-touch-checkbox">
-                                        <label for="agreement1" class="text-gray-700 text-xs sm:text-sm">
-                                            Saya menyatakan bahwa data yang saya berikan adalah benar dan dapat dipertanggungjawabkan
-                                        </label>
-                                    </div>
-                                    <div class="flex items-start">
-                                        <input type="checkbox" id="agreement2" name="agreements" required class="mr-3 mt-1 mobile-touch-checkbox">
-                                        <label for="agreement2" class="text-gray-700 text-xs sm:text-sm">
-                                            Saya setuju dengan <a href="#" class="text-primary hover:underline">Syarat dan Ketentuan</a> ServiCycle
-                                        </label>
-                                    </div>
-                                    <div class="flex items-start">
-                                        <input type="checkbox" id="agreement3" name="agreements" required class="mr-3 mt-1 mobile-touch-checkbox">
-                                        <label for="agreement3" class="text-gray-700 text-xs sm:text-sm">
-                                            Saya memahami bahwa pendaftaran bengkel hanya dapat dilakukan sekali dan tidak dapat diubah kecuali melalui proses permohonan perubahan
-                                        </label>
+                                        <i class="fas fa-lightbulb text-blue-500 mt-0.5 mr-3 text-lg"></i>
+                                        <div>
+                                            <h4 class="font-semibold text-blue-800 mb-2">Tips Foto yang Baik:</h4>
+                                            <ul class="text-sm text-gray-700 space-y-1">
+                                                <li>• Foto tampilan depan bengkel</li>
+                                                <li>• Foto area kerja dan peralatan</li>
+                                                <li>• Foto interior bengkel</li>
+                                                <li>• Foto stok sparepart (jika ada)</li>
+                                                <li>• Foto sertifikat atau penghargaan</li>
+                                            </ul>
+                                            <p class="text-xs text-gray-600 mt-2">Foto yang baik akan meningkatkan kepercayaan pelanggan</p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="flex mobile-stack sm:flex-row justify-between mt-6 sm:mt-8 space-y-3 sm:space-y-0">
+                        <div class="flex mobile-stack sm:flex-row justify-between mt-8 space-y-3 sm:space-y-0">
                             <button type="button" onclick="prevStep(2)" 
                                 class="bg-gray-300 text-gray-700 px-6 sm:px-8 py-3 rounded-lg font-medium hover:bg-gray-400 transition-all duration-300 flex items-center justify-center mobile-touch-button mobile-full">
                                 <i class="fas fa-arrow-left mr-2"></i> Kembali
@@ -1498,10 +1456,9 @@
                     document.getElementById('customHoursInput').focus();
                 }
             } else if (step === 3) {
-                const agreements = document.querySelectorAll('input[name="agreements"]:checked');
-                
-                if (agreements.length !== 3) {
-                    errorMessage = 'Anda harus menyetujui semua persyaratan';
+                // Validasi untuk foto bengkel
+                if (uploadedPhotos.length === 0) {
+                    errorMessage = 'Upload minimal satu foto bengkel';
                 }
             }
 
