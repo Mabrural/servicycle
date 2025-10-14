@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\WorkshopController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GoogleController;
 
@@ -84,9 +85,10 @@ Route::middleware(['auth', 'verified', 'is_set_role', 'workshop'])->group(functi
     Route::get('/profil-bengkel', function () {
         return view('profil-bengkel.index');
     })->name('profil-bengkel');
-    Route::get('/profil-bengkel/create', function () {
-        return view('profil-bengkel.create');
-    })->name('profil-bengkel.create');
+    // Route::get('/profil-bengkel/create', function () {
+    //     return view('profil-bengkel.create');
+    // })->name('profil-bengkel.create');
+    Route::resource('profil-bengkel', WorkshopController::class);
 
     Route::get('/booking-servis', function () {
         return view('booking-servis.index');
