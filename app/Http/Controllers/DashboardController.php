@@ -13,33 +13,37 @@ class DashboardController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-{
-    // Jika user login dan rolenya 'workshop'
-    if (Auth::check() && Auth::user()->role === 'workshop') {
+    {
+        // Pastikan user sudah login
+        $user = Auth::user();
 
-        // Cek apakah user sudah punya data bengkel
-        $hasWorkshop = Workshop::where('created_by', Auth::id())->exists();
-
-        // Jika belum punya bengkel, arahkan ke profil bengkel
-        if (!$hasWorkshop) {
-            return redirect()->route('profil-bengkel.index');
+        if (!$user) {
+            return redirect()->route('login');
         }
-    }
-    // Jika user login dan rolenya 'vehicle_owner'
-    if (Auth::check() && Auth::user()->role === 'vehicle_owner') {
 
-        // Cek apakah user sudah punya data kendaraan
-        $hasVehicle = Vehicle::where('created_by', Auth::id())->exists();
+        // === Role: Workshop ===
+        if ($user->role === 'workshop') {
+            $hasWorkshop = Workshop::where('created_by', $user->id)->exists();
 
-        // Jika belum punya kendaraan, arahkan ke daftar kendaraan
-        if (!$hasVehicle) {
-            return redirect()->route('kendaraan-saya.create');
+            if (!$hasWorkshop) {
+                // Jika belum punya bengkel → arahkan ke halaman profil bengkel
+                return redirect()->route('profil-bengkel.index');
+            }
         }
-    }
 
-    // Jika bukan workshop atau sudah punya data bengkel → lanjut ke dashboard
-    return view('dashboard.index');
-}
+        // === Role: Vehicle Owner ===
+        if ($user->role === 'vehicle_owner') {
+            $hasVehicle = Vehicle::where('created_by', $user->id)->exists();
+
+            if (!$hasVehicle) {
+                // Jika belum punya kendaraan → arahkan ke halaman tambah kendaraan
+                return redirect()->route('kendaraan-saya.create');
+            }
+        }
+
+        // === Default: tampilkan dashboard ===
+        return view('dashboard.index');
+    }
 
     /**
      * Show the form for creating a new resource.
