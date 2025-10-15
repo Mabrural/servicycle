@@ -147,7 +147,7 @@ class VehicleController extends Controller
             // Commit transaction
             DB::commit();
 
-            return redirect()->route('vehicles.show', $vehicle->id)
+            return redirect()->route('kendaraan-saya.index', $vehicle->id)
                 ->with('success', 'Kendaraan berhasil didaftarkan!');
 
         } catch (\Exception $e) {

@@ -603,242 +603,263 @@
     </div>
 
     <script>
-        let currentStep = 1;
-        let uploadedPhoto = null;
+    let currentStep = 1;
+    let uploadedPhoto = null;
 
-        // Initialize page
-        document.addEventListener('DOMContentLoaded', function() {
-            setupEventListeners();
-            updateMobileStepIndicator();
+    // Initialize page
+    document.addEventListener('DOMContentLoaded', function() {
+        setupEventListeners();
+        updateMobileStepIndicator();
+        
+        // Check if there are validation errors and show the appropriate step
+        @if($errors->any())
+            // If there are errors, show the first step that has errors
+            const errorFields = [
+                'vehicleType', 'brand', 'model', 'year', 'licensePlate', 'vin',
+                'color', 'engineCapacity', 'transmission', 'fuelType', 'notes',
+                'vehiclePhoto'
+            ];
             
-            // Check if there are validation errors and show the appropriate step
-            @if($errors->any())
-                // If there are errors, show the first step that has errors
-                const errorFields = [
-                    'vehicleType', 'brand', 'model', 'year', 'licensePlate', 'vin',
-                    'color', 'engineCapacity', 'transmission', 'fuelType', 'notes',
-                    'vehiclePhoto'
-                ];
-                
-                for (let field of errorFields) {
-                    if (document.querySelector(`[name="${field}"]`)) {
-                        const fieldElement = document.querySelector(`[name="${field}"]`);
-                        if (fieldElement.closest('#step1')) {
-                            showStep(1);
-                            break;
-                        } else if (fieldElement.closest('#step2')) {
-                            showStep(2);
-                            break;
-                        } else if (fieldElement.closest('#step3')) {
-                            showStep(3);
-                            break;
-                        }
+            for (let field of errorFields) {
+                if (document.querySelector(`[name="${field}"]`)) {
+                    const fieldElement = document.querySelector(`[name="${field}"]`);
+                    if (fieldElement.closest('#step1')) {
+                        showStep(1);
+                        break;
+                    } else if (fieldElement.closest('#step2')) {
+                        showStep(2);
+                        break;
+                    } else if (fieldElement.closest('#step3')) {
+                        showStep(3);
+                        break;
                     }
                 }
-            @endif
+            }
+        @endif
+    });
+
+    // Setup event listeners
+    function setupEventListeners() {
+        // Photo upload - only allow single file
+        document.getElementById('vehiclePhoto').addEventListener('change', function(e) {
+            handlePhotoUpload(e.target.files);
         });
 
-        // Setup event listeners
-        function setupEventListeners() {
-            // Photo upload - only allow single file
-            document.getElementById('vehiclePhoto').addEventListener('change', function(e) {
-                handlePhotoUpload(e.target.files);
-            });
-        }
+        // Form submission - HAPUS event listener ini karena mengganggu submit native Laravel
+        // document.getElementById('vehicleForm').addEventListener('submit', function(e) {
+        //     e.preventDefault();
+        //     registerVehicle();
+        // });
+    }
 
-        // Handle photo upload and preview - modified for single photo
-        function handlePhotoUpload(files) {
-            const previewContainer = document.getElementById('photoPreview');
+    // Handle photo upload and preview - modified for single photo
+    function handlePhotoUpload(files) {
+        const previewContainer = document.getElementById('photoPreview');
+        const fileInput = document.getElementById('vehiclePhoto');
+        
+        if (files.length === 0) return;
+        
+        const file = files[0]; // Only take the first file
+        
+        // Check file size (max 5MB)
+        if (file.size > 5 * 1024 * 1024) {
+            alert(`File ${file.name} terlalu besar. Maksimal 5MB.`);
+            return;
+        }
+        
+        // Check file type
+        if (!file.type.match('image/jpeg') && !file.type.match('image/png')) {
+            alert(`File ${file.name} harus berupa gambar JPG atau PNG.`);
+            return;
+        }
+        
+        // Store the single photo
+        uploadedPhoto = file;
+        
+        // Clear previous preview
+        previewContainer.innerHTML = '';
+        
+        // Create preview
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const previewItem = document.createElement('div');
+            previewItem.className = 'file-preview-item';
             
-            if (files.length === 0) return;
+            const img = document.createElement('img');
+            img.src = e.target.result;
+            img.alt = 'Preview foto kendaraan';
             
-            const file = files[0]; // Only take the first file
-            
-            // Check file size (max 5MB)
-            if (file.size > 5 * 1024 * 1024) {
-                alert(`File ${file.name} terlalu besar. Maksimal 5MB.`);
-                return;
-            }
-            
-            // Check file type
-            if (!file.type.match('image/jpeg') && !file.type.match('image/png')) {
-                alert(`File ${file.name} harus berupa gambar JPG atau PNG.`);
-                return;
-            }
-            
-            // Store the single photo
-            uploadedPhoto = file;
-            
-            // Clear previous preview
-            previewContainer.innerHTML = '';
-            
-            // Create preview
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const previewItem = document.createElement('div');
-                previewItem.className = 'file-preview-item';
-                
-                const img = document.createElement('img');
-                img.src = e.target.result;
-                img.alt = 'Preview foto kendaraan';
-                
-                const removeBtn = document.createElement('button');
-                removeBtn.className = 'remove-btn';
-                removeBtn.innerHTML = '×';
-                removeBtn.title = 'Hapus foto';
-                removeBtn.onclick = function() {
-                    removePhoto();
-                };
-                
-                previewItem.appendChild(img);
-                previewItem.appendChild(removeBtn);
-                previewContainer.appendChild(previewItem);
+            const removeBtn = document.createElement('button');
+            removeBtn.className = 'remove-btn';
+            removeBtn.innerHTML = '×';
+            removeBtn.title = 'Hapus foto';
+            removeBtn.type = 'button'; // Important: prevent form submission
+            removeBtn.onclick = function() {
+                removePhoto();
             };
             
-            reader.readAsDataURL(file);
-            
-            // Reset file input to allow selecting the same file again
-            document.getElementById('vehiclePhoto').value = '';
-        }
+            previewItem.appendChild(img);
+            previewItem.appendChild(removeBtn);
+            previewContainer.appendChild(previewItem);
+        };
+        
+        reader.readAsDataURL(file);
+        
+        // Create a new FileList dengan file yang dipilih
+        const dataTransfer = new DataTransfer();
+        dataTransfer.items.add(file);
+        fileInput.files = dataTransfer.files;
+    }
 
-        // Remove photo from preview
-        function removePhoto() {
-            uploadedPhoto = null;
-            const previewContainer = document.getElementById('photoPreview');
-            previewContainer.innerHTML = `
-                <div class="no-photo-placeholder">
-                    <i class="fas fa-image"></i>
-                    <span class="text-sm">Belum ada foto</span>
-                </div>
-            `;
-        }
+    // Remove photo from preview
+    function removePhoto() {
+        uploadedPhoto = null;
+        const previewContainer = document.getElementById('photoPreview');
+        const fileInput = document.getElementById('vehiclePhoto');
+        
+        // Clear file input
+        fileInput.value = '';
+        
+        previewContainer.innerHTML = `
+            <div class="no-photo-placeholder">
+                <i class="fas fa-image"></i>
+                <span class="text-sm">Belum ada foto</span>
+            </div>
+        `;
+    }
 
-        // Mobile navigation handlers
-        function handleMobileBack() {
-            if (currentStep > 1) {
-                prevStep(currentStep - 1);
-            } else {
-                window.history.back();
+    // Mobile navigation handlers
+    function handleMobileBack() {
+        if (currentStep > 1) {
+            prevStep(currentStep - 1);
+        } else {
+            window.history.back();
+        }
+    }
+
+    function handleMobileNext() {
+        if (currentStep < 3) {
+            nextStep(currentStep + 1);
+        } else {
+            // Validasi step 3 sebelum submit
+            if (validateStep(3)) {
+                document.getElementById('vehicleForm').submit();
             }
         }
+    }
 
-        function handleMobileNext() {
-            if (currentStep < 3) {
-                nextStep(currentStep + 1);
-            } else {
-                if (validateStep(3)) {
-                    document.getElementById('vehicleForm').submit();
-                }
-            }
-        }
-
-        // Step navigation
-        function nextStep(step) {
-            if (validateStep(currentStep)) {
-                showStep(step);
-            }
-        }
-
-        function prevStep(step) {
+    // Step navigation
+    function nextStep(step) {
+        if (validateStep(currentStep)) {
             showStep(step);
         }
+    }
 
-        function showStep(step) {
-            document.querySelectorAll('.step-content').forEach(el => el.classList.add('hidden'));
-            document.getElementById('step' + step).classList.remove('hidden');
-            currentStep = step;
-            updateProgress(step);
-            updateMobileStepIndicator();
-            scrollToTop();
-        }
+    function prevStep(step) {
+        showStep(step);
+    }
 
-        function updateProgress(currentStep) {
-            const steps = document.querySelectorAll('.flex-shrink-0 .w-8');
-            steps.forEach((step, index) => {
-                if (index < currentStep) {
-                    step.classList.remove('bg-gray-300', 'text-gray-600');
-                    step.classList.add('bg-primary', 'text-white');
-                } else {
-                    step.classList.remove('bg-primary', 'text-white');
-                    step.classList.add('bg-gray-300', 'text-gray-600');
-                }
-            });
-        }
+    function showStep(step) {
+        document.querySelectorAll('.step-content').forEach(el => el.classList.add('hidden'));
+        document.getElementById('step' + step).classList.remove('hidden');
+        currentStep = step;
+        updateProgress(step);
+        updateMobileStepIndicator();
+        scrollToTop();
+    }
 
-        function updateMobileStepIndicator() {
-            document.getElementById('mobileStepIndicator').textContent = `${currentStep}/3`;
-        }
-
-        function scrollToTop() {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        // Step validation
-        function validateStep(step) {
-            let isValid = true;
-            let errorMessage = '';
-
-            if (step === 1) {
-                const vehicleType = document.getElementById('vehicleType').value;
-                const brand = document.getElementById('brand').value;
-                const model = document.getElementById('model').value;
-                const year = document.getElementById('year').value;
-                const licensePlate = document.getElementById('licensePlate').value;
-                const vin = document.getElementById('vin').value;
-                
-                if (!vehicleType) {
-                    errorMessage = 'Jenis kendaraan harus dipilih';
-                    document.getElementById('vehicleType').focus();
-                } else if (!brand) {
-                    errorMessage = 'Merek kendaraan harus diisi';
-                    document.getElementById('brand').focus();
-                } else if (!model) {
-                    errorMessage = 'Model kendaraan harus diisi';
-                    document.getElementById('model').focus();
-                } else if (!year) {
-                    errorMessage = 'Tahun pembuatan harus diisi';
-                    document.getElementById('year').focus();
-                } else if (!licensePlate) {
-                    errorMessage = 'Nomor polisi harus diisi';
-                    document.getElementById('licensePlate').focus();
-                } else if (!vin) {
-                    errorMessage = 'Nomor rangka (VIN) harus diisi';
-                    document.getElementById('vin').focus();
-                }
-            } else if (step === 2) {
-                const color = document.getElementById('color').value;
-                const engineCapacity = document.getElementById('engineCapacity').value;
-                const transmission = document.getElementById('transmission').value;
-                const fuelType = document.getElementById('fuelType').value;
-                
-                if (!color) {
-                    errorMessage = 'Warna kendaraan harus diisi';
-                    document.getElementById('color').focus();
-                } else if (!engineCapacity) {
-                    errorMessage = 'Kapasitas mesin harus diisi';
-                    document.getElementById('engineCapacity').focus();
-                } else if (!transmission) {
-                    errorMessage = 'Tipe transmisi harus dipilih';
-                    document.getElementById('transmission').focus();
-                } else if (!fuelType) {
-                    errorMessage = 'Jenis bahan bakar harus dipilih';
-                    document.getElementById('fuelType').focus();
-                }
-            } else if (step === 3) {
-                // Validasi untuk foto kendaraan - hanya 1 foto
-                if (!uploadedPhoto) {
-                    errorMessage = 'Upload satu foto kendaraan';
-                }
+    function updateProgress(currentStep) {
+        const steps = document.querySelectorAll('.flex-shrink-0 .w-8');
+        steps.forEach((step, index) => {
+            if (index < currentStep) {
+                step.classList.remove('bg-gray-300', 'text-gray-600');
+                step.classList.add('bg-primary', 'text-white');
+            } else {
+                step.classList.remove('bg-primary', 'text-white');
+                step.classList.add('bg-gray-300', 'text-gray-600');
             }
+        });
+    }
 
-            if (errorMessage) {
-                alert(errorMessage);
-                isValid = false;
+    function updateMobileStepIndicator() {
+        document.getElementById('mobileStepIndicator').textContent = `${currentStep}/3`;
+    }
+
+    function scrollToTop() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Step validation - HANYA untuk navigasi, bukan untuk final submission
+    function validateStep(step) {
+        let isValid = true;
+        let errorMessage = '';
+
+        if (step === 1) {
+            const vehicleType = document.getElementById('vehicleType').value;
+            const brand = document.getElementById('brand').value;
+            const model = document.getElementById('model').value;
+            const year = document.getElementById('year').value;
+            const licensePlate = document.getElementById('licensePlate').value;
+            const vin = document.getElementById('vin').value;
+            
+            if (!vehicleType) {
+                errorMessage = 'Jenis kendaraan harus dipilih';
+                document.getElementById('vehicleType').focus();
+            } else if (!brand) {
+                errorMessage = 'Merek kendaraan harus diisi';
+                document.getElementById('brand').focus();
+            } else if (!model) {
+                errorMessage = 'Model kendaraan harus diisi';
+                document.getElementById('model').focus();
+            } else if (!year) {
+                errorMessage = 'Tahun pembuatan harus diisi';
+                document.getElementById('year').focus();
+            } else if (!licensePlate) {
+                errorMessage = 'Nomor polisi harus diisi';
+                document.getElementById('licensePlate').focus();
+            } else if (!vin) {
+                errorMessage = 'Nomor rangka (VIN) harus diisi';
+                document.getElementById('vin').focus();
             }
-
-            return isValid;
+        } else if (step === 2) {
+            const color = document.getElementById('color').value;
+            const engineCapacity = document.getElementById('engineCapacity').value;
+            const transmission = document.getElementById('transmission').value;
+            const fuelType = document.getElementById('fuelType').value;
+            
+            if (!color) {
+                errorMessage = 'Warna kendaraan harus diisi';
+                document.getElementById('color').focus();
+            } else if (!engineCapacity) {
+                errorMessage = 'Kapasitas mesin harus diisi';
+                document.getElementById('engineCapacity').focus();
+            } else if (!transmission) {
+                errorMessage = 'Tipe transmisi harus dipilih';
+                document.getElementById('transmission').focus();
+            } else if (!fuelType) {
+                errorMessage = 'Jenis bahan bakar harus dipilih';
+                document.getElementById('fuelType').focus();
+            }
+        } else if (step === 3) {
+            // Untuk step 3, hanya beri peringatan tapi biarkan form bisa di-submit
+            // Validasi sebenarnya akan dilakukan oleh Laravel
+            const fileInput = document.getElementById('vehiclePhoto');
+            if (!fileInput.files || fileInput.files.length === 0) {
+                errorMessage = 'Upload satu foto kendaraan sebelum melanjutkan';
+            }
         }
-    </script>
+
+        if (errorMessage) {
+            alert(errorMessage);
+            isValid = false;
+        }
+
+        return isValid;
+    }
+
+    // HAPUS function registerVehicle() karena tidak diperlukan lagi
+    // Biarkan form submission native Laravel yang menangani
+</script>
 </body>
 
 </html>
