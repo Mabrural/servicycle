@@ -17,13 +17,12 @@ class VehicleController extends Controller
      */
     public function index()
     {
-        // Cek apakah user sudah memiliki kendaraan
-        if (Vehicle::userHasVehicle(Auth::id())) {
-            return redirect()->route('kendaraan-saya.show')
-                ->with('info', 'Anda sudah memiliki kendaraan terdaftar.');
+        // cek apakah user sudah memiliki kendaraan
+        if (Vehicle::userHasVehicle(Auth::id())){
+            return redirect()->route('kendaraan-saya.index');
         }
 
-        return view('kendaraan-saya.create');
+        return redirect()->route('kendaraan-saya.create');
     }
 
     /**

@@ -33,7 +33,7 @@ class DashboardController extends Controller
 
         // Jika belum punya kendaraan, arahkan ke daftar kendaraan
         if (!$hasVehicle) {
-            return redirect()->route('kendaraan-saya.index');
+            return redirect()->route('kendaraan-saya.create');
         }
     }
 
