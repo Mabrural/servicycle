@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Vehicle;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Workshop;
@@ -22,6 +23,17 @@ class DashboardController extends Controller
         // Jika belum punya bengkel, arahkan ke profil bengkel
         if (!$hasWorkshop) {
             return redirect()->route('profil-bengkel.index');
+        }
+    }
+    // Jika user login dan rolenya 'vehicle_owner'
+    if (Auth::check() && Auth::user()->role === 'vehicle_owner') {
+
+        // Cek apakah user sudah punya data kendaraan
+        $hasVehicle = Vehicle::where('created_by', Auth::id())->exists();
+
+        // Jika belum punya kendaraan, arahkan ke daftar kendaraan
+        if (!$hasVehicle) {
+            return redirect()->route('kendaraan-saya.index');
         }
     }
 

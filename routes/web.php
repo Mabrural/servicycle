@@ -4,6 +4,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\VehicleController;
 use App\Http\Controllers\WorkshopController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GoogleController;
@@ -52,13 +53,14 @@ Route::middleware(['auth', 'verified', 'is_set_role', 'admin'])->group(function 
 
 Route::middleware(['auth', 'verified', 'is_set_role', 'vehicle_owner'])->group(function(){
     // pemilik kendaraan
-    Route::get('/kendaraan-saya', function () {
-        return view('kendaraan-saya.index');
-    })->name('kendaraan-saya');
+    // Route::get('/kendaraan-saya', function () {
+    //     return view('kendaraan-saya.index');
+    // })->name('kendaraan-saya');
 
-    Route::get('/kendaraan-saya/create', function(){
-        return view('kendaraan-saya.create');
-    })->name('kendaraan-saya.create');
+    // Route::get('/kendaraan-saya/create', function(){
+    //     return view('kendaraan-saya.create');
+    // })->name('kendaraan-saya.create');
+    Route::resource('kendaraan-saya', VehicleController::class);
 
     Route::get('/riwayat-servis', function () {
         return view('riwayat-servis.index');

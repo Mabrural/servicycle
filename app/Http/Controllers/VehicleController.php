@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Vehicle;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class VehicleController extends Controller
 {
@@ -12,7 +13,13 @@ class VehicleController extends Controller
      */
     public function index()
     {
-        //
+        // Cek apakah user sudah memiliki kendaraan
+        if (Vehicle::userHasVehicle(Auth::id())) {
+            return redirect()->route('kendaraan-saya.show')
+                ->with('info', 'Anda sudah memiliki kendaraan terdaftar.');
+        }
+
+        return view('kendaraan-saya.create');
     }
 
     /**
