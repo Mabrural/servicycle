@@ -16,9 +16,6 @@ Route::get('/', function () {
 });
 
 Route::middleware(['auth', 'verified', 'is_set_role'])->group(function () {
-    // Route::get('/dashboard', function () {
-    //     return view('dashboard.index');
-    // })->name('dashboard');
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 });
 
@@ -59,6 +56,10 @@ Route::middleware(['auth', 'verified', 'is_set_role', 'vehicle_owner'])->group(f
         return view('kendaraan-saya.index');
     })->name('kendaraan-saya');
 
+    Route::get('/kendaraan-saya/create', function(){
+        return view('kendaraan-saya.create');
+    })->name('kendaraan-saya.create');
+
     Route::get('/riwayat-servis', function () {
         return view('riwayat-servis.index');
     })->name('riwayat-servis');
@@ -84,12 +85,6 @@ Route::middleware(['auth', 'verified', 'is_set_role', 'vehicle_owner'])->group(f
 
 Route::middleware(['auth', 'verified', 'is_set_role', 'workshop'])->group(function(){
     // Bengkel
-    // Route::get('/profil-bengkel', function () {
-    //     return view('profil-bengkel.index');
-    // })->name('profil-bengkel');
-    // Route::get('/profil-bengkel/create', function () {
-    //     return view('profil-bengkel.create');
-    // })->name('profil-bengkel.create');
     Route::resource('profil-bengkel', WorkshopController::class);
 
     Route::get('/booking-servis', function () {
