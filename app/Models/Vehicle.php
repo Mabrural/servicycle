@@ -22,6 +22,7 @@ class Vehicle extends Model
         'transmission',
         'fuel_type',
         'notes',
+        'image',
         'created_by',
     ];
 
