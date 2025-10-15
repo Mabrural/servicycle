@@ -82,9 +82,9 @@ Route::middleware(['auth', 'verified', 'is_set_role', 'vehicle_owner'])->group(f
 
 Route::middleware(['auth', 'verified', 'is_set_role', 'workshop'])->group(function(){
     // Bengkel
-    Route::get('/profil-bengkel', function () {
-        return view('profil-bengkel.index');
-    })->name('profil-bengkel');
+    // Route::get('/profil-bengkel', function () {
+    //     return view('profil-bengkel.index');
+    // })->name('profil-bengkel');
     // Route::get('/profil-bengkel/create', function () {
     //     return view('profil-bengkel.create');
     // })->name('profil-bengkel.create');

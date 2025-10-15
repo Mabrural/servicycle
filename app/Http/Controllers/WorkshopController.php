@@ -11,6 +11,16 @@ use Illuminate\Support\Facades\Validator;
 
 class WorkshopController extends Controller
 {
+    public function index()
+    {
+        // Cek apakah user sudah memiliki workshop
+        if (Workshop::userHasWorkshop(Auth::id())) {
+            return redirect()->route('profil-bengkel.show')
+                ->with('info', 'Anda sudah memiliki workshop terdaftar.');
+        }
+
+        return view('profil-bengkel.create');
+    }
     /**
      * Menampilkan form pendaftaran workshop
      */
@@ -18,11 +28,11 @@ class WorkshopController extends Controller
     {
         // Cek apakah user sudah memiliki workshop
         if (Workshop::userHasWorkshop(Auth::id())) {
-            return redirect()->route('workshop.show')
+            return redirect()->route('profil-bengkel.show')
                 ->with('info', 'Anda sudah memiliki workshop terdaftar.');
         }
 
-        return view('workshop.create');
+        return view('profil-bengkel.create');
     }
 
     /**
