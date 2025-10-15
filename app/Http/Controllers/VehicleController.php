@@ -27,7 +27,13 @@ class VehicleController extends Controller
      */
     public function create()
     {
-        //
+        // cek apakah user sudah memiliki kendaraan
+        if (Vehicle::userHasVehicle(Auth::id())){
+            return redirect()->route('kendaraan-saya.edit')
+                ->with('info', 'anda sudah memiliki kendaraan terdaftar.');
+        }
+
+        return view('kendaraan-saya.create');
     }
 
     /**

@@ -365,7 +365,6 @@
                                         <option value="">Pilih Tipe Transmisi</option>
                                         <option value="manual">Manual</option>
                                         <option value="matic">Matic</option>
-                                        <option value="automatic">Automatic</option>
                                     </select>
                                 </div>
                                 
