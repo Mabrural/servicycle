@@ -19,10 +19,11 @@ class VehicleController extends Controller
      */
     public function index()
     {
-        $vehicles = Vehicle::all();
+        $vehicles = Vehicle::where('created_by', Auth::id())->get();
 
         return view('vehicle.index', compact('vehicles'));
     }
+
     // public function index()
     // {
     //     // Cek apakah user sudah memiliki kendaraan
