@@ -19,6 +19,22 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/storage/{folder}/{filename}', function ($folder, $filename) {
+    $allowedFolders = ['shipment_documents'];
+
+    if (!in_array($folder, $allowedFolders)) {
+        abort(403);
+    }
+
+    $path = storage_path('app/public/' . $folder . '/' . $filename);
+
+    if (!file_exists($path)) {
+        abort(404);
+    }
+
+    return response()->file($path);
+})->where('filename', '.*');
+
 Route::middleware(['auth', 'verified', 'is_set_role'])->group(function () {
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 });
