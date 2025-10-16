@@ -31,9 +31,10 @@
                             {{-- Foto utama --}}
                             <div class="position-relative">
                                 @php
-                                    $photo = is_array($workshop->photos) && count($workshop->photos) > 0
-                                        ? url('/storage/workshop_photos/' . $workshop->photos[0])
-                                        : asset('img/no-vehicle.jpg');
+                                    $photo =
+                                        is_array($workshop->photos) && count($workshop->photos) > 0
+                                            ? url('/storage/workshop_photos/' . $workshop->photos[0])
+                                            : asset('img/no-vehicle.jpg');
                                 @endphp
 
                                 <img src="{{ $photo }}" class="card-img-top" alt="{{ $workshop->name }}"
@@ -49,14 +50,16 @@
                             {{-- Konten --}}
                             <div class="card-body d-flex flex-column">
                                 <h5 class="card-title fw-bold mb-1">{{ $workshop->name }}</h5>
-                                <small class="text-muted d-block mb-2">{{ $workshop->city }}, {{ $workshop->province }}</small>
+                                <small class="text-muted d-block mb-2">{{ $workshop->city }},
+                                    {{ $workshop->province }}</small>
 
                                 <ul class="list-unstyled small mb-3">
                                     <li><i class="fa-solid fa-wrench me-2 text-muted"></i> Jenis:
                                         {{ is_array($workshop->types) ? implode(', ', $workshop->types) : '-' }}
                                     </li>
                                     <li><i class="fa-solid fa-phone me-2 text-muted"></i> {{ $workshop->phone ?? '-' }}</li>
-                                    <li><i class="fa-solid fa-envelope me-2 text-muted"></i> {{ $workshop->email ?? '-' }}</li>
+                                    <li><i class="fa-solid fa-envelope me-2 text-muted"></i> {{ $workshop->email ?? '-' }}
+                                    </li>
                                     <li><i class="fa-solid fa-map-marker-alt me-2 text-muted"></i>
                                         {{ $workshop->address ?? '-' }}
                                     </li>
@@ -68,7 +71,7 @@
                                         class="btn btn-outline-primary btn-sm w-50 me-2">
                                         <i class="bi bi-eye"></i> Lihat
                                     </a>
-                                    <a href="{{ route('profile.edit', $workshop->id) }}"
+                                    <a href="{{ url('/workshop/profile/' . $workshop->id . '/edit') }}"
                                         class="btn btn-outline-warning btn-sm w-50">
                                         <i class="bi bi-pencil"></i> Edit
                                     </a>

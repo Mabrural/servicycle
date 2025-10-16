@@ -143,4 +143,10 @@ class WorkshopController extends Controller
         $workshops = Workshop::all();
         return view('workshop.index', compact('workshops'));
     }
+
+    public function edit($id)
+    {
+        $workshop = Workshop::findOrFail($id);
+        return view('workshop.edit', compact('workshop'));
+    }
 }
