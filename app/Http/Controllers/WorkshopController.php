@@ -136,6 +136,6 @@ class WorkshopController extends Controller
     public function index()
     {
         $workshops = Workshop::where('status', 'approved')->get();
-        return view('workshops.index', compact('workshops'));
+        return view('workshop.index', compact('workshops'));
     }
 }

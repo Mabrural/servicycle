@@ -131,12 +131,6 @@
                     <div data-i18n="Analytics">Profil Bengkel</div>
                 </a>
             </li>
-            {{-- <li class="menu-item {{ Route::is('profil-bengkel') ? 'active' : '' }}">
-                <a href="{{ route('profil-bengkel.index') }}" class="menu-link">
-                    <i class="menu-icon tf-icons bx bx-store"></i>
-                    <div data-i18n="Analytics">Profil Bengkel</div>
-                </a>
-            </li> --}}
 
             <!-- Booking Servis -->
             <li class="menu-item">
