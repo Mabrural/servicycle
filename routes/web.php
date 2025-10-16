@@ -108,7 +108,7 @@ Route::middleware(['auth', 'verified', 'is_set_role', 'workshop'])->group(functi
     Route::get('/workshop/dashboard', [WorkshopDashboardController::class, 'index'])->name('dashboard.workshop');
 
     // Route::resource('profil-bengkel', WorkshopController::class);
-    Route::resource('workshop/create', WorkshopController::class);
+    Route::resource('workshop/profile', WorkshopController::class);
 
     Route::get('/booking-servis', function () {
         return view('booking-servis.index');

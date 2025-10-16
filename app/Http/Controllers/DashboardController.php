@@ -64,7 +64,7 @@ class DashboardController extends Controller
 
             if (!$hasWorkshop) {
                 // Jika belum punya bengkel → arahkan ke halaman profil bengkel
-                return redirect()->route('create.index');
+                return redirect()->route('profile.create');
             }
 
             return redirect('/workshop/dashboard');

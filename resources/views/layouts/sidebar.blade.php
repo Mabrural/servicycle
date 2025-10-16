@@ -125,8 +125,8 @@
             </li>
 
             <!-- Profil Bengkel -->
-            <li class="menu-item {{ Route::is('create.*') ? 'active' : '' }}">
-                <a href="{{ route('create.index') }}" class="menu-link">
+            <li class="menu-item {{ Route::is('profile.*') ? 'active' : '' }}">
+                <a href="{{ route('profile.index') }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-store"></i>
                     <div data-i18n="Analytics">Profil Bengkel</div>
                 </a>
