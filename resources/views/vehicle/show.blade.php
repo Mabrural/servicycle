@@ -11,14 +11,26 @@
                     <i class="bi bi-arrow-left"></i> Kembali
                 </a>
             </div>
+            <style>
+                .vehicle-img {
+                    object-fit: cover;
+                    object-position: center;
+                    height: 350px;
+                    border-radius: 10px;
+                    transition: transform 0.3s ease;
+                }
+
+                .vehicle-img:hover {
+                    transform: scale(1.03);
+                }
+            </style>
 
             {{-- Detail Kendaraan --}}
             <div class="row">
                 <div class="col-lg-5 mb-4">
                     <div class="card border-0 shadow-sm overflow-hidden">
                         <img src="{{ $vehicle->image ? url('/storage/vehicle_images/' . $vehicle->image) : asset('img/no-vehicle.jpg') }}"
-                            alt="{{ $vehicle->full_name }}" class="img-fluid w-100"
-                            style="object-fit: cover; height: 350px;">
+                            alt="{{ $vehicle->full_name }}" class="img-fluid w-100 vehicle-img">
 
                         <div class="card-body text-center">
                             <h4 class="fw-bold mb-1">{{ $vehicle->full_name }}</h4>
