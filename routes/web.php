@@ -9,6 +9,7 @@ use App\Http\Controllers\VehicleController;
 use App\Http\Controllers\WorkshopController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GoogleController;
+use App\Http\Controllers\UserDashboardController;
 use App\Http\Controllers\WorkshopDashboardController;
 
 Route::get('/auth/google', [GoogleController::class, 'redirect'])->name('google.login');
@@ -64,6 +65,9 @@ Route::middleware(['auth', 'verified', 'is_set_role', 'vehicle_owner'])->group(f
     // Route::get('/kendaraan-saya/create', function(){
     //     return view('kendaraan-saya.create');
     // })->name('kendaraan-saya.create');
+
+    Route::get('/user/dashboard', [UserDashboardController::class, 'index'])->name('dashboard.user');
+
     Route::resource('kendaraan-saya', VehicleController::class);
 
     Route::get('/riwayat-servis', function () {

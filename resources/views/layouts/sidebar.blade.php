@@ -18,7 +18,7 @@
 
     <ul class="menu-inner py-1">
         <!-- Dashboard -->
-        <li class="menu-item {{ Route::is('dashboard.admin') ? 'active' : '' }}">
+        <li class="menu-item {{ Route::is('dashboard.admin') || Route::is('dashboard.workshop') || Route::is('dashboard.user') ? 'active' : '' }}">
             <a href="{{ route('dashboard') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
                 <div data-i18n="Analytics">Dashboard</div>
@@ -28,13 +28,6 @@
             <li class="menu-header small text-uppercase">
                 <span class="menu-header-text">Admin</span>
             </li>
-            <!-- Pilih Role -->
-            {{-- <li class="menu-item ">
-                <a href="{{ route('pilih-role') }}" class="menu-link">
-                    <i class="menu-icon tf-icons bx bx-home-circle"></i>
-                    <div data-i18n="Analytics">Pilih Role</div>
-                </a>
-            </li> --}}
             <!-- Manajemen Pengguna -->
             <li class="menu-item {{ Route::is('manajemen-pengguna.*') ? 'active' : '' }}">
                 <a href="{{ route('manajemen-pengguna.index') }}" class="menu-link">
