@@ -28,7 +28,7 @@
                         data-name="{{ strtolower($vehicle->brand . ' ' . $vehicle->license_plate) }}">
                         <div class="card border-0 shadow-sm h-100 rounded-4 overflow-hidden">
                             <div class="position-relative">
-                                <img src="{{ $vehicle->image ? url('/storage/vehicle_images/' . $vehicle->image) : asset('images/default-vehicle.jpg') }}"
+                                <img src="{{ $vehicle->image ? url('/storage/vehicle_images/' . $vehicle->image) : asset('img/no-vehicle.jpg') }}"
                                     class="card-img-top" alt="{{ $vehicle->full_name }}"
                                     style="height: 180px; object-fit: cover;">
                                 <span class="badge bg-gradient position-absolute top-0 start-0 m-2 px-3 py-2"

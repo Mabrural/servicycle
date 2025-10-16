@@ -193,37 +193,35 @@ class VehicleController extends Controller
             'brand' => 'required|string|max:255',
             'model' => 'required|string|max:255',
             'year' => 'required|integer',
-            'license_plate' => 'required|string|max:50',
-            'vin' => 'nullable|string|max:255',
+            'license_plate' => 'required|string|max:50|unique:vehicles,license_plate',
+            'vin' => 'nullable|string|max:255|unique:vehicles,vin',
             'color' => 'nullable|string|max:50',
             'engine_capacity' => 'nullable|integer',
             'transmission' => 'required|string',
             'fuel_type' => 'required|string',
             'notes' => 'nullable|string',
             'image' => 'nullable|image|max:2048',
+        ], [
+            'required' => 'Kolom :attribute wajib diisi.',
+            'unique' => ':attribute sudah digunakan.',
+            'image' => 'File harus berupa gambar (JPG/PNG).',
+            'max' => 'Ukuran file maksimal 2MB.',
         ]);
 
         $validated['created_by'] = Auth::id();
 
         if ($request->hasFile('image')) {
             $file = $request->file('image');
-
-            // Ekstensi file
             $extension = $file->getClientOriginalExtension();
 
-            // Hash unik nama file
             $hashedName = hash('sha256', Str::uuid() . time() . $file->getClientOriginalName()) . '.' . $extension;
-
-            // Pastikan folder tujuan ada
             $destinationPath = storage_path('app/public/vehicle_images');
+
             if (!file_exists($destinationPath)) {
                 mkdir($destinationPath, 0775, true);
             }
 
-            // Pindahkan file ke folder tujuan
             $file->move($destinationPath, $hashedName);
-
-            // Simpan nama file ke DB
             $validated['image'] = $hashedName;
         }
 
@@ -231,6 +229,7 @@ class VehicleController extends Controller
 
         return redirect()->route('vehicles.index')->with('success', 'Kendaraan berhasil ditambahkan!');
     }
+
 
 
     /**
@@ -253,9 +252,6 @@ class VehicleController extends Controller
         return view('vehicle.edit', compact('vehicle'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, $id)
     {
         $vehicle = Vehicle::findOrFail($id);
@@ -265,35 +261,51 @@ class VehicleController extends Controller
             'brand' => 'required|string|max:255',
             'model' => 'required|string|max:255',
             'year' => 'required|integer',
-            'license_plate' => 'required|string|max:50',
-            'vin' => 'nullable|string|max:255',
+            'license_plate' => 'required|string|max:50|unique:vehicles,license_plate,' . $id,
+            'vin' => 'nullable|string|max:255|unique:vehicles,vin,' . $id,
             'color' => 'nullable|string|max:50',
             'engine_capacity' => 'nullable|integer',
             'transmission' => 'required|string',
             'fuel_type' => 'required|string',
             'notes' => 'nullable|string',
             'image' => 'nullable|image|max:2048',
+        ], [
+            'required' => 'Kolom :attribute wajib diisi.',
+            'unique' => ':attribute sudah digunakan.',
+            'image' => 'File harus berupa gambar (JPG/PNG).',
+            'max' => 'Ukuran file maksimal 2MB.',
         ]);
 
-        // Update data dasar
+        // Simpan data non-image dulu
         $vehicle->fill($validated);
 
-        // Jika ada file baru
+        // === Jika user upload gambar baru ===
         if ($request->hasFile('image')) {
-            // Hapus file lama jika ada
-            if ($vehicle->image) {
-                $oldPath = storage_path('app/public/vehicle_images/' . $vehicle->image);
-                if (File::exists($oldPath)) {
-                    File::delete($oldPath);
-                }
+            // Path lama
+            $oldImage = $vehicle->image;
+            $oldImagePath = storage_path('app/public/vehicle_images/' . $oldImage);
+
+            // Hapus file lama SEBELUM upload baru
+            if (!empty($oldImage) && File::exists($oldImagePath)) {
+                File::delete($oldImagePath);
             }
 
-            // Simpan foto baru dengan nama unik & aman
+            // Upload baru dengan nama unik & hash aman
             $file = $request->file('image');
             $extension = $file->getClientOriginalExtension();
             $hashedName = hash('sha256', Str::uuid() . time() . $file->getClientOriginalName()) . '.' . $extension;
-            $file->storeAs('public/vehicle_images', $hashedName);
 
+            $destinationPath = storage_path('app/public/vehicle_images');
+
+            // Pastikan folder ada
+            if (!File::exists($destinationPath)) {
+                File::makeDirectory($destinationPath, 0775, true);
+            }
+
+            // Pindahkan file
+            $file->move($destinationPath, $hashedName);
+
+            // Simpan nama baru di database
             $vehicle->image = $hashedName;
         }
 
