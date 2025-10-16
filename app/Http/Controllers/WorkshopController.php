@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
 
 class WorkshopController extends Controller
 {
@@ -47,6 +49,59 @@ class WorkshopController extends Controller
     /**
      * Menyimpan data workshop baru
      */
+        // public function store(Request $request)
+        // {
+        //     $validated = $request->validate([
+        //         'name' => 'required|string|max:255',
+        //         'types' => 'required|array',
+        //         'address' => 'required|string',
+        //         'province' => 'required|string|max:100',
+        //         'city' => 'required|string|max:100',
+        //         'district' => 'nullable|string|max:100',
+        //         'village' => 'nullable|string|max:100',
+        //         'postal_code' => 'nullable|string|max:20',
+        //         'latitude' => 'nullable|numeric',
+        //         'longitude' => 'nullable|numeric',
+        //         'phone' => 'required|string|max:20',
+        //         'email' => 'nullable|email|max:255',
+        //         'services' => 'nullable|array',
+        //         'specialization' => 'nullable|array',
+        //         'operating_hours' => 'nullable|string|max:100',
+        //         'description' => 'nullable|string',
+        //         'photos.*' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+        //     ], [
+        //         'required' => 'Kolom :attribute wajib diisi.',
+        //         'image' => 'File harus berupa gambar.',
+        //         'max' => 'Ukuran file maksimal 2MB per foto.',
+        //     ]);
+
+        //     $validated['created_by'] = Auth::id();
+        //     $validated['status'] = 'pending';
+
+        //     // Simpan foto ke storage/app/public/workshop_photos/
+        //     $photoPaths = [];
+        //     if ($request->hasFile('photos')) {
+        //         $destinationPath = storage_path('app/public/workshop_photos');
+
+        //         if (!File::exists($destinationPath)) {
+        //             File::makeDirectory($destinationPath, 0775, true);
+        //         }
+
+        //         foreach ($request->file('photos') as $file) {
+        //             $extension = $file->getClientOriginalExtension();
+        //             $hashedName = hash('sha256', Str::uuid() . time() . $file->getClientOriginalName()) . '.' . $extension;
+
+        //             $file->move($destinationPath, $hashedName);
+        //             $photoPaths[] = $hashedName;
+        //         }
+        //     }
+
+        //     $validated['photos'] = $photoPaths;
+
+        //     Workshop::create($validated);
+
+        //     return redirect()->route('workshops.index')->with('success', 'Bengkel berhasil ditambahkan dan menunggu persetujuan!');
+        // }
     public function store(Request $request)
     {
         // Validasi role user
@@ -264,7 +319,6 @@ class WorkshopController extends Controller
 
             return redirect()->route('workshop.show')
                 ->with('success', 'Data workshop berhasil diperbarui! Menunggu verifikasi ulang admin.');
-
         } catch (\Exception $e) {
             // Hapus foto baru yang sudah diupload jika ada error
             foreach ($newPhotoPaths as $path) {

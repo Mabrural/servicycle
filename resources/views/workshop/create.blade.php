@@ -12,6 +12,9 @@
     <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    
     <script>
         tailwind.config = {
             theme: {
@@ -218,6 +221,29 @@
             cursor: pointer;
             font-size: 12px;
         }
+
+        /* Service tag styling */
+        .service-tag {
+            display: inline-flex;
+            align-items: center;
+            padding: 8px 16px;
+            margin: 4px;
+            background: #f3f4f6;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .service-tag.selected {
+            background: #4f46e5;
+            color: white;
+            border-color: #4f46e5;
+        }
+
+        .service-tag input[type="checkbox"] {
+            display: none;
+        }
     </style>
 </head>
 
@@ -232,10 +258,10 @@
                     </div>
                     <h1 class="text-xl sm:text-2xl font-bold text-primary">ServiCycle</h1>
                 </div>
-                <a href="/" class="text-gray-600 hover:text-primary font-medium text-sm sm:text-base">
+                <a href="{{ route('profile.index') }}" class="text-gray-600 hover:text-primary font-medium text-sm sm:text-base">
                     <i class="fas fa-arrow-left mr-1 sm:mr-2"></i>
-                    <span class="hidden sm:inline">Kembali ke Beranda</span>
-                    <span class="sm:hidden">Beranda</span>
+                    <span class="hidden sm:inline">Kembali ke Daftar Bengkel</span>
+                    <span class="sm:hidden">Kembali</span>
                 </a>
             </div>
         </div>
@@ -298,7 +324,9 @@
                     </div>
                 </div>
 
-                <form id="workshopForm" class="bg-white rounded-xl shadow-lg p-4 sm:p-6 md:p-8">
+                <form id="workshopForm" action="{{ route('profile.store') }}" method="POST" class="bg-white rounded-xl shadow-lg p-4 sm:p-6 md:p-8" enctype="multipart/form-data">
+                    @csrf
+
                     <!-- Progress Steps -->
                     <div class="mb-6 sm:mb-8">
                         <div class="flex items-center justify-between mb-4 overflow-x-auto">
@@ -334,24 +362,35 @@
                             <div class="grid grid-cols-1 gap-4 sm:gap-6">
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-2">Nama Bengkel *</label>
-                                    <input type="text" id="workshopName" name="workshopName" required
-                                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300 mobile-form-input"
+                                    <input type="text" id="name" name="name" value="{{ old('name') }}" required
+                                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300 mobile-form-input @error('name') border-red-500 @enderror"
                                         placeholder="Contoh: Bengkel Motor Maju Jaya">
+                                    @error('name')
+                                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                    @enderror
                                     <p class="text-xs text-gray-500 mt-1">Nama resmi bengkel Anda</p>
                                 </div>
                                 
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-2">Jenis Bengkel *</label>
                                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                        @foreach(['motor', 'mobil', 'truk', 'alat_berat'] as $type)
                                         <div class="flex items-center">
-                                            <input type="checkbox" id="type_motor" name="workshopType" value="motor" class="mr-3 mobile-touch-checkbox">
-                                            <label for="type_motor" class="text-gray-700 text-sm sm:text-base">Bengkel Motor</label>
+                                            <input type="checkbox" id="type_{{ $type }}" name="types[]" value="{{ $type }}" 
+                                                class="mr-3 mobile-touch-checkbox" {{ in_array($type, old('types', [])) ? 'checked' : '' }}>
+                                            <label for="type_{{ $type }}" class="text-gray-700 text-sm sm:text-base">
+                                                @if($type === 'motor') Bengkel Motor
+                                                @elseif($type === 'mobil') Bengkel Mobil
+                                                @elseif($type === 'truk') Bengkel Truk
+                                                @elseif($type === 'alat_berat') Alat Berat
+                                                @endif
+                                            </label>
                                         </div>
-                                        <div class="flex items-center">
-                                            <input type="checkbox" id="type_mobil" name="workshopType" value="mobil" class="mr-3 mobile-touch-checkbox">
-                                            <label for="type_mobil" class="text-gray-700 text-sm sm:text-base">Bengkel Mobil</label>
-                                        </div>
+                                        @endforeach
                                     </div>
+                                    @error('types')
+                                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                    @enderror
                                 </div>
                             </div>
 
@@ -366,28 +405,34 @@
                                         <label class="block text-sm font-medium text-gray-700 mb-2">Provinsi *</label>
                                         <div class="relative">
                                             <select id="province" name="province" required
-                                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300 mobile-form-input appearance-none">
+                                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300 mobile-form-input appearance-none @error('province') border-red-500 @enderror">
                                                 <option value="">Memuat provinsi...</option>
                                             </select>
                                             <div id="provinceLoading" class="loading-spinner absolute right-3 top-1/2 transform -translate-y-1/2"></div>
                                         </div>
+                                        @error('province')
+                                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                        @enderror
                                     </div>
                                     
                                     <div>
                                         <label class="block text-sm font-medium text-gray-700 mb-2">Kota/Kabupaten *</label>
                                         <div class="relative">
                                             <select id="city" name="city" required disabled
-                                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300 mobile-form-input appearance-none bg-gray-100">
+                                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300 mobile-form-input appearance-none bg-gray-100 @error('city') border-red-500 @enderror">
                                                 <option value="">Pilih provinsi terlebih dahulu</option>
                                             </select>
                                             <div id="cityLoading" class="loading-spinner absolute right-3 top-1/2 transform -translate-y-1/2 hidden"></div>
                                         </div>
+                                        @error('city')
+                                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                        @enderror
                                     </div>
                                     
                                     <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-2">Kecamatan *</label>
+                                        <label class="block text-sm font-medium text-gray-700 mb-2">Kecamatan</label>
                                         <div class="relative">
-                                            <select id="district" name="district" required disabled
+                                            <select id="district" name="district" disabled
                                                 class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300 mobile-form-input appearance-none bg-gray-100">
                                                 <option value="">Pilih kota terlebih dahulu</option>
                                             </select>
@@ -396,9 +441,9 @@
                                     </div>
 
                                     <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-2">Kelurahan *</label>
+                                        <label class="block text-sm font-medium text-gray-700 mb-2">Kelurahan</label>
                                         <div class="relative">
-                                            <select id="village" name="village" required disabled
+                                            <select id="village" name="village" disabled
                                                 class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300 mobile-form-input appearance-none bg-gray-100">
                                                 <option value="">Pilih kecamatan terlebih dahulu</option>
                                             </select>
@@ -409,7 +454,7 @@
                                 
                                 <div class="mt-3">
                                     <label class="block text-sm font-medium text-gray-700 mb-2">Kode Pos</label>
-                                    <input type="text" id="postalCode" name="postalCode"
+                                    <input type="text" id="postal_code" name="postal_code" value="{{ old('postal_code') }}"
                                         class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300 mobile-form-input"
                                         placeholder="12345">
                                 </div>
@@ -418,8 +463,11 @@
                                 <div class="mt-3">
                                     <label class="block text-sm font-medium text-gray-700 mb-2">Alamat Lengkap *</label>
                                     <textarea id="address" name="address" required rows="3"
-                                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300 mobile-form-input"
-                                        placeholder="Jl. Contoh No. 123, RT/RW, Nama Jalan, dll."></textarea>
+                                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300 mobile-form-input @error('address') border-red-500 @enderror"
+                                        placeholder="Jl. Contoh No. 123, RT/RW, Nama Jalan, dll.">{{ old('address') }}</textarea>
+                                    @error('address')
+                                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                    @enderror
                                 </div>
                                 
                                 <!-- Map Section -->
@@ -444,8 +492,8 @@
                                         <div class="mt-2 text-xs text-gray-500">
                                             <p>Koordinat: <span id="coordinates">Belum dipilih</span></p>
                                         </div>
-                                        <input type="hidden" id="latitude" name="latitude">
-                                        <input type="hidden" id="longitude" name="longitude">
+                                        <input type="hidden" id="latitude" name="latitude" value="{{ old('latitude') }}">
+                                        <input type="hidden" id="longitude" name="longitude" value="{{ old('longitude') }}">
                                     </div>
                                 </div>
                             </div>
@@ -453,16 +501,22 @@
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-2">Nomor Telepon *</label>
-                                    <input type="tel" id="phone" name="phone" required
-                                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300 mobile-form-input"
+                                    <input type="tel" id="phone" name="phone" value="{{ old('phone') }}" required
+                                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300 mobile-form-input @error('phone') border-red-500 @enderror"
                                         placeholder="081234567890">
+                                    @error('phone')
+                                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                    @enderror
                                 </div>
                                 
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-2">Email Bengkel</label>
-                                    <input type="email" id="email" name="email"
-                                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300 mobile-form-input"
+                                    <input type="email" id="email" name="email" value="{{ old('email') }}"
+                                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300 mobile-form-input @error('email') border-red-500 @enderror"
                                         placeholder="bengkel@example.com">
+                                    @error('email')
+                                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                    @enderror
                                 </div>
                             </div>
                         </div>
@@ -481,69 +535,42 @@
                         
                         <div class="space-y-4 sm:space-y-6">
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-3 sm:mb-4">Jenis Layanan yang Tersedia *</label>
-                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-                                    <div class="flex items-center">
-                                        <input type="checkbox" id="service_oil" name="services" value="Ganti Oli" class="mr-3 mobile-touch-checkbox">
-                                        <label for="service_oil" class="text-gray-700 text-sm sm:text-base">Ganti Oli & Filter</label>
-                                    </div>
-                                    <div class="flex items-center">
-                                        <input type="checkbox" id="service_tune" name="services" value="Tune Up" class="mr-3 mobile-touch-checkbox">
-                                        <label for="service_tune" class="text-gray-700 text-sm sm:text-base">Tune Up</label>
-                                    </div>
-                                    <div class="flex items-center">
-                                        <input type="checkbox" id="service_brake" name="services" value="Rem" class="mr-3 mobile-touch-checkbox">
-                                        <label for="service_brake" class="text-gray-700 text-sm sm:text-base">Servis Rem</label>
-                                    </div>
-                                    <div class="flex items-center">
-                                        <input type="checkbox" id="service_tire" name="services" value="Ban" class="mr-3 mobile-touch-checkbox">
-                                        <label for="service_tire" class="text-gray-700 text-sm sm:text-base">Ganti Ban</label>
-                                    </div>
-                                    <div class="flex items-center">
-                                        <input type="checkbox" id="service_ac" name="services" value="AC" class="mr-3 mobile-touch-checkbox">
-                                        <label for="service_ac" class="text-gray-700 text-sm sm:text-base">Servis AC</label>
-                                    </div>
-                                    <div class="flex items-center">
-                                        <input type="checkbox" id="service_body" name="services" value="Body Repair" class="mr-3 mobile-touch-checkbox">
-                                        <label for="service_body" class="text-gray-700 text-sm sm:text-base">Body Repair</label>
-                                    </div>
-                                    <div class="flex items-center">
-                                        <input type="checkbox" id="service_electrical" name="services" value="Kelistrikan" class="mr-3 mobile-touch-checkbox">
-                                        <label for="service_electrical" class="text-gray-700 text-sm sm:text-base">Servis Kelistrikan</label>
-                                    </div>
-                                    <div class="flex items-center">
-                                        <input type="checkbox" id="service_transmission" name="services" value="Transmisi" class="mr-3 mobile-touch-checkbox">
-                                        <label for="service_transmission" class="text-gray-700 text-sm sm:text-base">Servis Transmisi</label>
-                                    </div>
+                                <label class="block text-sm font-medium text-gray-700 mb-3 sm:mb-4">Jenis Layanan yang Tersedia</label>
+                                <div class="flex flex-wrap gap-2">
+                                    @foreach([
+                                        'Ganti Oli & Filter' => 'Ganti Oli',
+                                        'Tune Up' => 'Tune Up',
+                                        'Servis Rem' => 'Rem',
+                                        'Ganti Ban' => 'Ban',
+                                        'Servis AC' => 'AC',
+                                        'Body Repair' => 'Body Repair',
+                                        'Servis Kelistrikan' => 'Kelistrikan',
+                                        'Servis Transmisi' => 'Transmisi',
+                                        'Spooring Balancing' => 'Spooring Balancing',
+                                        'Servis Mesin' => 'servis mesin'
+                                    ] as $label => $value)
+                                    <label class="service-tag">
+                                        <input type="checkbox" name="services[]" value="{{ $value }}" 
+                                            {{ in_array($value, old('services', [])) ? 'checked' : '' }}>
+                                        {{ $label }}
+                                    </label>
+                                    @endforeach
                                 </div>
                             </div>
 
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-2">Spesialisasi</label>
-                                <input type="text" id="specialization" name="specialization"
+                                <input type="text" id="specialization" name="specialization" value="{{ old('specialization') }}"
                                     class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300 mobile-form-input"
                                     placeholder="Contoh: Mesin Honda, Transmisi Matic, dll.">
                             </div>
 
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">Jam Operasional *</label>
-                                    <select id="operatingHours" name="operatingHours" required
-                                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300 mobile-form-input">
-                                        <option value="">Pilih Jam Operasional</option>
-                                        <option value="08:00-17:00">08:00 - 17:00</option>
-                                        <option value="09:00-18:00">09:00 - 18:00</option>
-                                        <option value="07:00-21:00">07:00 - 21:00</option>
-                                        <option value="24jam">24 Jam</option>
-                                        <option value="custom">Custom</option>
-                                    </select>
-                                </div>
-                                
-                                <div id="customHours" class="hidden sm:col-span-2 lg:col-span-1">
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">Jam Custom</label>
-                                    <input type="text" id="customHoursInput" name="customHours"
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Jam Operasional</label>
+                                    <input type="text" id="operating_hours" name="operating_hours" value="{{ old('operating_hours') }}"
                                         class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300 mobile-form-input"
-                                        placeholder="Contoh: 07:00-21:00">
+                                        placeholder="Contoh: 08:00-17:00">
                                 </div>
                             </div>
 
@@ -551,7 +578,7 @@
                                 <label class="block text-sm font-medium text-gray-700 mb-2">Deskripsi Bengkel</label>
                                 <textarea id="description" name="description" rows="4"
                                     class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300 mobile-form-input"
-                                    placeholder="Ceritakan tentang bengkel Anda, pengalaman, keunggulan, dll."></textarea>
+                                    placeholder="Ceritakan tentang bengkel Anda, pengalaman, keunggulan, dll.">{{ old('description') }}</textarea>
                             </div>
                         </div>
 
@@ -573,20 +600,20 @@
                         
                         <div class="space-y-6">
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-4">Upload Foto Bengkel *</label>
+                                <label class="block text-sm font-medium text-gray-700 mb-4">Upload Foto Bengkel</label>
                                 
                                 <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 sm:p-8 text-center">
                                     <i class="fas fa-camera text-3xl sm:text-4xl text-gray-400 mb-3 sm:mb-4"></i>
                                     <p class="text-lg font-medium text-gray-700 mb-2">Tambahkan Foto Bengkel Anda</p>
                                     <p class="text-sm text-gray-600 mb-4">Upload beberapa foto untuk menunjukkan kondisi bengkel Anda</p>
                                     
-                                    <input type="file" id="workshopPhoto" name="workshopPhoto" accept=".jpg,.jpeg,.png" 
+                                    <input type="file" id="photos" name="photos[]" accept=".jpg,.jpeg,.png" 
                                         class="hidden" multiple>
-                                    <button type="button" onclick="document.getElementById('workshopPhoto').click()" 
+                                    <button type="button" onclick="document.getElementById('photos').click()" 
                                         class="bg-primary text-white px-6 py-3 rounded-lg font-medium hover:bg-secondary transition-all duration-300 mobile-touch-button inline-flex items-center">
                                         <i class="fas fa-cloud-upload-alt mr-2"></i> Pilih Foto
                                     </button>
-                                    <p class="text-xs text-gray-500 mt-3">Format: JPG, PNG (Maks. 5MB per file)</p>
+                                    <p class="text-xs text-gray-500 mt-3">Format: JPG, PNG (Maks. 2MB per file)</p>
                                 </div>
                                 
                                 <!-- Preview container -->
@@ -664,28 +691,55 @@
         let userLocationCircle;
         let userLocationObtained = false;
 
-        let userHasRegistered = false;
-        let registeredWorkshopData = {
-            name: "Bengkel Motor Maju Jaya",
-            type: "motor",
-            address: "Jl. Sudirman No. 123, Jakarta Pusat",
-            phone: "081234567890",
-            services: ["Ganti Oli", "Tune Up", "Servis Rem"],
-            status: "Terverifikasi"
-        };
-
         let currentStep = 1;
         let uploadedPhotos = [];
 
         // Initialize page
         document.addEventListener('DOMContentLoaded', function() {
-            checkRegistrationStatus();
             setupEventListeners();
             updateMobileStepIndicator();
             loadProvinces(); // Load provinces on page load
             initMap(); // Initialize Leaflet map
             getCurrentLocation(); // Get user's current location on page load
+            initServiceTags();
+            
+            // Set old values for region selects if they exist
+            @if(old('province'))
+                setTimeout(() => {
+                    const provinceSelect = document.getElementById('province');
+                    const provinceOption = Array.from(provinceSelect.options).find(opt => opt.text === '{{ old('province') }}');
+                    if (provinceOption) {
+                        provinceSelect.value = provinceOption.value;
+                        provinceSelect.dispatchEvent(new Event('change'));
+                        
+                        // Wait for cities to load then set city
+                        setTimeout(() => {
+                            const citySelect = document.getElementById('city');
+                            const cityOption = Array.from(citySelect.options).find(opt => opt.text === '{{ old('city') }}');
+                            if (cityOption) {
+                                citySelect.value = cityOption.value;
+                                citySelect.dispatchEvent(new Event('change'));
+                            }
+                        }, 1000);
+                    }
+                }, 500);
+            @endif
         });
+
+        // Initialize service tags
+        function initServiceTags() {
+            document.querySelectorAll('.service-tag').forEach(tag => {
+                tag.addEventListener('click', function() {
+                    const checkbox = this.querySelector('input[type="checkbox"]');
+                    checkbox.checked = !checkbox.checked;
+                    this.classList.toggle('selected', checkbox.checked);
+                });
+
+                // Set initial state based on checked status
+                const checkbox = tag.querySelector('input[type="checkbox"]');
+                tag.classList.toggle('selected', checkbox.checked);
+            });
+        }
 
         // Initialize Leaflet Map
         function initMap() {
@@ -705,6 +759,16 @@
                 placeMarker(e.latlng);
                 updateCoordinates(e.latlng);
             });
+
+            // Set marker from old values if they exist
+            @if(old('latitude') && old('longitude'))
+                const oldLat = {{ old('latitude') }};
+                const oldLng = {{ old('longitude') }};
+                const oldLocation = L.latLng(oldLat, oldLng);
+                placeMarker(oldLocation);
+                updateCoordinates(oldLocation);
+                map.setView(oldLocation, 15);
+            @endif
         }
 
         // Get current location using GPS
@@ -1057,6 +1121,15 @@
                 option.textContent = province.name;
                 provinceSelect.appendChild(option);
             });
+
+            // Set old value if exists
+            @if(old('province'))
+                const oldProvince = '{{ old('province') }}';
+                const provinceOption = Array.from(provinceSelect.options).find(opt => opt.text === oldProvince);
+                if (provinceOption) {
+                    provinceSelect.value = provinceOption.value;
+                }
+            @endif
         }
 
         function populateCities(cities) {
@@ -1072,6 +1145,15 @@
             });
             
             citySelect.disabled = false;
+            
+            // Set old value if exists
+            @if(old('city'))
+                const oldCity = '{{ old('city') }}';
+                const cityOption = Array.from(citySelect.options).find(opt => opt.text === oldCity);
+                if (cityOption) {
+                    citySelect.value = cityOption.value;
+                }
+            @endif
             
             // Reset district and village when city changes
             resetDistrict();
@@ -1092,6 +1174,15 @@
             
             districtSelect.disabled = false;
             
+            // Set old value if exists
+            @if(old('district'))
+                const oldDistrict = '{{ old('district') }}';
+                const districtOption = Array.from(districtSelect.options).find(opt => opt.text === oldDistrict);
+                if (districtOption) {
+                    districtSelect.value = districtOption.value;
+                }
+            @endif
+            
             // Reset village when district changes
             resetVillage();
         }
@@ -1109,6 +1200,15 @@
             });
             
             villageSelect.disabled = false;
+
+            // Set old value if exists
+            @if(old('village'))
+                const oldVillage = '{{ old('village') }}';
+                const villageOption = Array.from(villageSelect.options).find(opt => opt.text === oldVillage);
+                if (villageOption) {
+                    villageSelect.value = villageOption.value;
+                }
+            @endif
         }
 
         function resetDistrict() {
@@ -1212,35 +1312,14 @@
                 }
             });
 
-            // Operating hours change
-            document.getElementById('operatingHours').addEventListener('change', function() {
-                const customHoursDiv = document.getElementById('customHours');
-                if (this.value === 'custom') {
-                    customHoursDiv.classList.remove('hidden');
-                } else {
-                    customHoursDiv.classList.add('hidden');
-                }
-            });
-
             // Locate me button
             document.getElementById('locateMeBtn').addEventListener('click', function() {
                 locateUser();
             });
 
             // Photo upload
-            document.getElementById('workshopPhoto').addEventListener('change', function(e) {
+            document.getElementById('photos').addEventListener('change', function(e) {
                 handlePhotoUpload(e.target.files);
-            });
-
-            // Form submission
-            document.getElementById('workshopForm').addEventListener('submit', function(e) {
-                e.preventDefault();
-                registerWorkshop();
-            });
-
-            // Edit request button
-            document.getElementById('editRequestBtn').addEventListener('click', function() {
-                requestEdit();
             });
         }
 
@@ -1251,9 +1330,9 @@
             for (let i = 0; i < files.length; i++) {
                 const file = files[i];
                 
-                // Check file size (max 5MB)
-                if (file.size > 5 * 1024 * 1024) {
-                    alert(`File ${file.name} terlalu besar. Maksimal 5MB.`);
+                // Check file size (max 2MB)
+                if (file.size > 2 * 1024 * 1024) {
+                    alert(`File ${file.name} terlalu besar. Maksimal 2MB.`);
                     continue;
                 }
                 
@@ -1292,7 +1371,7 @@
             }
             
             // Reset file input to allow selecting the same file again
-            document.getElementById('workshopPhoto').value = '';
+            document.getElementById('photos').value = '';
         }
 
         // Remove photo from preview and array
@@ -1305,38 +1384,8 @@
         }
 
         // ===============================
-        // REST OF THE FUNCTIONS
+        // STEP NAVIGATION FUNCTIONS
         // ===============================
-
-        function checkRegistrationStatus() {
-            if (userHasRegistered) {
-                document.getElementById('registrationForm').classList.add('hidden');
-                document.getElementById('alreadyRegistered').classList.remove('hidden');
-                displayRegisteredWorkshopInfo();
-            }
-        }
-
-        function displayRegisteredWorkshopInfo() {
-            const infoContainer = document.getElementById('registeredWorkshopInfo');
-            infoContainer.innerHTML = `
-                <div class="bg-white/10 rounded p-2">
-                    <p class="text-white/70 text-xs">Nama Bengkel</p>
-                    <p class="font-semibold text-sm">${registeredWorkshopData.name}</p>
-                </div>
-                <div class="bg-white/10 rounded p-2">
-                    <p class="text-white/70 text-xs">Jenis Bengkel</p>
-                    <p class="font-semibold text-sm">${registeredWorkshopData.type === 'motor' ? 'Bengkel Motor' : 'Bengkel Mobil'}</p>
-                </div>
-                <div class="bg-white/10 rounded p-2">
-                    <p class="text-white/70 text-xs">Alamat</p>
-                    <p class="font-semibold text-sm">${registeredWorkshopData.address}</p>
-                </div>
-                <div class="bg-white/10 rounded p-2">
-                    <p class="text-white/70 text-xs">Telepon</p>
-                    <p class="font-semibold text-sm">${registeredWorkshopData.phone}</p>
-                </div>
-            `;
-        }
 
         // Mobile navigation handlers
         function handleMobileBack() {
@@ -1351,9 +1400,8 @@
             if (currentStep < 3) {
                 nextStep(currentStep + 1);
             } else {
-                if (validateStep(3)) {
-                    document.getElementById('workshopForm').dispatchEvent(new Event('submit'));
-                }
+                // Submit form on last step
+                document.getElementById('workshopForm').submit();
             }
         }
 
@@ -1405,20 +1453,18 @@
             let errorMessage = '';
 
             if (step === 1) {
-                const name = document.getElementById('workshopName').value;
-                const workshopTypes = document.querySelectorAll('input[name="workshopType"]:checked');
+                const name = document.getElementById('name').value;
+                const workshopTypes = document.querySelectorAll('input[name="types[]"]:checked');
                 const address = document.getElementById('address').value;
                 const phone = document.getElementById('phone').value;
                 const province = document.getElementById('province').value;
                 const city = document.getElementById('city').value;
-                const district = document.getElementById('district').value;
-                const village = document.getElementById('village').value;
                 const latitude = document.getElementById('latitude').value;
                 const longitude = document.getElementById('longitude').value;
                 
                 if (!name) {
                     errorMessage = 'Nama bengkel harus diisi';
-                    document.getElementById('workshopName').focus();
+                    document.getElementById('name').focus();
                 } else if (workshopTypes.length === 0) {
                     errorMessage = 'Pilih minimal satu jenis bengkel';
                 } else if (!address) {
@@ -1433,32 +1479,8 @@
                 } else if (!city) {
                     errorMessage = 'Kota/Kabupaten harus dipilih';
                     document.getElementById('city').focus();
-                } else if (!district) {
-                    errorMessage = 'Kecamatan harus dipilih';
-                    document.getElementById('district').focus();
-                } else if (!village) {
-                    errorMessage = 'Kelurahan harus dipilih';
-                    document.getElementById('village').focus();
                 } else if (!latitude || !longitude) {
                     errorMessage = 'Tentukan lokasi bengkel di peta dengan mengeklik pada peta';
-                }
-            } else if (step === 2) {
-                const services = document.querySelectorAll('input[name="services"]:checked');
-                const operatingHours = document.getElementById('operatingHours').value;
-                
-                if (services.length === 0) {
-                    errorMessage = 'Pilih minimal satu jenis layanan';
-                } else if (!operatingHours) {
-                    errorMessage = 'Jam operasional harus dipilih';
-                    document.getElementById('operatingHours').focus();
-                } else if (operatingHours === 'custom' && !document.getElementById('customHoursInput').value) {
-                    errorMessage = 'Jam custom harus diisi';
-                    document.getElementById('customHoursInput').focus();
-                }
-            } else if (step === 3) {
-                // Validasi untuk foto bengkel
-                if (uploadedPhotos.length === 0) {
-                    errorMessage = 'Upload minimal satu foto bengkel';
                 }
             }
 
@@ -1468,55 +1490,6 @@
             }
 
             return isValid;
-        }
-
-        // Register workshop
-        function registerWorkshop() {
-            if (!validateStep(3)) return;
-
-            // Collect form data
-            const workshopTypes = Array.from(document.querySelectorAll('input[name="workshopType"]:checked')).map(cb => cb.value);
-            
-            const formData = {
-                name: document.getElementById('workshopName').value,
-                types: workshopTypes,
-                address: document.getElementById('address').value,
-                province: document.getElementById('province').selectedOptions[0].text,
-                city: document.getElementById('city').selectedOptions[0].text,
-                district: document.getElementById('district').selectedOptions[0].text,
-                village: document.getElementById('village').selectedOptions[0].text,
-                postalCode: document.getElementById('postalCode').value,
-                latitude: document.getElementById('latitude').value,
-                longitude: document.getElementById('longitude').value,
-                phone: document.getElementById('phone').value,
-                email: document.getElementById('email').value,
-                services: Array.from(document.querySelectorAll('input[name="services"]:checked')).map(cb => cb.value),
-                specialization: document.getElementById('specialization').value,
-                operatingHours: document.getElementById('operatingHours').value === 'custom' ? 
-                    document.getElementById('customHoursInput').value : document.getElementById('operatingHours').value,
-                description: document.getElementById('description').value,
-                photos: uploadedPhotos.length
-            };
-
-            // Simulate API call
-            console.log('Registering workshop:', formData);
-            
-            // Show success message
-            alert('Pendaftaran bengkel berhasil! Data Anda sedang diverifikasi.');
-            
-            // In real app, this would be set by backend
-            userHasRegistered = true;
-            registeredWorkshopData = formData;
-            checkRegistrationStatus();
-        }
-
-        // Request edit
-        function requestEdit() {
-            const reason = prompt('Mohon jelaskan alasan perubahan data bengkel:');
-            if (reason) {
-                console.log('Edit request:', reason);
-                alert('Permohonan perubahan telah dikirim. Tim kami akan menghubungi Anda dalam 1-2 hari kerja.');
-            }
         }
     </script>
 </body>
