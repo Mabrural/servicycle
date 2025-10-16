@@ -16,7 +16,7 @@
         <div class="row">
             <div class="col-lg-5 mb-4">
                 <div class="card border-0 shadow-sm overflow-hidden">
-                    <img src="{{ $vehicle->image_url }}" 
+                    <img src="{{ $vehicle->image ? url('/storage/vehicle_images/' . $vehicle->image) : asset('images/default-vehicle.jpg') }}" 
                          alt="{{ $vehicle->full_name }}" 
                          class="img-fluid w-100" 
                          style="object-fit: cover; height: 350px;">

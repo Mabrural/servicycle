@@ -20,7 +20,7 @@ Route::get('/', function () {
 });
 
 Route::get('/storage/{folder}/{filename}', function ($folder, $filename) {
-    $allowedFolders = ['vehicles'];
+    $allowedFolders = ['vehicle_images'];
 
     if (!in_array($folder, $allowedFolders)) {
         abort(403);
