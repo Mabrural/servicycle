@@ -9,6 +9,7 @@ use App\Http\Controllers\VehicleController;
 use App\Http\Controllers\WorkshopController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GoogleController;
+use App\Http\Controllers\WorkshopDashboardController;
 
 Route::get('/auth/google', [GoogleController::class, 'redirect'])->name('google.login');
 Route::get('/auth/google/callback', [GoogleController::class, 'callback']);
@@ -90,6 +91,9 @@ Route::middleware(['auth', 'verified', 'is_set_role', 'vehicle_owner'])->group(f
 
 Route::middleware(['auth', 'verified', 'is_set_role', 'workshop'])->group(function(){
     // Bengkel
+
+    Route::get('/workshop/dashboard', [WorkshopDashboardController::class, 'index'])->name('dashboard.workshop');
+
     Route::resource('profil-bengkel', WorkshopController::class);
 
     Route::get('/booking-servis', function () {

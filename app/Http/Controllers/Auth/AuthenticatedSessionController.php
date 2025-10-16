@@ -44,10 +44,10 @@ class AuthenticatedSessionController extends Controller
                 return redirect()->route('dashboard.admin');
 
             case 'workshop':
-                return redirect()->route('workshop.dashboard');
+                return redirect()->route('dashboard.workshop');
 
             case 'vehicle_owner':
-                return redirect()->route('user.dashboard');
+                return redirect()->route('dashboard.user');
 
             default:
                 return redirect()->route('dashboard');
