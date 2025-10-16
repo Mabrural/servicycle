@@ -1,133 +1,120 @@
 @extends('layouts.main')
 
 @section('container')
-<div class="container-xxl flex-grow-1 container-p-y">
-    <div class="row g-4">
-        <div class="col-lg-8 col-md-12 order-0">
-            <!-- Profil Bengkel -->
-            <div class="card mb-4">
-                <div class="card-body d-flex flex-column flex-md-row align-items-center text-center text-md-start">
-                    <img src="{{ asset('img/bengkel-mobil.jpeg') }}" alt="Workshop Photo"
-                        class="rounded-3 mb-3 mb-md-0 me-md-4"
-                        style="width: 150px; height: 150px; object-fit: cover; object-position: center;">
-                    
-                    <div class="w-100">
-                        <div class="d-flex justify-content-between align-items-start flex-wrap">
-                            <div>
-                                <h4 class="card-title mb-1">Bengkel Maju Jaya</h4>
-                                <p class="mb-1 text-muted">Spesialis Mobil dan Motor</p>
-                                <span class="badge bg-success mb-2 mb-md-0">Approved</span>
+    <div class="container-xxl flex-grow-1 container-p-y">
+        <div class="container-fluid p-0">
+
+            {{-- Header --}}
+            <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+                <h1 class="h3 mb-0">
+                    <strong>Bengkel</strong> Saya
+                </h1>
+
+                <a href="{{ route('profile.create') }}" class="btn btn-primary btn-sm d-flex align-items-center shadow-sm">
+                    <i class="fa-solid fa-circle-plus me-1"></i> Tambah Bengkel
+                </a>
+            </div>
+
+            {{-- Pencarian --}}
+            <div class="mb-4">
+                <input type="text" id="searchWorkshop" class="form-control form-control-sm"
+                    placeholder="Cari bengkel berdasarkan nama atau kota..." style="max-width: 350px;">
+            </div>
+
+            {{-- Daftar Bengkel --}}
+            <div class="row" id="workshopList">
+                @forelse ($workshops as $workshop)
+                    <div class="col-md-4 mb-4 workshop-card"
+                        data-name="{{ strtolower($workshop->name . ' ' . $workshop->city) }}">
+                        <div class="card border-0 shadow-sm h-100 rounded-4 overflow-hidden">
+
+                            {{-- Foto utama --}}
+                            <div class="position-relative">
+                                @php
+                                    $photo = is_array($workshop->photos) && count($workshop->photos) > 0
+                                        ? url('/storage/workshop_photos/' . $workshop->photos[0])
+                                        : asset('img/no-vehicle.jpg');
+                                @endphp
+
+                                <img src="{{ $photo }}" class="card-img-top" alt="{{ $workshop->name }}"
+                                    style="height: 180px; object-fit: cover; object-position: center;">
+
+                                <span class="badge bg-gradient position-absolute top-0 start-0 m-2 px-3 py-2"
+                                    style="background: linear-gradient(90deg, #007bff, #00c6ff);">
+                                    <i class="fa-solid fa-tools me-1"></i>
+                                    {{ ucfirst($workshop->status) }}
+                                </span>
                             </div>
-                            <a href="#" class="btn btn-sm btn-warning mt-2 mt-md-0">
-                                <i class="fa-solid fa-pen-to-square me-1"></i> Edit Data
-                            </a>
+
+                            {{-- Konten --}}
+                            <div class="card-body d-flex flex-column">
+                                <h5 class="card-title fw-bold mb-1">{{ $workshop->name }}</h5>
+                                <small class="text-muted d-block mb-2">{{ $workshop->city }}, {{ $workshop->province }}</small>
+
+                                <ul class="list-unstyled small mb-3">
+                                    <li><i class="fa-solid fa-wrench me-2 text-muted"></i> Jenis:
+                                        {{ is_array($workshop->types) ? implode(', ', $workshop->types) : '-' }}
+                                    </li>
+                                    <li><i class="fa-solid fa-phone me-2 text-muted"></i> {{ $workshop->phone ?? '-' }}</li>
+                                    <li><i class="fa-solid fa-envelope me-2 text-muted"></i> {{ $workshop->email ?? '-' }}</li>
+                                    <li><i class="fa-solid fa-map-marker-alt me-2 text-muted"></i>
+                                        {{ $workshop->address ?? '-' }}
+                                    </li>
+                                </ul>
+
+                                {{-- Tombol aksi --}}
+                                <div class="mt-auto d-flex justify-content-between">
+                                    <a href="{{ route('profile.show', $workshop->id) }}"
+                                        class="btn btn-outline-primary btn-sm w-50 me-2">
+                                        <i class="bi bi-eye"></i> Lihat
+                                    </a>
+                                    <a href="{{ route('profile.edit', $workshop->id) }}"
+                                        class="btn btn-outline-warning btn-sm w-50">
+                                        <i class="bi bi-pencil"></i> Edit
+                                    </a>
+                                </div>
+                            </div>
                         </div>
-
-                        <p class="mt-3 mb-1"><i class="fa-solid fa-phone"></i> 0812-3456-7890</p>
-                        <p class="mb-0"><i class="fa-solid fa-envelope"></i> bengkelmajujaya@gmail.com</p>
                     </div>
-                </div>
-            </div>
-
-            <!-- Informasi Umum -->
-            <div class="card mb-4">
-                <div class="card-header">
-                    <h5 class="mb-0">Informasi Umum</h5>
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-12 col-sm-6">
-                            <p><strong>Nama Bengkel:</strong> Bengkel Maju Jaya</p>
-                            <p><strong>Jenis Bengkel:</strong> Mobil, Motor</p>
-                            <p><strong>Alamat:</strong> Jl. Sudirman No. 123, Batam Center</p>
-                            <p><strong>Provinsi:</strong> Kepulauan Riau</p>
-                        </div>
-                        <div class="col-12 col-sm-6">
-                            <p><strong>Kota:</strong> Batam</p>
-                            <p><strong>Kecamatan:</strong> Batam Kota</p>
-                            <p><strong>Kelurahan:</strong> Baloi Permai</p>
-                            <p><strong>Kode Pos:</strong> 29444</p>
-                        </div>
+                @empty
+                    <div class="col-12 text-center mt-5">
+                        <img src="{{ asset('img/empty.jpg') }}" alt="No Workshops" width="180" class="mb-3">
+                        <h5 class="text-muted">Belum ada bengkel terdaftar</h5>
+                        <a href="{{ route('workshops.create') }}" class="btn btn-primary mt-2">
+                            <i class="fa-solid fa-plus me-1"></i> Tambah Bengkel Pertama
+                        </a>
                     </div>
-                </div>
+                @endforelse
             </div>
 
-            <!-- Layanan & Spesialisasi -->
-            <div class="card mb-4">
-                <div class="card-header">
-                    <h5 class="mb-0">Layanan & Spesialisasi</h5>
-                </div>
-                <div class="card-body">
-                    <p><strong>Layanan:</strong></p>
-                    <ul class="mb-3">
-                        <li>Ganti Oli</li>
-                        <li>Servis Mesin</li>
-                        <li>Balancing & Spooring</li>
-                    </ul>
-                    <p><strong>Spesialisasi:</strong> Mobil Jepang dan Motor Matic</p>
-                </div>
-            </div>
-
-            <!-- Jam Operasional -->
-            <div class="card mb-4">
-                <div class="card-header">
-                    <h5 class="mb-0">Jam Operasional</h5>
-                </div>
-                <div class="card-body">
-                    <p><strong>Senin - Sabtu:</strong> 08.00 - 17.00</p>
-                    <p><strong>Minggu:</strong> Tutup</p>
-                </div>
-            </div>
-
-            <!-- Deskripsi Bengkel -->
-            <div class="card mb-4">
-                <div class="card-header">
-                    <h5 class="mb-0">Deskripsi Bengkel</h5>
-                </div>
-                <div class="card-body">
-                    <p>
-                        Bengkel Maju Jaya telah berdiri sejak tahun 2015 dan berfokus pada perawatan kendaraan roda dua dan roda empat. 
-                        Dilengkapi dengan mekanik berpengalaman serta alat modern untuk menjamin kualitas servis terbaik bagi pelanggan.
-                    </p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Kolom kanan -->
-        <div class="col-lg-4 col-md-12">
-            <!-- Lokasi -->
-            <div class="card mb-4">
-                <div class="card-header">
-                    <h5 class="mb-0">Lokasi Bengkel</h5>
-                </div>
-                <div class="card-body">
-                    <p><strong>Latitude:</strong> 1.123456</p>
-                    <p><strong>Longitude:</strong> 104.123456</p>
-                    <div class="ratio ratio-4x3">
-                        <iframe src="https://www.google.com/maps?q=1.123456,104.123456&hl=id&z=14&output=embed" 
-                                style="border:0;" allowfullscreen="" loading="lazy"></iframe>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Galeri -->
-            <div class="card">
-                <div class="card-header">
-                    <h5 class="mb-0">Galeri Bengkel</h5>
-                </div>
-                <div class="card-body">
-                    <div class="row g-2">
-                        @for ($i = 0; $i < 4; $i++)
-                        <div class="col-6 col-md-6">
-                            <img src="{{ asset('img/bengkel-mobil.jpeg') }}" 
-                                class="img-fluid rounded w-100" 
-                                style="object-fit: cover; height: 120px;">
-                        </div>
-                        @endfor
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
-</div>
+
+    {{-- Pencarian JavaScript --}}
+    <script>
+        document.getElementById('searchWorkshop').addEventListener('keyup', function() {
+            const search = this.value.toLowerCase();
+            const cards = document.querySelectorAll('.workshop-card');
+            cards.forEach(card => {
+                card.style.display = card.getAttribute('data-name').includes(search) ? '' : 'none';
+            });
+        });
+    </script>
+
+    {{-- Responsiveness tambahan --}}
+    <style>
+        @media (max-width: 768px) {
+            .card-body ul {
+                font-size: 13px;
+            }
+
+            .card-body h5 {
+                font-size: 16px;
+            }
+
+            .card-body small {
+                font-size: 12px;
+            }
+        }
+    </style>
 @endsection

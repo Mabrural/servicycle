@@ -133,9 +133,14 @@ class WorkshopController extends Controller
     /**
      * Show list of workshops.
      */
+    // public function index()
+    // {
+    //     $workshops = Workshop::where('status', 'approved')->get();
+    //     return view('workshop.index', compact('workshops'));
+    // }
     public function index()
     {
-        $workshops = Workshop::where('status', 'approved')->get();
+        $workshops = Workshop::all();
         return view('workshop.index', compact('workshops'));
     }
 }
