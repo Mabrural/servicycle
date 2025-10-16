@@ -1,5 +1,6 @@
 @extends('layouts.main')
 
+
 @section('container')
 <div class="container-xxl flex-grow-1 container-p-y">
     <div class="container-fluid p-0">
@@ -12,9 +13,14 @@
             <div>
                 <input type="text" class="form-control form-control-sm" placeholder="Cari kendaraan..." style="width: 250px;">
             </div>
-            <a href="{{ route('vehicles.create') }}" class="btn btn-primary btn-sm">
-                <i class="bi bi-plus-circle me-1"></i> Tambah Kendaraan
-            </a>
+            <a href="{{ route('vehicles.create') }}" class="btn btn-primary btn-sm d-flex align-items-center">
+    <i class="fa-solid fa-circle-plus me-1"></i> Tambah Kendaraan
+    <span class="badge ms-2 d-flex align-items-center" 
+          style="background: linear-gradient(90deg, #FFD700, #FFB300); color: #000;">
+        <i class="fa-solid fa-crown me-1"></i> VIP
+    </span>
+</a>
+
         </div>
 
         {{-- Daftar Kendaraan --}}

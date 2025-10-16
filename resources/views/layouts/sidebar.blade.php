@@ -78,12 +78,6 @@
                     <div data-i18n="Analytics">Kendaraan Saya</div>
                 </a>
             </li>
-            {{-- <li class="menu-item {{ Route::is('kendaraan-saya') ? 'active' : '' }}">
-                <a href="{{ route('kendaraan-saya.index') }}" class="menu-link">
-                    <i class="menu-icon tf-icons bx bx-car"></i>
-                    <div data-i18n="Analytics">Kendaraan Saya</div>
-                </a>
-            </li> --}}
 
             <!-- Riwayat Servis -->
             <li class="menu-item">
