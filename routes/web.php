@@ -58,17 +58,10 @@ Route::middleware(['auth', 'verified', 'is_set_role', 'admin'])->group(function 
 
 Route::middleware(['auth', 'verified', 'is_set_role', 'vehicle_owner'])->group(function(){
     // pemilik kendaraan
-    // Route::get('/kendaraan-saya', function () {
-    //     return view('kendaraan-saya.index');
-    // })->name('kendaraan-saya');
-
-    // Route::get('/kendaraan-saya/create', function(){
-    //     return view('kendaraan-saya.create');
-    // })->name('kendaraan-saya.create');
-
     Route::get('/user/dashboard', [UserDashboardController::class, 'index'])->name('dashboard.user');
 
-    Route::resource('kendaraan-saya', VehicleController::class);
+    // Route::resource('kendaraan-saya', VehicleController::class);
+    Route::resource('/user/vehicles', VehicleController::class);
 
     Route::get('/riwayat-servis', function () {
         return view('riwayat-servis.index');

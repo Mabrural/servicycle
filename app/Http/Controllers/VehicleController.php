@@ -26,7 +26,7 @@ class VehicleController extends Controller
         }
 
         // Jika sudah punya kendaraan → arahkan ke halaman index
-        return view('kendaraan-saya.index');
+        return view('vehicle.index');
     }
 
     /**
