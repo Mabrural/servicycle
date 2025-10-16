@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
@@ -26,8 +27,10 @@ Route::middleware(['auth', 'verified', 'redirect_if_role_set'])->group(function 
     Route::post('/pilih-role', [RoleController::class, 'setRole'])->name('set.role');
 });
 
-// Route yang membutuhkan role baru dilindungi oleh is_set_role
+// Route yang membutuhkan role baru dilindungi oleh is_set_role -> Admin
 Route::middleware(['auth', 'verified', 'is_set_role', 'admin'])->group(function () {
+
+    Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard.admin');
 
     Route::resource('manajemen-pengguna', UserController::class);
 
