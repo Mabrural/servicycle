@@ -276,21 +276,23 @@ class VehicleController extends Controller
             'max' => 'Ukuran file maksimal 2MB.',
         ]);
 
-        // Simpan data non-image dulu
-        $vehicle->fill($validated);
+        // Simpan nama file lama SEBELUM fill()
+        $oldImage = $vehicle->image;
 
-        // === Jika user upload gambar baru ===
+        // Update data selain image
+        $vehicle->fill(collect($validated)->except('image')->toArray());
+
+        // Jika ada file baru di-upload
         if ($request->hasFile('image')) {
-            // Path lama
-            $oldImage = $vehicle->image;
-            $oldImagePath = storage_path('app/public/vehicle_images/' . $oldImage);
-
-            // Hapus file lama SEBELUM upload baru
-            if (!empty($oldImage) && File::exists($oldImagePath)) {
-                File::delete($oldImagePath);
+            // Hapus file lama jika ada
+            if (!empty($oldImage)) {
+                $oldPath = storage_path('app/public/vehicle_images/' . $oldImage);
+                if (File::exists($oldPath)) {
+                    File::delete($oldPath);
+                }
             }
 
-            // Upload baru dengan nama unik & hash aman
+            // Upload baru
             $file = $request->file('image');
             $extension = $file->getClientOriginalExtension();
             $hashedName = hash('sha256', Str::uuid() . time() . $file->getClientOriginalName()) . '.' . $extension;
@@ -302,10 +304,9 @@ class VehicleController extends Controller
                 File::makeDirectory($destinationPath, 0775, true);
             }
 
-            // Pindahkan file
             $file->move($destinationPath, $hashedName);
 
-            // Simpan nama baru di database
+            // Simpan nama baru
             $vehicle->image = $hashedName;
         }
 
@@ -313,6 +314,7 @@ class VehicleController extends Controller
 
         return redirect()->route('vehicles.index')->with('success', 'Data kendaraan berhasil diperbarui!');
     }
+
 
     /**
      * Remove the specified resource from storage.
