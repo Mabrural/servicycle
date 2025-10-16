@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Vehicle;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
@@ -186,50 +187,50 @@ class VehicleController extends Controller
     // }
 
     public function store(Request $request)
-{
-    $validated = $request->validate([
-        'vehicle_type' => 'required|string',
-        'brand' => 'required|string|max:255',
-        'model' => 'required|string|max:255',
-        'year' => 'required|integer',
-        'license_plate' => 'required|string|max:50',
-        'vin' => 'nullable|string|max:255',
-        'color' => 'nullable|string|max:50',
-        'engine_capacity' => 'nullable|integer',
-        'transmission' => 'required|string',
-        'fuel_type' => 'required|string',
-        'notes' => 'nullable|string',
-        'image' => 'nullable|image|max:2048',
-    ]);
+    {
+        $validated = $request->validate([
+            'vehicle_type' => 'required|string',
+            'brand' => 'required|string|max:255',
+            'model' => 'required|string|max:255',
+            'year' => 'required|integer',
+            'license_plate' => 'required|string|max:50',
+            'vin' => 'nullable|string|max:255',
+            'color' => 'nullable|string|max:50',
+            'engine_capacity' => 'nullable|integer',
+            'transmission' => 'required|string',
+            'fuel_type' => 'required|string',
+            'notes' => 'nullable|string',
+            'image' => 'nullable|image|max:2048',
+        ]);
 
-    $validated['created_by'] = Auth::id();
+        $validated['created_by'] = Auth::id();
 
-    if ($request->hasFile('image')) {
-        $file = $request->file('image');
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
 
-        // Ekstensi file
-        $extension = $file->getClientOriginalExtension();
+            // Ekstensi file
+            $extension = $file->getClientOriginalExtension();
 
-        // Hash unik nama file
-        $hashedName = hash('sha256', Str::uuid() . time() . $file->getClientOriginalName()) . '.' . $extension;
+            // Hash unik nama file
+            $hashedName = hash('sha256', Str::uuid() . time() . $file->getClientOriginalName()) . '.' . $extension;
 
-        // Pastikan folder tujuan ada
-        $destinationPath = storage_path('app/public/vehicle_images');
-        if (!file_exists($destinationPath)) {
-            mkdir($destinationPath, 0775, true);
+            // Pastikan folder tujuan ada
+            $destinationPath = storage_path('app/public/vehicle_images');
+            if (!file_exists($destinationPath)) {
+                mkdir($destinationPath, 0775, true);
+            }
+
+            // Pindahkan file ke folder tujuan
+            $file->move($destinationPath, $hashedName);
+
+            // Simpan nama file ke DB
+            $validated['image'] = $hashedName;
         }
 
-        // Pindahkan file ke folder tujuan
-        $file->move($destinationPath, $hashedName);
+        Vehicle::create($validated);
 
-        // Simpan nama file ke DB
-        $validated['image'] = $hashedName;
+        return redirect()->route('vehicles.index')->with('success', 'Kendaraan berhasil ditambahkan!');
     }
-
-    Vehicle::create($validated);
-
-    return redirect()->route('vehicles.index')->with('success', 'Kendaraan berhasil ditambahkan!');
-}
 
 
     /**
@@ -246,24 +247,79 @@ class VehicleController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Vehicle $vehicle)
+    public function edit($id)
     {
-        return "ini adalah edit";
+        $vehicle = Vehicle::findOrFail($id);
+        return view('vehicle.edit', compact('vehicle'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Vehicle $vehicle)
+    public function update(Request $request, $id)
     {
-        //
+        $vehicle = Vehicle::findOrFail($id);
+
+        $validated = $request->validate([
+            'vehicle_type' => 'required|string',
+            'brand' => 'required|string|max:255',
+            'model' => 'required|string|max:255',
+            'year' => 'required|integer',
+            'license_plate' => 'required|string|max:50',
+            'vin' => 'nullable|string|max:255',
+            'color' => 'nullable|string|max:50',
+            'engine_capacity' => 'nullable|integer',
+            'transmission' => 'required|string',
+            'fuel_type' => 'required|string',
+            'notes' => 'nullable|string',
+            'image' => 'nullable|image|max:2048',
+        ]);
+
+        // Update data dasar
+        $vehicle->fill($validated);
+
+        // Jika ada file baru
+        if ($request->hasFile('image')) {
+            // Hapus file lama jika ada
+            if ($vehicle->image) {
+                $oldPath = storage_path('app/public/vehicle_images/' . $vehicle->image);
+                if (File::exists($oldPath)) {
+                    File::delete($oldPath);
+                }
+            }
+
+            // Simpan foto baru dengan nama unik & aman
+            $file = $request->file('image');
+            $extension = $file->getClientOriginalExtension();
+            $hashedName = hash('sha256', Str::uuid() . time() . $file->getClientOriginalName()) . '.' . $extension;
+            $file->storeAs('public/vehicle_images', $hashedName);
+
+            $vehicle->image = $hashedName;
+        }
+
+        $vehicle->save();
+
+        return redirect()->route('vehicles.index')->with('success', 'Data kendaraan berhasil diperbarui!');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Vehicle $vehicle)
+    public function destroy($id)
     {
-        //
+        $vehicle = Vehicle::findOrFail($id);
+
+        // Jika ada gambar, hapus dari storage
+        if ($vehicle->image) {
+            $imagePath = storage_path('app/public/vehicle_images/' . $vehicle->image);
+            if (File::exists($imagePath)) {
+                File::delete($imagePath);
+            }
+        }
+
+        // Hapus record dari database
+        $vehicle->delete();
+
+        return redirect()->route('vehicles.index')->with('success', 'Kendaraan berhasil dihapus!');
     }
 }
