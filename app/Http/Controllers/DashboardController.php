@@ -76,7 +76,7 @@ class DashboardController extends Controller
 
             if (!$hasVehicle) {
                 // Jika belum punya kendaraan → arahkan ke halaman tambah kendaraan
-                return redirect()->route('kendaraan-saya.create');
+                return redirect()->route('vehicles.create');
             }
 
             return redirect('/user/dashboard');
