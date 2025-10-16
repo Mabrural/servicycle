@@ -33,15 +33,20 @@ class VehicleController extends Controller
      * Show the form for creating a new resource.
      */
     public function create()
-    {
-        // cek apakah user sudah memiliki kendaraan
-        if (Vehicle::userHasVehicle(Auth::id())) {
-            return redirect()->route('kendaraan-saya.edit')
-                ->with('info', 'anda sudah memiliki kendaraan terdaftar.');
-        }
+{
+    // Cek apakah user sudah memiliki kendaraan
+    $vehicle = Vehicle::where('created_by', Auth::id())->first();
 
-        return view('kendaraan-saya.create');
+    if ($vehicle) {
+        // Jika sudah punya kendaraan, arahkan ke halaman edit kendaraan tersebut
+        return redirect()->route('kendaraan-saya.edit', $vehicle->id)
+            ->with('info', 'Anda sudah memiliki kendaraan terdaftar. Silakan ubah data kendaraan Anda.');
     }
+
+    // Jika belum punya kendaraan, tampilkan form create
+    return view('kendaraan-saya.create');
+}
+
 
     /**
      * Store a newly created resource in storage.
@@ -182,7 +187,7 @@ class VehicleController extends Controller
      */
     public function edit(Vehicle $vehicle)
     {
-        //
+        return "ini adalah edit";
     }
 
     /**
