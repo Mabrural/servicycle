@@ -31,14 +31,18 @@ class WorkshopController extends Controller
      */
     public function create()
     {
-        // Cek apakah user sudah memiliki workshop
-        if (Workshop::userHasWorkshop(Auth::id())) {
-            return redirect()->route('profil-bengkel.show')
-                ->with('info', 'Anda sudah memiliki workshop terdaftar.');
-        }
-
-        return view('profil-bengkel.create');
+        return view('workshop.create');
     }
+    // public function create()
+    // {
+    //     // Cek apakah user sudah memiliki workshop
+    //     if (Workshop::userHasWorkshop(Auth::id())) {
+    //         return redirect()->route('profil-bengkel.show')
+    //             ->with('info', 'Anda sudah memiliki workshop terdaftar.');
+    //     }
+
+    //     return view('profil-bengkel.create');
+    // }
 
     /**
      * Menyimpan data workshop baru
