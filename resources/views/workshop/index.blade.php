@@ -83,7 +83,7 @@
                     <div class="col-12 text-center mt-5">
                         <img src="{{ asset('img/empty.jpg') }}" alt="No Workshops" width="180" class="mb-3">
                         <h5 class="text-muted">Belum ada bengkel terdaftar</h5>
-                        <a href="{{ route('workshops.create') }}" class="btn btn-primary mt-2">
+                        <a href="{{ route('profile.create') }}" class="btn btn-primary mt-2">
                             <i class="fa-solid fa-plus me-1"></i> Tambah Bengkel Pertama
                         </a>
                     </div>
