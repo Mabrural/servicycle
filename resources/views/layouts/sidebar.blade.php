@@ -58,7 +58,7 @@
             </li>
 
             <!-- Pengaturan Aplikasi -->
-            <li class="menu-item {{ Route::is('setting') ? 'acive' : '' }}">
+            <li class="menu-item {{ Route::is('setting') ? 'active' : '' }}">
                 <a href="{{ route('setting') }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-cog"></i>
                     <div data-i18n="Analytics">Pengaturan Aplikasi</div>
