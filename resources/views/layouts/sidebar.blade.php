@@ -141,7 +141,7 @@
             </li>
 
             <!-- Servis & Sparepart -->
-            <li class="menu-item">
+            <li class="menu-item {{ Route::is('service-and-sparepart') ? 'active' : '' }}">
                 <a href="{{ route('service-and-sparepart') }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-wrench"></i>
                     <div data-i18n="Analytics">Servis & Sparepart</div>
