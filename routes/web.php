@@ -67,9 +67,12 @@ Route::middleware(['auth', 'verified', 'is_set_role', 'admin'])->group(function 
         return view('report.admin');
     })->name('report');
 
-    Route::get('/manajemen-notifikasi', function () {
-        return view('manajemen-notifikasi.index');
-    })->middleware(['auth', 'verified'])->name('manajemen-notifikasi');
+    // Route::get('/manajemen-notifikasi', function () {
+    //     return view('manajemen-notifikasi.index');
+    // })->middleware(['auth', 'verified'])->name('manajemen-notifikasi');
+    Route::get('/admin/notification-management', function(){
+        return view('notification-management.index');
+    })->name('notification.management');
 
     Route::get('/pengaturan-aplikasi', function () {
         return view('pengaturan-aplikasi.index');

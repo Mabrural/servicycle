@@ -50,8 +50,8 @@
                 </a>
             </li>
             <!-- Manajemen Notifikasi Sistem -->
-            <li class="menu-item">
-                <a href="{{ route('manajemen-notifikasi') }}" class="menu-link">
+            <li class="menu-item {{ Route::is('notification.management') ? 'active' : '' }}">
+                <a href="{{ route('notification.management') }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-bell"></i>
                     <div data-i18n="Analytics">Manajemen Notifikasi</div>
                 </a>
