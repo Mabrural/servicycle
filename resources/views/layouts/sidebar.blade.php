@@ -88,8 +88,8 @@
             </li>
 
             <!-- Jadwal Servis -->
-            <li class="menu-item">
-                <a href="{{ route('jadwal-servis') }}" class="menu-link">
+            <li class="menu-item {{ Route::is('schedule') ? 'active' : '' }}">
+                <a href="{{ route('schedule') }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-calendar"></i>
                     <div data-i18n="Analytics">Jadwal Servis</div>
                 </a>

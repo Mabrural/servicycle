@@ -83,13 +83,12 @@ Route::middleware(['auth', 'verified', 'is_set_role', 'vehicle_owner'])->group(f
         return view('history.index');
     })->name('history');
 
-    // Route::get('/riwayat-servis', function () {
-    //     return view('riwayat-servis.index');
-    // })->name('riwayat-servis');
-
-    Route::get('/jadwal-servis', function () {
-        return view('jadwal-servis.index');
-    })->name('jadwal-servis');
+    // Route::get('/jadwal-servis', function () {
+    //     return view('jadwal-servis.index');
+    // })->name('jadwal-servis');
+    Route::get('/user/schedule', function(){
+        return view('schedule.index');
+    })->name('schedule');
 
     Route::get('/notifikasi-servis', function () {
         return view('notifikasi-servis.index');
