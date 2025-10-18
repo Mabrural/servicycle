@@ -142,7 +142,7 @@
 
             <!-- Servis & Sparepart -->
             <li class="menu-item">
-                <a href="{{ route('servis-dan-sparepart') }}" class="menu-link">
+                <a href="{{ route('service-and-sparepart') }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-wrench"></i>
                     <div data-i18n="Analytics">Servis & Sparepart</div>
                 </a>
