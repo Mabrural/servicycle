@@ -36,8 +36,8 @@
                 </a>
             </li>
             <!-- Manajemen Langganan -->
-            <li class="menu-item">
-                <a href="{{ route('manajemen-langganan') }}" class="menu-link">
+            <li class="menu-item {{ Route::is('subscription-management') ? 'active' : '' }}">
+                <a href="{{ route('subscription-management') }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-receipt"></i>
                     <div data-i18n="Analytics">Manajemen Langganan</div>
                 </a>

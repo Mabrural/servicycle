@@ -59,9 +59,9 @@ Route::middleware(['auth', 'verified', 'is_set_role', 'admin'])->group(function 
     Route::patch('/manajemen-pengguna/{id}/toggle-role', [UserController::class, 'toggleRole'])->name('manajemen-pengguna.toggleRole');
     Route::patch('/manajemen-pengguna/{id}/toggle-status', [UserController::class, 'toggleStatus'])->name('manajemen-pengguna.toggleStatus');
 
-    Route::get('/manajemen-langganan', function () {
-        return view('manajemen-langganan.index');
-    })->middleware(['auth', 'verified'])->name('manajemen-langganan');
+    Route::get('/admin/subscription-management', function(){
+        return view('subscription-management.index');
+    })->name('subscription-management');
 
     Route::get('/laporan-analitik', function () {
         return view('laporan-analitik.index');
@@ -102,11 +102,6 @@ Route::middleware(['auth', 'verified', 'is_set_role', 'vehicle_owner'])->group(f
     Route::get('/user/upgrade-premium', function(){
         return view('upgrade-premium.user');
     })->name('upgrade-premium.user');
-
-    // Route::get('/upgrade-premium', function () {
-    //     return view('upgrade-premium.index');
-    // })->middleware(['auth', 'verified'])->name('upgrade-premium');
-
 
 });
 
