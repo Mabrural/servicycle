@@ -94,9 +94,12 @@ Route::middleware(['auth', 'verified', 'is_set_role', 'vehicle_owner'])->group(f
         return view('schedule.index');
     })->name('schedule');
 
-    Route::get('/notifikasi-servis', function () {
-        return view('notifikasi-servis.index');
-    })->name('notifikasi-servis');
+    // Route::get('/notifikasi-servis', function () {
+    //     return view('notifikasi-servis.index');
+    // })->name('notifikasi-servis');
+    Route::get('/user/notification', function(){
+        return view('notification.user');
+    })->name('notification.user');
 
     Route::get('/catatan-masalah', function () {
         return view('catatan-masalah.index');
