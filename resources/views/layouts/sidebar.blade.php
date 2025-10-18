@@ -157,7 +157,7 @@
             </li>
 
             <!-- Promosi Bengkel (Premium) -->
-            <li class="menu-item">
+            <li class="menu-item {{ Route::is('promote') ? 'active' : '' }}">
                 <a href="{{ route('promote') }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-gift"></i>
                     <div data-i18n="Analytics">Promosi Bengkel </div>
