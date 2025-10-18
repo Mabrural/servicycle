@@ -1,0 +1,1 @@
+ini adalah halamam untuk pemilik

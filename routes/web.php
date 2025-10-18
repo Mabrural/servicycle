@@ -19,6 +19,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/booking', function() {
+    return view('booking.index');
+});
+
 Route::get('/storage/{folder}/{filename}', function ($folder, $filename) {
     $allowedFolders = ['vehicle_images'];
 
