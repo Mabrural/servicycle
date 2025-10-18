@@ -96,7 +96,7 @@
             </li>
 
             <!-- Notifikasi Servis -->
-            <li class="menu-item">
+            <li class="menu-item {{ Route::is('notification.user') ? 'active' : '' }}">
                 <a href="{{ route('notification.user') }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-bell"></i>
                     <div data-i18n="Analytics">Notifikasi Servis</div>
