@@ -4,9 +4,9 @@
 @section('title', 'Tambah Bengkel Baru')
 
 @section('container')
-<div class="container">
+<div class="container-xxl flex-grow-1 container-p-y">
     <div class="row justify-content-center">
-        <div class="col-md-10">
+        <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
                     <h4 class="mb-0">Tambah Bengkel Baru</h4>
