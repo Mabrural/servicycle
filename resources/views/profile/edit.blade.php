@@ -39,9 +39,8 @@
     <div class="app-brand justify-content-center mt-5">
         <a href="{{ route('login') }}" class="app-brand-link gap-2">
             <span class="app-brand-logo demo">
-                <img src="{{ asset('img/favicon/favicon.ico') }}" alt="">
+                <img src="{{ asset('img/logo-servicycle.png') }}" alt="">
             </span>
-            <span class="app-brand-text demo text-body fw-bolder">ServiCycle</span>
         </a>
     </div>
     <!-- /Logo -->
