@@ -104,8 +104,8 @@
             </li>
 
             <!-- Catatan Masalah -->
-            <li class="menu-item">
-                <a href="{{ route('catatan-masalah') }}" class="menu-link">
+            <li class="menu-item {{ Route::is('record') ? 'active' : '' }}">
+                <a href="{{ route('record') }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-error"></i>
                     <div data-i18n="Analytics">Catatan Masalah</div>
                 </a>

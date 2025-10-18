@@ -87,23 +87,20 @@ Route::middleware(['auth', 'verified', 'is_set_role', 'vehicle_owner'])->group(f
         return view('history.index');
     })->name('history');
 
-    // Route::get('/jadwal-servis', function () {
-    //     return view('jadwal-servis.index');
-    // })->name('jadwal-servis');
     Route::get('/user/schedule', function(){
         return view('schedule.index');
     })->name('schedule');
 
-    // Route::get('/notifikasi-servis', function () {
-    //     return view('notifikasi-servis.index');
-    // })->name('notifikasi-servis');
     Route::get('/user/notification', function(){
         return view('notification.user');
     })->name('notification.user');
 
-    Route::get('/catatan-masalah', function () {
-        return view('catatan-masalah.index');
-    })->name('catatan-masalah');
+    // Route::get('/catatan-masalah', function () {
+    //     return view('catatan-masalah.index');
+    // })->name('catatan-masalah');
+    Route::get('/user/record', function(){
+        return view('record.index');
+    })->name('record');
 
     Route::get('/upgrade-premium', function () {
         return view('upgrade-premium.index');
