@@ -133,8 +133,8 @@
             </li>
 
             <!-- Booking Servis -->
-            <li class="menu-item">
-                <a href="{{ route('booking-servis') }}" class="menu-link">
+            <li class="menu-item {{ Route::is('workshop.booking') ? 'active' : '' }}">
+                <a href="{{ route('workshop.booking') }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-calendar-check"></i>
                     <div data-i18n="Analytics">Booking Servis</div>
                 </a>

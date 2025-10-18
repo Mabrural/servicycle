@@ -71,9 +71,6 @@ Route::middleware(['auth', 'verified', 'is_set_role', 'admin'])->group(function 
         return view('notification-management.index');
     })->name('notification.management');
 
-    // Route::get('/pengaturan-aplikasi', function () {
-    //     return view('pengaturan-aplikasi.index');
-    // })->middleware(['auth', 'verified'])->name('pengaturan-aplikasi');
     Route::get('admin/setting', function(){
         return view('setting.index');
     })->name('setting');
@@ -116,9 +113,12 @@ Route::middleware(['auth', 'verified', 'is_set_role', 'workshop'])->group(functi
     // Route::resource('profil-bengkel', WorkshopController::class);
     Route::resource('workshop/profile', WorkshopController::class);
 
-    Route::get('/booking-servis', function () {
-        return view('booking-servis.index');
-    })->name('booking-servis');
+    // Route::get('/booking-servis', function () {
+    //     return view('booking-servis.index');
+    // })->name('booking-servis');
+    Route::get('/workshop/booking', function(){
+        return view('booking.workshop.index');
+    })->name('workshop.booking');
     
     Route::get('/servis-dan-sparepart', function () {
         return view('servis-dan-sparepart.index');
