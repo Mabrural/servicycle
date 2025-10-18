@@ -95,16 +95,17 @@ Route::middleware(['auth', 'verified', 'is_set_role', 'vehicle_owner'])->group(f
         return view('notification.user');
     })->name('notification.user');
 
-    // Route::get('/catatan-masalah', function () {
-    //     return view('catatan-masalah.index');
-    // })->name('catatan-masalah');
     Route::get('/user/record', function(){
         return view('record.index');
     })->name('record');
 
-    Route::get('/upgrade-premium', function () {
-        return view('upgrade-premium.index');
-    })->middleware(['auth', 'verified'])->name('upgrade-premium');
+    Route::get('/user/upgrade-premium', function(){
+        return view('upgrade-premium.user');
+    })->name('upgrade-premium.user');
+
+    // Route::get('/upgrade-premium', function () {
+    //     return view('upgrade-premium.index');
+    // })->middleware(['auth', 'verified'])->name('upgrade-premium');
 
 
 });

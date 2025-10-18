@@ -112,8 +112,8 @@
             </li>
 
             <!-- Upgrade Premium -->
-            <li class="menu-item">
-                <a href="{{ route('upgrade-premium') }}" class="menu-link">
+            <li class="menu-item {{ Route::is('upgrade-premium.user') ? 'active' : '' }}">
+                <a href="{{ route('upgrade-premium.user') }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-crown"></i>
                     <div data-i18n="Analytics">Upgrade Premium</div>
                 </a>
