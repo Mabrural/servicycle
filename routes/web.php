@@ -79,9 +79,13 @@ Route::middleware(['auth', 'verified', 'is_set_role', 'vehicle_owner'])->group(f
     // Route::resource('kendaraan-saya', VehicleController::class);
     Route::resource('/user/vehicles', VehicleController::class);
 
-    Route::get('/riwayat-servis', function () {
-        return view('riwayat-servis.index');
-    })->name('riwayat-servis');
+    Route::get('/user/history', function(){
+        return view('history.index');
+    })->name('history');
+
+    // Route::get('/riwayat-servis', function () {
+    //     return view('riwayat-servis.index');
+    // })->name('riwayat-servis');
 
     Route::get('/jadwal-servis', function () {
         return view('jadwal-servis.index');

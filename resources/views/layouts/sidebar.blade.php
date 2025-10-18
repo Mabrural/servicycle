@@ -80,8 +80,8 @@
             </li>
 
             <!-- Riwayat Servis -->
-            <li class="menu-item">
-                <a href="{{ route('riwayat-servis') }}" class="menu-link">
+            <li class="menu-item {{ Route::is('history') ? 'active' : ''}}">
+                <a href="{{ route('history') }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-wrench"></i>
                     <div data-i18n="Analytics">Riwayat Servis</div>
                 </a>
