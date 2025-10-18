@@ -149,8 +149,8 @@
             </li>
 
             <!-- Invoice Servis -->
-            <li class="menu-item">
-                <a href="{{ route('invoice-servis') }}" class="menu-link">
+            <li class="menu-item {{ Route::is('invoice') ? 'active' : '' }}">
+                <a href="{{ route('invoice') }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-receipt"></i>
                     <div data-i18n="Analytics">Invoice Servis</div>
                 </a>

@@ -116,18 +116,17 @@ Route::middleware(['auth', 'verified', 'is_set_role', 'workshop'])->group(functi
     Route::get('/workshop/booking', function(){
         return view('booking.workshop.index');
     })->name('workshop.booking');
-    
-    // Route::get('/servis-dan-sparepart', function () {
-    //     return view('servis-dan-sparepart.index');
-    // })->name('servis-dan-sparepart');
 
     Route::get('/workshop/service-and-sparepart', function(){
         return view('service-and-sparepart.index');
     })->name('service-and-sparepart');
 
-    Route::get('/invoice-servis', function () {
-        return view('invoice-servis.index');
-    })->name('invoice-servis');
+    // Route::get('/invoice-servis', function () {
+    //     return view('invoice-servis.index');
+    // })->name('invoice-servis');
+    Route::get('/workshop/invoice', function(){
+        return view('invoice.index');
+    })->name('invoice');
 
     Route::get('/promosi-bengkel', function () {
         return view('promosi-bengkel.index');
