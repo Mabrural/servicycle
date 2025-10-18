@@ -64,7 +64,7 @@ Route::middleware(['auth', 'verified', 'is_set_role', 'admin'])->group(function 
     })->name('subscription-management');
 
     Route::get('/admin/report-analytic', function(){
-        return ('report.admin');
+        return view('report.admin');
     })->name('report');
 
     Route::get('/manajemen-notifikasi', function () {
