@@ -63,9 +63,9 @@ Route::middleware(['auth', 'verified', 'is_set_role', 'admin'])->group(function 
         return view('subscription-management.index');
     })->name('subscription-management');
 
-    Route::get('/laporan-analitik', function () {
-        return view('laporan-analitik.index');
-    })->middleware(['auth', 'verified'])->name('laporan-analitik');
+    Route::get('/admin/report-analytic', function(){
+        return ('report.admin');
+    })->name('report');
 
     Route::get('/manajemen-notifikasi', function () {
         return view('manajemen-notifikasi.index');

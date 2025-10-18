@@ -43,8 +43,8 @@
                 </a>
             </li>
             <!-- Laporan & Analitik -->
-            <li class="menu-item">
-                <a href="{{ route('laporan-analitik') }}" class="menu-link">
+            <li class="menu-item {{ Route::is('report') ? 'active' : '' }}">
+                <a href="{{ route('report') }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-bar-chart"></i>
                     <div data-i18n="Analytics">Laporan & Analitik</div>
                 </a>
