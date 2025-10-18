@@ -1296,7 +1296,7 @@
                     </div>
                     
                     <div class="flex space-x-2 md:space-x-3">
-                        <button class="flex-1 bg-primary text-white py-2 rounded-lg font-medium hover:bg-secondary transition-all duration-300 text-sm md:text-base">
+                        <button onclick="window.location.href='/booking'" class="flex-1 bg-primary text-white py-2 rounded-lg font-medium hover:bg-secondary transition-all duration-300 text-sm md:text-base">
                             <i class="fas fa-calendar-alt mr-1 md:mr-2"></i> Booking
                         </button>
                         <button class="flex-1 bg-gray-200 text-gray-800 py-2 rounded-lg font-medium hover:bg-gray-300 transition-all duration-300 text-sm md:text-base">
