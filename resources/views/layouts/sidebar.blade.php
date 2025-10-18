@@ -158,7 +158,7 @@
 
             <!-- Promosi Bengkel (Premium) -->
             <li class="menu-item">
-                <a href="{{ route('promosi-bengkel') }}" class="menu-link">
+                <a href="{{ route('promote') }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-gift"></i>
                     <div data-i18n="Analytics">Promosi Bengkel </div>
                 </a>
