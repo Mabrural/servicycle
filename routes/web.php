@@ -125,9 +125,6 @@ Route::middleware(['auth', 'verified', 'is_set_role', 'workshop'])->group(functi
         return view('invoice.index');
     })->name('invoice');
 
-    // Route::get('/promosi-bengkel', function () {
-    //     return view('promosi-bengkel.index');
-    // })->name('promosi-bengkel');
     Route::get('/workshop/promote', function(){
         return view('promote.index');
     })->name('promote');
