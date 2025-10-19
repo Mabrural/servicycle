@@ -113,6 +113,14 @@ Route::middleware(['auth', 'verified', 'is_set_role', 'workshop'])->group(functi
     // Route::resource('profil-bengkel', WorkshopController::class);
     Route::resource('workshop/profile', WorkshopController::class);
 
+    Route::middleware(['auth'])->group(function () {
+    Route::get('/workshop/create', [WorkshopController::class, 'create'])->name('workshop.create');
+    Route::post('/workshop/store', [WorkshopController::class, 'store'])->name('workshop.store');
+    Route::get('/workshop/{id}', [WorkshopController::class, 'show'])->name('workshop.show');
+    Route::get('/workshop/{id}/edit', [WorkshopController::class, 'edit'])->name('workshop.edit');
+    Route::get('/workshops', [WorkshopController::class, 'index'])->name('workshop.index');
+});
+
     Route::get('/workshop/booking', function(){
         return view('booking.workshop.index');
     })->name('workshop.booking');
