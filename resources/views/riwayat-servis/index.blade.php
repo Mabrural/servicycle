@@ -1,1 +1,0 @@
-ini adalah riwayat riwayat-servis

@@ -1,1 +1,0 @@
-ini adalah laporan dan analitik
