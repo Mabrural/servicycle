@@ -1547,7 +1547,7 @@
             });
 
             // Send data to server
-            fetch('/profile/store', {
+            fetch("{{ route('profile.store') }}", {
                 method: 'POST',
                 headers: {
                     'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value,
