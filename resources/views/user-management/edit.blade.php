@@ -5,7 +5,7 @@
     <h4 class="fw-bold py-3 mb-4">Edit Pengguna</h4>
 
     <div class="card p-4">
-        <form action="{{ route('manajemen-pengguna.update', $user->id) }}" method="POST">
+        <form action="{{ route('user-management.update', $user->id) }}" method="POST">
             @csrf
             @method('PUT')
 
@@ -87,7 +87,7 @@
             </div>
 
             <div class="d-flex justify-content-end">
-                <a href="{{ route('manajemen-pengguna.index') }}" class="btn btn-secondary me-2">Batal</a>
+                <a href="{{ route('user-management.index') }}" class="btn btn-secondary me-2">Batal</a>
                 <button type="submit" class="btn btn-primary">Perbarui</button>
             </div>
         </form>

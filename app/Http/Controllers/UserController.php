@@ -18,7 +18,7 @@ class UserController extends Controller
     public function index()
     {
         $users = User::orderBy('created_at', 'desc')->paginate(10);
-        return view('manajemen-pengguna.index', compact('users'));
+        return view('user-management.index', compact('users'));
     }
 
 
@@ -36,17 +36,17 @@ class UserController extends Controller
             });
         }
 
-        // 🔐 Filter role
+        // Filter role
         if ($request->filled('role')) {
             $query->where('role', $request->role);
         }
 
-        // 🟢 Filter status
+        // Filter status
         if ($request->filled('status')) {
             $query->where('is_active', $request->status === 'active' ? 1 : 0);
         }
 
-        // 📄 Pagination
+        // Pagination
         $perPage = $request->perPage ?? 10;
         $users = $query->orderBy('created_at', 'desc')->paginate($perPage);
 
@@ -84,7 +84,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('manajemen-pengguna.create');
+        return view('user-management.create');
     }
 
     /**
@@ -114,7 +114,7 @@ class UserController extends Controller
 
         User::create($validated);
 
-        return redirect()->route('manajemen-pengguna.index')->with('success', 'Pengguna berhasil ditambahkan!');
+        return redirect()->route('user-management.index')->with('success', 'Pengguna berhasil ditambahkan!');
     }
 
 
@@ -137,7 +137,7 @@ class UserController extends Controller
         $user = User::findOrFail($id);
 
         // Kirim ke view edit
-        return view('manajemen-pengguna.edit', compact('user'));
+        return view('user-management.edit', compact('user'));
     }
 
 
@@ -173,7 +173,7 @@ class UserController extends Controller
 
         $user->update($validated);
 
-        return redirect()->route('manajemen-pengguna.index')->with('success', 'Data pengguna berhasil diperbarui!');
+        return redirect()->route('user-management.index')->with('success', 'Data pengguna berhasil diperbarui!');
     }
 
 
@@ -189,7 +189,7 @@ class UserController extends Controller
         $user->delete();
 
         // Redirect kembali dengan pesan sukses
-        return redirect()->route('manajemen-pengguna.index')
+        return redirect()->route('user-management.index')
             ->with('success', 'Pengguna berhasil dihapus.');
     }
 }

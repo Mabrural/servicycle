@@ -54,10 +54,10 @@ Route::middleware(['auth', 'verified', 'is_set_role', 'admin'])->group(function 
 
     Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard.admin');
 
-    Route::resource('manajemen-pengguna', UserController::class);
+    Route::resource('/admin/user-management', UserController::class);
 
-    Route::patch('/manajemen-pengguna/{id}/toggle-role', [UserController::class, 'toggleRole'])->name('manajemen-pengguna.toggleRole');
-    Route::patch('/manajemen-pengguna/{id}/toggle-status', [UserController::class, 'toggleStatus'])->name('manajemen-pengguna.toggleStatus');
+    Route::patch('/admin/user-management/{id}/toggle-role', [UserController::class, 'toggleRole'])->name('user-management.toggleRole');
+    Route::patch('/admin/user-management//{id}/toggle-status', [UserController::class, 'toggleStatus'])->name('user-management.toggleStatus');
 
     Route::get('/admin/subscription-management', function(){
         return view('subscription-management.index');

@@ -5,7 +5,7 @@
         <h4 class="fw-bold py-3 mb-4">Tambah Pengguna</h4>
 
         <div class="card p-4">
-            <form action="{{ route('manajemen-pengguna.store') }}" method="POST">
+            <form action="{{ route('user-management.store') }}" method="POST">
                 @csrf
 
                 <!-- Nama -->
@@ -67,7 +67,7 @@
 
 
                 <div class="d-flex justify-content-end">
-                    <a href="{{ route('manajemen-pengguna.index') }}" class="btn btn-secondary me-2">Batal</a>
+                    <a href="{{ route('user-management.index') }}" class="btn btn-secondary me-2">Batal</a>
                     <button type="submit" class="btn btn-primary">Simpan</button>
                 </div>
             </form>

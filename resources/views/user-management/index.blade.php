@@ -6,7 +6,7 @@
             Manajemen Pengguna
         </h4>
         <div class="mb-3">
-            <a href="{{ route('manajemen-pengguna.create') }}" class="btn btn-primary btn-sm">
+            <a href="{{ route('user-management.create') }}" class="btn btn-primary btn-sm">
                 <i class="bx bx-plus"></i> Tambah Pengguna
             </a>
         </div>
@@ -72,14 +72,14 @@
                                             {{-- Edit --}}
                                             <li>
                                                 <a class="dropdown-item d-flex align-items-center"
-                                                    href="{{ route('manajemen-pengguna.edit', $user->id) }}">
+                                                    href="{{ route('user-management.edit', $user->id) }}">
                                                     <i class="bx bx-edit-alt me-2 fs-5 text-primary"></i> Edit
                                                 </a>
                                             </li>
 
                                             {{-- Hapus --}}
                                             <li>
-                                                <form action="{{ route('manajemen-pengguna.destroy', $user->id) }}"
+                                                <form action="{{ route('user-management.destroy', $user->id) }}"
                                                     method="POST"
                                                     onsubmit="return confirm('Yakin ingin menghapus pengguna ini?')">
                                                     @csrf
@@ -93,7 +93,7 @@
 
                                             {{-- Ubah Hak Akses --}}
                                             <li>
-                                                <form action="{{ route('manajemen-pengguna.toggleRole', $user->id) }}"
+                                                <form action="{{ route('user-management.toggleRole', $user->id) }}"
                                                     method="POST"
                                                     onsubmit="return confirm('Yakin ingin mengubah hak akses pengguna ini?')">
                                                     @csrf
@@ -107,7 +107,7 @@
 
                                             {{-- Aktifkan / Nonaktifkan --}}
                                             <li>
-                                                <form action="{{ route('manajemen-pengguna.toggleStatus', $user->id) }}"
+                                                <form action="{{ route('user-management.toggleStatus', $user->id) }}"
                                                     method="POST"
                                                     onsubmit="return confirm('Yakin ingin mengubah status pengguna ini?')">
                                                     @csrf
