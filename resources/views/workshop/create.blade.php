@@ -364,10 +364,6 @@
                                             <input type="checkbox" id="type_mobil" name="types[]" value="mobil" class="mr-3 mobile-touch-checkbox">
                                             <label for="type_mobil" class="text-gray-700 text-sm sm:text-base">Bengkel Mobil</label>
                                         </div>
-                                        <div class="flex items-center">
-                                            <input type="checkbox" id="type_sepeda" name="types[]" value="sepeda" class="mr-3 mobile-touch-checkbox">
-                                            <label for="type_sepeda" class="text-gray-700 text-sm sm:text-base">Bengkel Sepeda</label>
-                                        </div>
                                     </div>
                                     <div id="types-error" class="error-message"></div>
                                 </div>
