@@ -353,6 +353,20 @@
             font-weight: bold;
             color: #0066cc;
         }
+        .map-link {
+            display: inline-block;
+            margin-top: 8px;
+            background: #007BFF;
+            color: white;
+            text-decoration: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: background 0.2s ease;
+        }
+        .map-link:hover {
+            background: #0056b3;
+        }
     </style>
 </head>
 
@@ -633,9 +647,16 @@
                 @foreach ($workshops as $workshop)
                     <div class="card" data-lat="{{ $workshop->latitude }}" data-lng="{{ $workshop->longitude }}"
                         data-id="{{ $workshop->id }}">
+                        <img src="{{ asset('img/bengkel-mobil.jpeg') }}" alt=""
+                            class="img-fluid mb-2 rounded">
                         <div class="name">{{ $workshop->name }}</div>
-                        <div class="address">{{ $workshop->address ?? '-' }}</div>
+                        <div class="city">{{ $workshop->city ?? '-' }}</div>
                         <div class="distance">Jarak: menghitung...</div>
+                        <a class="map-link"
+                            href="https://www.google.com/maps?q={{ $workshop->latitude }},{{ $workshop->longitude }}"
+                            target="_blank">
+                            Lihat di Google Maps
+                        </a>
                     </div>
                 @endforeach
             </div>
@@ -1152,14 +1173,14 @@
                     function(error) {
                         console.error("Error getting location:", error);
                         locationStatus.innerHTML =
-                        '<p class="text-red-700 text-center">Gagal mendapatkan lokasi 😢</p>';
+                            '<p class="text-red-700 text-center">Gagal mendapatkan lokasi 😢</p>';
                         // Calculate distances without location
                         calculateDistances();
                     }
                 );
             } else {
                 locationStatus.innerHTML =
-                '<p class="text-red-700 text-center">Browser Anda tidak mendukung geolokasi.</p>';
+                    '<p class="text-red-700 text-center">Browser Anda tidak mendukung geolokasi.</p>';
                 // Calculate distances without location
                 calculateDistances();
             }
@@ -1189,7 +1210,7 @@
 
                 if (userLat && userLng && lat && lng) {
                     const distance = calculateDistance(userLat, userLng, lat, lng);
-                    card.querySelector('.distance').textContent = `Jarak: ${distance.toFixed(2)} km`;
+                    card.querySelector('.distance').textContent = ` ${distance.toFixed(2)} km`;
                     card.dataset.distance = distance;
                 } else {
                     card.querySelector('.distance').textContent = 'Jarak: tidak tersedia';
