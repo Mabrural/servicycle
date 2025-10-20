@@ -60,9 +60,18 @@
                                     <li><i class="fa-solid fa-phone me-2 text-muted"></i> {{ $workshop->phone ?? '-' }}</li>
                                     <li><i class="fa-solid fa-envelope me-2 text-muted"></i> {{ $workshop->email ?? '-' }}
                                     </li>
-                                    <li><i class="fa-solid fa-map-marker-alt me-2 text-muted"></i>
-                                        {{ $workshop->address ?? '-' }}
+                                    <li>
+                                        <i class="fa-solid fa-map-marker-alt me-2 text-muted"></i>
+                                        @if (!empty($workshop->latitude) && !empty($workshop->longitude))
+                                            <a href="https://www.google.com/maps?q={{ $workshop->latitude }},{{ $workshop->longitude }}"
+                                                target="_blank" class="">
+                                                {{ $workshop->address ?? '-' }}
+                                            </a>
+                                        @else
+                                            {{ $workshop->address ?? '-' }}
+                                        @endif
                                     </li>
+
                                 </ul>
 
                                 {{-- Tombol aksi --}}
