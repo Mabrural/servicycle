@@ -1547,7 +1547,7 @@
             });
 
             // Send data to server
-            fetch("{{ route('profile.store') }}", {
+            fetch("{{ route('my-workshop.store') }}", {
                 method: 'POST',
                 headers: {
                     'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value,

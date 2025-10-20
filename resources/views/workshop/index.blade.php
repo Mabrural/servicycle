@@ -10,7 +10,7 @@
                     <strong>Bengkel</strong> Saya
                 </h1>
 
-                <a href="{{ route('profile.create') }}" class="btn btn-primary btn-sm d-flex align-items-center shadow-sm">
+                <a href="{{ route('my-workshop.create') }}" class="btn btn-primary btn-sm d-flex align-items-center shadow-sm">
                     <i class="fa-solid fa-circle-plus me-1"></i> Tambah Bengkel
                 </a>
             </div>
@@ -67,7 +67,7 @@
 
                                 {{-- Tombol aksi --}}
                                 <div class="mt-auto d-flex justify-content-between">
-                                    <a href="{{ route('profile.show', $workshop->id) }}"
+                                    <a href="{{ route('my-workshop.show', $workshop->id) }}"
                                         class="btn btn-outline-primary btn-sm w-50 me-2">
                                         <i class="bi bi-eye"></i> Lihat
                                     </a>
@@ -83,7 +83,7 @@
                     <div class="col-12 text-center mt-5">
                         <img src="{{ asset('img/empty.jpg') }}" alt="No Workshops" width="180" class="mb-3">
                         <h5 class="text-muted">Belum ada bengkel terdaftar</h5>
-                        <a href="{{ route('profile.create') }}" class="btn btn-primary mt-2">
+                        <a href="{{ route('my-workshop.create') }}" class="btn btn-primary mt-2">
                             <i class="fa-solid fa-plus me-1"></i> Tambah Bengkel Pertama
                         </a>
                     </div>

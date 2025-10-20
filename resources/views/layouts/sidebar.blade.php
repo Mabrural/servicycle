@@ -29,12 +29,6 @@
                 <span class="menu-header-text">Admin</span>
             </li>
             <!-- Manajemen Pengguna -->
-            {{-- <li class="menu-item {{ Route::is('manajemen-pengguna.*') ? 'active' : '' }}">
-                <a href="{{ route('manajemen-pengguna.index') }}" class="menu-link">
-                    <i class="menu-icon tf-icons bx bx-group"></i>
-                    <div data-i18n="Analytics">Manajemen Pengguna</div>
-                </a>
-            </li> --}}
             <li class="menu-item {{ Route::is('user-management.*') ? 'active' : '' }}">
                 <a href="{{ route('user-management.index') }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-group"></i>
@@ -131,8 +125,8 @@
             </li>
 
             <!-- Profil Bengkel -->
-            <li class="menu-item {{ Route::is('profile.*') ? 'active' : '' }}">
-                <a href="{{ route('profile.index') }}" class="menu-link">
+            <li class="menu-item {{ Route::is('my-workshop.*') ? 'active' : '' }}">
+                <a href="{{ route('my-workshop.index') }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-store"></i>
                     <div data-i18n="Analytics">Profil Bengkel</div>
                 </a>

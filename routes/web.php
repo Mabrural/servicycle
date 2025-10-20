@@ -111,7 +111,7 @@ Route::middleware(['auth', 'verified', 'is_set_role', 'workshop'])->group(functi
     Route::get('/workshop/dashboard', [WorkshopDashboardController::class, 'index'])->name('dashboard.workshop');
 
     // Route::resource('profil-bengkel', WorkshopController::class);
-    Route::resource('workshop/profile', WorkshopController::class);
+    Route::resource('workshop/my-workshop', WorkshopController::class);
 
 //     Route::middleware(['auth'])->group(function () {
 //     Route::get('/workshop/create', [WorkshopController::class, 'create'])->name('workshop.create');
