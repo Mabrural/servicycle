@@ -1,6 +1,6 @@
-@extends('layouts.app')
+@extends('layouts.main')
 
-@section('content')
+@section('container')
 <div class="min-h-screen py-8">
     <div class="max-w-4xl mx-auto px-4">
         <div class="bg-green-600 text-white rounded-xl shadow-lg p-6 md:p-8 mb-6">

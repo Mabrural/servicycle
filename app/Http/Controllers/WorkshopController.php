@@ -20,9 +20,9 @@ class WorkshopController extends Controller
     {
         // Cek apakah user sudah memiliki workshop
         if (Workshop::userHasWorkshop(Auth::id())) {
-            $workshop = Workshop::getByUserId(Auth::id());
-            return view('workshop.already-registered', compact('workshop'));
+            return redirect()->route('my-workshop.index');
         }
+
 
         return view('workshop.create');
     }
@@ -114,7 +114,7 @@ class WorkshopController extends Controller
             if ($request->hasFile('photos')) {
                 foreach ($request->file('photos') as $index => $photo) {
                     $path = $photo->store('workshop-images', 'public');
-                    
+
                     WorkshopImage::create([
                         'workshop_id' => $workshop->id,
                         'image_path' => $path,
@@ -129,10 +129,9 @@ class WorkshopController extends Controller
 
             return redirect()->route('my-workshop.index', $workshop->id)
                 ->with('success', 'Bengkel berhasil didaftarkan! Status: Menunggu Verifikasi');
-
         } catch (\Exception $e) {
             DB::rollBack();
-            
+
             return redirect()->back()
                 ->with('error', 'Terjadi kesalahan saat menyimpan data: ' . $e->getMessage())
                 ->withInput();
@@ -164,7 +163,7 @@ class WorkshopController extends Controller
     public function edit($id)
     {
         $workshop = Workshop::with('images')->findOrFail($id);
-        
+
         // Authorization check - hanya creator yang bisa edit
         if ($workshop->created_by !== Auth::id()) {
             abort(403, 'Unauthorized action.');
@@ -179,7 +178,7 @@ class WorkshopController extends Controller
     public function checkRegistration()
     {
         $workshop = Workshop::with('images')->getByUserId(Auth::id());
-        
+
         return response()->json([
             'registered' => !is_null($workshop),
             'workshop' => $workshop
