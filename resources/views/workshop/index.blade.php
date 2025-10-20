@@ -10,9 +10,9 @@
                     <strong>Bengkel</strong> Saya
                 </h1>
 
-                <a href="{{ route('my-workshop.create') }}" class="btn btn-primary btn-sm d-flex align-items-center shadow-sm">
+                {{-- <a href="{{ route('my-workshop.create') }}" class="btn btn-primary btn-sm d-flex align-items-center shadow-sm">
                     <i class="fa-solid fa-circle-plus me-1"></i> Tambah Bengkel
-                </a>
+                </a> --}}
             </div>
 
             {{-- Pencarian --}}

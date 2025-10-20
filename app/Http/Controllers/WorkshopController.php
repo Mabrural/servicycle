@@ -127,7 +127,7 @@ class WorkshopController extends Controller
 
             DB::commit();
 
-            return redirect()->route('profile.index', $workshop->id)
+            return redirect()->route('my-workshop.index', $workshop->id)
                 ->with('success', 'Bengkel berhasil didaftarkan! Status: Menunggu Verifikasi');
 
         } catch (\Exception $e) {
