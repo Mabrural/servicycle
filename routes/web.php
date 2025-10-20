@@ -9,15 +9,17 @@ use App\Http\Controllers\VehicleController;
 use App\Http\Controllers\WorkshopController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GoogleController;
+use App\Http\Controllers\HomepageController;
 use App\Http\Controllers\UserDashboardController;
 use App\Http\Controllers\WorkshopDashboardController;
 
 Route::get('/auth/google', [GoogleController::class, 'redirect'])->name('google.login');
 Route::get('/auth/google/callback', [GoogleController::class, 'callback']);
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+Route::get('/', [HomepageController::class, 'index']);
 
 Route::get('/booking', function() {
     return view('booking.index');
@@ -112,14 +114,6 @@ Route::middleware(['auth', 'verified', 'is_set_role', 'workshop'])->group(functi
 
     // Route::resource('profil-bengkel', WorkshopController::class);
     Route::resource('workshop/my-workshop', WorkshopController::class);
-
-//     Route::middleware(['auth'])->group(function () {
-//     Route::get('/workshop/create', [WorkshopController::class, 'create'])->name('workshop.create');
-//     Route::post('/workshop/store', [WorkshopController::class, 'store'])->name('workshop.store');
-//     Route::get('/workshop/{id}', [WorkshopController::class, 'show'])->name('workshop.show');
-//     Route::get('/workshop/{id}/edit', [WorkshopController::class, 'edit'])->name('workshop.edit');
-//     Route::get('/workshops', [WorkshopController::class, 'index'])->name('workshop.index');
-// });
 
     Route::get('/workshop/booking', function(){
         return view('booking.workshop.index');
