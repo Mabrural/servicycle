@@ -16,9 +16,6 @@ use App\Http\Controllers\WorkshopDashboardController;
 Route::get('/auth/google', [GoogleController::class, 'redirect'])->name('google.login');
 Route::get('/auth/google/callback', [GoogleController::class, 'callback']);
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
 Route::get('/', [HomepageController::class, 'index']);
 
 Route::get('/booking', function() {

@@ -296,6 +296,22 @@
                 transform: scale(0.98);
             }
         }
+        
+        /* Loading spinner */
+        .loading-spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #4f46e5;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
     </style>
 </head>
 
@@ -600,12 +616,20 @@
                     data-type="motor">Motor</button>
                 <button class="tab-button px-4 py-3 md:px-6 md:py-3 font-medium text-sm md:text-base whitespace-nowrap"
                     data-type="mobil">Mobil</button>
+                <button class="tab-button px-4 py-3 md:px-6 md:py-3 font-medium text-sm md:text-base whitespace-nowrap"
+                    data-type="sepeda">Sepeda</button>
+            </div>
+
+            <!-- Loading Spinner -->
+            <div id="workshopsLoading" class="mt-8 hidden">
+                <div class="loading-spinner"></div>
+                <p class="text-center mt-4 text-gray-600">Memuat data bengkel...</p>
             </div>
 
             <!-- Workshops List -->
             <div id="workshopsList"
                 class="mt-6 md:mt-8 grid md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 workshop-grid">
-                <!-- Static workshop cards will be populated here -->
+                <!-- Workshop cards will be populated by JavaScript -->
             </div>
 
             <!-- No Results Message -->
@@ -618,8 +642,6 @@
             </div>
         </div>
     </section>
-
-
 
     <!-- Fitur Utama -->
     <section id="features" class="py-16 md:py-20 bg-gray-50">
@@ -740,7 +762,7 @@
                     <h4 class="text-xl md:text-2xl font-semibold mb-4 md:mb-6">Daftar Sekarang</h4>
                     <p class="mb-4 md:mb-6 text-sm md:text-base">Isi formulir pendaftaran untuk bergabung sebagai mitra
                         ServiCycle</p>
-                    <a href="/login"
+                    <a href="/register"
                         class="bg-white text-primary px-4 py-3 md:px-6 md:py-3 rounded-lg font-medium hover:bg-gray-100 transition-all duration-300 btn-glow inline-block text-sm md:text-base">
                         Daftar sebagai Mitra
                     </a>
@@ -1091,78 +1113,22 @@
         const getLocationBtn = document.getElementById('getLocationBtn');
         const locationStatus = document.getElementById('locationStatus');
         const workshopsList = document.getElementById('workshopsList');
+        const workshopsLoading = document.getElementById('workshopsLoading');
         const noResults = document.getElementById('noResults');
         const searchWorkshop = document.getElementById('searchWorkshop');
         const tabButtons = document.querySelectorAll('.tab-button');
 
         let userLocation = null;
-        let workshops = [{
-                id: 1,
-                name: "Bengkel Motor Maju Jaya",
-                type: "motor",
-                address: "Jl. Sudirman No. 123, Jakarta",
-                distance: 1.2,
-                rating: 4.8,
-                open: true,
-                services: ["Ganti Oli", "Service Rutin", "Ganti Ban"]
-            },
-            {
-                id: 2,
-                name: "AutoCare Center",
-                type: "mobil",
-                address: "Jl. Thamrin No. 45, Jakarta",
-                distance: 2.5,
-                rating: 4.6,
-                open: true,
-                services: ["Tune Up", "Ganti Oli", "Service AC"]
-            },
-            {
-                id: 3,
-                name: "Bengkel Sejahtera Motor",
-                type: "motor",
-                address: "Jl. Gatot Subroto No. 78, Jakarta",
-                distance: 3.1,
-                rating: 4.9,
-                open: false,
-                services: ["Service Rutin", "Ganti Kampas Rem", "Ganti Aki"]
-            },
-            {
-                id: 4,
-                name: "Mobil Plus Service",
-                type: "mobil",
-                address: "Jl. Rasuna Said No. 99, Jakarta",
-                distance: 4.7,
-                rating: 4.7,
-                open: true,
-                services: ["Service Berkala", "Ganti Oli", "Perbaikan Mesin"]
-            },
-            {
-                id: 5,
-                name: "Bengkel Motor Andalan",
-                type: "motor",
-                address: "Jl. Kemang No. 56, Jakarta",
-                distance: 5.3,
-                rating: 4.5,
-                open: true,
-                services: ["Ganti Oli", "Service Rutin", "Ganti Ban"]
-            },
-            {
-                id: 6,
-                name: "Auto Service Pro",
-                type: "mobil",
-                address: "Jl. Kuningan No. 32, Jakarta",
-                distance: 6.2,
-                rating: 4.9,
-                open: true,
-                services: ["Tune Up", "Ganti Oli", "Service AC", "Perbaikan Body"]
-            }
-        ];
+        let workshops = [];
 
         // Show location permission modal when page loads
         window.addEventListener('load', function() {
             setTimeout(() => {
                 locationPermissionModal.classList.add('active');
             }, 1000);
+            
+            // Load workshops from database
+            loadWorkshopsFromDatabase();
         });
 
         // Handle location permission
@@ -1177,7 +1143,6 @@
                 <i class="fas fa-exclamation-triangle text-yellow-500 text-xl mr-3"></i>
                 <p class="text-yellow-700">Akses lokasi ditolak. Anda masih dapat melihat daftar bengkel tanpa filter lokasi.</p>
             `;
-            displayWorkshops();
         });
 
         // Get user location
@@ -1202,6 +1167,7 @@
                             <p class="text-green-700">Lokasi berhasil didapatkan! Menampilkan bengkel terdekat.</p>
                         `;
 
+                        // Re-display workshops with location-based sorting
                         displayWorkshops();
                     },
                     function(error) {
@@ -1210,7 +1176,6 @@
                             <i class="fas fa-exclamation-triangle text-red-500 text-xl mr-3"></i>
                             <p class="text-red-700">Gagal mendapatkan lokasi. Pastikan Anda mengizinkan akses lokasi.</p>
                         `;
-                        displayWorkshops();
                     }
                 );
             } else {
@@ -1218,7 +1183,35 @@
                     <i class="fas fa-exclamation-triangle text-red-500 text-xl mr-3"></i>
                     <p class="text-red-700">Browser Anda tidak mendukung geolokasi.</p>
                 `;
+            }
+        }
+
+        // Load workshops from database
+        async function loadWorkshopsFromDatabase() {
+            try {
+                workshopsLoading.classList.remove('hidden');
+                workshopsList.classList.add('hidden');
+
+                const response = await fetch('/api/workshops');
+                
+                if (!response.ok) {
+                    throw new Error('Failed to fetch workshops');
+                }
+
+                workshops = await response.json();
+                
+                // Display workshops
                 displayWorkshops();
+                
+            } catch (error) {
+                console.error('Error loading workshops:', error);
+                locationStatus.innerHTML = `
+                    <i class="fas fa-exclamation-triangle text-red-500 text-xl mr-3"></i>
+                    <p class="text-red-700">Gagal memuat data bengkel. Silakan refresh halaman.</p>
+                `;
+            } finally {
+                workshopsLoading.classList.add('hidden');
+                workshopsList.classList.remove('hidden');
             }
         }
 
@@ -1228,20 +1221,29 @@
 
             // Filter by type
             if (filterType !== 'all') {
-                filteredWorkshops = filteredWorkshops.filter(workshop => workshop.type === filterType);
+                filteredWorkshops = filteredWorkshops.filter(workshop => {
+                    // Check if workshop has the selected type
+                    return workshop.types && workshop.types.includes(filterType);
+                });
             }
 
             // Filter by search term
             if (searchTerm) {
                 filteredWorkshops = filteredWorkshops.filter(workshop =>
                     workshop.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                    workshop.address.toLowerCase().includes(searchTerm.toLowerCase())
+                    (workshop.address && workshop.address.toLowerCase().includes(searchTerm.toLowerCase())) ||
+                    (workshop.description && workshop.description.toLowerCase().includes(searchTerm.toLowerCase()))
                 );
             }
 
             // Sort by distance if location is available
             if (userLocation) {
-                filteredWorkshops.sort((a, b) => a.distance - b.distance);
+                filteredWorkshops.sort((a, b) => {
+                    // Calculate distance for sorting (simplified)
+                    const distA = calculateDistance(userLocation, a);
+                    const distB = calculateDistance(userLocation, b);
+                    return distA - distB;
+                });
             }
 
             // Clear workshops list
@@ -1250,9 +1252,11 @@
             // Show no results message if no workshops found
             if (filteredWorkshops.length === 0) {
                 noResults.classList.remove('hidden');
+                workshopsList.classList.add('hidden');
                 return;
             } else {
                 noResults.classList.add('hidden');
+                workshopsList.classList.remove('hidden');
             }
 
             // Display workshops
@@ -1260,8 +1264,13 @@
                 const workshopCard = document.createElement('div');
                 workshopCard.className = 'bg-white rounded-xl shadow-lg p-4 md:p-6 workshop-card';
 
-                const statusClass = workshop.open ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800';
-                const statusText = workshop.open ? 'Buka' : 'Tutup';
+                // Determine status and rating
+                const isOpen = checkIfOpen(workshop.operating_hours);
+                const statusClass = isOpen ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800';
+                const statusText = isOpen ? 'Buka' : 'Tutup';
+                
+                const rating = workshop.rating || 4.5;
+                const distance = userLocation ? calculateDistance(userLocation, workshop).toFixed(1) : null;
 
                 workshopCard.innerHTML = `
                     <div class="flex justify-between items-start mb-4">
@@ -1269,7 +1278,7 @@
                             <h4 class="text-lg md:text-xl font-semibold">${workshop.name}</h4>
                             <div class="flex items-center mt-1">
                                 <i class="fas fa-map-marker-alt text-gray-400 mr-1"></i>
-                                <span class="text-gray-600 text-xs md:text-sm">${workshop.address}</span>
+                                <span class="text-gray-600 text-xs md:text-sm">${workshop.address || 'Alamat tidak tersedia'}</span>
                             </div>
                         </div>
                         <span class="px-2 py-1 md:px-3 md:py-1 rounded-full text-xs md:text-sm font-medium ${statusClass}">${statusText}</span>
@@ -1278,28 +1287,33 @@
                     <div class="flex justify-between items-center mb-4">
                         <div class="flex items-center">
                             <i class="fas fa-star text-yellow-400 mr-1"></i>
-                            <span class="font-medium text-sm md:text-base">${workshop.rating}</span>
+                            <span class="font-medium text-sm md:text-base">${rating}</span>
                         </div>
+                        ${distance ? `
                         <div class="flex items-center">
                             <i class="fas fa-road text-gray-400 mr-1"></i>
-                            <span class="font-medium text-sm md:text-base">${workshop.distance} km</span>
+                            <span class="font-medium text-sm md:text-base">${distance} km</span>
                         </div>
+                        ` : ''}
                     </div>
                     
+                    ${workshop.services && workshop.services.length > 0 ? `
                     <div class="mb-4">
                         <h5 class="font-medium mb-2 text-sm md:text-base">Layanan:</h5>
                         <div class="flex flex-wrap gap-1 md:gap-2">
-                            ${workshop.services.map(service => 
+                            ${workshop.services.slice(0, 3).map(service => 
                                 `<span class="bg-gray-100 text-gray-800 px-2 py-1 rounded text-xs">${service}</span>`
                             ).join('')}
+                            ${workshop.services.length > 3 ? `<span class="bg-gray-100 text-gray-800 px-2 py-1 rounded text-xs">+${workshop.services.length - 3} lainnya</span>` : ''}
                         </div>
                     </div>
+                    ` : ''}
                     
                     <div class="flex space-x-2 md:space-x-3">
-                        <button onclick="window.location.href='/booking'" class="flex-1 bg-primary text-white py-2 rounded-lg font-medium hover:bg-secondary transition-all duration-300 text-sm md:text-base">
+                        <button onclick="window.location.href='/booking/${workshop.id}'" class="flex-1 bg-primary text-white py-2 rounded-lg font-medium hover:bg-secondary transition-all duration-300 text-sm md:text-base">
                             <i class="fas fa-calendar-alt mr-1 md:mr-2"></i> Booking
                         </button>
-                        <button class="flex-1 bg-gray-200 text-gray-800 py-2 rounded-lg font-medium hover:bg-gray-300 transition-all duration-300 text-sm md:text-base">
+                        <button onclick="window.location.href='/workshops/${workshop.id}'" class="flex-1 bg-gray-200 text-gray-800 py-2 rounded-lg font-medium hover:bg-gray-300 transition-all duration-300 text-sm md:text-base">
                             <i class="fas fa-info-circle mr-1 md:mr-2"></i> Detail
                         </button>
                     </div>
@@ -1307,6 +1321,44 @@
 
                 workshopsList.appendChild(workshopCard);
             });
+        }
+
+        // Calculate distance between two coordinates (simplified)
+        function calculateDistance(userLoc, workshop) {
+            if (!userLoc || !workshop.latitude || !workshop.longitude) {
+                return Math.random() * 10 + 1; // Fallback random distance
+            }
+            
+            const R = 6371; // Earth's radius in km
+            const dLat = (workshop.latitude - userLoc.latitude) * Math.PI / 180;
+            const dLon = (workshop.longitude - userLoc.longitude) * Math.PI / 180;
+            const a = 
+                Math.sin(dLat/2) * Math.sin(dLat/2) +
+                Math.cos(userLoc.latitude * Math.PI / 180) * Math.cos(workshop.latitude * Math.PI / 180) * 
+                Math.sin(dLon/2) * Math.sin(dLon/2);
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+            return R * c;
+        }
+
+        // Check if workshop is currently open
+        function checkIfOpen(operatingHours) {
+            if (!operatingHours) return true;
+            
+            const now = new Date();
+            const currentTime = now.getHours() * 100 + now.getMinutes();
+            
+            // Simple check for common operating hours
+            if (operatingHours === '24jam') return true;
+            
+            // For predefined hours like "08:00-17:00"
+            const match = operatingHours.match(/(\d+):(\d+)-(\d+):(\d+)/);
+            if (match) {
+                const openTime = parseInt(match[1]) * 100 + parseInt(match[2]);
+                const closeTime = parseInt(match[3]) * 100 + parseInt(match[4]);
+                return currentTime >= openTime && currentTime <= closeTime;
+            }
+            
+            return true; // Default to open if we can't determine
         }
 
         // Tab functionality
@@ -1332,9 +1384,6 @@
 
             displayWorkshops(filterType, this.value);
         });
-
-        // Initial display of workshops
-        displayWorkshops();
     </script>
 </body>
 
