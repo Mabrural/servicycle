@@ -5,14 +5,14 @@
         <div class="container-fluid p-0">
 
             {{-- Header --}}
-            <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
-                <h1 class="h3 mb-0">
-                    <strong>Bengkel</strong> Saya
-                </h1>
-
-                {{-- <a href="{{ route('my-workshop.create') }}" class="btn btn-primary btn-sm d-flex align-items-center shadow-sm">
-                    <i class="fa-solid fa-circle-plus me-1"></i> Tambah Bengkel
-                </a> --}}
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div>
+                    <h3 class="fw-bold mb-1">Bengkel Saya</h3>
+                    <p class="text-muted mb-0">Kelola informasi bengkel dan pantau seluruh aktivitas servis pelanggan dengan mudah.</p>
+                </div>
+                <button class="btn btn-outline-secondary btn-sm" id="refreshButton">
+                    <i class="bi bi-arrow-clockwise"></i> Refresh
+                </button>
             </div>
 
             {{-- Pencarian --}}
