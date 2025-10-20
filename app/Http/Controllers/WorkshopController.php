@@ -152,8 +152,8 @@ class WorkshopController extends Controller
      */
     public function index()
     {
-        // $workshops = Workshop::with('images')->approved()->get();
-        $workshops = Workshop::all();
+        // $workshops = Workshop::all();
+        $workshops = Workshop::where('created_by', Auth::id())->get();
         return view('workshop.index', compact('workshops'));
     }
 
