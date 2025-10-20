@@ -153,7 +153,8 @@ class WorkshopController extends Controller
      */
     public function index()
     {
-        $workshops = Workshop::with('images')->approved()->get();
+        // $workshops = Workshop::with('images')->approved()->get();
+        $workshops = Workshop::all();
         return view('workshop.index', compact('workshops'));
     }
 

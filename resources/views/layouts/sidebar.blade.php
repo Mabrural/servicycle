@@ -128,7 +128,7 @@
             <li class="menu-item {{ Route::is('my-workshop.*') ? 'active' : '' }}">
                 <a href="{{ route('my-workshop.index') }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-store"></i>
-                    <div data-i18n="Analytics">Profil Bengkel</div>
+                    <div data-i18n="Analytics">Bengkel Saya</div>
                 </a>
             </li>
 
