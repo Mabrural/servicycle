@@ -18,6 +18,10 @@ Route::get('/auth/google/callback', [GoogleController::class, 'callback']);
 
 Route::get('/', [HomepageController::class, 'index']);
 
+Route::get('/workshop/{id}', function(){
+    return "hello";
+})->name('workshops.show');
+
 Route::get('/booking', function() {
     return view('booking.index');
 });

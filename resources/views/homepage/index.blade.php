@@ -353,6 +353,7 @@
             font-weight: bold;
             color: #0066cc;
         }
+
         .map-link {
             display: inline-block;
             margin-top: 8px;
@@ -364,6 +365,7 @@
             font-size: 14px;
             transition: background 0.2s ease;
         }
+
         .map-link:hover {
             background: #0056b3;
         }
@@ -647,16 +649,25 @@
                 @foreach ($workshops as $workshop)
                     <div class="card" data-lat="{{ $workshop->latitude }}" data-lng="{{ $workshop->longitude }}"
                         data-id="{{ $workshop->id }}">
-                        <img src="{{ asset('img/bengkel-mobil.jpeg') }}" alt=""
-                            class="img-fluid mb-2 rounded">
+                        <img src="{{ asset('img/bengkel-mobil.jpeg') }}" alt="Gambar Bengkel"
+                            class="relative overflow-hidden rounded-xl mb-2">
                         <div class="name">{{ $workshop->name }}</div>
-                        <div class="city">{{ $workshop->city ?? '-' }}</div>
+                        <div class="city"><i class="fa-solid fa-location-dot text-red-500"></i>
+                            {{ $workshop->city ?? '-' }}</div>
                         <div class="distance">Jarak: menghitung...</div>
-                        <a class="map-link"
-                            href="https://www.google.com/maps?q={{ $workshop->latitude }},{{ $workshop->longitude }}"
-                            target="_blank">
-                            Lihat di Google Maps
-                        </a>
+                        {{-- Tombol Aksi --}}
+                        <div class="mt-4 flex items-center justify-between">
+                            <a href="https://www.google.com/maps?q={{ $workshop->latitude }},{{ $workshop->longitude }}"
+                                target="_blank"
+                                class="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 text-sm font-medium transition-colors">
+                                <i class="fa-solid fa-map-location-dot"></i> Lihat di Google Maps
+                            </a>
+
+                            <a href="{{ route('workshops.show', $workshop->id) }}"
+                                class="inline-flex items-center gap-2 bg-blue-600 text-white text-sm font-medium px-3 py-2 rounded-lg hover:bg-blue-700 transition-colors shadow-sm">
+                                <i class="fa-solid fa-info-circle"></i> Detail
+                            </a>
+                        </div>
                     </div>
                 @endforeach
             </div>
@@ -1165,7 +1176,7 @@
                         const userLng = position.coords.longitude;
 
                         locationStatus.innerHTML =
-                            '<p class="text-green-700 text-center">Lokasi berhasil didapatkan ✅</p>';
+                            '<p class="text-green-700 text-center">Lokasi berhasil didapatkan </p>';
 
                         // Calculate distances with user location
                         calculateDistances(userLat, userLng);
@@ -1173,7 +1184,7 @@
                     function(error) {
                         console.error("Error getting location:", error);
                         locationStatus.innerHTML =
-                            '<p class="text-red-700 text-center">Gagal mendapatkan lokasi 😢</p>';
+                            '<p class="text-red-700 text-center">Gagal mendapatkan lokasi </p>';
                         // Calculate distances without location
                         calculateDistances();
                     }
@@ -1210,12 +1221,15 @@
 
                 if (userLat && userLng && lat && lng) {
                     const distance = calculateDistance(userLat, userLng, lat, lng);
-                    card.querySelector('.distance').textContent = ` ${distance.toFixed(2)} km`;
+                    card.querySelector('.distance').innerHTML =
+                        `<i class="fa-solid fa-route text-green-500"></i> ${distance.toFixed(2)} km`;
                     card.dataset.distance = distance;
                 } else {
-                    card.querySelector('.distance').textContent = 'Jarak: tidak tersedia';
+                    card.querySelector('.distance').innerHTML =
+                        `<i class="fa-solid fa-route text-gray-400"></i> Jarak: tidak tersedia`;
                     card.dataset.distance = 99999; // Large number for sorting
                 }
+
             });
 
             // Sort by distance (nearest first) if location is available
