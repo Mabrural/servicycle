@@ -508,7 +508,7 @@
                         <h3 class="text-xl font-bold text-gray-800 mb-4">Aksi Cepat</h3>
 
                         <div class="space-y-3">
-                            <button onclick="window.location.href='/booking/1'"
+                            <button onclick="window.location.href='{{ route('workshops.booking', ['id' => $workshop->id]) }}'"
                                 class="w-full bg-primary text-white py-3 rounded-lg font-medium hover:bg-secondary transition-all duration-300 flex items-center justify-center">
                                 <i class="fas fa-calendar-plus mr-2"></i> Booking Servis
                             </button>

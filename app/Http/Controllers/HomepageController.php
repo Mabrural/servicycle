@@ -19,4 +19,11 @@ class HomepageController extends Controller
 
         return view('homepage.show-workshop', compact('workshop'));
     }
+
+    public function bookingService($id)
+    {
+        $booking = Workshop::findOrFail($id);
+
+        return view('homepage.booking', compact('booking'));
+    }
 }
