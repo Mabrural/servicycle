@@ -34,8 +34,10 @@ class WorkshopController extends Controller
     {
         // Cek apakah user sudah memiliki workshop
         if (Workshop::userHasWorkshop(Auth::id())) {
-            return redirect()->back()
-                ->with('error', 'Anda sudah memiliki bengkel terdaftar.');
+            return response()->json([
+                'success' => false,
+                'message' => 'Anda sudah memiliki bengkel terdaftar.'
+            ], 422);
         }
 
         // Validasi data
@@ -74,9 +76,11 @@ class WorkshopController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect()->back()
-                ->withErrors($validator)
-                ->withInput();
+            return response()->json([
+                'success' => false,
+                'message' => 'Validasi gagal',
+                'errors' => $validator->errors()
+            ], 422);
         }
 
         try {
@@ -127,14 +131,18 @@ class WorkshopController extends Controller
 
             DB::commit();
 
-            return redirect()->route('my-workshop.index', $workshop->id)
-                ->with('success', 'Bengkel berhasil didaftarkan! Status: Menunggu Verifikasi');
+            return response()->json([
+                'success' => true,
+                'message' => 'Bengkel berhasil didaftarkan! Status: Menunggu Verifikasi',
+                'workshop' => $workshop
+            ]);
         } catch (\Exception $e) {
             DB::rollBack();
 
-            return redirect()->back()
-                ->with('error', 'Terjadi kesalahan saat menyimpan data: ' . $e->getMessage())
-                ->withInput();
+            return response()->json([
+                'success' => false,
+                'message' => 'Terjadi kesalahan saat menyimpan data: ' . $e->getMessage()
+            ], 500);
         }
     }
 

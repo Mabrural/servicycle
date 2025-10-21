@@ -8,10 +8,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+
     <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    
+
     <script>
         tailwind.config = {
             theme: {
@@ -34,15 +34,15 @@
         body {
             font-family: 'Poppins', sans-serif;
         }
-        
+
         .form-section {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         }
-        
+
         .btn-glow:hover {
             box-shadow: 0 0 20px rgba(79, 70, 229, 0.6);
         }
-        
+
         .success-card {
             background: linear-gradient(135deg, #10b981 0%, #059669 100%);
         }
@@ -58,8 +58,13 @@
         }
 
         @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
         }
 
         /* Map container */
@@ -74,14 +79,14 @@
         .leaflet-container {
             font-family: 'Poppins', sans-serif;
         }
-        
+
         .custom-marker {
             background-color: #4f46e5;
             border: 3px solid white;
             border-radius: 50%;
             width: 20px;
             height: 20px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
         }
 
         /* GPS Loading Overlay */
@@ -91,7 +96,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(255,255,255,0.9);
+            background: rgba(255, 255, 255, 0.9);
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -116,27 +121,27 @@
                 padding-left: 1rem;
                 padding-right: 1rem;
             }
-            
+
             .mobile-stack {
                 flex-direction: column;
             }
-            
+
             .mobile-full {
                 width: 100%;
             }
-            
+
             .mobile-text-center {
                 text-align: center;
             }
-            
-            .mobile-space-y-4 > * + * {
+
+            .mobile-space-y-4>*+* {
                 margin-top: 1rem;
             }
-            
+
             .mobile-step-indicator {
                 font-size: 0.75rem;
             }
-            
+
             .mobile-form-input {
                 font-size: 16px;
             }
@@ -150,11 +155,11 @@
         ::-webkit-scrollbar {
             width: 4px;
         }
-        
+
         ::-webkit-scrollbar-track {
             background: #f1f1f1;
         }
-        
+
         ::-webkit-scrollbar-thumb {
             background: #c5c5c5;
             border-radius: 2px;
@@ -166,7 +171,7 @@
                 min-height: 44px;
                 padding: 12px 16px;
             }
-            
+
             .mobile-touch-checkbox {
                 min-width: 20px;
                 min-height: 20px;
@@ -193,7 +198,7 @@
             height: 100px;
             border-radius: 8px;
             overflow: hidden;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         .file-preview-item img {
@@ -206,7 +211,7 @@
             position: absolute;
             top: 5px;
             right: 5px;
-            background: rgba(0,0,0,0.5);
+            background: rgba(0, 0, 0, 0.5);
             color: white;
             border: none;
             border-radius: 50%;
@@ -255,17 +260,19 @@
     <!-- Main Content -->
     <div class="min-h-screen py-4 sm:py-8">
         <div class="max-w-4xl mx-auto mobile-padding">
-            
+
             <!-- Success Message -->
             <div id="alreadyRegistered" class="hidden mb-6 sm:mb-8">
                 <div class="success-card text-white rounded-xl shadow-lg p-4 sm:p-6 md:p-8">
                     <div class="flex items-start sm:items-center mobile-stack sm:flex-row">
-                        <div class="bg-white/20 w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center mr-3 sm:mr-4 mb-3 sm:mb-0">
+                        <div
+                            class="bg-white/20 w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center mr-3 sm:mr-4 mb-3 sm:mb-0">
                             <i class="fas fa-check text-lg sm:text-xl"></i>
                         </div>
                         <div class="mobile-text-center sm:text-left flex-1">
                             <h2 class="text-xl sm:text-2xl font-bold mb-1">Bengkel Sudah Terdaftar</h2>
-                            <p class="text-white/90 text-sm sm:text-base">Anda sudah pernah mendaftarkan bengkel sebelumnya</p>
+                            <p class="text-white/90 text-sm sm:text-base">Anda sudah pernah mendaftarkan bengkel
+                                sebelumnya</p>
                         </div>
                     </div>
                     <div class="bg-white/10 rounded-lg p-3 sm:p-4 mt-4">
@@ -275,10 +282,12 @@
                         </div>
                     </div>
                     <div class="mt-4 sm:mt-6 flex mobile-stack sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4">
-                        <a href="/mitra/dashboard" class="bg-white text-green-600 px-4 sm:px-6 py-2 sm:py-3 rounded-lg font-medium hover:bg-gray-100 transition-all duration-300 mobile-touch-button text-center mobile-full">
+                        <a href="/mitra/dashboard"
+                            class="bg-white text-green-600 px-4 sm:px-6 py-2 sm:py-3 rounded-lg font-medium hover:bg-gray-100 transition-all duration-300 mobile-touch-button text-center mobile-full">
                             <i class="fas fa-tachometer-alt mr-2"></i>Dashboard Mitra
                         </a>
-                        <button id="editRequestBtn" class="bg-white/20 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-lg font-medium hover:bg-white/30 transition-all duration-300 mobile-touch-button text-center mobile-full">
+                        <button id="editRequestBtn"
+                            class="bg-white/20 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-lg font-medium hover:bg-white/30 transition-all duration-300 mobile-touch-button text-center mobile-full">
                             <i class="fas fa-edit mr-2"></i>Ajukan Perubahan
                         </button>
                     </div>
@@ -289,59 +298,73 @@
             <div id="registrationForm">
                 <div class="form-section text-white rounded-xl shadow-lg p-4 sm:p-6 md:p-8 mb-6 sm:mb-8">
                     <div class="flex items-start sm:items-center mobile-stack sm:flex-row">
-                        <div class="bg-white/20 w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center mr-3 sm:mr-4 mb-3 sm:mb-0">
+                        <div
+                            class="bg-white/20 w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center mr-3 sm:mr-4 mb-3 sm:mb-0">
                             <i class="fas fa-store text-lg sm:text-xl"></i>
                         </div>
                         <div class="mobile-text-center sm:text-left flex-1">
                             <h1 class="text-2xl sm:text-3xl font-bold mb-2">Daftarkan Bengkel Anda</h1>
-                            <p class="text-white/90 text-sm sm:text-base">Bergabunglah dengan jaringan bengkel terpercaya ServiCycle</p>
+                            <p class="text-white/90 text-sm sm:text-base">Bergabunglah dengan jaringan bengkel
+                                terpercaya ServiCycle</p>
                         </div>
                     </div>
-                    
+
                     <div class="bg-white/10 rounded-lg p-3 sm:p-4 mt-4">
                         <div class="flex items-start">
                             <i class="fas fa-info-circle text-yellow-300 mt-0.5 mr-2 sm:mr-3 text-sm sm:text-base"></i>
                             <div>
                                 <h3 class="font-semibold text-yellow-300 text-sm sm:text-base">Penting!</h3>
-                                <p class="text-xs sm:text-sm">Form pendaftaran bengkel hanya dapat diisi <strong>sekali saja</strong>. Pastikan data yang Anda masukkan sudah benar dan lengkap.</p>
+                                <p class="text-xs sm:text-sm">Form pendaftaran bengkel hanya dapat diisi <strong>sekali
+                                        saja</strong>. Pastikan data yang Anda masukkan sudah benar dan lengkap.</p>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <form id="workshopForm" class="bg-white rounded-xl shadow-lg p-4 sm:p-6 md:p-8" enctype="multipart/form-data">
+                <form id="workshopForm" class="bg-white rounded-xl shadow-lg p-4 sm:p-6 md:p-8"
+                    enctype="multipart/form-data">
                     @csrf
                     <!-- Progress Steps -->
                     <div class="mb-6 sm:mb-8">
                         <div class="flex items-center justify-between mb-4 overflow-x-auto">
                             <!-- Step 1 -->
                             <div class="flex-shrink-0 flex flex-col items-center mx-2">
-                                <div class="w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center font-bold text-sm">1</div>
-                                <p class="font-semibold text-xs mt-2 mobile-step-indicator text-center">Informasi<br>Dasar</p>
+                                <div
+                                    class="w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center font-bold text-sm">
+                                    1</div>
+                                <p class="font-semibold text-xs mt-2 mobile-step-indicator text-center">
+                                    Informasi<br>Dasar</p>
                             </div>
-                            
+
                             <div class="h-1 bg-gray-300 flex-1 mx-1 sm:mx-2 min-w-8"></div>
-                            
+
                             <!-- Step 2 -->
                             <div class="flex-shrink-0 flex flex-col items-center mx-2">
-                                <div class="w-8 h-8 bg-gray-300 text-gray-600 rounded-full flex items-center justify-center font-bold text-sm">2</div>
-                                <p class="font-semibold text-xs mt-2 mobile-step-indicator text-center">Detail<br>Layanan</p>
+                                <div
+                                    class="w-8 h-8 bg-gray-300 text-gray-600 rounded-full flex items-center justify-center font-bold text-sm">
+                                    2</div>
+                                <p class="font-semibold text-xs mt-2 mobile-step-indicator text-center">
+                                    Detail<br>Layanan</p>
                             </div>
-                            
+
                             <div class="h-1 bg-gray-300 flex-1 mx-1 sm:mx-2 min-w-8"></div>
-                            
+
                             <!-- Step 3 -->
                             <div class="flex-shrink-0 flex flex-col items-center mx-2">
-                                <div class="w-8 h-8 bg-gray-300 text-gray-600 rounded-full flex items-center justify-center font-bold text-sm">3</div>
-                                <p class="font-semibold text-xs mt-2 mobile-step-indicator text-center">Foto<br>Bengkel</p>
+                                <div
+                                    class="w-8 h-8 bg-gray-300 text-gray-600 rounded-full flex items-center justify-center font-bold text-sm">
+                                    3</div>
+                                <p class="font-semibold text-xs mt-2 mobile-step-indicator text-center">Foto<br>Bengkel
+                                </p>
                             </div>
                         </div>
                     </div>
 
                     <!-- Step 1: Basic Information -->
                     <div id="step1" class="step-content">
-                        <h2 class="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-gray-800">Informasi Dasar Bengkel</h2>
-                        
+                        <h2 class="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-gray-800">Informasi Dasar Bengkel
+                        </h2>
+
                         <div class="space-y-4 sm:space-y-6">
                             <div class="grid grid-cols-1 gap-4 sm:gap-6">
                                 <div>
@@ -352,17 +375,21 @@
                                     <div id="name-error" class="error-message"></div>
                                     <p class="text-xs text-gray-500 mt-1">Nama resmi bengkel Anda</p>
                                 </div>
-                                
+
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-2">Jenis Bengkel *</label>
                                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                                         <div class="flex items-center">
-                                            <input type="checkbox" id="type_motor" name="types[]" value="motor" class="mr-3 mobile-touch-checkbox">
-                                            <label for="type_motor" class="text-gray-700 text-sm sm:text-base">Bengkel Motor</label>
+                                            <input type="checkbox" id="type_motor" name="types[]" value="motor"
+                                                class="mr-3 mobile-touch-checkbox">
+                                            <label for="type_motor" class="text-gray-700 text-sm sm:text-base">Bengkel
+                                                Motor</label>
                                         </div>
                                         <div class="flex items-center">
-                                            <input type="checkbox" id="type_mobil" name="types[]" value="mobil" class="mr-3 mobile-touch-checkbox">
-                                            <label for="type_mobil" class="text-gray-700 text-sm sm:text-base">Bengkel Mobil</label>
+                                            <input type="checkbox" id="type_mobil" name="types[]" value="mobil"
+                                                class="mr-3 mobile-touch-checkbox">
+                                            <label for="type_mobil" class="text-gray-700 text-sm sm:text-base">Bengkel
+                                                Mobil</label>
                                         </div>
                                     </div>
                                     <div id="types-error" class="error-message"></div>
@@ -374,7 +401,7 @@
                                 <h3 class="text-lg font-semibold text-blue-800 mb-3 flex items-center">
                                     <i class="fas fa-map-marker-alt mr-2"></i>Lokasi Bengkel
                                 </h3>
-                                
+
                                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                                     <div>
                                         <label class="block text-sm font-medium text-gray-700 mb-2">Provinsi *</label>
@@ -383,23 +410,28 @@
                                                 class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300 mobile-form-input appearance-none">
                                                 <option value="">Memuat provinsi...</option>
                                             </select>
-                                            <div id="provinceLoading" class="loading-spinner absolute right-3 top-1/2 transform -translate-y-1/2"></div>
+                                            <div id="provinceLoading"
+                                                class="loading-spinner absolute right-3 top-1/2 transform -translate-y-1/2">
+                                            </div>
                                         </div>
                                         <div id="province-error" class="error-message"></div>
                                     </div>
-                                    
+
                                     <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-2">Kota/Kabupaten *</label>
+                                        <label class="block text-sm font-medium text-gray-700 mb-2">Kota/Kabupaten
+                                            *</label>
                                         <div class="relative">
                                             <select id="city" name="city" required disabled
                                                 class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300 mobile-form-input appearance-none bg-gray-100">
                                                 <option value="">Pilih provinsi terlebih dahulu</option>
                                             </select>
-                                            <div id="cityLoading" class="loading-spinner absolute right-3 top-1/2 transform -translate-y-1/2 hidden"></div>
+                                            <div id="cityLoading"
+                                                class="loading-spinner absolute right-3 top-1/2 transform -translate-y-1/2 hidden">
+                                            </div>
                                         </div>
                                         <div id="city-error" class="error-message"></div>
                                     </div>
-                                    
+
                                     <div>
                                         <label class="block text-sm font-medium text-gray-700 mb-2">Kecamatan *</label>
                                         <div class="relative">
@@ -407,7 +439,9 @@
                                                 class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300 mobile-form-input appearance-none bg-gray-100">
                                                 <option value="">Pilih kota terlebih dahulu</option>
                                             </select>
-                                            <div id="districtLoading" class="loading-spinner absolute right-3 top-1/2 transform -translate-y-1/2 hidden"></div>
+                                            <div id="districtLoading"
+                                                class="loading-spinner absolute right-3 top-1/2 transform -translate-y-1/2 hidden">
+                                            </div>
                                         </div>
                                         <div id="district-error" class="error-message"></div>
                                     </div>
@@ -419,12 +453,14 @@
                                                 class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300 mobile-form-input appearance-none bg-gray-100">
                                                 <option value="">Pilih kecamatan terlebih dahulu</option>
                                             </select>
-                                            <div id="villageLoading" class="loading-spinner absolute right-3 top-1/2 transform -translate-y-1/2 hidden"></div>
+                                            <div id="villageLoading"
+                                                class="loading-spinner absolute right-3 top-1/2 transform -translate-y-1/2 hidden">
+                                            </div>
                                         </div>
                                         <div id="village-error" class="error-message"></div>
                                     </div>
                                 </div>
-                                
+
                                 <div class="mt-3">
                                     <label class="block text-sm font-medium text-gray-700 mb-2">Kode Pos</label>
                                     <input type="text" id="postal_code" name="postal_code"
@@ -432,34 +468,40 @@
                                         placeholder="12345">
                                     <div id="postal_code-error" class="error-message"></div>
                                 </div>
-                                
+
                                 <!-- Alamat Lengkap -->
                                 <div class="mt-3">
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">Alamat Lengkap *</label>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Alamat Lengkap
+                                        *</label>
                                     <textarea id="address" name="address" required rows="3"
                                         class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300 mobile-form-input"
                                         placeholder="Jl. Contoh No. 123, RT/RW, Nama Jalan, dll."></textarea>
                                     <div id="address-error" class="error-message"></div>
                                 </div>
-                                
+
                                 <!-- Map Section -->
                                 <div class="mt-4">
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">Pin Lokasi di Peta</label>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Pin Lokasi di
+                                        Peta</label>
                                     <div class="bg-gray-100 p-4 rounded-lg relative">
                                         <!-- GPS Loading Overlay -->
                                         <div id="gpsLoading" class="gps-loading">
                                             <div class="gps-loading-spinner"></div>
                                             <p class="text-gray-600 font-medium">Mengambil lokasi Anda...</p>
-                                            <p class="text-sm text-gray-500 mt-2">Pastikan GPS aktif dan berikan izin akses lokasi</p>
+                                            <p class="text-sm text-gray-500 mt-2">Pastikan GPS aktif dan berikan izin
+                                                akses lokasi</p>
                                         </div>
-                                        
-                                        <p class="text-sm text-gray-600 mb-3">Tentukan lokasi tepat bengkel Anda di peta:</p>
+
+                                        <p class="text-sm text-gray-600 mb-3">Tentukan lokasi tepat bengkel Anda di
+                                            peta:</p>
                                         <div id="map"></div>
                                         <div class="mt-3 flex items-center">
-                                            <button type="button" id="locateMeBtn" class="bg-primary text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-secondary transition-all duration-300 flex items-center">
+                                            <button type="button" id="locateMeBtn"
+                                                class="bg-primary text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-secondary transition-all duration-300 flex items-center">
                                                 <i class="fas fa-crosshairs mr-2"></i> Gunakan Lokasi Saya
                                             </button>
-                                            <p class="text-xs text-gray-500 ml-3">Klik pada peta untuk menandai lokasi</p>
+                                            <p class="text-xs text-gray-500 ml-3">Klik pada peta untuk menandai lokasi
+                                            </p>
                                         </div>
                                         <div class="mt-2 text-xs text-gray-500">
                                             <p>Koordinat: <span id="coordinates">Belum dipilih</span></p>
@@ -480,7 +522,7 @@
                                         placeholder="081234567890">
                                     <div id="phone-error" class="error-message"></div>
                                 </div>
-                                
+
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-2">Email Bengkel</label>
                                     <input type="email" id="email" name="email"
@@ -492,7 +534,7 @@
                         </div>
 
                         <div class="flex justify-end mt-6 sm:mt-8">
-                            <button type="button" onclick="nextStep(2)" 
+                            <button type="button" onclick="nextStep(2)"
                                 class="bg-primary text-white px-6 sm:px-8 py-3 rounded-lg font-medium hover:bg-secondary transition-all duration-300 btn-glow flex items-center mobile-touch-button mobile-full sm:mobile-auto">
                                 Selanjutnya <i class="fas fa-arrow-right ml-2"></i>
                             </button>
@@ -502,42 +544,59 @@
                     <!-- Step 2: Service Details -->
                     <div id="step2" class="step-content hidden">
                         <h2 class="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-gray-800">Detail Layanan</h2>
-                        
+
                         <div class="space-y-4 sm:space-y-6">
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-3 sm:mb-4">Jenis Layanan yang Tersedia *</label>
+                                <label class="block text-sm font-medium text-gray-700 mb-3 sm:mb-4">Jenis Layanan yang
+                                    Tersedia *</label>
                                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                                     <div class="flex items-center">
-                                        <input type="checkbox" id="service_rutin" name="services[]" value="service_rutin" class="mr-3 mobile-touch-checkbox">
-                                        <label for="service_rutin" class="text-gray-700 text-sm sm:text-base">Service Rutin</label>
+                                        <input type="checkbox" id="service_rutin" name="services[]"
+                                            value="service_rutin" class="mr-3 mobile-touch-checkbox">
+                                        <label for="service_rutin" class="text-gray-700 text-sm sm:text-base">Service
+                                            Rutin</label>
                                     </div>
                                     <div class="flex items-center">
-                                        <input type="checkbox" id="ganti_oli" name="services[]" value="ganti_oli" class="mr-3 mobile-touch-checkbox">
-                                        <label for="ganti_oli" class="text-gray-700 text-sm sm:text-base">Ganti Oli & Filter</label>
+                                        <input type="checkbox" id="ganti_oli" name="services[]" value="ganti_oli"
+                                            class="mr-3 mobile-touch-checkbox">
+                                        <label for="ganti_oli" class="text-gray-700 text-sm sm:text-base">Ganti Oli &
+                                            Filter</label>
                                     </div>
                                     <div class="flex items-center">
-                                        <input type="checkbox" id="tune_up" name="services[]" value="tune_up" class="mr-3 mobile-touch-checkbox">
-                                        <label for="tune_up" class="text-gray-700 text-sm sm:text-base">Tune Up</label>
+                                        <input type="checkbox" id="tune_up" name="services[]" value="tune_up"
+                                            class="mr-3 mobile-touch-checkbox">
+                                        <label for="tune_up" class="text-gray-700 text-sm sm:text-base">Tune
+                                            Up</label>
                                     </div>
                                     <div class="flex items-center">
-                                        <input type="checkbox" id="perbaikan_mesin" name="services[]" value="perbaikan_mesin" class="mr-3 mobile-touch-checkbox">
-                                        <label for="perbaikan_mesin" class="text-gray-700 text-sm sm:text-base">Perbaikan Mesin</label>
+                                        <input type="checkbox" id="perbaikan_mesin" name="services[]"
+                                            value="perbaikan_mesin" class="mr-3 mobile-touch-checkbox">
+                                        <label for="perbaikan_mesin"
+                                            class="text-gray-700 text-sm sm:text-base">Perbaikan Mesin</label>
                                     </div>
                                     <div class="flex items-center">
-                                        <input type="checkbox" id="perbaikan_rem" name="services[]" value="perbaikan_rem" class="mr-3 mobile-touch-checkbox">
-                                        <label for="perbaikan_rem" class="text-gray-700 text-sm sm:text-base">Servis Rem</label>
+                                        <input type="checkbox" id="perbaikan_rem" name="services[]"
+                                            value="perbaikan_rem" class="mr-3 mobile-touch-checkbox">
+                                        <label for="perbaikan_rem" class="text-gray-700 text-sm sm:text-base">Servis
+                                            Rem</label>
                                     </div>
                                     <div class="flex items-center">
-                                        <input type="checkbox" id="service_tire" name="services[]" value="ganti_ban" class="mr-3 mobile-touch-checkbox">
-                                        <label for="service_tire" class="text-gray-700 text-sm sm:text-base">Ganti Ban</label>
+                                        <input type="checkbox" id="service_tire" name="services[]" value="ganti_ban"
+                                            class="mr-3 mobile-touch-checkbox">
+                                        <label for="service_tire" class="text-gray-700 text-sm sm:text-base">Ganti
+                                            Ban</label>
                                     </div>
                                     <div class="flex items-center">
-                                        <input type="checkbox" id="service_ac" name="services[]" value="servis_ac" class="mr-3 mobile-touch-checkbox">
-                                        <label for="service_ac" class="text-gray-700 text-sm sm:text-base">Servis AC</label>
+                                        <input type="checkbox" id="service_ac" name="services[]" value="servis_ac"
+                                            class="mr-3 mobile-touch-checkbox">
+                                        <label for="service_ac" class="text-gray-700 text-sm sm:text-base">Servis
+                                            AC</label>
                                     </div>
                                     <div class="flex items-center">
-                                        <input type="checkbox" id="service_electrical" name="services[]" value="kelistrikan" class="mr-3 mobile-touch-checkbox">
-                                        <label for="service_electrical" class="text-gray-700 text-sm sm:text-base">Servis Kelistrikan</label>
+                                        <input type="checkbox" id="service_electrical" name="services[]"
+                                            value="kelistrikan" class="mr-3 mobile-touch-checkbox">
+                                        <label for="service_electrical"
+                                            class="text-gray-700 text-sm sm:text-base">Servis Kelistrikan</label>
                                     </div>
                                 </div>
                                 <div id="services-error" class="error-message"></div>
@@ -553,7 +612,8 @@
 
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">Jam Operasional *</label>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Jam Operasional
+                                        *</label>
                                     <select id="operating_hours" name="operating_hours" required
                                         class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300 mobile-form-input">
                                         <option value="">Pilih Jam Operasional</option>
@@ -565,7 +625,7 @@
                                     </select>
                                     <div id="operating_hours-error" class="error-message"></div>
                                 </div>
-                                
+
                                 <div id="customHours" class="hidden sm:col-span-2 lg:col-span-1">
                                     <label class="block text-sm font-medium text-gray-700 mb-2">Jam Custom</label>
                                     <input type="text" id="custom_hours" name="custom_hours"
@@ -585,11 +645,11 @@
                         </div>
 
                         <div class="flex mobile-stack sm:flex-row justify-between mt-6 sm:mt-8 space-y-3 sm:space-y-0">
-                            <button type="button" onclick="prevStep(1)" 
+                            <button type="button" onclick="prevStep(1)"
                                 class="bg-gray-300 text-gray-700 px-6 sm:px-8 py-3 rounded-lg font-medium hover:bg-gray-400 transition-all duration-300 flex items-center justify-center mobile-touch-button mobile-full">
                                 <i class="fas fa-arrow-left mr-2"></i> Kembali
                             </button>
-                            <button type="button" onclick="nextStep(3)" 
+                            <button type="button" onclick="nextStep(3)"
                                 class="bg-primary text-white px-6 sm:px-8 py-3 rounded-lg font-medium hover:bg-secondary transition-all duration-300 btn-glow flex items-center justify-center mobile-touch-button mobile-full">
                                 Selanjutnya <i class="fas fa-arrow-right ml-2"></i>
                             </button>
@@ -599,29 +659,30 @@
                     <!-- Step 3: Foto Bengkel -->
                     <div id="step3" class="step-content hidden">
                         <h2 class="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-gray-800">Foto Bengkel</h2>
-                        
+
                         <div class="space-y-6">
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-4">Upload Foto Bengkel</label>
-                                
+
                                 <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 sm:p-8 text-center">
                                     <i class="fas fa-camera text-3xl sm:text-4xl text-gray-400 mb-3 sm:mb-4"></i>
                                     <p class="text-lg font-medium text-gray-700 mb-2">Tambahkan Foto Bengkel Anda</p>
-                                    <p class="text-sm text-gray-600 mb-4">Upload beberapa foto untuk menunjukkan kondisi bengkel Anda</p>
-                                    
-                                    <input type="file" id="photos" name="photos[]" accept=".jpg,.jpeg,.png" 
+                                    <p class="text-sm text-gray-600 mb-4">Upload beberapa foto untuk menunjukkan
+                                        kondisi bengkel Anda</p>
+
+                                    <input type="file" id="photos" name="photos[]" accept=".jpg,.jpeg,.png"
                                         class="hidden" multiple>
-                                    <button type="button" onclick="document.getElementById('photos').click()" 
+                                    <button type="button" onclick="document.getElementById('photos').click()"
                                         class="bg-primary text-white px-6 py-3 rounded-lg font-medium hover:bg-secondary transition-all duration-300 mobile-touch-button inline-flex items-center">
                                         <i class="fas fa-cloud-upload-alt mr-2"></i> Pilih Foto
                                     </button>
                                     <p class="text-xs text-gray-500 mt-3">Format: JPG, PNG (Maks. 5MB per file)</p>
                                 </div>
-                                
+
                                 <!-- Preview container -->
                                 <div id="photoPreview" class="file-preview mt-6"></div>
                                 <div id="photos-error" class="error-message"></div>
-                                
+
                                 <div class="mt-6 bg-blue-50 border border-blue-200 rounded-lg p-4">
                                     <div class="flex items-start">
                                         <i class="fas fa-lightbulb text-blue-500 mt-0.5 mr-3 text-lg"></i>
@@ -634,7 +695,8 @@
                                                 <li>• Foto stok sparepart (jika ada)</li>
                                                 <li>• Foto sertifikat atau penghargaan</li>
                                             </ul>
-                                            <p class="text-xs text-gray-600 mt-2">Foto yang baik akan meningkatkan kepercayaan pelanggan</p>
+                                            <p class="text-xs text-gray-600 mt-2">Foto yang baik akan meningkatkan
+                                                kepercayaan pelanggan</p>
                                         </div>
                                     </div>
                                 </div>
@@ -642,7 +704,7 @@
                         </div>
 
                         <div class="flex mobile-stack sm:flex-row justify-between mt-8 space-y-3 sm:space-y-0">
-                            <button type="button" onclick="prevStep(2)" 
+                            <button type="button" onclick="prevStep(2)"
                                 class="bg-gray-300 text-gray-700 px-6 sm:px-8 py-3 rounded-lg font-medium hover:bg-gray-400 transition-all duration-300 flex items-center justify-center mobile-touch-button mobile-full">
                                 <i class="fas fa-arrow-left mr-2"></i> Kembali
                             </button>
@@ -714,15 +776,15 @@
         function initMap() {
             // Default location (Jakarta) - will be updated by GPS
             const defaultLocation = [-6.2088, 106.8456];
-            
+
             // Create map
             map = L.map('map').setView(defaultLocation, 12);
-            
+
             // Add OpenStreetMap tiles
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             }).addTo(map);
-            
+
             // Add click listener to map
             map.on('click', function(e) {
                 placeMarker(e.latlng);
@@ -747,12 +809,12 @@
                         position.coords.latitude,
                         position.coords.longitude
                     ];
-                    
+
                     // Remove existing location circle
                     if (userLocationCircle) {
                         map.removeLayer(userLocationCircle);
                     }
-                    
+
                     // Add accuracy circle
                     userLocationCircle = L.circle(userLocation, {
                         color: '#4f46e5',
@@ -760,30 +822,31 @@
                         fillOpacity: 0.1,
                         radius: position.coords.accuracy
                     }).addTo(map);
-                    
+
                     // Place marker at user's location
                     placeMarker(L.latLng(userLocation));
                     map.setView(userLocation, 16);
-                    
+
                     // Update coordinates display
                     updateCoordinates(L.latLng(userLocation));
-                    
+
                     // Mark that we have obtained user location
                     userLocationObtained = true;
-                    
+
                     // Hide GPS loading overlay
                     hideGpsLoading();
-                    
+
                     console.log('Lokasi berhasil didapatkan:', userLocation);
                 },
                 function(error) {
                     hideGpsLoading();
-                    
+
                     let errorMessage = 'Tidak dapat mengakses lokasi Anda. ';
-                    
-                    switch(error.code) {
+
+                    switch (error.code) {
                         case error.PERMISSION_DENIED:
-                            errorMessage += 'Izin lokasi ditolak. Silakan aktifkan izin lokasi di browser Anda dan refresh halaman.';
+                            errorMessage +=
+                                'Izin lokasi ditolak. Silakan aktifkan izin lokasi di browser Anda dan refresh halaman.';
                             break;
                         case error.POSITION_UNAVAILABLE:
                             errorMessage += 'Informasi lokasi tidak tersedia. Pastikan GPS aktif.';
@@ -795,17 +858,16 @@
                             errorMessage += 'Terjadi error yang tidak diketahui.';
                             break;
                     }
-                    
+
                     alert(errorMessage);
                     console.error('Geolocation error:', error);
-                    
+
                     // Fallback to default location (Jakarta)
                     const defaultLocation = [-6.2088, 106.8456];
                     placeMarker(L.latLng(defaultLocation));
                     map.setView(defaultLocation, 12);
                     updateCoordinates(L.latLng(defaultLocation));
-                },
-                {
+                }, {
                     enableHighAccuracy: true,
                     timeout: 15000,
                     maximumAge: 60000
@@ -824,7 +886,7 @@
             if (marker) {
                 map.removeLayer(marker);
             }
-            
+
             // Create custom marker icon
             const customIcon = L.divIcon({
                 className: 'custom-marker',
@@ -832,15 +894,18 @@
                 iconSize: [20, 20],
                 iconAnchor: [10, 10]
             });
-            
+
             // Add new marker
-            marker = L.marker(location, { icon: customIcon, draggable: true }).addTo(map);
-            
+            marker = L.marker(location, {
+                icon: customIcon,
+                draggable: true
+            }).addTo(map);
+
             // Add drag listener to marker
             marker.on('dragend', function() {
                 updateCoordinates(marker.getLatLng());
             });
-            
+
             // Center map on marker
             map.setView(location, Math.max(map.getZoom(), 15));
         }
@@ -849,7 +914,7 @@
         function updateCoordinates(latlng) {
             const lat = latlng.lat.toFixed(6);
             const lng = latlng.lng.toFixed(6);
-            
+
             document.getElementById('coordinates').textContent = `${lat}, ${lng}`;
             document.getElementById('latitude').value = lat;
             document.getElementById('longitude').value = lng;
@@ -876,7 +941,7 @@
         async function loadProvinces() {
             const provinceSelect = document.getElementById('province');
             const loadingSpinner = document.getElementById('provinceLoading');
-            
+
             try {
                 // Show loading
                 provinceSelect.innerHTML = '<option value="">Memuat provinsi...</option>';
@@ -890,13 +955,13 @@
 
                 // Using Mabrural GitHub API
                 const response = await fetch(`${API_BASE_URL}/provinces.json`);
-                
+
                 if (!response.ok) {
                     throw new Error('Failed to fetch provinces');
                 }
 
                 const data = await response.json();
-                
+
                 // Transform data to store both ID and Name
                 const provinces = data.map(province => ({
                     id: province.id,
@@ -908,9 +973,9 @@
 
                 // Cache the data
                 regionCache.provinces = provinces;
-                
+
                 populateProvinces(provinces);
-                
+
             } catch (error) {
                 console.error('Error loading provinces:', error);
                 provinceSelect.innerHTML = '<option value="">Gagal memuat provinsi</option>';
@@ -925,7 +990,7 @@
         async function loadCities(provinceId) {
             const citySelect = document.getElementById('city');
             const loadingSpinner = document.getElementById('cityLoading');
-            
+
             try {
                 // Show loading
                 citySelect.innerHTML = '<option value="">Memuat kota/kabupaten...</option>';
@@ -940,13 +1005,13 @@
 
                 // Using Mabrural GitHub API
                 const response = await fetch(`${API_BASE_URL}/regencies/${provinceId}.json`);
-                
+
                 if (!response.ok) {
                     throw new Error('Failed to fetch cities');
                 }
 
                 const data = await response.json();
-                
+
                 // Transform data to store both ID and Name
                 const cities = data.map(city => ({
                     id: city.id,
@@ -958,9 +1023,9 @@
 
                 // Cache the data
                 regionCache.cities[provinceId] = cities;
-                
+
                 populateCities(cities);
-                
+
             } catch (error) {
                 console.error('Error loading cities:', error);
                 citySelect.innerHTML = '<option value="">Gagal memuat kota/kabupaten</option>';
@@ -973,7 +1038,7 @@
         async function loadDistricts(cityId) {
             const districtSelect = document.getElementById('district');
             const loadingSpinner = document.getElementById('districtLoading');
-            
+
             try {
                 // Show loading
                 districtSelect.innerHTML = '<option value="">Memuat kecamatan...</option>';
@@ -988,13 +1053,13 @@
 
                 // Using Mabrural GitHub API
                 const response = await fetch(`${API_BASE_URL}/districts/${cityId}.json`);
-                
+
                 if (!response.ok) {
                     throw new Error('Failed to fetch districts');
                 }
 
                 const data = await response.json();
-                
+
                 // Transform data to store both ID and Name
                 const districts = data.map(district => ({
                     id: district.id,
@@ -1006,9 +1071,9 @@
 
                 // Cache the data
                 regionCache.districts[cityId] = districts;
-                
+
                 populateDistricts(districts);
-                
+
             } catch (error) {
                 console.error('Error loading districts:', error);
                 districtSelect.innerHTML = '<option value="">Gagal memuat kecamatan</option>';
@@ -1021,7 +1086,7 @@
         async function loadVillages(districtId) {
             const villageSelect = document.getElementById('village');
             const loadingSpinner = document.getElementById('villageLoading');
-            
+
             try {
                 // Show loading
                 villageSelect.innerHTML = '<option value="">Memuat kelurahan...</option>';
@@ -1036,13 +1101,13 @@
 
                 // Using Mabrural GitHub API
                 const response = await fetch(`${API_BASE_URL}/villages/${districtId}.json`);
-                
+
                 if (!response.ok) {
                     throw new Error('Failed to fetch villages');
                 }
 
                 const data = await response.json();
-                
+
                 // Transform data to store both ID and Name
                 const villages = data.map(village => ({
                     id: village.id,
@@ -1054,9 +1119,9 @@
 
                 // Cache the data
                 regionCache.villages[districtId] = villages;
-                
+
                 populateVillages(villages);
-                
+
             } catch (error) {
                 console.error('Error loading villages:', error);
                 villageSelect.innerHTML = '<option value="">Gagal memuat kelurahan</option>';
@@ -1071,9 +1136,9 @@
 
         function populateProvinces(provinces) {
             const provinceSelect = document.getElementById('province');
-            
+
             provinceSelect.innerHTML = '<option value="">Pilih Provinsi</option>';
-            
+
             provinces.forEach(province => {
                 const option = document.createElement('option');
                 option.value = province.name; // Store the name instead of ID
@@ -1085,9 +1150,9 @@
 
         function populateCities(cities) {
             const citySelect = document.getElementById('city');
-            
+
             citySelect.innerHTML = '<option value="">Pilih Kota/Kabupaten</option>';
-            
+
             cities.forEach(city => {
                 const option = document.createElement('option');
                 option.value = city.name; // Store the name instead of ID
@@ -1095,9 +1160,9 @@
                 option.setAttribute('data-id', city.id); // Store ID as data attribute if needed
                 citySelect.appendChild(option);
             });
-            
+
             citySelect.disabled = false;
-            
+
             // Reset district and village when city changes
             resetDistrict();
             resetVillage();
@@ -1105,9 +1170,9 @@
 
         function populateDistricts(districts) {
             const districtSelect = document.getElementById('district');
-            
+
             districtSelect.innerHTML = '<option value="">Pilih Kecamatan</option>';
-            
+
             districts.forEach(district => {
                 const option = document.createElement('option');
                 option.value = district.name; // Store the name instead of ID
@@ -1115,18 +1180,18 @@
                 option.setAttribute('data-id', district.id); // Store ID as data attribute if needed
                 districtSelect.appendChild(option);
             });
-            
+
             districtSelect.disabled = false;
-            
+
             // Reset village when district changes
             resetVillage();
         }
 
         function populateVillages(villages) {
             const villageSelect = document.getElementById('village');
-            
+
             villageSelect.innerHTML = '<option value="">Pilih Kelurahan</option>';
-            
+
             villages.forEach(village => {
                 const option = document.createElement('option');
                 option.value = village.name; // Store the name instead of ID
@@ -1134,7 +1199,7 @@
                 option.setAttribute('data-id', village.id); // Store ID as data attribute if needed
                 villageSelect.appendChild(option);
             });
-            
+
             villageSelect.disabled = false;
         }
 
@@ -1155,46 +1220,156 @@
         // ===============================
 
         function loadStaticProvinces() {
-            const staticProvinces = [
-                { id: '11', name: 'Aceh' },
-                { id: '12', name: 'Sumatera Utara' },
-                { id: '13', name: 'Sumatera Barat' },
-                { id: '14', name: 'Riau' },
-                { id: '15', name: 'Jambi' },
-                { id: '16', name: 'Sumatera Selatan' },
-                { id: '17', name: 'Bengkulu' },
-                { id: '18', name: 'Lampung' },
-                { id: '19', name: 'Kepulauan Bangka Belitung' },
-                { id: '21', name: 'Kepulauan Riau' },
-                { id: '31', name: 'DKI Jakarta' },
-                { id: '32', name: 'Jawa Barat' },
-                { id: '33', name: 'Jawa Tengah' },
-                { id: '34', name: 'DI Yogyakarta' },
-                { id: '35', name: 'Jawa Timur' },
-                { id: '36', name: 'Banten' },
-                { id: '51', name: 'Bali' },
-                { id: '52', name: 'Nusa Tenggara Barat' },
-                { id: '53', name: 'Nusa Tenggara Timur' },
-                { id: '61', name: 'Kalimantan Barat' },
-                { id: '62', name: 'Kalimantan Tengah' },
-                { id: '63', name: 'Kalimantan Selatan' },
-                { id: '64', name: 'Kalimantan Timur' },
-                { id: '65', name: 'Kalimantan Utara' },
-                { id: '71', name: 'Sulawesi Utara' },
-                { id: '72', name: 'Sulawesi Tengah' },
-                { id: '73', name: 'Sulawesi Selatan' },
-                { id: '74', name: 'Sulawesi Tenggara' },
-                { id: '75', name: 'Gorontalo' },
-                { id: '76', name: 'Sulawesi Barat' },
-                { id: '81', name: 'Maluku' },
-                { id: '82', name: 'Maluku Utara' },
-                { id: '91', name: 'Papua Barat' },
-                { id: '92', name: 'Papua' },
-                { id: '93', name: 'Papua Selatan' },
-                { id: '94', name: 'Papua Tengah' },
-                { id: '95', name: 'Papua Pegunungan' }
+            const staticProvinces = [{
+                    id: '11',
+                    name: 'Aceh'
+                },
+                {
+                    id: '12',
+                    name: 'Sumatera Utara'
+                },
+                {
+                    id: '13',
+                    name: 'Sumatera Barat'
+                },
+                {
+                    id: '14',
+                    name: 'Riau'
+                },
+                {
+                    id: '15',
+                    name: 'Jambi'
+                },
+                {
+                    id: '16',
+                    name: 'Sumatera Selatan'
+                },
+                {
+                    id: '17',
+                    name: 'Bengkulu'
+                },
+                {
+                    id: '18',
+                    name: 'Lampung'
+                },
+                {
+                    id: '19',
+                    name: 'Kepulauan Bangka Belitung'
+                },
+                {
+                    id: '21',
+                    name: 'Kepulauan Riau'
+                },
+                {
+                    id: '31',
+                    name: 'DKI Jakarta'
+                },
+                {
+                    id: '32',
+                    name: 'Jawa Barat'
+                },
+                {
+                    id: '33',
+                    name: 'Jawa Tengah'
+                },
+                {
+                    id: '34',
+                    name: 'DI Yogyakarta'
+                },
+                {
+                    id: '35',
+                    name: 'Jawa Timur'
+                },
+                {
+                    id: '36',
+                    name: 'Banten'
+                },
+                {
+                    id: '51',
+                    name: 'Bali'
+                },
+                {
+                    id: '52',
+                    name: 'Nusa Tenggara Barat'
+                },
+                {
+                    id: '53',
+                    name: 'Nusa Tenggara Timur'
+                },
+                {
+                    id: '61',
+                    name: 'Kalimantan Barat'
+                },
+                {
+                    id: '62',
+                    name: 'Kalimantan Tengah'
+                },
+                {
+                    id: '63',
+                    name: 'Kalimantan Selatan'
+                },
+                {
+                    id: '64',
+                    name: 'Kalimantan Timur'
+                },
+                {
+                    id: '65',
+                    name: 'Kalimantan Utara'
+                },
+                {
+                    id: '71',
+                    name: 'Sulawesi Utara'
+                },
+                {
+                    id: '72',
+                    name: 'Sulawesi Tengah'
+                },
+                {
+                    id: '73',
+                    name: 'Sulawesi Selatan'
+                },
+                {
+                    id: '74',
+                    name: 'Sulawesi Tenggara'
+                },
+                {
+                    id: '75',
+                    name: 'Gorontalo'
+                },
+                {
+                    id: '76',
+                    name: 'Sulawesi Barat'
+                },
+                {
+                    id: '81',
+                    name: 'Maluku'
+                },
+                {
+                    id: '82',
+                    name: 'Maluku Utara'
+                },
+                {
+                    id: '91',
+                    name: 'Papua Barat'
+                },
+                {
+                    id: '92',
+                    name: 'Papua'
+                },
+                {
+                    id: '93',
+                    name: 'Papua Selatan'
+                },
+                {
+                    id: '94',
+                    name: 'Papua Tengah'
+                },
+                {
+                    id: '95',
+                    name: 'Papua Pegunungan'
+                }
             ];
-            
+
             populateProvinces(staticProvinces);
         }
 
@@ -1207,14 +1382,14 @@
             document.getElementById('province').addEventListener('change', function() {
                 const selectedOption = this.options[this.selectedIndex];
                 const provinceId = selectedOption.getAttribute('data-id');
-                
+
                 if (provinceId) {
                     loadCities(provinceId);
                 } else {
                     const citySelect = document.getElementById('city');
                     citySelect.innerHTML = '<option value="">Pilih provinsi terlebih dahulu</option>';
                     citySelect.disabled = true;
-                    
+
                     resetDistrict();
                     resetVillage();
                 }
@@ -1224,7 +1399,7 @@
             document.getElementById('city').addEventListener('change', function() {
                 const selectedOption = this.options[this.selectedIndex];
                 const cityId = selectedOption.getAttribute('data-id');
-                
+
                 if (cityId) {
                     loadDistricts(cityId);
                 } else {
@@ -1237,7 +1412,7 @@
             document.getElementById('district').addEventListener('change', function() {
                 const selectedOption = this.options[this.selectedIndex];
                 const districtId = selectedOption.getAttribute('data-id');
-                
+
                 if (districtId) {
                     loadVillages(districtId);
                 } else {
@@ -1280,50 +1455,50 @@
         // Handle photo upload and preview
         function handlePhotoUpload(files) {
             const previewContainer = document.getElementById('photoPreview');
-            
+
             for (let i = 0; i < files.length; i++) {
                 const file = files[i];
-                
+
                 // Check file size (max 5MB)
                 if (file.size > 5 * 1024 * 1024) {
                     alert(`File ${file.name} terlalu besar. Maksimal 5MB.`);
                     continue;
                 }
-                
+
                 // Check file type
                 if (!file.type.match('image/jpeg') && !file.type.match('image/png')) {
                     alert(`File ${file.name} harus berupa gambar JPG atau PNG.`);
                     continue;
                 }
-                
+
                 // Add to uploaded photos array
                 uploadedPhotos.push(file);
-                
+
                 // Create preview
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     const previewItem = document.createElement('div');
                     previewItem.className = 'file-preview-item';
-                    
+
                     const img = document.createElement('img');
                     img.src = e.target.result;
                     img.alt = 'Preview foto bengkel';
-                    
+
                     const removeBtn = document.createElement('button');
                     removeBtn.className = 'remove-btn';
                     removeBtn.innerHTML = '×';
                     removeBtn.onclick = function() {
                         removePhoto(file, previewItem);
                     };
-                    
+
                     previewItem.appendChild(img);
                     previewItem.appendChild(removeBtn);
                     previewContainer.appendChild(previewItem);
                 };
-                
+
                 reader.readAsDataURL(file);
             }
-            
+
             // Reset file input to allow selecting the same file again
             document.getElementById('photos').value = '';
         }
@@ -1439,7 +1614,10 @@
         }
 
         function scrollToTop() {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
         }
 
         // Clear error messages
@@ -1455,11 +1633,11 @@
         // Display validation errors
         function displayErrors(errors) {
             clearErrors();
-            
+
             for (const field in errors) {
                 const errorElement = document.getElementById(field + '-error');
                 const inputElement = document.querySelector(`[name="${field}"]`);
-                
+
                 if (errorElement && inputElement) {
                     errorElement.textContent = errors[field][0];
                     inputElement.classList.add('border-error');
@@ -1483,7 +1661,7 @@
                 const village = document.getElementById('village').value;
                 const latitude = document.getElementById('latitude').value;
                 const longitude = document.getElementById('longitude').value;
-                
+
                 if (!name) {
                     errorMessage = 'Nama bengkel harus diisi';
                     document.getElementById('name').focus();
@@ -1513,7 +1691,7 @@
             } else if (step === 2) {
                 const services = document.querySelectorAll('input[name="services[]"]:checked');
                 const operatingHours = document.getElementById('operating_hours').value;
-                
+
                 if (services.length === 0) {
                     errorMessage = 'Pilih minimal satu jenis layanan';
                 } else if (!operatingHours) {
@@ -1534,12 +1712,68 @@
         }
 
         // Register workshop
+        // function registerWorkshop() {
+        //     if (!validateStep(3)) return;
+
+        //     const submitBtn = document.getElementById('submitBtn');
+        //     const originalText = submitBtn.innerHTML;
+
+        //     // Show loading state
+        //     submitBtn.disabled = true;
+        //     submitBtn.innerHTML = '<div class="loading-spinner mr-2"></div> Mendaftarkan...';
+
+        //     // Create FormData object
+        //     const formData = new FormData(document.getElementById('workshopForm'));
+
+        //     // Add uploaded photos to FormData
+        //     uploadedPhotos.forEach((file, index) => {
+        //         formData.append(`photos[${index}]`, file);
+        //     });
+
+        //     // Send data to server
+        //     fetch("{{ route('my-workshop.store') }}", {
+        //         method: 'POST',
+        //         headers: {
+        //             'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value,
+        //             'Accept': 'application/json'
+        //         },
+        //         body: formData
+        //     })
+        //     .then(response => response.json())
+        //     .then(data => {
+        //         if (data.success) {
+        //             // Show success message
+        //             alert('Pendaftaran bengkel berhasil! Data Anda sedang diverifikasi.');
+
+        //             // Update UI to show registered workshop
+        //             userHasRegistered = true;
+        //             registeredWorkshopData = data.workshop;
+        //             document.getElementById('registrationForm').classList.add('hidden');
+        //             document.getElementById('alreadyRegistered').classList.remove('hidden');
+        //             displayRegisteredWorkshopInfo();
+        //         } else {
+        //             // Display validation errors
+        //             displayErrors(data.errors);
+        //             alert('Terjadi kesalahan. Silakan periksa kembali data yang Anda masukkan.');
+        //         }
+        //     })
+        //     .catch(error => {
+        //         console.error('Error:', error);
+        //         alert('Terjadi kesalahan saat mendaftarkan bengkel. Silakan coba lagi.');
+        //     })
+        //     .finally(() => {
+        //         // Reset button state
+        //         submitBtn.disabled = false;
+        //         submitBtn.innerHTML = originalText;
+        //     });
+        // }
+        // Register workshop
         function registerWorkshop() {
             if (!validateStep(3)) return;
 
             const submitBtn = document.getElementById('submitBtn');
             const originalText = submitBtn.innerHTML;
-            
+
             // Show loading state
             submitBtn.disabled = true;
             submitBtn.innerHTML = '<div class="loading-spinner mr-2"></div> Mendaftarkan...';
@@ -1552,42 +1786,61 @@
                 formData.append(`photos[${index}]`, file);
             });
 
+            // Add types array properly
+            const types = document.querySelectorAll('input[name="types[]"]:checked');
+            types.forEach((type, index) => {
+                formData.append(`types[${index}]`, type.value);
+            });
+
+            // Add services array properly
+            const services = document.querySelectorAll('input[name="services[]"]:checked');
+            services.forEach((service, index) => {
+                formData.append(`services[${index}]`, service.value);
+            });
+
             // Send data to server
             fetch("{{ route('my-workshop.store') }}", {
-                method: 'POST',
-                headers: {
-                    'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value,
-                    'Accept': 'application/json'
-                },
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    // Show success message
-                    alert('Pendaftaran bengkel berhasil! Data Anda sedang diverifikasi.');
-                    
-                    // Update UI to show registered workshop
-                    userHasRegistered = true;
-                    registeredWorkshopData = data.workshop;
-                    document.getElementById('registrationForm').classList.add('hidden');
-                    document.getElementById('alreadyRegistered').classList.remove('hidden');
-                    displayRegisteredWorkshopInfo();
-                } else {
-                    // Display validation errors
-                    displayErrors(data.errors);
-                    alert('Terjadi kesalahan. Silakan periksa kembali data yang Anda masukkan.');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('Terjadi kesalahan saat mendaftarkan bengkel. Silakan coba lagi.');
-            })
-            .finally(() => {
-                // Reset button state
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = originalText;
-            });
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value,
+                        'Accept': 'application/json'
+                    },
+                    body: formData
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.success) {
+                        // Show success message
+                        alert(data.message || 'Pendaftaran bengkel berhasil! Data Anda sedang diverifikasi.');
+
+                        // Update UI to show registered workshop
+                        userHasRegistered = true;
+                        registeredWorkshopData = data.workshop;
+                        document.getElementById('registrationForm').classList.add('hidden');
+                        document.getElementById('alreadyRegistered').classList.remove('hidden');
+                        displayRegisteredWorkshopInfo();
+                    } else {
+                        // Display validation errors
+                        if (data.errors) {
+                            displayErrors(data.errors);
+                        }
+                        alert(data.message || 'Terjadi kesalahan. Silakan periksa kembali data yang Anda masukkan.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Terjadi kesalahan saat mendaftarkan bengkel. Silakan coba lagi.');
+                })
+                .finally(() => {
+                    // Reset button state
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = originalText;
+                });
         }
 
         // Request edit
@@ -1595,25 +1848,28 @@
             const reason = prompt('Mohon jelaskan alasan perubahan data bengkel:');
             if (reason) {
                 fetch('/api/request-edit', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value
-                    },
-                    body: JSON.stringify({ reason: reason })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        alert('Permohonan perubahan telah dikirim. Tim kami akan menghubungi Anda dalam 1-2 hari kerja.');
-                    } else {
-                        alert('Gagal mengirim permohonan perubahan. Silakan coba lagi.');
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('Terjadi kesalahan saat mengirim permohonan perubahan.');
-                });
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value
+                        },
+                        body: JSON.stringify({
+                            reason: reason
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            alert(
+                                'Permohonan perubahan telah dikirim. Tim kami akan menghubungi Anda dalam 1-2 hari kerja.');
+                        } else {
+                            alert('Gagal mengirim permohonan perubahan. Silakan coba lagi.');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('Terjadi kesalahan saat mengirim permohonan perubahan.');
+                    });
             }
         }
     </script>
