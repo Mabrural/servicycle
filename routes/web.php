@@ -26,7 +26,7 @@ Route::get('/booking', function() {
 });
 
 Route::get('/storage/{folder}/{filename}', function ($folder, $filename) {
-    $allowedFolders = ['vehicle_images', 'workshop-photos'];
+    $allowedFolders = ['vehicle_images', 'workshop-images'];
 
     if (!in_array($folder, $allowedFolders)) {
         abort(403);

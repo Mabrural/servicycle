@@ -33,7 +33,7 @@
                                 @php
                                     $photo =
                                         is_array($workshop->photos) && count($workshop->photos) > 0
-                                            ? url('/storage/workshop_photos/' . $workshop->photos[0])
+                                            ? url('/storage/workshop-images/' . $workshop->photos[0])
                                             : asset('img/no-vehicle.jpg');
                                 @endphp
 
