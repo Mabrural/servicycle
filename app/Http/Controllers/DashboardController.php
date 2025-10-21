@@ -35,7 +35,7 @@ class DashboardController extends Controller
                 return redirect()->route('my-workshop.create');
             }
 
-            return redirect('/workshop/dashboard');
+            return redirect()->route('dashboard.workshop');
         }
 
         // === Role: Vehicle Owner ===
