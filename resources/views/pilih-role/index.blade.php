@@ -11,7 +11,7 @@
     <meta name="description" content="Pilih peran Anda di ServiCycle - Platform manajemen servis kendaraan" />
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="{{ asset('img/favicon/favicon.ico') }}" />
+    <link rel="icon" type="image/x-icon" href="{{ asset('img/icon-servicycle.png') }}" />
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
