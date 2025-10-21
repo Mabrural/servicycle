@@ -30,14 +30,7 @@
 
                             {{-- Foto utama --}}
                             <div class="position-relative">
-                                @php
-                                    $photo =
-                                        is_array($workshop->photos) && count($workshop->photos) > 0
-                                            ? url('/storage/workshop-images/' . $workshop->photos[0])
-                                            : asset('img/no-vehicle.jpg');
-                                @endphp
-
-                                <img src="{{ $photo }}" class="card-img-top" alt="{{ $workshop->name }}"
+                                <img src="{{ $workshop->primaryImage->image_url }}" class="card-img-top" alt="{{ $workshop->name }}"
                                     style="height: 180px; object-fit: cover; object-position: center;">
 
                                 <span class="badge bg-gradient position-absolute top-0 start-0 m-2 px-3 py-2"
