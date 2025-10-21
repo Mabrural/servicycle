@@ -149,11 +149,20 @@ class WorkshopController extends Controller
     /**
      * Show list of workshops.
      */
+    // public function index()
+    // {
+    //     $workshops = Workshop::where('created_by', Auth::id())->get();
+    //     return view('workshop.index', compact('workshops'));
+    // }
     public function index()
     {
-        $workshops = Workshop::where('created_by', Auth::id())->get();
+        $workshops = Workshop::with('images')
+            ->where('created_by', Auth::id())
+            ->get();
+
         return view('workshop.index', compact('workshops'));
     }
+
 
     /**
      * Show edit form for workshop
