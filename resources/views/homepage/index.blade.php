@@ -649,8 +649,9 @@
                 @foreach ($workshops as $workshop)
                     <div class="card" data-lat="{{ $workshop->latitude }}" data-lng="{{ $workshop->longitude }}"
                         data-id="{{ $workshop->id }}">
-                        <img src="{{ asset('img/bengkel-mobil.jpeg') }}" alt="Gambar Bengkel"
-                            class="relative overflow-hidden rounded-xl mb-2">
+                        <img src="{{ $workshop->primaryImage->image_url }}" alt="Gambar Bengkel"
+                            class="w-full h-44 object-cover object-center rounded-xl mb-2 bg-gray-100" />
+
                         <div class="name">{{ $workshop->name }}</div>
                         <div class="city"><i class="fa-solid fa-location-dot text-red-500"></i>
                             {{ $workshop->city ?? '-' }}</div>
