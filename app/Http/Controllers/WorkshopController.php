@@ -167,17 +167,21 @@ class WorkshopController extends Controller
         return view('workshop.edit', compact('workshop'));
     }
 
+    // public function show($id)
+    // {
+    //     $workshop = Workshop::where('id', $id)
+    //         ->where('created_by', Auth::id())
+    //         ->with('images')
+    //         ->firstOrFail();
+
+    //     return response()->json([
+    //         'success' => true,
+    //         'workshop' => $workshop
+    //     ]);
+    // }
     public function show($id)
     {
-        $workshop = Workshop::where('id', $id)
-            ->where('created_by', Auth::id())
-            ->with('images')
-            ->firstOrFail();
-
-        return response()->json([
-            'success' => true,
-            'workshop' => $workshop
-        ]);
+        return view('workshop.show');
     }
 
     public function update(Request $request, $id)
