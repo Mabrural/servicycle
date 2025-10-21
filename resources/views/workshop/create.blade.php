@@ -1712,62 +1712,6 @@
         }
 
         // Register workshop
-        // function registerWorkshop() {
-        //     if (!validateStep(3)) return;
-
-        //     const submitBtn = document.getElementById('submitBtn');
-        //     const originalText = submitBtn.innerHTML;
-
-        //     // Show loading state
-        //     submitBtn.disabled = true;
-        //     submitBtn.innerHTML = '<div class="loading-spinner mr-2"></div> Mendaftarkan...';
-
-        //     // Create FormData object
-        //     const formData = new FormData(document.getElementById('workshopForm'));
-
-        //     // Add uploaded photos to FormData
-        //     uploadedPhotos.forEach((file, index) => {
-        //         formData.append(`photos[${index}]`, file);
-        //     });
-
-        //     // Send data to server
-        //     fetch("{{ route('my-workshop.store') }}", {
-        //         method: 'POST',
-        //         headers: {
-        //             'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value,
-        //             'Accept': 'application/json'
-        //         },
-        //         body: formData
-        //     })
-        //     .then(response => response.json())
-        //     .then(data => {
-        //         if (data.success) {
-        //             // Show success message
-        //             alert('Pendaftaran bengkel berhasil! Data Anda sedang diverifikasi.');
-
-        //             // Update UI to show registered workshop
-        //             userHasRegistered = true;
-        //             registeredWorkshopData = data.workshop;
-        //             document.getElementById('registrationForm').classList.add('hidden');
-        //             document.getElementById('alreadyRegistered').classList.remove('hidden');
-        //             displayRegisteredWorkshopInfo();
-        //         } else {
-        //             // Display validation errors
-        //             displayErrors(data.errors);
-        //             alert('Terjadi kesalahan. Silakan periksa kembali data yang Anda masukkan.');
-        //         }
-        //     })
-        //     .catch(error => {
-        //         console.error('Error:', error);
-        //         alert('Terjadi kesalahan saat mendaftarkan bengkel. Silakan coba lagi.');
-        //     })
-        //     .finally(() => {
-        //         // Reset button state
-        //         submitBtn.disabled = false;
-        //         submitBtn.innerHTML = originalText;
-        //     });
-        // }
-        // Register workshop
         function registerWorkshop() {
             if (!validateStep(3)) return;
 

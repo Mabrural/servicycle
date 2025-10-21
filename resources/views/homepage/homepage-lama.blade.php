@@ -645,23 +645,18 @@
 
             <!-- Workshops List -->
             <div class="workshop-list mt-6 md:mt-8" id="workshopList">
-                @forelse ($workshops as $workshop)
+                <!-- Workshop cards will be populated by JavaScript -->
+                @foreach ($workshops as $workshop)
                     <div class="card" data-lat="{{ $workshop->latitude }}" data-lng="{{ $workshop->longitude }}"
                         data-id="{{ $workshop->id }}">
-
-                        <!-- Gambar Bengkel -->
-                        <img src="{{ $workshop->primaryImage->image_url ?? asset('img/default-workshop.jpg') }}"
-                            alt="Gambar Bengkel"
+                        <img src="{{ $workshop->primaryImage->image_url }}" alt="Gambar Bengkel"
                             class="w-full h-44 object-cover object-center rounded-xl mb-2 bg-gray-100" />
 
-                        <!-- Info Bengkel -->
-                        <div class="name font-semibold text-lg text-gray-800">{{ $workshop->name }}</div>
-                        <div class="city text-sm text-gray-600">
-                            <i class="fa-solid fa-location-dot text-red-500"></i> {{ $workshop->city ?? '-' }}
-                        </div>
-                        <div class="distance text-sm text-gray-500">Jarak: menghitung...</div>
-
-                        <!-- Tombol Aksi -->
+                        <div class="name">{{ $workshop->name }}</div>
+                        <div class="city"><i class="fa-solid fa-location-dot text-red-500"></i>
+                            {{ $workshop->city ?? '-' }}</div>
+                        <div class="distance">Jarak: menghitung...</div>
+                        {{-- Tombol Aksi --}}
                         <div class="mt-4 flex items-center justify-between">
                             <a href="https://www.google.com/maps?q={{ $workshop->latitude }},{{ $workshop->longitude }}"
                                 target="_blank"
@@ -675,19 +670,8 @@
                             </a>
                         </div>
                     </div>
-                @empty
-                    {{-- Tidak menampilkan apa pun di awal, pesan akan dimunculkan lewat JS --}}
-                @endforelse
+                @endforeach
             </div>
-
-            <!-- Pesan jika tidak ada bengkel -->
-            <div id="noWorkshopsMessage"
-                class="hidden flex flex-col items-center justify-center text-center py-20 bg-gray-50 rounded-xl border border-dashed border-gray-300">
-                <i class="fa-solid fa-wrench text-gray-400 text-5xl mb-3"></i>
-                <p class="text-gray-600 text-lg font-medium">Belum ada bengkel yang terdaftar di sekitar lokasi Anda.
-                </p>
-            </div>
-
         </div>
     </section>
 
@@ -1259,47 +1243,6 @@
             }
         }
     </script>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // Coba dapatkan lokasi pengguna
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(
-                    function(position) {
-                        const userLat = position.coords.latitude;
-                        const userLng = position.coords.longitude;
-
-                        console.log("Lokasi pengguna:", userLat, userLng);
-
-                        // Setelah lokasi didapatkan, cek apakah ada bengkel
-                        const workshopList = document.getElementById('workshopList');
-                        const workshops = workshopList.querySelectorAll('.card');
-                        const noWorkshopsMessage = document.getElementById('noWorkshopsMessage');
-
-                        if (workshops.length === 0) {
-                            noWorkshopsMessage.classList.remove('hidden');
-                        } else {
-                            noWorkshopsMessage.classList.add('hidden');
-                        }
-
-                        // Tambahkan logika perhitungan jarak di sini jika perlu
-                    },
-                    function(error) {
-                        console.warn("Gagal mendapatkan lokasi:", error.message);
-                        document.getElementById('noWorkshopsMessage').classList.remove('hidden');
-                        document.getElementById('noWorkshopsMessage').querySelector('p').textContent =
-                            "Tidak dapat menentukan lokasi Anda.";
-                    }
-                );
-            } else {
-                console.warn("Browser tidak mendukung geolocation.");
-                document.getElementById('noWorkshopsMessage').classList.remove('hidden');
-                document.getElementById('noWorkshopsMessage').querySelector('p').textContent =
-                    "Browser Anda tidak mendukung deteksi lokasi.";
-            }
-        });
-    </script>
-
 </body>
 
 </html>
