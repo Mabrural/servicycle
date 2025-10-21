@@ -61,7 +61,7 @@ class Workshop extends Model
      */
     public function getPrimaryImageAttribute()
     {
-        return $this->images()->primary()->first() ?? $this->images()->ordered()->first();
+        return $this->images()->where('is_primary', true)->first() ?? $this->images()->first();
     }
 
     /**
@@ -72,6 +72,22 @@ class Workshop extends Model
         return $this->images->map(function ($image) {
             return $image->image_url;
         });
+    }
+
+    /**
+     * Scope untuk gambar utama
+     */
+    public function scopePrimary($query)
+    {
+        return $query->where('is_primary', true);
+    }
+
+    /**
+     * Scope untuk mengurutkan berdasarkan order
+     */
+    public function scopeOrdered($query)
+    {
+        return $query->orderBy('order')->orderBy('created_at');
     }
 
     /**

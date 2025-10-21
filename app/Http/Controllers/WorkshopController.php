@@ -181,7 +181,24 @@ class WorkshopController extends Controller
     // }
     public function show($id)
     {
-        return view('workshop.show');
+        $workshop = Workshop::where('id', $id)
+            ->where('created_by', Auth::id())
+            ->with(['images', 'creator'])
+            ->firstOrFail();
+
+        // Service names mapping
+        $serviceNames = [
+            'service_rutin' => 'Service Rutin',
+            'ganti_oli' => 'Ganti Oli & Filter',
+            'tune_up' => 'Tune Up',
+            'perbaikan_mesin' => 'Perbaikan Mesin',
+            'perbaikan_rem' => 'Servis Rem',
+            'ganti_ban' => 'Ganti Ban',
+            'servis_ac' => 'Servis AC',
+            'kelistrikan' => 'Servis Kelistrikan'
+        ];
+
+        return view('workshop.show', compact('workshop', 'serviceNames'));
     }
 
     public function update(Request $request, $id)
