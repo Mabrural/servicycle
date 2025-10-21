@@ -110,24 +110,24 @@ Route::middleware(['auth', 'verified', 'is_set_role', 'vehicle_owner'])->group(f
 Route::middleware(['auth', 'verified', 'is_set_role', 'workshop'])->group(function(){
     // Bengkel
 
-    Route::get('/workshop/dashboard', [WorkshopDashboardController::class, 'index'])->name('dashboard.workshop');
+    Route::get('/workshops/dashboard', [WorkshopDashboardController::class, 'index'])->name('dashboard.workshop');
 
     // Route::resource('profil-bengkel', WorkshopController::class);
-    Route::resource('workshop/my-workshop', WorkshopController::class);
+    Route::resource('workshops/my-workshop', WorkshopController::class);
 
-    Route::get('/workshop/booking', function(){
+    Route::get('/workshops/booking', function(){
         return view('booking.workshop.index');
     })->name('workshop.booking');
 
-    Route::get('/workshop/service-and-sparepart', function(){
+    Route::get('/workshops/service-and-sparepart', function(){
         return view('service-and-sparepart.index');
     })->name('service-and-sparepart');
 
-    Route::get('/workshop/invoice', function(){
+    Route::get('/workshops/invoice', function(){
         return view('invoice.index');
     })->name('invoice');
 
-    Route::get('/workshop/promote', function(){
+    Route::get('/workshops/promote', function(){
         return view('promote.index');
     })->name('promote');
 
