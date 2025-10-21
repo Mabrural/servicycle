@@ -149,11 +149,11 @@ class WorkshopController extends Controller
     /**
      * Display the specified workshop.
      */
-    public function show($id)
-    {
-        $workshop = Workshop::with(['creator', 'images'])->findOrFail($id);
-        return view('workshop.show', compact('workshop'));
-    }
+    // public function show($id)
+    // {
+    //     $workshop = Workshop::with(['creator', 'images'])->findOrFail($id);
+    //     return view('workshop.show', compact('workshop'));
+    // }
 
     /**
      * Show list of workshops.
@@ -168,16 +168,181 @@ class WorkshopController extends Controller
     /**
      * Show edit form for workshop
      */
+    // public function edit($id)
+    // {
+    //     $workshop = Workshop::with('images')->findOrFail($id);
+
+    //     // Authorization check - hanya creator yang bisa edit
+    //     if ($workshop->created_by !== Auth::id()) {
+    //         abort(403, 'Unauthorized action.');
+    //     }
+
+    //     return view('workshop.edit', compact('workshop'));
+    // }
     public function edit($id)
     {
-        $workshop = Workshop::with('images')->findOrFail($id);
-
-        // Authorization check - hanya creator yang bisa edit
-        if ($workshop->created_by !== Auth::id()) {
-            abort(403, 'Unauthorized action.');
-        }
+        $workshop = Workshop::where('id', $id)
+            ->where('created_by', Auth::id())
+            ->firstOrFail();
 
         return view('workshop.edit', compact('workshop'));
+    }
+
+    public function show($id)
+    {
+        $workshop = Workshop::where('id', $id)
+            ->where('created_by', Auth::id())
+            ->with('images')
+            ->firstOrFail();
+
+        return response()->json([
+            'success' => true,
+            'workshop' => $workshop
+        ]);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $workshop = Workshop::where('id', $id)
+            ->where('created_by', Auth::id())
+            ->firstOrFail();
+
+        // Validasi data
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'types' => 'required|array|min:1',
+            'types.*' => 'in:motor,mobil,sepeda',
+            'address' => 'required|string',
+            'province' => 'required|string|max:255',
+            'city' => 'required|string|max:255',
+            'district' => 'required|string|max:255',
+            'village' => 'required|string|max:255',
+            'postal_code' => 'nullable|string|max:10',
+            'latitude' => 'required|numeric|between:-90,90',
+            'longitude' => 'required|numeric|between:-180,180',
+            'phone' => 'required|string|max:20',
+            'email' => 'nullable|email|max:255',
+            'services' => 'required|array|min:1',
+            'services.*' => 'in:service_rutin,ganti_oli,tune_up,perbaikan_mesin,perbaikan_rem,ganti_ban,servis_ac,kelistrikan',
+            'specialization' => 'nullable|string|max:255',
+            'operating_hours' => 'required|string|max:255',
+            'custom_hours' => 'nullable|string|max:100',
+            'description' => 'nullable|string',
+            'photos' => 'nullable|array',
+            'photos.*' => 'image|mimes:jpeg,png,jpg|max:5120',
+            'remove_photos' => 'nullable|array',
+            'remove_photos.*' => 'integer|exists:workshop_images,id'
+        ], [
+            'types.required' => 'Pilih minimal satu jenis bengkel.',
+            'types.*.in' => 'Jenis bengkel yang dipilih tidak valid.',
+            'services.required' => 'Pilih minimal satu layanan.',
+            'services.*.in' => 'Layanan yang dipilih tidak valid.',
+            'latitude.between' => 'Latitude harus antara -90 dan 90.',
+            'longitude.between' => 'Longitude harus antara -180 dan 180.',
+            'photos.*.image' => 'File harus berupa gambar.',
+            'photos.*.mimes' => 'Format gambar harus jpeg, png, atau jpg.',
+            'photos.*.max' => 'Ukuran gambar maksimal 5MB.'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Validasi gagal',
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
+        try {
+            DB::beginTransaction();
+
+            // Handle operating hours
+            $operatingHours = $request->operating_hours;
+            if ($operatingHours === 'custom' && $request->custom_hours) {
+                $operatingHours = $request->custom_hours;
+            }
+
+            // Update workshop
+            $workshop->update([
+                'name' => $request->name,
+                'types' => $request->types,
+                'address' => $request->address,
+                'province' => $request->province,
+                'city' => $request->city,
+                'district' => $request->district,
+                'village' => $request->village,
+                'postal_code' => $request->postal_code,
+                'latitude' => $request->latitude,
+                'longitude' => $request->longitude,
+                'phone' => $request->phone,
+                'email' => $request->email,
+                'services' => $request->services,
+                'specialization' => $request->specialization,
+                'operating_hours' => $operatingHours,
+                'description' => $request->description,
+                'status' => 'pending', // Reset status to pending when updating
+            ]);
+
+            // Handle remove photos
+            if ($request->has('remove_photos')) {
+                foreach ($request->remove_photos as $photoId) {
+                    $workshopImage = WorkshopImage::where('id', $photoId)
+                        ->where('workshop_id', $workshop->id)
+                        ->first();
+
+                    if ($workshopImage) {
+                        // Delete file from storage
+                        Storage::disk('public')->delete($workshopImage->image_path);
+                        $workshopImage->delete();
+                    }
+                }
+            }
+
+            // Handle new photo uploads
+            if ($request->hasFile('photos')) {
+                $existingImagesCount = $workshop->images()->count();
+
+                foreach ($request->file('photos') as $index => $photo) {
+                    $path = $photo->store('workshop-images', 'public');
+
+                    WorkshopImage::create([
+                        'workshop_id' => $workshop->id,
+                        'image_path' => $path,
+                        'image_name' => $photo->getClientOriginalName(),
+                        'order' => $existingImagesCount + $index,
+                        'is_primary' => ($existingImagesCount === 0 && $index === 0) // Set as primary if no images exist
+                    ]);
+                }
+            }
+
+            // Update primary image if needed
+            if ($request->has('primary_photo') && $workshop->images()->count() > 0) {
+                $workshop->images()->update(['is_primary' => false]);
+                $primaryImage = WorkshopImage::where('id', $request->primary_photo)
+                    ->where('workshop_id', $workshop->id)
+                    ->first();
+                if ($primaryImage) {
+                    $primaryImage->update(['is_primary' => true]);
+                }
+            }
+
+            DB::commit();
+
+            // Reload workshop with images
+            $workshop->load('images');
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Data bengkel berhasil diperbarui! Status: Menunggu Verifikasi Ulang',
+                'workshop' => $workshop
+            ]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Terjadi kesalahan saat memperbarui data: ' . $e->getMessage()
+            ], 500);
+        }
     }
 
     /**

@@ -80,7 +80,7 @@
                                         class="btn btn-outline-primary btn-sm w-50 me-2">
                                         <i class="bi bi-eye"></i> Lihat
                                     </a>
-                                    <a href="{{ url('/workshop/profile/' . $workshop->id . '/edit') }}"
+                                    <a href="{{ route('my-workshop.edit', $workshop->id) }}"
                                         class="btn btn-outline-warning btn-sm w-50">
                                         <i class="bi bi-pencil"></i> Edit
                                     </a>

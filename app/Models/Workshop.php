@@ -105,4 +105,9 @@ class Workshop extends Model
     {
         return self::where('created_by', $userId)->first();
     }
+
+    public function loadImages()
+    {
+        return $this->load('images');
+    }
 }

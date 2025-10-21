@@ -133,6 +133,10 @@ Route::middleware(['auth', 'verified', 'is_set_role', 'workshop'])->group(functi
 
 });
 
+// routes/web.php
+Route::get('/my-workshop/{id}/edit', [WorkshopController::class, 'edit'])->name('my-workshop.edit');
+Route::put('/my-workshop/{id}', [WorkshopController::class, 'update'])->name('my-workshop.update');
+Route::get('/my-workshop/{id}', [WorkshopController::class, 'show'])->name('my-workshop.show');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
