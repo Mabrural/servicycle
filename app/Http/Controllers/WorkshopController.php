@@ -147,20 +147,10 @@ class WorkshopController extends Controller
     }
 
     /**
-     * Display the specified workshop.
-     */
-    // public function show($id)
-    // {
-    //     $workshop = Workshop::with(['creator', 'images'])->findOrFail($id);
-    //     return view('workshop.show', compact('workshop'));
-    // }
-
-    /**
      * Show list of workshops.
      */
     public function index()
     {
-        // $workshops = Workshop::all();
         $workshops = Workshop::where('created_by', Auth::id())->get();
         return view('workshop.index', compact('workshops'));
     }
@@ -168,17 +158,6 @@ class WorkshopController extends Controller
     /**
      * Show edit form for workshop
      */
-    // public function edit($id)
-    // {
-    //     $workshop = Workshop::with('images')->findOrFail($id);
-
-    //     // Authorization check - hanya creator yang bisa edit
-    //     if ($workshop->created_by !== Auth::id()) {
-    //         abort(403, 'Unauthorized action.');
-    //     }
-
-    //     return view('workshop.edit', compact('workshop'));
-    // }
     public function edit($id)
     {
         $workshop = Workshop::where('id', $id)
