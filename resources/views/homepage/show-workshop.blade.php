@@ -98,6 +98,10 @@
             margin: 4px;
         }
 
+        .rating-stars {
+            color: #fbbf24;
+        }
+
         .bottom-nav.active {
             display: flex;
         }
