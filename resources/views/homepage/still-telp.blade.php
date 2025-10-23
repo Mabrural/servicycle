@@ -380,16 +380,6 @@
             align-items: center;
             justify-content: center;
         }
-
-        /* WhatsApp Button Styles */
-        .whatsapp-btn {
-            background-color: #25D366;
-            color: white;
-        }
-
-        .whatsapp-btn:hover {
-            background-color: #128C7E;
-        }
     </style>
 </head>
 
@@ -833,9 +823,9 @@
                             </button>
 
                             @if($workshop->phone)
-                            <button onclick="openWhatsApp('{{ $workshop->phone }}', '{{ $workshop->name }}')"
-                                class="w-full whatsapp-btn py-3 rounded-lg font-medium hover:bg-[#128C7E] transition-all duration-300 flex items-center justify-center">
-                                <i class="fab fa-whatsapp mr-2"></i> WhatsApp
+                            <button onclick="window.location.href='tel:{{ $workshop->phone }}'"
+                                class="w-full bg-accent text-white py-3 rounded-lg font-medium hover:bg-emerald-600 transition-all duration-300 flex items-center justify-center">
+                                <i class="fas fa-phone mr-2"></i> Telepon Sekarang
                             </button>
                             @endif
 
@@ -861,10 +851,10 @@
                     <i class="fas fa-calendar-alt mr-2"></i> Booking Sekarang
                 </button>
                 @if($workshop->phone)
-                <button onclick="openWhatsApp('{{ $workshop->phone }}', '{{ $workshop->name }}')"
-                    class="whatsapp-btn px-6 py-3 md:px-8 md:py-4 rounded-lg font-medium hover:bg-[#128C7E] transition-all duration-300 text-sm md:text-base flex items-center justify-center">
-                    <i class="fab fa-whatsapp mr-2"></i> WhatsApp
-                </button>
+                <a href="tel:{{ $workshop->phone }}"
+                    class="bg-transparent border-2 border-white px-6 py-3 md:px-8 md:py-4 rounded-lg font-medium hover:bg-white hover:text-primary transition-all duration-300 text-sm md:text-base">
+                    <i class="fas fa-phone mr-2"></i> Hubungi Kami
+                </a>
                 @endif
             </div>
         </div>
@@ -941,24 +931,6 @@
     </footer>
 
     <script>
-        // WhatsApp Function
-        function openWhatsApp(phoneNumber, workshopName) {
-            // Format nomor telepon (hapus karakter selain angka)
-            const formattedPhone = phoneNumber.replace(/\D/g, '');
-            
-            // Pesan default yang akan dikirim
-            const defaultMessage = `Halo, saya tertarik dengan layanan di ${workshopName}. Bisa info lebih lanjut?`;
-            
-            // Encode message untuk URL
-            const encodedMessage = encodeURIComponent(defaultMessage);
-            
-            // Buat URL WhatsApp
-            const whatsappUrl = `https://wa.me/${formattedPhone}?text=${encodedMessage}`;
-            
-            // Buka WhatsApp di tab baru
-            window.open(whatsappUrl, '_blank');
-        }
-
         // Gallery Functions
         function changeMainImage(imageUrl, element) {
             // Update main image
