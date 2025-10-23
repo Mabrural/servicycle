@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminDashboardController;
+use App\Http\Controllers\BookingServiceController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
@@ -24,6 +25,8 @@ Route::get('/workshop/{id}/booking', [HomepageController::class, 'bookingService
 Route::get('/booking', function() {
     return view('booking.index');
 });
+
+Route::resource('booking-services', BookingServiceController::class);
 
 Route::get('/storage/{folder}/{filename}', function ($folder, $filename) {
     $allowedFolders = ['vehicle_images', 'workshop-images'];
