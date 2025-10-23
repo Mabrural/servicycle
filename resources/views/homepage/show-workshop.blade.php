@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Detail Bengkel - ServiCycle</title>
+    <title>{{ $workshop->name }} - ServiCycle</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -172,6 +172,41 @@
         .back-btn:hover {
             transform: translateX(-3px);
         }
+
+        /* Image Gallery Styles */
+        .image-gallery {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 8px;
+            height: 400px;
+        }
+
+        .main-image {
+            grid-row: span 2;
+        }
+
+        .gallery-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-image:hover {
+            transform: scale(1.05);
+        }
+
+        @media (max-width: 768px) {
+            .image-gallery {
+                grid-template-columns: 1fr;
+                height: auto;
+            }
+            .main-image {
+                grid-row: auto;
+            }
+        }
     </style>
 </head>
 
@@ -255,7 +290,7 @@
     </header>
 
     <!-- Bottom Navigation for Mobile -->
-    <div class="bottom-nav" id="bottomNav">
+    {{-- <div class="bottom-nav" id="bottomNav">
         <a href="/#workshops" class="bottom-nav-item" data-section="workshops">
             <i class="fas fa-map-marker-alt"></i>
             <span>Bengkel</span>
@@ -303,7 +338,7 @@
                 <span>Akun</span>
             </a>
         @endauth
-    </div>
+    </div> --}}
 
     <!-- Workshop Detail Hero -->
     <section class="detail-hero text-white py-12 md:py-16 relative overflow-hidden">
@@ -323,29 +358,49 @@
                 <div class="flex-1">
                     <div class="bg-white/10 backdrop-blur-sm rounded-lg px-4 py-2 inline-flex items-center mb-4">
                         <i class="fas fa-star mr-2 text-yellow-300"></i>
-                        <span class="text-sm md:text-base">Rating 4.8/5 • 2.4 km dari lokasi Anda</span>
+                        <span class="text-sm md:text-base">
+                            @if($workshop->rating)
+                                Rating {{ number_format($workshop->rating, 1) }}/5 • 
+                            @else
+                                Belum ada rating • 
+                            @endif
+                            {{-- Untuk jarak, Anda bisa menambahkan logika perhitungan jarak di controller --}}
+                            Lokasi: {{ $workshop->district }}, {{ $workshop->city }}
+                        </span>
                     </div>
                     <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight mb-4">
-                        Bengkel Maju Jaya
+                        {{ $workshop->name }}
                     </h1>
                     <p class="text-lg md:text-xl text-indigo-100 max-w-2xl">
-                        Bengkel terpercaya di Kota Batam dengan layanan servis mobil dan motor lengkap.
+                        {{ $workshop->description ?: 'Bengkel terpercaya dengan layanan servis mobil dan motor lengkap.' }}
                     </p>
 
                     <div class="mt-6 flex flex-wrap gap-2">
-                        <span class="bg-white/20 px-3 py-1 rounded-full text-sm">Mobil</span>
-                        <span class="bg-white/20 px-3 py-1 rounded-full text-sm">Motor</span>
-                        <span class="bg-white/20 px-3 py-1 rounded-full text-sm">24 Jam</span>
-                        <span class="bg-white/20 px-3 py-1 rounded-full text-sm">Emergency</span>
+                        @if($workshop->types && is_array($workshop->types))
+                            @foreach($workshop->types as $type)
+                                <span class="bg-white/20 px-3 py-1 rounded-full text-sm capitalize">{{ $type }}</span>
+                            @endforeach
+                        @endif
+                        
+                        @if($workshop->specialization)
+                            @foreach(explode(',', $workshop->specialization) as $spec)
+                                <span class="bg-white/20 px-3 py-1 rounded-full text-sm">{{ trim($spec) }}</span>
+                            @endforeach
+                        @endif
+                        
+                        {{-- Anda bisa menambahkan logika untuk menampilkan status 24 jam jika ada --}}
+                        @if(strpos(strtolower($workshop->operating_hours ?? ''), '24') !== false)
+                            <span class="bg-white/20 px-3 py-1 rounded-full text-sm">24 Jam</span>
+                        @endif
                     </div>
                 </div>
 
                 <div class="mt-6 md:mt-0 flex space-x-4">
-                    <a href="https://www.google.com/maps?q=-6.200000,106.816666" target="_blank"
+                    <a href="https://www.google.com/maps?q={{ $workshop->latitude }},{{ $workshop->longitude }}" target="_blank"
                         class="bg-white text-primary px-6 py-3 rounded-lg font-medium hover:bg-gray-100 transition-all duration-300 btn-glow flex items-center">
                         <i class="fas fa-map-marker-alt mr-2"></i> Lihat di Maps
                     </a>
-                    <button onclick="window.location.href='/booking/1'"
+                    <button onclick="window.location.href='{{ route('workshops.booking', ['id' => $workshop->id]) }}'"
                         class="bg-accent text-white px-6 py-3 rounded-lg font-medium hover:bg-emerald-600 transition-all duration-300 btn-glow flex items-center">
                         <i class="fas fa-calendar-alt mr-2"></i> Booking Servis
                     </button>
@@ -360,11 +415,47 @@
             <div class="grid md:grid-cols-3 gap-8">
                 <!-- Main Content -->
                 <div class="md:col-span-2">
-                    <!-- Workshop Image -->
-                    <div class="rounded-2xl overflow-hidden shadow-lg mb-8">
-                        <img src="{{ asset('img/bengkel-mobil.jpeg') }}" alt="Foto Bengkel Maju Jaya"
-                            class="w-full h-64 md:h-80 object-cover">
+                    <!-- Workshop Image Gallery -->
+                    @if($workshop->images && $workshop->images->count() > 0)
+                    <div class="image-gallery mb-8">
+                        @php
+                            $primaryImage = $workshop->images->where('is_primary', true)->first() ?? $workshop->images->first();
+                            $otherImages = $workshop->images->where('id', '!=', $primaryImage->id)->take(4);
+                        @endphp
+                        
+                        <div class="main-image">
+                            <img src="{{ $primaryImage->image_url }}" 
+                                 alt="{{ $workshop->name }}" 
+                                 class="gallery-image w-full h-full"
+                                 onclick="openImageModal('{{ $primaryImage->image_url }}')">
+                        </div>
+                        
+                        @foreach($otherImages as $image)
+                        <div>
+                            <img src="{{ $image->image_url }}" 
+                                 alt="{{ $workshop->name }}" 
+                                 class="gallery-image w-full h-full"
+                                 onclick="openImageModal('{{ $image->image_url }}')">
+                        </div>
+                        @endforeach
+                        
+                        @if($workshop->images->count() < 5)
+                            @for($i = $workshop->images->count(); $i < 5; $i++)
+                            <div>
+                                <div class="gallery-image w-full h-full bg-gray-200 flex items-center justify-center">
+                                    <i class="fas fa-image text-gray-400 text-2xl"></i>
+                                </div>
+                            </div>
+                            @endfor
+                        @endif
                     </div>
+                    @else
+                    <div class="rounded-2xl overflow-hidden shadow-lg mb-8">
+                        <div class="w-full h-64 md:h-80 bg-gray-200 flex items-center justify-center">
+                            <i class="fas fa-image text-gray-400 text-4xl"></i>
+                        </div>
+                    </div>
+                    @endif
 
                     <!-- About Section -->
                     <div class="bg-white rounded-2xl shadow-lg p-6 md:p-8 info-card mb-8">
@@ -373,29 +464,30 @@
                             Tentang Bengkel
                         </h2>
                         <p class="text-gray-600 leading-relaxed">
-                            Bengkel Maju Jaya telah melayani masyarakat Batam sejak 2010 dengan komitmen
-                            memberikan pelayanan terbaik untuk kendaraan Anda. Dengan teknisi berpengalaman
-                            dan peralatan modern, kami siap menangani berbagai masalah pada kendaraan
-                            mobil dan motor Anda.
+                            {{ $workshop->description ?: 'Bengkel ini menyediakan berbagai layanan servis kendaraan dengan teknisi berpengalaman dan peralatan modern.' }}
                         </p>
 
                         <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div class="flex items-center">
-                                <i class="fas fa-calendar-check text-accent mr-3"></i>
-                                <span class="text-gray-700">Beroperasi sejak 2010</span>
+                                <i class="fas fa-map-marker-alt text-accent mr-3"></i>
+                                <span class="text-gray-700">{{ $workshop->village }}, {{ $workshop->district }}</span>
                             </div>
                             <div class="flex items-center">
-                                <i class="fas fa-users text-accent mr-3"></i>
-                                <span class="text-gray-700">10+ Teknisi Berpengalaman</span>
+                                <i class="fas fa-city text-accent mr-3"></i>
+                                <span class="text-gray-700">{{ $workshop->city }}, {{ $workshop->province }}</span>
                             </div>
+                            @if($workshop->operating_hours)
                             <div class="flex items-center">
-                                <i class="fas fa-shield-alt text-accent mr-3"></i>
-                                <span class="text-gray-700">Garansi 6 Bulan</span>
+                                <i class="fas fa-clock text-accent mr-3"></i>
+                                <span class="text-gray-700">{{ $workshop->operating_hours }}</span>
                             </div>
+                            @endif
+                            @if($workshop->created_at)
                             <div class="flex items-center">
-                                <i class="fas fa-award text-accent mr-3"></i>
-                                <span class="text-gray-700">Bengkel Terpercaya</span>
+                                <i class="fas fa-calendar text-accent mr-3"></i>
+                                <span class="text-gray-700">Bergabung {{ $workshop->created_at->format('M Y') }}</span>
                             </div>
+                            @endif
                         </div>
                     </div>
 
@@ -407,36 +499,41 @@
                         </h2>
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            @if($workshop->services && is_array($workshop->services))
                             <div class="bg-gray-50 rounded-lg p-4">
                                 <h3 class="font-semibold text-gray-800 mb-2 flex items-center">
-                                    <i class="fas fa-car text-primary mr-2"></i>
-                                    Layanan Mobil
+                                    <i class="fas fa-list text-primary mr-2"></i>
+                                    Semua Layanan
                                 </h3>
                                 <div class="flex flex-wrap gap-2 mt-2">
-                                    <span class="service-tag">Ganti Oli</span>
-                                    <span class="service-tag">Tune-up</span>
-                                    <span class="service-tag">Ganti Ban</span>
-                                    <span class="service-tag">Servis Rem</span>
-                                    <span class="service-tag">AC Service</span>
-                                    <span class="service-tag">Body Repair</span>
+                                    @foreach($workshop->services as $service)
+                                    <span class="service-tag">{{ $service }}</span>
+                                    @endforeach
                                 </div>
                             </div>
+                            @endif
 
+                            @if($workshop->specialization)
                             <div class="bg-gray-50 rounded-lg p-4">
                                 <h3 class="font-semibold text-gray-800 mb-2 flex items-center">
-                                    <i class="fas fa-motorcycle text-primary mr-2"></i>
-                                    Layanan Motor
+                                    <i class="fas fa-star text-primary mr-2"></i>
+                                    Spesialisasi
                                 </h3>
                                 <div class="flex flex-wrap gap-2 mt-2">
-                                    <span class="service-tag">Ganti Oli</span>
-                                    <span class="service-tag">Tune-up</span>
-                                    <span class="service-tag">Ganti Ban</span>
-                                    <span class="service-tag">Servis CVT</span>
-                                    <span class="service-tag">Ganti Aki</span>
-                                    <span class="service-tag">Servis Karburator</span>
+                                    @foreach(explode(',', $workshop->specialization) as $spec)
+                                    <span class="service-tag bg-green-100 text-green-800">{{ trim($spec) }}</span>
+                                    @endforeach
                                 </div>
                             </div>
+                            @endif
                         </div>
+
+                        @if(!$workshop->services && !$workshop->specialization)
+                        <div class="text-center py-8 text-gray-500">
+                            <i class="fas fa-tools text-4xl mb-4"></i>
+                            <p>Informasi layanan belum tersedia</p>
+                        </div>
+                        @endif
                     </div>
                 </div>
 
@@ -454,27 +551,43 @@
                                 <i class="fas fa-location-dot text-gray-400 mt-1 mr-3"></i>
                                 <div>
                                     <p class="font-medium text-gray-700">Alamat</p>
-                                    <p class="text-gray-600 text-sm">Jl. Ahmad Yani No. 45, Batam Center, Kota Batam
+                                    <p class="text-gray-600 text-sm">
+                                        {{ $workshop->address }}<br>
+                                        {{ $workshop->village }}, {{ $workshop->district }}<br>
+                                        {{ $workshop->city }}, {{ $workshop->province }} {{ $workshop->postal_code }}
                                     </p>
                                 </div>
                             </div>
 
+                            @if($workshop->phone)
                             <div class="flex items-center">
                                 <i class="fas fa-phone text-gray-400 mr-3"></i>
                                 <div>
                                     <p class="font-medium text-gray-700">Telepon</p>
-                                    <p class="text-gray-600 text-sm">+62 812 3456 7890</p>
+                                    <p class="text-gray-600 text-sm">{{ $workshop->phone }}</p>
                                 </div>
                             </div>
+                            @endif
 
+                            @if($workshop->email)
+                            <div class="flex items-center">
+                                <i class="fas fa-envelope text-gray-400 mr-3"></i>
+                                <div>
+                                    <p class="font-medium text-gray-700">Email</p>
+                                    <p class="text-gray-600 text-sm">{{ $workshop->email }}</p>
+                                </div>
+                            </div>
+                            @endif
+
+                            @if($workshop->operating_hours)
                             <div class="flex items-center">
                                 <i class="fas fa-clock text-gray-400 mr-3"></i>
                                 <div>
                                     <p class="font-medium text-gray-700">Jam Operasional</p>
-                                    <p class="text-gray-600 text-sm">Senin - Sabtu: 08:00 - 17:00</p>
-                                    <p class="text-gray-600 text-sm">Minggu: 09:00 - 15:00</p>
+                                    <p class="text-gray-600 text-sm">{{ $workshop->operating_hours }}</p>
                                 </div>
                             </div>
+                            @endif
                         </div>
                     </div>
 
@@ -486,15 +599,33 @@
                         </h3>
 
                         <div class="text-center mb-4">
-                            <div class="text-4xl font-bold text-gray-800 mb-2">4.8</div>
-                            <div class="rating-stars text-2xl mb-2">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star-half-alt"></i>
+                            <div class="text-4xl font-bold text-gray-800 mb-2">
+                                {{ $workshop->rating ? number_format($workshop->rating, 1) : '0.0' }}
                             </div>
-                            <p class="text-gray-600 text-sm">Berdasarkan 124 ulasan</p>
+                            <div class="rating-stars text-2xl mb-2">
+                                @if($workshop->rating)
+                                    @for($i = 1; $i <= 5; $i++)
+                                        @if($i <= floor($workshop->rating))
+                                            <i class="fas fa-star"></i>
+                                        @elseif($i - 0.5 <= $workshop->rating)
+                                            <i class="fas fa-star-half-alt"></i>
+                                        @else
+                                            <i class="far fa-star"></i>
+                                        @endif
+                                    @endfor
+                                @else
+                                    @for($i = 1; $i <= 5; $i++)
+                                        <i class="far fa-star"></i>
+                                    @endfor
+                                @endif
+                            </div>
+                            <p class="text-gray-600 text-sm">
+                                @if($workshop->review_count)
+                                    Berdasarkan {{ $workshop->review_count }} ulasan
+                                @else
+                                    Belum ada ulasan
+                                @endif
+                            </p>
                         </div>
 
                         <button
@@ -513,12 +644,14 @@
                                 <i class="fas fa-calendar-plus mr-2"></i> Booking Servis
                             </button>
 
-                            <button onclick="window.location.href='tel:+6281234567890'"
+                            @if($workshop->phone)
+                            <button onclick="window.location.href='tel:{{ $workshop->phone }}'"
                                 class="w-full bg-accent text-white py-3 rounded-lg font-medium hover:bg-emerald-600 transition-all duration-300 flex items-center justify-center">
                                 <i class="fas fa-phone mr-2"></i> Telepon Sekarang
                             </button>
+                            @endif
 
-                            <a href="https://www.google.com/maps?q=-6.200000,106.816666" target="_blank"
+                            <a href="https://www.google.com/maps?q={{ $workshop->latitude }},{{ $workshop->longitude }}" target="_blank"
                                 class="w-full bg-gray-100 text-gray-700 py-3 rounded-lg font-medium hover:bg-gray-200 transition-all duration-300 flex items-center justify-center">
                                 <i class="fas fa-directions mr-2"></i> Dapatkan Petunjuk
                             </a>
@@ -533,20 +666,31 @@
     <section class="py-16 md:py-20 bg-primary text-white">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h3 class="text-2xl md:text-3xl font-bold mb-4 md:mb-6">Siap Servis Kendaraan Anda?</h3>
-            <p class="text-indigo-100 mb-6 md:mb-10 text-sm md:text-base">Booking jadwal servis sekarang dan dapatkan
-                penawaran spesial untuk pelanggan pertama</p>
+            <p class="text-indigo-100 mb-6 md:mb-10 text-sm md:text-base">Booking jadwal servis sekarang dan dapatkan penawaran spesial untuk pelanggan pertama</p>
             <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
-                <button onclick="window.location.href='/booking/1'"
+                <button onclick="window.location.href='{{ route('workshops.booking', ['id' => $workshop->id]) }}'"
                     class="bg-white text-primary px-6 py-3 md:px-8 md:py-4 rounded-lg font-medium hover:bg-gray-100 transition-all duration-300 btn-glow text-sm md:text-base">
                     <i class="fas fa-calendar-alt mr-2"></i> Booking Sekarang
                 </button>
-                <a href="tel:+6281234567890"
+                @if($workshop->phone)
+                <a href="tel:{{ $workshop->phone }}"
                     class="bg-transparent border-2 border-white px-6 py-3 md:px-8 md:py-4 rounded-lg font-medium hover:bg-white hover:text-primary transition-all duration-300 text-sm md:text-base">
                     <i class="fas fa-phone mr-2"></i> Hubungi Kami
                 </a>
+                @endif
             </div>
         </div>
     </section>
+
+    <!-- Image Modal -->
+    <div id="imageModal" class="fixed inset-0 bg-black bg-opacity-90 z-50 hidden flex items-center justify-center p-4">
+        <div class="relative max-w-4xl max-h-full">
+            <button onclick="closeImageModal()" class="absolute -top-12 right-0 text-white text-2xl hover:text-gray-300">
+                <i class="fas fa-times"></i>
+            </button>
+            <img id="modalImage" src="" alt="" class="max-w-full max-h-full object-contain">
+        </div>
+    </div>
 
     <!-- Footer -->
     <footer id="contact" class="bg-gray-900 text-gray-300 py-8 md:py-12">
@@ -658,6 +802,32 @@
 
         // Update active nav item on scroll
         window.addEventListener('scroll', setActiveNavItem);
+
+        // Image Modal Functions
+        function openImageModal(imageUrl) {
+            document.getElementById('modalImage').src = imageUrl;
+            document.getElementById('imageModal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeImageModal() {
+            document.getElementById('imageModal').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal when clicking outside the image
+        document.getElementById('imageModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeImageModal();
+            }
+        });
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeImageModal();
+            }
+        });
 
         // Mobile dropdown functionality
         (function() {
