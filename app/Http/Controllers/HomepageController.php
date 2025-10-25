@@ -24,19 +24,24 @@ class HomepageController extends Controller
 
     // public function bookingService($id)
     // {
+    //     // Ambil data bengkel berdasarkan ID
     //     $booking = Workshop::findOrFail($id);
 
-    //     return view('homepage.booking', compact('booking'));
+    //     // Ambil semua kendaraan milik user yang sedang login
+    //     $vehicles = Vehicle::where('created_by', Auth::id())->get();
+
+    //     // Kirimkan data ke view
+    //     return view('homepage.booking', compact('booking', 'vehicles'));
     // }
     public function bookingService($id)
     {
         // Ambil data bengkel berdasarkan ID
-        $booking = Workshop::findOrFail($id);
+        $workshop = Workshop::findOrFail($id);
 
         // Ambil semua kendaraan milik user yang sedang login
         $vehicles = Vehicle::where('created_by', Auth::id())->get();
 
-        // Kirimkan data ke view
-        return view('homepage.booking', compact('booking', 'vehicles'));
+        // Kirim data ke view
+        return view('homepage.booking', compact('workshop', 'vehicles'));
     }
 }

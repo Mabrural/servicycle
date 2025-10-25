@@ -514,6 +514,7 @@
 
                 <!-- Sidebar Summary -->
                 <div class="space-y-6">
+
                     <!-- Workshop Info -->
                     <div class="bg-white rounded-2xl shadow-lg p-6">
                         <h3 class="text-xl font-bold text-gray-800 mb-4">Bengkel Tujuan</h3>
@@ -524,18 +525,32 @@
                                 </div>
                             </div>
                             <div>
-                                <h4 class="font-semibold text-gray-800">Bengkel Maju Jaya</h4>
-                                <p class="text-sm text-gray-600 mt-1">Jl. Ahmad Yani No. 45, Batam Center</p>
-                                <div class="flex items-center mt-2">
-                                    <div class="rating-stars text-yellow-400">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star-half-alt"></i>
+                                <h4 class="font-semibold text-gray-800">
+                                    {{ $workshop->name }}
+                                </h4>
+                                <p class="text-sm text-gray-600 mt-1">
+                                    {{ $workshop->address }}
+                                </p>
+
+                                @if ($workshop->rating)
+                                    <div class="flex items-center mt-2">
+                                        <div class="rating-stars text-yellow-400">
+                                            @for ($i = 1; $i <= 5; $i++)
+                                                @if ($i <= floor($workshop->rating))
+                                                    <i class="fas fa-star"></i>
+                                                @elseif ($i - $workshop->rating < 1)
+                                                    <i class="fas fa-star-half-alt"></i>
+                                                @else
+                                                    <i class="far fa-star"></i>
+                                                @endif
+                                            @endfor
+                                        </div>
+                                        <span class="text-sm text-gray-600 ml-2">
+                                            {{ number_format($workshop->rating, 1) }}
+                                            ({{ $workshop->review_count ?? 0 }})
+                                        </span>
                                     </div>
-                                    <span class="text-sm text-gray-600 ml-2">4.8 (124)</span>
-                                </div>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -568,19 +583,21 @@
                         <div class="space-y-3">
                             <div class="flex items-center text-gray-600">
                                 <i class="fas fa-phone text-primary mr-3"></i>
-                                <span>+62 812 3456 7890</span>
+                                <span>{{ $workshop->phone ?? '+62 812 3456 7890' }}</span>
                             </div>
                             <div class="flex items-center text-gray-600">
                                 <i class="fas fa-envelope text-primary mr-3"></i>
-                                <span>support@servicycle.com</span>
+                                <span>{{ $workshop->email ?? 'support@servicycle.com' }}</span>
                             </div>
                             <div class="flex items-center text-gray-600">
                                 <i class="fas fa-clock text-primary mr-3"></i>
-                                <span>24/7 Customer Service</span>
+                                <span>{{ $workshop->service_hours ?? '24/7 Customer Service' }}</span>
                             </div>
                         </div>
                     </div>
+
                 </div>
+
             </div>
         </div>
     </section>
