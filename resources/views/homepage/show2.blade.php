@@ -83,6 +83,25 @@
             padding: 8px 0;
         }
 
+        /* Workshop Detail Styles */
+        .detail-hero {
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+        }
+
+        .service-tag {
+            display: inline-block;
+            background-color: #e0e7ff;
+            color: #4f46e5;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            margin: 4px;
+        }
+
+        .rating-stars {
+            color: #fbbf24;
+        }
+
         .bottom-nav.active {
             display: flex;
         }
@@ -141,71 +160,235 @@
             }
         }
 
-        /* Workshop Detail Styles */
-        .detail-hero {
-            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+        /* Improved Responsive Image Gallery Styles */
+        .gallery-container {
+            width: 100%;
+            margin-bottom: 2rem;
         }
 
-        .service-tag {
-            display: inline-block;
-            background-color: #e0e7ff;
-            color: #4f46e5;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 14px;
-            margin: 4px;
+        /* Single Image Layout */
+        .single-image-container {
+            width: 100%;
+            aspect-ratio: 16/9;
+            max-height: 500px;
+            border-radius: 12px;
+            overflow: hidden;
         }
 
-        .info-card {
-            transition: all 0.3s ease;
-        }
-
-        .info-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-        }
-
-        .rating-stars {
-            color: #fbbf24;
-        }
-
-        .back-btn:hover {
-            transform: translateX(-3px);
-        }
-
-        /* Image Gallery Styles */
-        .image-gallery {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr;
-            gap: 8px;
-            height: 400px;
-        }
-
-        .main-image {
-            grid-row: span 2;
-        }
-
-        .gallery-image {
+        .single-image {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            border-radius: 8px;
             cursor: pointer;
             transition: transform 0.3s ease;
         }
 
-        .gallery-image:hover {
-            transform: scale(1.05);
+        .single-image:hover {
+            transform: scale(1.02);
+        }
+
+        /* Multiple Images Layout */
+        .multi-gallery-container {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .main-image-container {
+            width: 100%;
+            aspect-ratio: 16/9;
+            max-height: 400px;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .main-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .main-image:hover {
+            transform: scale(1.02);
+        }
+
+        .thumbnail-scroll-container {
+            width: 100%;
+            overflow-x: auto;
+            padding: 8px 0;
+        }
+
+        .thumbnail-scroll-container::-webkit-scrollbar {
+            height: 6px;
+        }
+
+        .thumbnail-scroll-container::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 3px;
+        }
+
+        .thumbnail-scroll-container::-webkit-scrollbar-thumb {
+            background: #c1c1c1;
+            border-radius: 3px;
+        }
+
+        .thumbnail-scroll-container::-webkit-scrollbar-thumb:hover {
+            background: #a8a8a8;
+        }
+
+        .thumbnails-wrapper {
+            display: flex;
+            gap: 8px;
+            min-width: min-content;
+        }
+
+        .thumbnail-item {
+            flex: 0 0 auto;
+            width: 120px;
+            height: 80px;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .thumbnail-item:hover {
+            border-color: #4f46e5;
+            transform: translateY(-2px);
+        }
+
+        .thumbnail-item.active {
+            border-color: #4f46e5;
+        }
+
+        .thumbnail-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .placeholder-thumbnail {
+            width: 120px;
+            height: 80px;
+            background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #9ca3af;
+            flex: 0 0 auto;
+        }
+
+        /* No Images Fallback */
+        .no-image-container {
+            width: 100%;
+            aspect-ratio: 16/9;
+            background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #9ca3af;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 1024px) {
+            .single-image-container,
+            .main-image-container {
+                aspect-ratio: 4/3;
+                max-height: 400px;
+            }
+            
+            .thumbnail-item {
+                width: 100px;
+                height: 70px;
+            }
         }
 
         @media (max-width: 768px) {
-            .image-gallery {
-                grid-template-columns: 1fr;
-                height: auto;
+            .single-image-container,
+            .main-image-container {
+                aspect-ratio: 4/3;
+                max-height: 350px;
             }
-            .main-image {
-                grid-row: auto;
+            
+            .thumbnail-item {
+                width: 90px;
+                height: 60px;
             }
+        }
+
+        @media (max-width: 480px) {
+            .single-image-container,
+            .main-image-container {
+                aspect-ratio: 1/1;
+                max-height: 300px;
+            }
+            
+            .thumbnail-item {
+                width: 80px;
+                height: 60px;
+            }
+            
+            .placeholder-thumbnail {
+                width: 80px;
+                height: 60px;
+            }
+        }
+
+        /* Image Modal */
+        .image-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            max-width: 90%;
+            max-height: 90%;
+            position: relative;
+        }
+
+        .modal-image {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* WhatsApp Button Styles */
+        .whatsapp-btn {
+            background-color: #25D366;
+            color: white;
+        }
+
+        .whatsapp-btn:hover {
+            background-color: #128C7E;
         }
     </style>
 </head>
@@ -290,7 +473,7 @@
     </header>
 
     <!-- Bottom Navigation for Mobile -->
-    {{-- <div class="bottom-nav" id="bottomNav">
+    <div class="bottom-nav" id="bottomNav">
         <a href="/#workshops" class="bottom-nav-item" data-section="workshops">
             <i class="fas fa-map-marker-alt"></i>
             <span>Bengkel</span>
@@ -338,7 +521,7 @@
                 <span>Akun</span>
             </a>
         @endauth
-    </div> --}}
+    </div>
 
     <!-- Workshop Detail Hero -->
     <section class="detail-hero text-white py-12 md:py-16 relative overflow-hidden">
@@ -364,7 +547,6 @@
                             @else
                                 Belum ada rating • 
                             @endif
-                            {{-- Untuk jarak, Anda bisa menambahkan logika perhitungan jarak di controller --}}
                             Lokasi: {{ $workshop->district }}, {{ $workshop->city }}
                         </span>
                     </div>
@@ -388,7 +570,6 @@
                             @endforeach
                         @endif
                         
-                        {{-- Anda bisa menambahkan logika untuk menampilkan status 24 jam jika ada --}}
                         @if(strpos(strtolower($workshop->operating_hours ?? ''), '24') !== false)
                             <span class="bg-white/20 px-3 py-1 rounded-full text-sm">24 Jam</span>
                         @endif
@@ -416,46 +597,53 @@
                 <!-- Main Content -->
                 <div class="md:col-span-2">
                     <!-- Workshop Image Gallery -->
-                    @if($workshop->images && $workshop->images->count() > 0)
-                    <div class="image-gallery mb-8">
-                        @php
-                            $primaryImage = $workshop->images->where('is_primary', true)->first() ?? $workshop->images->first();
-                            $otherImages = $workshop->images->where('id', '!=', $primaryImage->id)->take(4);
-                        @endphp
-                        
-                        <div class="main-image">
-                            <img src="{{ $primaryImage->image_url }}" 
-                                 alt="{{ $workshop->name }}" 
-                                 class="gallery-image w-full h-full"
-                                 onclick="openImageModal('{{ $primaryImage->image_url }}')">
-                        </div>
-                        
-                        @foreach($otherImages as $image)
-                        <div>
-                            <img src="{{ $image->image_url }}" 
-                                 alt="{{ $workshop->name }}" 
-                                 class="gallery-image w-full h-full"
-                                 onclick="openImageModal('{{ $image->image_url }}')">
-                        </div>
-                        @endforeach
-                        
-                        @if($workshop->images->count() < 5)
-                            @for($i = $workshop->images->count(); $i < 5; $i++)
-                            <div>
-                                <div class="gallery-image w-full h-full bg-gray-200 flex items-center justify-center">
-                                    <i class="fas fa-image text-gray-400 text-2xl"></i>
+                    <div class="gallery-container">
+                        @if($workshop->images && $workshop->images->count() > 0)
+                            @if($workshop->images->count() == 1)
+                                <!-- Single Image Layout -->
+                                <div class="single-image-container">
+                                    <img src="{{ $workshop->images->first()->image_url }}" 
+                                         alt="{{ $workshop->name }}" 
+                                         class="single-image"
+                                         onclick="openImageModal('{{ $workshop->images->first()->image_url }}')">
+                                </div>
+                            @else
+                                <!-- Multiple Images Layout -->
+                                <div class="multi-gallery-container">
+                                    <!-- Main Image -->
+                                    <div class="main-image-container">
+                                        <img id="mainGalleryImage" 
+                                             src="{{ $workshop->images->first()->image_url }}" 
+                                             alt="{{ $workshop->name }}" 
+                                             class="main-image"
+                                             onclick="openImageModal(this.src)">
+                                    </div>
+                                    
+                                    <!-- Thumbnails Scroll -->
+                                    <div class="thumbnail-scroll-container">
+                                        <div class="thumbnails-wrapper">
+                                            @foreach($workshop->images as $index => $image)
+                                            <div class="thumbnail-item {{ $index === 0 ? 'active' : '' }}" 
+                                                 onclick="changeMainImage('{{ $image->image_url }}', this)">
+                                                <img src="{{ $image->image_url }}" 
+                                                     alt="{{ $workshop->name }}" 
+                                                     class="thumbnail-image">
+                                            </div>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
+                        @else
+                            <!-- No Images Fallback -->
+                            <div class="no-image-container">
+                                <div class="text-center">
+                                    <i class="fas fa-image text-4xl mb-2"></i>
+                                    <p>Tidak ada gambar tersedia</p>
                                 </div>
                             </div>
-                            @endfor
                         @endif
                     </div>
-                    @else
-                    <div class="rounded-2xl overflow-hidden shadow-lg mb-8">
-                        <div class="w-full h-64 md:h-80 bg-gray-200 flex items-center justify-center">
-                            <i class="fas fa-image text-gray-400 text-4xl"></i>
-                        </div>
-                    </div>
-                    @endif
 
                     <!-- About Section -->
                     <div class="bg-white rounded-2xl shadow-lg p-6 md:p-8 info-card mb-8">
@@ -645,9 +833,9 @@
                             </button>
 
                             @if($workshop->phone)
-                            <button onclick="window.location.href='tel:{{ $workshop->phone }}'"
-                                class="w-full bg-accent text-white py-3 rounded-lg font-medium hover:bg-emerald-600 transition-all duration-300 flex items-center justify-center">
-                                <i class="fas fa-phone mr-2"></i> Telepon Sekarang
+                            <button onclick="openWhatsApp('{{ $workshop->phone }}', '{{ $workshop->name }}')"
+                                class="w-full whatsapp-btn py-3 rounded-lg font-medium hover:bg-[#128C7E] transition-all duration-300 flex items-center justify-center">
+                                <i class="fab fa-whatsapp mr-2"></i> WhatsApp
                             </button>
                             @endif
 
@@ -673,22 +861,22 @@
                     <i class="fas fa-calendar-alt mr-2"></i> Booking Sekarang
                 </button>
                 @if($workshop->phone)
-                <a href="tel:{{ $workshop->phone }}"
-                    class="bg-transparent border-2 border-white px-6 py-3 md:px-8 md:py-4 rounded-lg font-medium hover:bg-white hover:text-primary transition-all duration-300 text-sm md:text-base">
-                    <i class="fas fa-phone mr-2"></i> Hubungi Kami
-                </a>
+                <button onclick="openWhatsApp('{{ $workshop->phone }}', '{{ $workshop->name }}')"
+                    class="whatsapp-btn px-6 py-3 md:px-8 md:py-4 rounded-lg font-medium hover:bg-[#128C7E] transition-all duration-300 text-sm md:text-base flex items-center justify-center">
+                    <i class="fab fa-whatsapp mr-2"></i> WhatsApp
+                </button>
                 @endif
             </div>
         </div>
     </section>
 
     <!-- Image Modal -->
-    <div id="imageModal" class="fixed inset-0 bg-black bg-opacity-90 z-50 hidden flex items-center justify-center p-4">
-        <div class="relative max-w-4xl max-h-full">
-            <button onclick="closeImageModal()" class="absolute -top-12 right-0 text-white text-2xl hover:text-gray-300">
+    <div id="imageModal" class="image-modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeImageModal()">
                 <i class="fas fa-times"></i>
-            </button>
-            <img id="modalImage" src="" alt="" class="max-w-full max-h-full object-contain">
+            </span>
+            <img id="modalImage" class="modal-image" src="" alt="">
         </div>
     </div>
 
@@ -753,6 +941,62 @@
     </footer>
 
     <script>
+        // WhatsApp Function
+        function openWhatsApp(phoneNumber, workshopName) {
+            // Format nomor telepon (hapus karakter selain angka)
+            const formattedPhone = phoneNumber.replace(/\D/g, '');
+            
+            // Pesan default yang akan dikirim
+            const defaultMessage = `Halo, saya tertarik dengan layanan di ${workshopName}. Bisa info lebih lanjut?`;
+            
+            // Encode message untuk URL
+            const encodedMessage = encodeURIComponent(defaultMessage);
+            
+            // Buat URL WhatsApp
+            const whatsappUrl = `https://wa.me/${formattedPhone}?text=${encodedMessage}`;
+            
+            // Buka WhatsApp di tab baru
+            window.open(whatsappUrl, '_blank');
+        }
+
+        // Gallery Functions
+        function changeMainImage(imageUrl, element) {
+            // Update main image
+            document.getElementById('mainGalleryImage').src = imageUrl;
+            
+            // Update active thumbnail
+            document.querySelectorAll('.thumbnail-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            element.classList.add('active');
+        }
+
+        // Image Modal Functions
+        function openImageModal(imageUrl) {
+            document.getElementById('modalImage').src = imageUrl;
+            document.getElementById('imageModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeImageModal() {
+            document.getElementById('imageModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal when clicking outside the image
+        document.getElementById('imageModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeImageModal();
+            }
+        });
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeImageModal();
+            }
+        });
+
         // Bottom Navigation Functionality
         const bottomNav = document.getElementById('bottomNav');
         const bottomNavItems = document.querySelectorAll('.bottom-nav-item');
@@ -802,32 +1046,6 @@
 
         // Update active nav item on scroll
         window.addEventListener('scroll', setActiveNavItem);
-
-        // Image Modal Functions
-        function openImageModal(imageUrl) {
-            document.getElementById('modalImage').src = imageUrl;
-            document.getElementById('imageModal').classList.remove('hidden');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeImageModal() {
-            document.getElementById('imageModal').classList.add('hidden');
-            document.body.style.overflow = 'auto';
-        }
-
-        // Close modal when clicking outside the image
-        document.getElementById('imageModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeImageModal();
-            }
-        });
-
-        // Close modal with Escape key
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                closeImageModal();
-            }
-        });
 
         // Mobile dropdown functionality
         (function() {
