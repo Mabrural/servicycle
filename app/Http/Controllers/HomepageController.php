@@ -10,7 +10,7 @@ class HomepageController extends Controller
     public function index()
     {
         $workshops = Workshop::select('id', 'name', 'city', 'address', 'latitude', 'longitude')->get();
-        return view('homepage.index', compact('workshops'));
+        return view('homepage.layouts.main', compact('workshops'));
     }
 
     public function getWorkshopDetails($id)
