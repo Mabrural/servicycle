@@ -43,11 +43,11 @@
                  </li>
                  <li class="flex items-center">
                      <i class="fas fa-phone-alt mr-3 text-primary"></i>
-                     <span>+62 812 3456 7890</span>
+                     <span>+62 856 6533 637</span>
                  </li>
                  <li class="flex items-start">
                      <i class="fas fa-map-marker-alt mr-3 text-primary mt-1"></i>
-                     <span>Jl. Teknologi No. 123, Jakarta Selatan, Indonesia</span>
+                     <span>Jl. Ahmad Yani, Tlk. Tering, Kec. Batam Kota, Kota Batam, Kepulauan Riau 29461</span>
                  </li>
              </ul>
          </div>
