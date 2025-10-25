@@ -149,6 +149,18 @@
             #map {
                 height: 250px;
             }
+            
+            /* Hide next/prev buttons on mobile */
+            .desktop-only {
+                display: none !important;
+            }
+        }
+
+        /* Show buttons on desktop */
+        @media (min-width: 769px) {
+            .desktop-only {
+                display: flex !important;
+            }
         }
 
         /* Custom scrollbar */
@@ -533,7 +545,7 @@
                             </div>
                         </div>
 
-                        <div class="flex justify-end mt-6 sm:mt-8">
+                        <div class="desktop-only flex justify-end mt-6 sm:mt-8">
                             <button type="button" onclick="nextStep(2)"
                                 class="bg-primary text-white px-6 sm:px-8 py-3 rounded-lg font-medium hover:bg-secondary transition-all duration-300 btn-glow flex items-center mobile-touch-button mobile-full sm:mobile-auto">
                                 Selanjutnya <i class="fas fa-arrow-right ml-2"></i>
@@ -644,7 +656,7 @@
                             </div>
                         </div>
 
-                        <div class="flex mobile-stack sm:flex-row justify-between mt-6 sm:mt-8 space-y-3 sm:space-y-0">
+                        <div class="desktop-only flex mobile-stack sm:flex-row justify-between mt-6 sm:mt-8 space-y-3 sm:space-y-0">
                             <button type="button" onclick="prevStep(1)"
                                 class="bg-gray-300 text-gray-700 px-6 sm:px-8 py-3 rounded-lg font-medium hover:bg-gray-400 transition-all duration-300 flex items-center justify-center mobile-touch-button mobile-full">
                                 <i class="fas fa-arrow-left mr-2"></i> Kembali
@@ -703,7 +715,7 @@
                             </div>
                         </div>
 
-                        <div class="flex mobile-stack sm:flex-row justify-between mt-8 space-y-3 sm:space-y-0">
+                        <div class="desktop-only flex mobile-stack sm:flex-row justify-between mt-8 space-y-3 sm:space-y-0">
                             <button type="button" onclick="prevStep(2)"
                                 class="bg-gray-300 text-gray-700 px-6 sm:px-8 py-3 rounded-lg font-medium hover:bg-gray-400 transition-all duration-300 flex items-center justify-center mobile-touch-button mobile-full">
                                 <i class="fas fa-arrow-left mr-2"></i> Kembali
@@ -718,6 +730,8 @@
             </div>
         </div>
     </div>
+    <br>
+    <br>
 
     <!-- Mobile Bottom Navigation -->
     <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 py-2 px-4 sm:hidden z-50">
