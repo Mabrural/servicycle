@@ -1,7 +1,9 @@
 @extends('homepage.layouts.main')
 
 @section('container')
-@include('homepage.layouts.location-permission')
+    @include('homepage.layouts.location-permission')
+    
+    @include('homepage.layouts.bottom-nav')
 
     @include('homepage.layouts.hero')
 

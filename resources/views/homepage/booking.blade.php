@@ -1,47 +1,6 @@
-<!DOCTYPE html>
-<html lang="id">
+@extends('homepage.layouts.main')
 
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Booking Servis - ServiCycle</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#4f46e5',
-                        secondary: '#6366f1',
-                        accent: '#10b981',
-                        dark: '#1f2937',
-                        light: '#f9fafb'
-                    },
-                    fontFamily: {
-                        sans: ['Poppins', 'sans-serif'],
-                    },
-                    animation: {
-                        'float': 'float 6s ease-in-out infinite',
-                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                    },
-                    keyframes: {
-                        float: {
-                            '0%, 100%': {
-                                transform: 'translateY(0)'
-                            },
-                            '50%': {
-                                transform: 'translateY(-20px)'
-                            },
-                        }
-                    }
-                }
-            }
-        }
-    </script>
+@section('container')
     <style>
         body {
             font-family: 'Poppins', sans-serif;
@@ -215,137 +174,6 @@
             background-color: #f0f4ff;
         }
     </style>
-</head>
-
-<body class="bg-gray-50 text-gray-800">
-
-    <!-- Navbar -->
-    <header class="bg-white shadow-lg sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-            <div class="flex items-center">
-                <a href="/" class="flex items-center">
-                    <div class="bg-primary p-2 rounded-lg mr-3">
-                        <i class="fas fa-tools text-white text-xl"></i>
-                    </div>
-                    <h1 class="text-2xl font-bold text-primary">ServiCycle</h1>
-                </a>
-            </div>
-
-            <!-- Desktop Navigation -->
-            <nav class="desktop-nav hidden md:flex space-x-8 items-center">
-                <a href="/#workshops" class="nav-link text-gray-600 hover:text-primary">Bengkel</a>
-                <a href="/#promo" class="nav-link text-gray-600 hover:text-primary">Promo</a>
-                <a href="/#mitra" class="nav-link text-gray-600 hover:text-primary">Gabung Mitra</a>
-            </nav>
-
-            <div class="hidden md:flex items-center space-x-4">
-                @auth
-                    <!-- Jika user sudah login -->
-                    <div class="relative inline-block text-left">
-                        <button id="userMenuButton"
-                            class="bg-primary text-white px-5 py-2.5 rounded-lg font-medium hover:bg-secondary transition-all duration-300 btn-glow flex items-center gap-2">
-                            <i class='bx bx-user-circle text-xl'></i>
-                            {{ Auth::user()->name }}
-                            <i class='bx bx-chevron-down text-lg'></i>
-                        </button>
-
-                        <!-- Dropdown menu -->
-                        <div id="userDropdownMenu"
-                            class="hidden absolute right-0 mt-2 w-44 bg-white rounded-lg shadow-lg border border-gray-100">
-                            <a href="{{ url('/dashboard') }}"
-                                class="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-t-lg">
-                                Dashboard
-                            </a>
-                            <form method="POST" action="{{ route('logout') }}">
-                                @csrf
-                                <button type="submit"
-                                    class="w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-b-lg">
-                                    Keluar
-                                </button>
-                            </form>
-                        </div>
-                    </div>
-                @else
-                    <!-- Jika user belum login -->
-                    <a href="/login"
-                        class="bg-primary text-white px-5 py-2.5 rounded-lg font-medium hover:bg-secondary transition-all duration-300 btn-glow">
-                        Masuk
-                    </a>
-                @endauth
-
-                <!-- Tambahkan Boxicons -->
-                <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-
-                <!-- Script Dropdown -->
-                <script>
-                    document.addEventListener('click', function(e) {
-                        const button = document.getElementById('userMenuButton');
-                        const menu = document.getElementById('userDropdownMenu');
-
-                        if (button && menu) {
-                            if (button.contains(e.target)) {
-                                menu.classList.toggle('hidden');
-                            } else if (!menu.contains(e.target)) {
-                                menu.classList.add('hidden');
-                            }
-                        }
-                    });
-                </script>
-
-            </div>
-        </div>
-    </header>
-
-    <!-- Bottom Navigation for Mobile -->
-    <div class="bottom-nav" id="bottomNav">
-        <a href="/#workshops" class="bottom-nav-item" data-section="workshops">
-            <i class="fas fa-map-marker-alt"></i>
-            <span>Bengkel</span>
-        </a>
-        <a href="/#promo" class="bottom-nav-item" data-section="promo">
-            <i class="fas fa-tags"></i>
-            <span>Promo</span>
-        </a>
-        <a href="/#mitra" class="bottom-nav-item" data-section="mitra">
-            <i class="fas fa-handshake"></i>
-            <span>Mitra</span>
-        </a>
-        @auth
-            <div class="bottom-nav-item relative" id="userDropdownWrapper" style="z-index: 50;">
-                <!-- Tombol yang menampilkan nama singkat -->
-                <button id="userMenuMobile" type="button"
-                    class="flex flex-col items-center text-center text-gray-700 focus:outline-none" aria-haspopup="true"
-                    aria-expanded="false" aria-controls="dropdownMobileMenu">
-                    <i class="fas fa-user-circle text-xl"></i>
-                    <span>{{ \Illuminate\Support\Str::limit(Auth::user()->name, 8) }}</span>
-                </button>
-
-                <!-- Dropdown untuk mobile -->
-                <div id="dropdownMobileMenu"
-                    class="hidden absolute bottom-14 left-1/2 transform -translate-x-1/2 bg-white shadow-lg rounded-lg w-44 border border-gray-100"
-                    role="menu" aria-labelledby="userMenuMobile">
-                    <a href="{{ url('/dashboard') }}"
-                        class="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-t-lg text-sm" role="menuitem">
-                        <i class="fas fa-tachometer-alt mr-2"></i> Dashboard
-                    </a>
-
-                    <form method="POST" action="{{ route('logout') }}" id="logoutForm">
-                        @csrf
-                        <button type="submit"
-                            class="w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-b-lg text-sm"
-                            role="menuitem">
-                            <i class="fas fa-sign-out-alt mr-2"></i> Keluar
-                        </button>
-                    </form>
-                </div>
-            </div>
-        @else
-            <a href="/login" class="bottom-nav-item" data-section="login">
-                <i class="fas fa-user"></i>
-                <span>Akun</span>
-            </a>
-        @endauth
-    </div>
 
     <!-- Booking Hero -->
     <section class="booking-hero text-white py-12 md:py-16 relative overflow-hidden">
@@ -355,11 +183,12 @@
                 style="animation-delay: 2s;"></div>
         </div>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <a href="/workshops/1" class="inline-flex items-center text-white/80 hover:text-white mb-6 transition-all duration-300">
+            <a href="javascript:void(0);" onclick="window.history.back();"
+                class="inline-flex items-center text-white/80 hover:text-white mb-6 transition-all duration-300">
                 <i class="fas fa-arrow-left mr-2"></i>
                 <span>Kembali ke Detail Bengkel</span>
             </a>
-            
+
             <div class="text-center">
                 <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight mb-4">
                     Booking Servis
@@ -378,7 +207,8 @@
             <div class="mb-12">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center">
-                        <div class="step-indicator w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center font-bold">
+                        <div
+                            class="step-indicator w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center font-bold">
                             1
                         </div>
                         <div class="ml-3">
@@ -386,11 +216,12 @@
                             <p class="text-sm text-gray-600">Pilih kendaraan yang akan diservis</p>
                         </div>
                     </div>
-                    
+
                     <div class="flex-1 h-1 bg-gray-200 mx-4"></div>
-                    
+
                     <div class="flex items-center">
-                        <div class="step-indicator w-10 h-10 rounded-full bg-gray-200 text-gray-600 flex items-center justify-center font-bold">
+                        <div
+                            class="step-indicator w-10 h-10 rounded-full bg-gray-200 text-gray-600 flex items-center justify-center font-bold">
                             2
                         </div>
                         <div class="ml-3">
@@ -398,11 +229,12 @@
                             <p class="text-sm text-gray-500">Pilih tanggal servis</p>
                         </div>
                     </div>
-                    
+
                     <div class="flex-1 h-1 bg-gray-200 mx-4"></div>
-                    
+
                     <div class="flex items-center">
-                        <div class="step-indicator w-10 h-10 rounded-full bg-gray-200 text-gray-600 flex items-center justify-center font-bold">
+                        <div
+                            class="step-indicator w-10 h-10 rounded-full bg-gray-200 text-gray-600 flex items-center justify-center font-bold">
                             3
                         </div>
                         <div class="ml-3">
@@ -423,16 +255,18 @@
                                 <i class="fas fa-car text-primary mr-3"></i>
                                 Pilih Kendaraan
                             </h2>
-                            
+
                             <!-- Vehicle List -->
                             <div class="mb-6">
                                 <label class="block text-sm font-medium text-gray-700 mb-4">Pilih Kendaraan Anda</label>
                                 <div class="space-y-4" id="vehicleList">
                                     <!-- Vehicle cards will be populated here -->
-                                    <div class="vehicle-card bg-white border-2 border-gray-200 rounded-xl p-6 cursor-pointer" data-vehicle-id="1">
+                                    <div class="vehicle-card bg-white border-2 border-gray-200 rounded-xl p-6 cursor-pointer"
+                                        data-vehicle-id="1">
                                         <div class="flex items-center justify-between">
                                             <div class="flex items-center space-x-4">
-                                                <div class="w-12 h-12 bg-primary rounded-lg flex items-center justify-center">
+                                                <div
+                                                    class="w-12 h-12 bg-primary rounded-lg flex items-center justify-center">
                                                     <i class="fas fa-car text-white"></i>
                                                 </div>
                                                 <div>
@@ -446,10 +280,12 @@
                                         </div>
                                     </div>
 
-                                    <div class="vehicle-card bg-white border-2 border-gray-200 rounded-xl p-6 cursor-pointer" data-vehicle-id="2">
+                                    <div class="vehicle-card bg-white border-2 border-gray-200 rounded-xl p-6 cursor-pointer"
+                                        data-vehicle-id="2">
                                         <div class="flex items-center justify-between">
                                             <div class="flex items-center space-x-4">
-                                                <div class="w-12 h-12 bg-green-500 rounded-lg flex items-center justify-center">
+                                                <div
+                                                    class="w-12 h-12 bg-green-500 rounded-lg flex items-center justify-center">
                                                     <i class="fas fa-motorcycle text-white"></i>
                                                 </div>
                                                 <div>
@@ -467,7 +303,8 @@
 
                             <!-- Add New Vehicle Button -->
                             <div class="mb-6">
-                                <button type="button" id="addNewVehicle" class="w-full py-4 border-2 border-dashed border-gray-300 rounded-xl text-gray-500 hover:text-primary hover:border-primary transition-all duration-300 flex items-center justify-center">
+                                <button type="button" id="addNewVehicle"
+                                    class="w-full py-4 border-2 border-dashed border-gray-300 rounded-xl text-gray-500 hover:text-primary hover:border-primary transition-all duration-300 flex items-center justify-center">
                                     <i class="fas fa-plus mr-2"></i>
                                     Tambah Kendaraan Baru
                                 </button>
@@ -479,7 +316,9 @@
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <div>
                                         <label class="block text-sm font-medium text-gray-700 mb-2">Jenis Kendaraan</label>
-                                        <select class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-primary form-input" id="vehicle_type">
+                                        <select
+                                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-primary form-input"
+                                            id="vehicle_type">
                                             <option value="">Pilih jenis</option>
                                             <option value="mobil">Mobil</option>
                                             <option value="motor">Motor</option>
@@ -487,30 +326,42 @@
                                     </div>
                                     <div>
                                         <label class="block text-sm font-medium text-gray-700 mb-2">Merek</label>
-                                        <input type="text" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-primary form-input" id="brand" placeholder="Contoh: Toyota">
+                                        <input type="text"
+                                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-primary form-input"
+                                            id="brand" placeholder="Contoh: Toyota">
                                     </div>
                                     <div>
                                         <label class="block text-sm font-medium text-gray-700 mb-2">Model</label>
-                                        <input type="text" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-primary form-input" id="model" placeholder="Contoh: Avanza">
+                                        <input type="text"
+                                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-primary form-input"
+                                            id="model" placeholder="Contoh: Avanza">
                                     </div>
                                     <div>
                                         <label class="block text-sm font-medium text-gray-700 mb-2">Tahun</label>
-                                        <input type="number" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-primary form-input" id="year" placeholder="Contoh: 2020">
+                                        <input type="number"
+                                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-primary form-input"
+                                            id="year" placeholder="Contoh: 2020">
                                     </div>
                                     <div>
                                         <label class="block text-sm font-medium text-gray-700 mb-2">Nomor Plat</label>
-                                        <input type="text" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-primary form-input" id="license_plate" placeholder="Contoh: B 1234 ABC">
+                                        <input type="text"
+                                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-primary form-input"
+                                            id="license_plate" placeholder="Contoh: B 1234 ABC">
                                     </div>
                                     <div>
                                         <label class="block text-sm font-medium text-gray-700 mb-2">Warna</label>
-                                        <input type="text" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-primary form-input" id="color" placeholder="Contoh: Hitam">
+                                        <input type="text"
+                                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-primary form-input"
+                                            id="color" placeholder="Contoh: Hitam">
                                     </div>
                                 </div>
                                 <div class="flex justify-end space-x-3 mt-4">
-                                    <button type="button" id="cancelAddVehicle" class="px-6 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-all duration-300">
+                                    <button type="button" id="cancelAddVehicle"
+                                        class="px-6 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-all duration-300">
                                         Batal
                                     </button>
-                                    <button type="button" id="saveVehicle" class="px-6 py-2 bg-primary text-white rounded-lg hover:bg-secondary transition-all duration-300">
+                                    <button type="button" id="saveVehicle"
+                                        class="px-6 py-2 bg-primary text-white rounded-lg hover:bg-secondary transition-all duration-300">
                                         Simpan Kendaraan
                                     </button>
                                 </div>
@@ -518,17 +369,16 @@
 
                             <!-- Notes -->
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-3">Catatan Servis (Opsional)</label>
-                                <textarea 
-                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-primary form-input" 
-                                    rows="3" 
-                                    placeholder="Jelaskan keluhan atau permintaan khusus servis..."
-                                    id="notes"></textarea>
+                                <label class="block text-sm font-medium text-gray-700 mb-3">Catatan Servis
+                                    (Opsional)</label>
+                                <textarea class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-primary form-input"
+                                    rows="3" placeholder="Jelaskan keluhan atau permintaan khusus servis..." id="notes"></textarea>
                             </div>
                         </div>
 
                         <div class="flex justify-end">
-                            <button id="nextToStep2" class="bg-primary text-white px-8 py-3 rounded-lg font-medium hover:bg-secondary transition-all duration-300 btn-glow flex items-center">
+                            <button id="nextToStep2"
+                                class="bg-primary text-white px-8 py-3 rounded-lg font-medium hover:bg-secondary transition-all duration-300 btn-glow flex items-center">
                                 Lanjut ke Jadwal
                                 <i class="fas fa-arrow-right ml-2"></i>
                             </button>
@@ -542,14 +392,16 @@
                                 <i class="fas fa-calendar-alt text-primary mr-3"></i>
                                 Pilih Jadwal Servis
                             </h2>
-                            
+
                             <div class="grid grid-cols-1 gap-6 mb-6">
                                 <!-- Date Selection -->
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-3">Tanggal Servis</label>
-                                    <input type="text" id="datePicker" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-primary flatpickr-input" placeholder="Pilih tanggal...">
+                                    <input type="text" id="datePicker"
+                                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-primary flatpickr-input"
+                                        placeholder="Pilih tanggal...">
                                 </div>
-                                
+
                                 <!-- Workshop Information -->
                                 <div class="bg-blue-50 rounded-xl p-4">
                                     <h4 class="font-semibold text-gray-800 mb-2">Informasi Bengkel</h4>
@@ -575,11 +427,13 @@
                         </div>
 
                         <div class="flex justify-between">
-                            <button id="backToStep1" class="bg-gray-200 text-gray-700 px-8 py-3 rounded-lg font-medium hover:bg-gray-300 transition-all duration-300 flex items-center">
+                            <button id="backToStep1"
+                                class="bg-gray-200 text-gray-700 px-8 py-3 rounded-lg font-medium hover:bg-gray-300 transition-all duration-300 flex items-center">
                                 <i class="fas fa-arrow-left mr-2"></i>
                                 Kembali
                             </button>
-                            <button id="nextToStep3" class="bg-primary text-white px-8 py-3 rounded-lg font-medium hover:bg-secondary transition-all duration-300 btn-glow flex items-center">
+                            <button id="nextToStep3"
+                                class="bg-primary text-white px-8 py-3 rounded-lg font-medium hover:bg-secondary transition-all duration-300 btn-glow flex items-center">
                                 Lanjut ke Konfirmasi
                                 <i class="fas fa-arrow-right ml-2"></i>
                             </button>
@@ -593,7 +447,7 @@
                                 <i class="fas fa-clipboard-check text-primary mr-3"></i>
                                 Konfirmasi Booking
                             </h2>
-                            
+
                             <!-- Booking Summary -->
                             <div class="bg-gray-50 rounded-xl p-6 mb-6">
                                 <h3 class="text-lg font-semibold text-gray-800 mb-4">Detail Booking</h3>
@@ -617,7 +471,9 @@
                                     <div class="border-t pt-3">
                                         <div class="flex justify-between items-center text-lg">
                                             <span class="text-gray-800 font-semibold">Status</span>
-                                            <span class="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-sm font-medium">Menunggu Konfirmasi</span>
+                                            <span
+                                                class="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-sm font-medium">Menunggu
+                                                Konfirmasi</span>
                                         </div>
                                     </div>
                                 </div>
@@ -628,10 +484,10 @@
                                 <label class="flex items-start">
                                     <input type="checkbox" id="termsAgreement" class="mt-1 mr-3 text-primary rounded">
                                     <span class="text-sm text-gray-600">
-                                        Saya menyetujui 
-                                        <a href="#" class="text-primary hover:underline">Syarat & Ketentuan</a> 
-                                        dan 
-                                        <a href="#" class="text-primary hover:underline">Kebijakan Privasi</a> 
+                                        Saya menyetujui
+                                        <a href="#" class="text-primary hover:underline">Syarat & Ketentuan</a>
+                                        dan
+                                        <a href="#" class="text-primary hover:underline">Kebijakan Privasi</a>
                                         ServiCycle
                                     </span>
                                 </label>
@@ -639,11 +495,13 @@
                         </div>
 
                         <div class="flex justify-between">
-                            <button id="backToStep2" class="bg-gray-200 text-gray-700 px-8 py-3 rounded-lg font-medium hover:bg-gray-300 transition-all duration-300 flex items-center">
+                            <button id="backToStep2"
+                                class="bg-gray-200 text-gray-700 px-8 py-3 rounded-lg font-medium hover:bg-gray-300 transition-all duration-300 flex items-center">
                                 <i class="fas fa-arrow-left mr-2"></i>
                                 Kembali
                             </button>
-                            <button id="confirmBooking" class="bg-accent text-white px-8 py-3 rounded-lg font-medium hover:bg-emerald-600 transition-all duration-300 btn-glow flex items-center">
+                            <button id="confirmBooking"
+                                class="bg-accent text-white px-8 py-3 rounded-lg font-medium hover:bg-emerald-600 transition-all duration-300 btn-glow flex items-center">
                                 <i class="fas fa-check mr-2"></i>
                                 Konfirmasi Booking
                             </button>
@@ -694,7 +552,8 @@
                             <div class="border-t pt-3">
                                 <div class="flex justify-between items-center">
                                     <span class="text-lg font-bold text-gray-800">Status</span>
-                                    <span class="px-2 py-1 bg-gray-100 text-gray-600 rounded-full text-xs font-medium">Draft</span>
+                                    <span
+                                        class="px-2 py-1 bg-gray-100 text-gray-600 rounded-full text-xs font-medium">Draft</span>
                                 </div>
                             </div>
                         </div>
@@ -723,65 +582,6 @@
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="bg-gray-900 text-gray-300 py-8 md:py-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
-            <div>
-                <div class="flex items-center mb-4">
-                    <div class="bg-primary p-2 rounded-lg mr-3">
-                        <i class="fas fa-tools text-white"></i>
-                    </div>
-                    <h4 class="text-white font-bold text-lg md:text-xl">ServiCycle</h4>
-                </div>
-                <p class="mb-4 text-sm md:text-base">Platform terdepan untuk manajemen perawatan kendaraan Anda.</p>
-                <div class="flex space-x-4">
-                    <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-twitter"></i></a>
-                    <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-instagram"></i></a>
-                    <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-linkedin-in"></i></a>
-                </div>
-            </div>
-            <div>
-                <h4 class="text-white font-semibold mb-3 md:mb-4 text-base md:text-lg">Navigasi</h4>
-                <ul class="space-y-2 text-sm md:text-base">
-                    <li><a href="/#features" class="hover:text-white">Fitur</a></li>
-                    <li><a href="/#workshops" class="hover:text-white">Bengkel</a></li>
-                    <li><a href="/#promo" class="hover:text-white">Promo</a></li>
-                    <li><a href="/#mitra" class="hover:text-white">Gabung Mitra</a></li>
-                </ul>
-            </div>
-            <div>
-                <h4 class="text-white font-semibold mb-3 md:mb-4 text-base md:text-lg">Layanan</h4>
-                <ul class="space-y-2 text-sm md:text-base">
-                    <li><a href="#" class="hover:text-white">Blog</a></li>
-                    <li><a href="#" class="hover:text-white">Pusat Bantuan</a></li>
-                    <li><a href="#" class="hover:text-white">Status Server</a></li>
-                    <li><a href="#" class="hover:text-white">Bengkel Rekanan</a></li>
-                </ul>
-            </div>
-            <div>
-                <h4 class="text-white font-semibold mb-3 md:mb-4 text-base md:text-lg">Kontak</h4>
-                <ul class="space-y-2 text-sm md:text-base">
-                    <li class="flex items-center">
-                        <i class="fas fa-envelope mr-3 text-primary"></i>
-                        <span>support@servicycle.com</span>
-                    </li>
-                    <li class="flex items-center">
-                        <i class="fas fa-phone-alt mr-3 text-primary"></i>
-                        <span>+62 812 3456 7890</span>
-                    </li>
-                    <li class="flex items-start">
-                        <i class="fas fa-map-marker-alt mr-3 text-primary mt-1"></i>
-                        <span>Jl. Teknologi No. 123, Jakarta Selatan, Indonesia</span>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <div class="text-center text-gray-500 mt-6 md:mt-10 pt-4 md:pt-6 border-t border-gray-800 text-sm md:text-base">
-            © 2025 ServiCycle. All rights reserved.
-        </div>
-    </footer>
-
     <script>
         // Booking Process Logic
         document.addEventListener('DOMContentLoaded', function() {
@@ -804,7 +604,7 @@
             // Step Navigation
             const steps = document.querySelectorAll('.booking-step');
             const stepIndicators = document.querySelectorAll('.step-indicator');
-            
+
             document.getElementById('nextToStep2').addEventListener('click', function() {
                 if (!bookingData.vehicle_id) {
                     alert('Silakan pilih kendaraan terlebih dahulu');
@@ -812,11 +612,11 @@
                 }
                 showStep(2);
             });
-            
+
             document.getElementById('backToStep1').addEventListener('click', function() {
                 showStep(1);
             });
-            
+
             document.getElementById('nextToStep3').addEventListener('click', function() {
                 if (!bookingData.booking_date) {
                     alert('Silakan pilih tanggal servis terlebih dahulu');
@@ -824,7 +624,7 @@
                 }
                 showStep(3);
             });
-            
+
             document.getElementById('backToStep2').addEventListener('click', function() {
                 showStep(2);
             });
@@ -832,10 +632,10 @@
             function showStep(stepNumber) {
                 // Hide all steps
                 steps.forEach(step => step.classList.add('hidden'));
-                
+
                 // Show current step
                 document.getElementById(`step${stepNumber}`).classList.remove('hidden');
-                
+
                 // Update step indicators
                 stepIndicators.forEach((indicator, index) => {
                     indicator.classList.remove('active', 'completed');
@@ -856,15 +656,15 @@
                 card.addEventListener('click', function() {
                     vehicleCards.forEach(c => c.classList.remove('selected'));
                     this.classList.add('selected');
-                    
+
                     const vehicleId = this.getAttribute('data-vehicle-id');
                     bookingData.vehicle_id = vehicleId;
-                    
+
                     // Update sidebar
                     const vehicleName = this.querySelector('h3').textContent;
                     const vehicleDetails = this.querySelector('p').textContent;
                     document.getElementById('sidebarVehicle').textContent = vehicleName;
-                    
+
                     updatePreviews();
                 });
             });
@@ -879,9 +679,10 @@
                 document.getElementById('newVehicleForm').classList.add('hidden');
                 document.getElementById('addNewVehicle').classList.remove('hidden');
                 // Reset form
-                document.getElementById('newVehicleForm').querySelectorAll('input, select').forEach(element => {
-                    element.value = '';
-                });
+                document.getElementById('newVehicleForm').querySelectorAll('input, select').forEach(
+                    element => {
+                        element.value = '';
+                    });
             });
 
             document.getElementById('saveVehicle').addEventListener('click', function() {
@@ -901,12 +702,13 @@
                 // Simulate adding new vehicle (in real app, this would be an API call)
                 const newVehicleId = Date.now(); // Temporary ID
                 const vehicleCard = document.createElement('div');
-                vehicleCard.className = 'vehicle-card bg-white border-2 border-gray-200 rounded-xl p-6 cursor-pointer selected';
+                vehicleCard.className =
+                    'vehicle-card bg-white border-2 border-gray-200 rounded-xl p-6 cursor-pointer selected';
                 vehicleCard.setAttribute('data-vehicle-id', newVehicleId);
-                
+
                 const iconClass = vehicleType === 'mobil' ? 'fa-car' : 'fa-motorcycle';
                 const iconColor = vehicleType === 'mobil' ? 'bg-primary' : 'bg-green-500';
-                
+
                 vehicleCard.innerHTML = `
                     <div class="flex items-center justify-between">
                         <div class="flex items-center space-x-4">
@@ -927,28 +729,30 @@
                 // Add click event to new vehicle card
                 vehicleCard.addEventListener('click', function() {
                     vehicleCards.forEach(c => c.classList.remove('selected'));
-                    document.querySelectorAll('.vehicle-card').forEach(c => c.classList.remove('selected'));
+                    document.querySelectorAll('.vehicle-card').forEach(c => c.classList.remove(
+                        'selected'));
                     this.classList.add('selected');
-                    
+
                     bookingData.vehicle_id = newVehicleId;
                     document.getElementById('sidebarVehicle').textContent = `${brand} ${model}`;
                     updatePreviews();
                 });
 
                 document.getElementById('vehicleList').appendChild(vehicleCard);
-                
+
                 // Select the new vehicle
                 bookingData.vehicle_id = newVehicleId;
                 document.getElementById('sidebarVehicle').textContent = `${brand} ${model}`;
-                
+
                 // Hide form and show button again
                 document.getElementById('newVehicleForm').classList.add('hidden');
                 document.getElementById('addNewVehicle').classList.remove('hidden');
-                
+
                 // Reset form
-                document.getElementById('newVehicleForm').querySelectorAll('input, select').forEach(element => {
-                    element.value = '';
-                });
+                document.getElementById('newVehicleForm').querySelectorAll('input, select').forEach(
+                    element => {
+                        element.value = '';
+                    });
 
                 updatePreviews();
             });
@@ -1005,10 +809,10 @@
 
                 // Simulate booking submission
                 console.log('Booking Data:', bookingData);
-                
+
                 // Show success message
                 alert('Booking berhasil! Anda akan menerima konfirmasi via email dan WhatsApp.');
-                
+
                 // In a real app, you would redirect to success page or dashboard
                 // window.location.href = '/booking/success';
             });
@@ -1048,6 +852,4 @@
             })();
         });
     </script>
-</body>
-
-</html>
+@endsection

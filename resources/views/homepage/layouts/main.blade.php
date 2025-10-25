@@ -7,7 +7,7 @@
 
     @include('homepage.layouts.navbar')
 
-    @include('homepage.layouts.bottom-nav')
+    
 
     @yield('container')
 
