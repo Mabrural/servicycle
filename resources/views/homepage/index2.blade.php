@@ -296,7 +296,7 @@
                 transform: scale(0.98);
             }
         }
-        
+
         /* Loading spinner */
         .loading-spinner {
             border: 3px solid #f3f3f3;
@@ -309,8 +309,65 @@
         }
 
         @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Workshop list styles from first example */
+        .workshop-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 15px 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+            transition: transform 0.2s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+        }
+
+        .name {
+            font-size: 18px;
+            font-weight: bold;
+            color: #222;
+        }
+
+        .address {
+            color: #555;
+            font-size: 14px;
+            margin: 5px 0;
+        }
+
+        .distance {
+            font-weight: bold;
+            color: #0066cc;
+        }
+
+        .map-link {
+            display: inline-block;
+            margin-top: 8px;
+            background: #007BFF;
+            color: white;
+            text-decoration: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: background 0.2s ease;
+        }
+
+        .map-link:hover {
+            background: #0056b3;
         }
     </style>
 </head>
@@ -582,64 +639,55 @@
             </div>
 
             <!-- Location Status -->
-            <div id="locationStatus"
-                class="mt-6 md:mt-8 bg-blue-50 border border-blue-200 rounded-lg p-4 flex items-center">
-                <i class="fas fa-info-circle text-blue-500 text-xl mr-3"></i>
-                <p class="text-blue-700 text-sm md:text-base">Klik tombol di bawah untuk mengizinkan akses lokasi dan
-                    melihat bengkel
-                    terdekat</p>
-            </div>
-
-            <!-- Location Controls -->
-            <div class="mt-4 md:mt-6 flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4">
-                <button id="getLocationBtn"
-                    class="bg-primary text-white px-4 py-3 md:px-6 md:py-3 rounded-lg font-medium hover:bg-secondary transition-all duration-300 btn-glow flex items-center justify-center text-sm md:text-base">
-                    <i class="fas fa-map-marker-alt mr-2"></i> Dapatkan Lokasi Saya
-                </button>
-                <div class="flex-1">
-                    <div class="flex border border-gray-300 rounded-lg overflow-hidden">
-                        <input type="text" id="searchWorkshop" placeholder="Cari bengkel..."
-                            class="flex-1 px-4 py-3 focus:outline-none text-sm md:text-base">
-                        <button class="bg-gray-100 px-4 hover:bg-gray-200 transition-colors">
-                            <i class="fas fa-search text-gray-600"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Vehicle Type Tabs -->
-            <div class="mt-6 md:mt-8 flex border-b border-gray-200 overflow-x-auto">
-                <button
-                    class="tab-button active px-4 py-3 md:px-6 md:py-3 font-medium text-sm md:text-base whitespace-nowrap"
-                    data-type="all">Semua</button>
-                <button class="tab-button px-4 py-3 md:px-6 md:py-3 font-medium text-sm md:text-base whitespace-nowrap"
-                    data-type="motor">Motor</button>
-                <button class="tab-button px-4 py-3 md:px-6 md:py-3 font-medium text-sm md:text-base whitespace-nowrap"
-                    data-type="mobil">Mobil</button>
-                <button class="tab-button px-4 py-3 md:px-6 md:py-3 font-medium text-sm md:text-base whitespace-nowrap"
-                    data-type="sepeda">Sepeda</button>
-            </div>
-
-            <!-- Loading Spinner -->
-            <div id="workshopsLoading" class="mt-8 hidden">
-                <div class="loading-spinner"></div>
-                <p class="text-center mt-4 text-gray-600">Memuat data bengkel...</p>
+            <div id="locationStatus" class="mt-6 md:mt-8 bg-blue-50 border border-blue-200 rounded-lg p-4">
+                <p class="text-blue-700 text-center">Mengambil lokasi Anda...</p>
             </div>
 
             <!-- Workshops List -->
-            <div id="workshopsList"
-                class="mt-6 md:mt-8 grid md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 workshop-grid">
-                <!-- Workshop cards will be populated by JavaScript -->
+            <div class="workshop-list mt-6 md:mt-8" id="workshopList">
+                @forelse ($workshops as $workshop)
+                    <div class="card" data-lat="{{ $workshop->latitude }}" data-lng="{{ $workshop->longitude }}"
+                        data-id="{{ $workshop->id }}">
+
+                        <!-- Gambar Bengkel -->
+                        <img src="{{ $workshop->primaryImage->image_url ?? asset('img/default-workshop.jpg') }}"
+                            alt="Gambar Bengkel"
+                            class="w-full h-44 object-cover object-center rounded-xl mb-2 bg-gray-100" />
+
+                        <!-- Info Bengkel -->
+                        <div class="name font-semibold text-lg text-gray-800">{{ $workshop->name }}</div>
+                        <div class="city text-sm text-gray-600">
+                            <i class="fa-solid fa-location-dot text-red-500"></i> {{ $workshop->city ?? '-' }}
+                        </div>
+                        <div class="distance text-sm text-gray-500">Jarak: menghitung...</div>
+
+                        <!-- Tombol Aksi -->
+                        <div class="mt-4 flex items-center justify-between">
+                            <a href="https://www.google.com/maps?q={{ $workshop->latitude }},{{ $workshop->longitude }}"
+                                target="_blank"
+                                class="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 text-sm font-medium transition-colors">
+                                <i class="fa-solid fa-map-location-dot"></i> Lihat di Google Maps
+                            </a>
+
+                            <a href="{{ route('workshops.show', $workshop->id) }}"
+                                class="inline-flex items-center gap-2 bg-blue-600 text-white text-sm font-medium px-3 py-2 rounded-lg hover:bg-blue-700 transition-colors shadow-sm">
+                                <i class="fa-solid fa-info-circle"></i> Detail
+                            </a>
+                        </div>
+                    </div>
+                @empty
+                    {{-- Tidak menampilkan apa pun di awal, pesan akan dimunculkan lewat JS --}}
+                @endforelse
             </div>
 
-            <!-- No Results Message -->
-            <div id="noResults" class="mt-6 md:mt-8 text-center hidden">
-                <div class="bg-gray-100 rounded-lg p-6 md:p-8">
-                    <i class="fas fa-search text-gray-400 text-3xl md:text-4xl mb-4"></i>
-                    <h4 class="text-lg md:text-xl font-semibold text-gray-600">Tidak ada bengkel ditemukan</h4>
-                    <p class="text-gray-500 mt-2 text-sm md:text-base">Coba ubah pencarian atau filter Anda</p>
-                </div>
+            <!-- Pesan jika tidak ada bengkel -->
+            <div id="noWorkshopsMessage"
+                class="hidden flex flex-col items-center justify-center text-center py-20 bg-gray-50 rounded-xl border border-dashed border-gray-300">
+                <i class="fa-solid fa-wrench text-gray-400 text-5xl mb-3"></i>
+                <p class="text-gray-600 text-lg font-medium">Belum ada bengkel yang terdaftar di sekitar lokasi Anda.
+                </p>
             </div>
+
         </div>
     </section>
 
@@ -1110,25 +1158,14 @@
         const locationPermissionModal = document.getElementById('locationPermissionModal');
         const allowLocationBtn = document.getElementById('allowLocation');
         const denyLocationBtn = document.getElementById('denyLocation');
-        const getLocationBtn = document.getElementById('getLocationBtn');
         const locationStatus = document.getElementById('locationStatus');
-        const workshopsList = document.getElementById('workshopsList');
-        const workshopsLoading = document.getElementById('workshopsLoading');
-        const noResults = document.getElementById('noResults');
-        const searchWorkshop = document.getElementById('searchWorkshop');
-        const tabButtons = document.querySelectorAll('.tab-button');
-
-        let userLocation = null;
-        let workshops = [];
+        const workshopList = document.getElementById('workshopList');
 
         // Show location permission modal when page loads
         window.addEventListener('load', function() {
             setTimeout(() => {
                 locationPermissionModal.classList.add('active');
             }, 1000);
-            
-            // Load workshops from database
-            loadWorkshopsFromDatabase();
         });
 
         // Handle location permission
@@ -1139,252 +1176,130 @@
 
         denyLocationBtn.addEventListener('click', function() {
             locationPermissionModal.classList.remove('active');
-            locationStatus.innerHTML = `
-                <i class="fas fa-exclamation-triangle text-yellow-500 text-xl mr-3"></i>
-                <p class="text-yellow-700">Akses lokasi ditolak. Anda masih dapat melihat daftar bengkel tanpa filter lokasi.</p>
-            `;
+            locationStatus.innerHTML =
+                '<p class="text-yellow-700 text-center">Akses lokasi ditolak. Anda masih dapat melihat daftar bengkel tanpa filter lokasi.</p>';
+            // Calculate distances without location
+            calculateDistances();
         });
 
         // Get user location
-        getLocationBtn.addEventListener('click', getLocation);
-
         function getLocation() {
             if (navigator.geolocation) {
-                locationStatus.innerHTML = `
-                    <i class="fas fa-spinner fa-spin text-blue-500 text-xl mr-3"></i>
-                    <p class="text-blue-700">Mendapatkan lokasi Anda...</p>
-                `;
+                locationStatus.innerHTML = '<p class="text-blue-700 text-center">Mendapatkan lokasi Anda...</p>';
 
                 navigator.geolocation.getCurrentPosition(
                     function(position) {
-                        userLocation = {
-                            latitude: position.coords.latitude,
-                            longitude: position.coords.longitude
-                        };
+                        const userLat = position.coords.latitude;
+                        const userLng = position.coords.longitude;
 
-                        locationStatus.innerHTML = `
-                            <i class="fas fa-check-circle text-green-500 text-xl mr-3"></i>
-                            <p class="text-green-700">Lokasi berhasil didapatkan! Menampilkan bengkel terdekat.</p>
-                        `;
+                        locationStatus.innerHTML =
+                            '<p class="text-green-700 text-center">Lokasi berhasil didapatkan </p>';
 
-                        // Re-display workshops with location-based sorting
-                        displayWorkshops();
+                        // Calculate distances with user location
+                        calculateDistances(userLat, userLng);
                     },
                     function(error) {
                         console.error("Error getting location:", error);
-                        locationStatus.innerHTML = `
-                            <i class="fas fa-exclamation-triangle text-red-500 text-xl mr-3"></i>
-                            <p class="text-red-700">Gagal mendapatkan lokasi. Pastikan Anda mengizinkan akses lokasi.</p>
-                        `;
+                        locationStatus.innerHTML =
+                            '<p class="text-red-700 text-center">Gagal mendapatkan lokasi </p>';
+                        // Calculate distances without location
+                        calculateDistances();
                     }
                 );
             } else {
-                locationStatus.innerHTML = `
-                    <i class="fas fa-exclamation-triangle text-red-500 text-xl mr-3"></i>
-                    <p class="text-red-700">Browser Anda tidak mendukung geolokasi.</p>
-                `;
+                locationStatus.innerHTML =
+                    '<p class="text-red-700 text-center">Browser Anda tidak mendukung geolokasi.</p>';
+                // Calculate distances without location
+                calculateDistances();
             }
         }
 
-        // Load workshops from database
-        async function loadWorkshopsFromDatabase() {
-            try {
-                workshopsLoading.classList.remove('hidden');
-                workshopsList.classList.add('hidden');
+        // Hitung jarak menggunakan formula haversine (from first example)
+        function calculateDistance(lat1, lon1, lat2, lon2) {
+            const R = 6371; // Radius bumi dalam KM
+            const dLat = (lat2 - lat1) * Math.PI / 180;
+            const dLon = (lon2 - lon1) * Math.PI / 180;
+            const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                Math.cos(lat1 * Math.PI / 180) *
+                Math.cos(lat2 * Math.PI / 180) *
+                Math.sin(dLon / 2) * Math.sin(dLon / 2);
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+            return R * c; // hasil km
+        }
 
-                const response = await fetch('/api/workshops');
-                
-                if (!response.ok) {
-                    throw new Error('Failed to fetch workshops');
+        // Calculate distances and sort workshops
+        function calculateDistances(userLat = null, userLng = null) {
+            const cards = Array.from(document.querySelectorAll('.card'));
+
+            // Calculate distance for each workshop
+            cards.forEach(card => {
+                const lat = parseFloat(card.dataset.lat);
+                const lng = parseFloat(card.dataset.lng);
+
+                if (userLat && userLng && lat && lng) {
+                    const distance = calculateDistance(userLat, userLng, lat, lng);
+                    card.querySelector('.distance').innerHTML =
+                        `<i class="fa-solid fa-route text-green-500"></i> ${distance.toFixed(2)} km`;
+                    card.dataset.distance = distance;
+                } else {
+                    card.querySelector('.distance').innerHTML =
+                        `<i class="fa-solid fa-route text-gray-400"></i> Jarak: tidak tersedia`;
+                    card.dataset.distance = 99999; // Large number for sorting
                 }
 
-                workshops = await response.json();
-                
-                // Display workshops
-                displayWorkshops();
-                
-            } catch (error) {
-                console.error('Error loading workshops:', error);
-                locationStatus.innerHTML = `
-                    <i class="fas fa-exclamation-triangle text-red-500 text-xl mr-3"></i>
-                    <p class="text-red-700">Gagal memuat data bengkel. Silakan refresh halaman.</p>
-                `;
-            } finally {
-                workshopsLoading.classList.add('hidden');
-                workshopsList.classList.remove('hidden');
+            });
+
+            // Sort by distance (nearest first) if location is available
+            if (userLat && userLng) {
+                const sorted = cards.sort((a, b) => a.dataset.distance - b.dataset.distance);
+
+                // Re-append sorted cards
+                workshopList.innerHTML = '';
+                sorted.forEach(c => workshopList.appendChild(c));
             }
         }
+    </script>
 
-        // Display workshops
-        function displayWorkshops(filterType = 'all', searchTerm = '') {
-            let filteredWorkshops = workshops;
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Coba dapatkan lokasi pengguna
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    function(position) {
+                        const userLat = position.coords.latitude;
+                        const userLng = position.coords.longitude;
 
-            // Filter by type
-            if (filterType !== 'all') {
-                filteredWorkshops = filteredWorkshops.filter(workshop => {
-                    // Check if workshop has the selected type
-                    return workshop.types && workshop.types.includes(filterType);
-                });
-            }
+                        console.log("Lokasi pengguna:", userLat, userLng);
 
-            // Filter by search term
-            if (searchTerm) {
-                filteredWorkshops = filteredWorkshops.filter(workshop =>
-                    workshop.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                    (workshop.address && workshop.address.toLowerCase().includes(searchTerm.toLowerCase())) ||
-                    (workshop.description && workshop.description.toLowerCase().includes(searchTerm.toLowerCase()))
+                        // Setelah lokasi didapatkan, cek apakah ada bengkel
+                        const workshopList = document.getElementById('workshopList');
+                        const workshops = workshopList.querySelectorAll('.card');
+                        const noWorkshopsMessage = document.getElementById('noWorkshopsMessage');
+
+                        if (workshops.length === 0) {
+                            noWorkshopsMessage.classList.remove('hidden');
+                        } else {
+                            noWorkshopsMessage.classList.add('hidden');
+                        }
+
+                        // Tambahkan logika perhitungan jarak di sini jika perlu
+                    },
+                    function(error) {
+                        console.warn("Gagal mendapatkan lokasi:", error.message);
+                        document.getElementById('noWorkshopsMessage').classList.remove('hidden');
+                        document.getElementById('noWorkshopsMessage').querySelector('p').textContent =
+                            "Tidak dapat menentukan lokasi Anda.";
+                    }
                 );
-            }
-
-            // Sort by distance if location is available
-            if (userLocation) {
-                filteredWorkshops.sort((a, b) => {
-                    // Calculate distance for sorting (simplified)
-                    const distA = calculateDistance(userLocation, a);
-                    const distB = calculateDistance(userLocation, b);
-                    return distA - distB;
-                });
-            }
-
-            // Clear workshops list
-            workshopsList.innerHTML = '';
-
-            // Show no results message if no workshops found
-            if (filteredWorkshops.length === 0) {
-                noResults.classList.remove('hidden');
-                workshopsList.classList.add('hidden');
-                return;
             } else {
-                noResults.classList.add('hidden');
-                workshopsList.classList.remove('hidden');
+                console.warn("Browser tidak mendukung geolocation.");
+                document.getElementById('noWorkshopsMessage').classList.remove('hidden');
+                document.getElementById('noWorkshopsMessage').querySelector('p').textContent =
+                    "Browser Anda tidak mendukung deteksi lokasi.";
             }
-
-            // Display workshops
-            filteredWorkshops.forEach(workshop => {
-                const workshopCard = document.createElement('div');
-                workshopCard.className = 'bg-white rounded-xl shadow-lg p-4 md:p-6 workshop-card';
-
-                // Determine status and rating
-                const isOpen = checkIfOpen(workshop.operating_hours);
-                const statusClass = isOpen ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800';
-                const statusText = isOpen ? 'Buka' : 'Tutup';
-                
-                const rating = workshop.rating || 4.5;
-                const distance = userLocation ? calculateDistance(userLocation, workshop).toFixed(1) : null;
-
-                workshopCard.innerHTML = `
-                    <div class="flex justify-between items-start mb-4">
-                        <div>
-                            <h4 class="text-lg md:text-xl font-semibold">${workshop.name}</h4>
-                            <div class="flex items-center mt-1">
-                                <i class="fas fa-map-marker-alt text-gray-400 mr-1"></i>
-                                <span class="text-gray-600 text-xs md:text-sm">${workshop.address || 'Alamat tidak tersedia'}</span>
-                            </div>
-                        </div>
-                        <span class="px-2 py-1 md:px-3 md:py-1 rounded-full text-xs md:text-sm font-medium ${statusClass}">${statusText}</span>
-                    </div>
-                    
-                    <div class="flex justify-between items-center mb-4">
-                        <div class="flex items-center">
-                            <i class="fas fa-star text-yellow-400 mr-1"></i>
-                            <span class="font-medium text-sm md:text-base">${rating}</span>
-                        </div>
-                        ${distance ? `
-                        <div class="flex items-center">
-                            <i class="fas fa-road text-gray-400 mr-1"></i>
-                            <span class="font-medium text-sm md:text-base">${distance} km</span>
-                        </div>
-                        ` : ''}
-                    </div>
-                    
-                    ${workshop.services && workshop.services.length > 0 ? `
-                    <div class="mb-4">
-                        <h5 class="font-medium mb-2 text-sm md:text-base">Layanan:</h5>
-                        <div class="flex flex-wrap gap-1 md:gap-2">
-                            ${workshop.services.slice(0, 3).map(service => 
-                                `<span class="bg-gray-100 text-gray-800 px-2 py-1 rounded text-xs">${service}</span>`
-                            ).join('')}
-                            ${workshop.services.length > 3 ? `<span class="bg-gray-100 text-gray-800 px-2 py-1 rounded text-xs">+${workshop.services.length - 3} lainnya</span>` : ''}
-                        </div>
-                    </div>
-                    ` : ''}
-                    
-                    <div class="flex space-x-2 md:space-x-3">
-                        <button onclick="window.location.href='/booking/${workshop.id}'" class="flex-1 bg-primary text-white py-2 rounded-lg font-medium hover:bg-secondary transition-all duration-300 text-sm md:text-base">
-                            <i class="fas fa-calendar-alt mr-1 md:mr-2"></i> Booking
-                        </button>
-                        <button onclick="window.location.href='/workshops/${workshop.id}'" class="flex-1 bg-gray-200 text-gray-800 py-2 rounded-lg font-medium hover:bg-gray-300 transition-all duration-300 text-sm md:text-base">
-                            <i class="fas fa-info-circle mr-1 md:mr-2"></i> Detail
-                        </button>
-                    </div>
-                `;
-
-                workshopsList.appendChild(workshopCard);
-            });
-        }
-
-        // Calculate distance between two coordinates (simplified)
-        function calculateDistance(userLoc, workshop) {
-            if (!userLoc || !workshop.latitude || !workshop.longitude) {
-                return Math.random() * 10 + 1; // Fallback random distance
-            }
-            
-            const R = 6371; // Earth's radius in km
-            const dLat = (workshop.latitude - userLoc.latitude) * Math.PI / 180;
-            const dLon = (workshop.longitude - userLoc.longitude) * Math.PI / 180;
-            const a = 
-                Math.sin(dLat/2) * Math.sin(dLat/2) +
-                Math.cos(userLoc.latitude * Math.PI / 180) * Math.cos(workshop.latitude * Math.PI / 180) * 
-                Math.sin(dLon/2) * Math.sin(dLon/2);
-            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-            return R * c;
-        }
-
-        // Check if workshop is currently open
-        function checkIfOpen(operatingHours) {
-            if (!operatingHours) return true;
-            
-            const now = new Date();
-            const currentTime = now.getHours() * 100 + now.getMinutes();
-            
-            // Simple check for common operating hours
-            if (operatingHours === '24jam') return true;
-            
-            // For predefined hours like "08:00-17:00"
-            const match = operatingHours.match(/(\d+):(\d+)-(\d+):(\d+)/);
-            if (match) {
-                const openTime = parseInt(match[1]) * 100 + parseInt(match[2]);
-                const closeTime = parseInt(match[3]) * 100 + parseInt(match[4]);
-                return currentTime >= openTime && currentTime <= closeTime;
-            }
-            
-            return true; // Default to open if we can't determine
-        }
-
-        // Tab functionality
-        tabButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                // Remove active class from all buttons
-                tabButtons.forEach(btn => btn.classList.remove('active'));
-                // Add active class to clicked button
-                this.classList.add('active');
-
-                // Get filter type
-                const filterType = this.getAttribute('data-type');
-
-                // Display workshops with filter
-                displayWorkshops(filterType, searchWorkshop.value);
-            });
-        });
-
-        // Search functionality
-        searchWorkshop.addEventListener('input', function() {
-            const activeTab = document.querySelector('.tab-button.active');
-            const filterType = activeTab ? activeTab.getAttribute('data-type') : 'all';
-
-            displayWorkshops(filterType, this.value);
         });
     </script>
+
 </body>
 
 </html>
