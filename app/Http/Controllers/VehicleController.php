@@ -201,12 +201,12 @@ class VehicleController extends Controller
             'transmission' => 'required|string',
             'fuel_type' => 'required|string',
             'notes' => 'nullable|string',
-            'image' => 'nullable|image|max:2048',
+            'image' => 'nullable|image|max:5120',
         ], [
             'required' => 'Kolom :attribute wajib diisi.',
             'unique' => ':attribute sudah digunakan.',
             'image' => 'File harus berupa gambar (JPG/PNG).',
-            'max' => 'Ukuran file maksimal 2MB.',
+            'max' => 'Ukuran file maksimal 5MB.',
         ]);
 
         $validated['created_by'] = Auth::id();
@@ -269,12 +269,12 @@ class VehicleController extends Controller
             'transmission' => 'required|string',
             'fuel_type' => 'required|string',
             'notes' => 'nullable|string',
-            'image' => 'nullable|image|max:2048',
+            'image' => 'nullable|image|max:5120',
         ], [
             'required' => 'Kolom :attribute wajib diisi.',
             'unique' => ':attribute sudah digunakan.',
             'image' => 'File harus berupa gambar (JPG/PNG).',
-            'max' => 'Ukuran file maksimal 2MB.',
+            'max' => 'Ukuran file maksimal 5MB.',
         ]);
 
         // Simpan nama file lama SEBELUM fill()
