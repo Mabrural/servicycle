@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Vehicle;
 use App\Models\Workshop;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomepageController extends Controller
 {
@@ -20,10 +22,21 @@ class HomepageController extends Controller
         return view('homepage.show-workshop', compact('workshop'));
     }
 
+    // public function bookingService($id)
+    // {
+    //     $booking = Workshop::findOrFail($id);
+
+    //     return view('homepage.booking', compact('booking'));
+    // }
     public function bookingService($id)
     {
+        // Ambil data bengkel berdasarkan ID
         $booking = Workshop::findOrFail($id);
 
-        return view('homepage.booking', compact('booking'));
+        // Ambil semua kendaraan milik user yang sedang login
+        $vehicles = Vehicle::where('created_by', Auth::id())->get();
+
+        // Kirimkan data ke view
+        return view('homepage.booking', compact('booking', 'vehicles'));
     }
 }

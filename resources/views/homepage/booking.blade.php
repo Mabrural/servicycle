@@ -259,56 +259,59 @@
                             <!-- Vehicle List -->
                             <div class="mb-6">
                                 <label class="block text-sm font-medium text-gray-700 mb-4">Pilih Kendaraan Anda</label>
-                                <div class="space-y-4" id="vehicleList">
-                                    <!-- Vehicle cards will be populated here -->
-                                    <div class="vehicle-card bg-white border-2 border-gray-200 rounded-xl p-6 cursor-pointer"
-                                        data-vehicle-id="1">
-                                        <div class="flex items-center justify-between">
-                                            <div class="flex items-center space-x-4">
-                                                <div
-                                                    class="w-12 h-12 bg-primary rounded-lg flex items-center justify-center">
-                                                    <i class="fas fa-car text-white"></i>
-                                                </div>
-                                                <div>
-                                                    <h3 class="font-semibold text-gray-800">Toyota Avanza</h3>
-                                                    <p class="text-sm text-gray-600">B 1234 ABC • 2020 • Hitam</p>
-                                                </div>
-                                            </div>
-                                            <div class="text-right">
-                                                <span class="text-sm text-gray-500">Mobil</span>
-                                            </div>
-                                        </div>
-                                    </div>
 
-                                    <div class="vehicle-card bg-white border-2 border-gray-200 rounded-xl p-6 cursor-pointer"
-                                        data-vehicle-id="2">
-                                        <div class="flex items-center justify-between">
-                                            <div class="flex items-center space-x-4">
-                                                <div
-                                                    class="w-12 h-12 bg-green-500 rounded-lg flex items-center justify-center">
-                                                    <i class="fas fa-motorcycle text-white"></i>
+                                <div class="space-y-4" id="vehicleList">
+                                    @forelse ($vehicles as $vehicle)
+                                        <div class="vehicle-card bg-white border-2 border-gray-200 rounded-xl p-6 cursor-pointer hover:border-primary transition"
+                                            data-vehicle-id="{{ $vehicle->id }}">
+                                            <div class="flex items-center justify-between">
+                                                <div class="flex items-center space-x-4">
+                                                    <div
+                                                        class="w-12 h-12 
+                                                        @if ($vehicle->type === 'Mobil') bg-primary 
+                                                        @elseif($vehicle->type === 'Motor') bg-green-500 
+                                                        @else bg-gray-400 @endif
+                                                        rounded-lg flex items-center justify-center">
+                                                        @if ($vehicle->type === 'Mobil')
+                                                            <i class="fas fa-car text-white"></i>
+                                                        @elseif($vehicle->type === 'Motor')
+                                                            <i class="fas fa-motorcycle text-white"></i>
+                                                        @else
+                                                            <i class="fas fa-truck text-white"></i>
+                                                        @endif
+                                                    </div>
+                                                    <div>
+                                                        <h3 class="font-semibold text-gray-800">{{ $vehicle->brand }}
+                                                            {{ $vehicle->model }}</h3>
+                                                        <p class="text-sm text-gray-600">
+                                                            {{ $vehicle->license_plate }} • {{ $vehicle->year }} •
+                                                            {{ $vehicle->color }}
+                                                        </p>
+                                                    </div>
                                                 </div>
-                                                <div>
-                                                    <h3 class="font-semibold text-gray-800">Honda Vario 160</h3>
-                                                    <p class="text-sm text-gray-600">B 5678 XYZ • 2022 • Merah</p>
+                                                <div class="text-right">
+                                                    <span class="text-sm text-gray-500">{{ $vehicle->type }}</span>
                                                 </div>
-                                            </div>
-                                            <div class="text-right">
-                                                <span class="text-sm text-gray-500">Motor</span>
                                             </div>
                                         </div>
-                                    </div>
+                                    @empty
+                                        <p class="text-gray-500 text-sm">Belum ada kendaraan terdaftar. Silakan tambahkan
+                                            kendaraan terlebih dahulu.</p>
+                                    @endforelse
                                 </div>
                             </div>
 
-                            <!-- Add New Vehicle Button -->
+
+                            <!-- Add New Vehicle Button (Premium Version) -->
                             <div class="mb-6">
                                 <button type="button" id="addNewVehicle"
-                                    class="w-full py-4 border-2 border-dashed border-gray-300 rounded-xl text-gray-500 hover:text-primary hover:border-primary transition-all duration-300 flex items-center justify-center">
-                                    <i class="fas fa-plus mr-2"></i>
-                                    Tambah Kendaraan Baru
+                                    class="w-full py-4 border-2 border-dashed border-gray-300 rounded-xl text-gray-600 hover:text-primary hover:border-primary transition-all duration-300 flex items-center justify-center gap-2">
+                                    <i class="fas fa-plus"></i>
+                                    <span>Tambah Kendaraan Baru</span>
+                                    <i class="fas fa-crown text-yellow-500 ml-2" title="Fitur Premium"></i>
                                 </button>
                             </div>
+
 
                             <!-- New Vehicle Form (Hidden by default) -->
                             <div id="newVehicleForm" class="hidden bg-gray-50 rounded-xl p-6 mb-6">
