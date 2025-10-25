@@ -30,6 +30,29 @@ class AuthenticatedSessionController extends Controller
 
     //     return redirect()->intended(route('dashboard', absolute: false));
     // }
+    // public function store(LoginRequest $request): RedirectResponse
+    // {
+    //     $request->authenticate();
+
+    //     $request->session()->regenerate();
+
+    //     $user = Auth::user();
+
+    //     // Arahkan berdasarkan role user
+    //     switch ($user->role) {
+    //         case 'admin':
+    //             return redirect()->route('dashboard.admin');
+
+    //         case 'workshop':
+    //             return redirect()->route('dashboard.workshop');
+
+    //         case 'vehicle_owner':
+    //             return redirect()->route('dashboard.user');
+
+    //         default:
+    //             return redirect()->route('dashboard');
+    //     }
+    // }
     public function store(LoginRequest $request): RedirectResponse
     {
         $request->authenticate();
@@ -38,21 +61,29 @@ class AuthenticatedSessionController extends Controller
 
         $user = Auth::user();
 
-        // Arahkan berdasarkan role user
+        // Tentukan route default berdasarkan role
         switch ($user->role) {
             case 'admin':
-                return redirect()->route('dashboard.admin');
+                $defaultRoute = route('dashboard.admin');
+                break;
 
             case 'workshop':
-                return redirect()->route('dashboard.workshop');
+                $defaultRoute = route('dashboard.workshop');
+                break;
 
             case 'vehicle_owner':
-                return redirect()->route('dashboard.user');
+                $defaultRoute = route('dashboard.user');
+                break;
 
             default:
-                return redirect()->route('dashboard');
+                $defaultRoute = route('dashboard');
+                break;
         }
+
+        // Redirect ke intended route jika ada, kalau tidak ke route default
+        return redirect()->intended($defaultRoute);
     }
+
 
 
     /**

@@ -20,7 +20,7 @@ Route::get('/auth/google/callback', [GoogleController::class, 'callback']);
 Route::get('/', [HomepageController::class, 'index']);
 
 Route::get('/workshop/{id}', [HomepageController::class, 'getWorkshopDetails'])->name('workshops.show');
-Route::get('/workshop/{id}/booking', [HomepageController::class, 'bookingService'])->name('workshops.booking');
+Route::get('/workshop/{id}/booking', [HomepageController::class, 'bookingService'])->name('workshops.booking')->middleware('auth');
 
 Route::get('/booking', function() {
     return view('booking.index');
