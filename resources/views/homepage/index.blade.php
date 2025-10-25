@@ -3,6 +3,8 @@
 @section('container')
     @include('homepage.layouts.location-permission')
     
+    @include('homepage.layouts.navbar')
+
     @include('homepage.layouts.bottom-nav')
 
     @include('homepage.layouts.hero')

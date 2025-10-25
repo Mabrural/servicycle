@@ -5,7 +5,7 @@
 
 <body class="bg-gray-50 text-gray-800">
 
-    @include('homepage.layouts.navbar')
+    
 
     
 
