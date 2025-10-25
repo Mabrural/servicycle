@@ -443,7 +443,7 @@
                                     <p class="text-sm text-gray-600 mb-2">Foto saat ini:</p>
                                     <div class="file-preview">
                                         <div class="file-preview-item current-photo">
-                                            <img src="{{ asset('storage/' . $vehicle->image) }}" alt="Foto kendaraan saat ini">
+                                            <img src="{{ asset('storage/vehicle_images/' . $vehicle->image) }}" alt="Foto kendaraan saat ini">
                                         </div>
                                     </div>
                                     <p class="text-xs text-gray-500 mt-1">Foto yang saat ini tersimpan</p>
