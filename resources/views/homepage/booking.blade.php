@@ -277,7 +277,9 @@
                                                         @elseif($vehicle->type === 'Motor')
                                                             <i class="fas fa-motorcycle text-white"></i>
                                                         @else
-                                                            <i class="fas fa-truck text-white"></i>
+                                                            <img src="{{ $vehicle->image ? url('/storage/vehicle_images/' . $vehicle->image) : asset('img/no-vehicle.jpg') }}"
+                                                                alt="{{ $vehicle->name ?? 'Vehicle Image' }}"
+                                                                class="w-10 h-10 object-cover rounded-lg" />
                                                         @endif
                                                     </div>
                                                     <div>
