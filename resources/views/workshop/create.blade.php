@@ -516,10 +516,10 @@
 
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">Nomor Telepon *</label>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Nomor Telepon / WhatsApp *</label>
                                     <input type="tel" id="phone" name="phone" required
                                         class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300 mobile-form-input"
-                                        placeholder="081234567890">
+                                        placeholder="6281234567890">
                                     <div id="phone-error" class="error-message"></div>
                                 </div>
 
