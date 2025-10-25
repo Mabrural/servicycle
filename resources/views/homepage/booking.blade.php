@@ -253,7 +253,7 @@
                         <form id="bookingForm" action="" method="POST">
                             @csrf
                             <input type="hidden" name="workshop_id" value="{{ $workshop->id }}">
-                            
+
                             <div class="bg-white rounded-2xl shadow-lg p-6 md:p-8 mb-8">
                                 <h2 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
                                     <i class="fas fa-car text-primary mr-3"></i>
@@ -272,16 +272,18 @@
                                                     <div class="flex items-center space-x-4">
                                                         <div
                                                             class="w-12 h-12 
-                                                            @if ($vehicle->vehicle_type === 'mobil') bg-primary 
-                                                            @elseif($vehicle->vehicle_type === 'motor') bg-green-500 
-                                                            @else bg-gray-400 @endif
-                                                            rounded-lg flex items-center justify-center">
-                                                            @if ($vehicle->vehicle_type === 'mobil')
+                                                        @if ($vehicle->type === 'Mobil') bg-primary 
+                                                        @elseif($vehicle->type === 'Motor') bg-green-500 
+                                                        @else bg-gray-400 @endif
+                                                        rounded-lg flex items-center justify-center">
+                                                            @if ($vehicle->type === 'Mobil')
                                                                 <i class="fas fa-car text-white"></i>
-                                                            @elseif($vehicle->vehicle_type === 'motor')
+                                                            @elseif($vehicle->type === 'Motor')
                                                                 <i class="fas fa-motorcycle text-white"></i>
                                                             @else
-                                                                <i class="fas fa-car text-white"></i>
+                                                                <img src="{{ $vehicle->image ? url('/storage/vehicle_images/' . $vehicle->image) : asset('img/no-vehicle.jpg') }}"
+                                                                    alt="{{ $vehicle->name ?? 'Vehicle Image' }}"
+                                                                    class="w-10 h-10 object-cover rounded-lg" />
                                                             @endif
                                                         </div>
                                                         <div>
@@ -295,7 +297,7 @@
                                                     </div>
                                                     <div class="text-right">
                                                         <span class="text-sm text-gray-500">
-                                                            @if($vehicle->vehicle_type === 'mobil')
+                                                            @if ($vehicle->vehicle_type === 'mobil')
                                                                 Mobil
                                                             @elseif($vehicle->vehicle_type === 'motor')
                                                                 Motor
@@ -307,7 +309,8 @@
                                                 </div>
                                             </div>
                                         @empty
-                                            <p class="text-gray-500 text-sm">Belum ada kendaraan terdaftar. Silakan tambahkan
+                                            <p class="text-gray-500 text-sm">Belum ada kendaraan terdaftar. Silakan
+                                                tambahkan
                                                 kendaraan terlebih dahulu.</p>
                                         @endforelse
                                     </div>
@@ -315,7 +318,7 @@
 
                                 <!-- Add New Vehicle Button -->
                                 <div class="mb-6">
-                                    <a href="{{ route('vehicles.create') }}" 
+                                    <a href="{{ route('vehicles.create') }}"
                                         class="w-full py-4 border-2 border-dashed border-gray-300 rounded-xl text-gray-600 hover:text-primary hover:border-primary transition-all duration-300 flex items-center justify-center gap-2">
                                         <i class="fas fa-plus"></i>
                                         <span>Tambah Kendaraan Baru</span>
@@ -326,11 +329,9 @@
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-3">Catatan Servis
                                         (Opsional)</label>
-                                    <textarea name="notes" 
-                                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-primary form-input" 
-                                        rows="3" 
-                                        placeholder="Jelaskan keluhan atau permintaan khusus servis..." 
-                                        id="notes">{{ old('notes') }}</textarea>
+                                    <textarea name="notes"
+                                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-primary form-input"
+                                        rows="3" placeholder="Jelaskan keluhan atau permintaan khusus servis..." id="notes">{{ old('notes') }}</textarea>
                                 </div>
                             </div>
 
@@ -369,7 +370,8 @@
                                     <h4 class="font-semibold text-gray-800 mb-2">Informasi Bengkel</h4>
                                     <p class="text-sm text-gray-600">{{ $workshop->name }}</p>
                                     <p class="text-sm text-gray-600">{{ $workshop->address }}</p>
-                                    <p class="text-sm text-gray-600">Jam Operasional: {{ $workshop->operating_hours ?? '08:00 - 17:00' }}</p>
+                                    <p class="text-sm text-gray-600">Jam Operasional:
+                                        {{ $workshop->operating_hours ?? '08:00 - 17:00' }}</p>
                                 </div>
                             </div>
 
@@ -444,7 +446,8 @@
                             <!-- Terms & Conditions -->
                             <div class="mb-6">
                                 <label class="flex items-start">
-                                    <input type="checkbox" id="termsAgreement" class="mt-1 mr-3 text-primary rounded" required>
+                                    <input type="checkbox" id="termsAgreement" class="mt-1 mr-3 text-primary rounded"
+                                        required>
                                     <span class="text-sm text-gray-600">
                                         Saya menyetujui
                                         <a href="#" class="text-primary hover:underline">Syarat & Ketentuan</a>
@@ -614,20 +617,20 @@
 
             function showStep(stepNumber) {
                 console.log('Showing step:', stepNumber);
-                
+
                 // Hide all steps
                 steps.forEach(step => {
                     step.classList.add('hidden');
                     console.log('Hiding step:', step.id);
                 });
-                
+
                 // Show current step
                 const currentStep = document.getElementById(`step${stepNumber}`);
                 if (currentStep) {
                     currentStep.classList.remove('hidden');
                     console.log('Showing step:', currentStep.id);
                 }
-                
+
                 // Update step indicators
                 stepIndicators.forEach((indicator, index) => {
                     indicator.classList.remove('active', 'completed');
@@ -648,18 +651,18 @@
                 card.addEventListener('click', function() {
                     // Remove selected class from all cards
                     vehicleCards.forEach(c => c.classList.remove('selected', 'border-primary'));
-                    
+
                     // Add selected class to clicked card
                     this.classList.add('selected', 'border-primary');
-                    
+
                     // Get vehicle data
                     const vehicleId = this.getAttribute('data-vehicle-id');
                     const vehicleName = this.querySelector('h3').textContent;
                     const vehicleDetails = this.querySelector('p').textContent;
-                    
+
                     // Update booking data
                     bookingData.vehicle_id = vehicleId;
-                    
+
                     // Update hidden input in form
                     const vehicleInput = document.querySelector('input[name="vehicle_id"]');
                     if (!vehicleInput) {
@@ -673,11 +676,11 @@
                     } else {
                         vehicleInput.value = vehicleId;
                     }
-                    
+
                     // Update sidebar and previews
                     document.getElementById('sidebarVehicle').textContent = vehicleName;
                     updatePreviews();
-                    
+
                     console.log('Vehicle selected:', vehicleId, vehicleName);
                 });
             });
