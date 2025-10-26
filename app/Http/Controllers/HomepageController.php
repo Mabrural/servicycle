@@ -37,42 +37,6 @@ class HomepageController extends Controller
     }
 
     // function untuk menyimpan data booking servis
-    // public function store(Request $request)
-    // {
-    //     // Validasi data
-    //     $validated = $request->validate([
-    //         'workshop_id' => 'required|exists:workshops,id',
-    //         'vehicle_id' => 'required|exists:vehicles,id',
-    //         'booking_date' => 'required|date',
-    //         'notes' => 'nullable|string|max:500',
-    //     ]);
-
-    //     try {
-    //         // Format tanggal dari d-m-Y ke Y-m-d H:i:s
-    //         $bookingDate = \Carbon\Carbon::createFromFormat('d-m-Y', $validated['booking_date'])->format('Y-m-d H:i:s');
-
-    //         // Buat booking
-    //         $booking = BookingService::create([
-    //             'created_by' => Auth::id(),
-    //             'workshop_id' => $validated['workshop_id'],
-    //             'vehicle_id' => $validated['vehicle_id'],
-    //             'booking_date' => $bookingDate,
-    //             'status' => 'pending',
-    //             'notes' => $validated['notes'] ?? null,
-    //         ]);
-
-
-    //         return redirect()->route('bookings.success', $booking->id)
-    //             ->with('success', 'Booking servis berhasil dibuat!');
-
-    //     } catch (\Exception $e) {
-    //         return redirect()->back()
-    //             ->with('error', 'Terjadi kesalahan saat membuat booking: ' . $e->getMessage())
-    //             ->withInput();
-    //     }
-    // }
-
-    // function untuk menyimpan data booking servis
     public function store(Request $request)
     {
         // Validasi data
