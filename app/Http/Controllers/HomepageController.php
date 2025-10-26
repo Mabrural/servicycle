@@ -60,6 +60,7 @@ class HomepageController extends Controller
                 'notes' => $validated['notes'] ?? null,
             ]);
 
+
             return redirect()->route('bookings.success', $booking->id)
                 ->with('success', 'Booking servis berhasil dibuat!');
 

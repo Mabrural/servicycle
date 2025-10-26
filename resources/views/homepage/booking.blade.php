@@ -250,7 +250,7 @@
                 <div class="md:col-span-2">
                     <!-- Step 1: Vehicle Selection -->
                     <div id="step1" class="booking-step">
-                        <form id="bookingForm" action="" method="POST">
+                        <form id="bookingForm" action="{{ route('save.booking') }}" method="POST">
                             @csrf
                             <input type="hidden" name="workshop_id" value="{{ $workshop->id }}">
 
