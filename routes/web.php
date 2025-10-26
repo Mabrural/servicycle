@@ -21,6 +21,8 @@ Route::get('/', [HomepageController::class, 'index']);
 
 Route::get('/workshop/{id}', [HomepageController::class, 'getWorkshopDetails'])->name('workshops.show');
 Route::get('/workshop/{id}/booking', [HomepageController::class, 'bookingService'])->name('workshops.booking')->middleware(['auth', 'vehicle_owner']);
+// simpan data booking
+Route::post('/save-bookings', [HomepageController::class, 'store'])->name('save.booking')->middleware(['auth', 'vehicle_owner']);
 
 Route::get('/booking', function() {
     return view('booking.index');
