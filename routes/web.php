@@ -26,10 +26,6 @@ Route::get('/workshop/{id}/booking', [HomepageController::class, 'bookingService
 Route::post('/bookings/store', [HomepageController::class, 'store'])->name('save.booking')->middleware('auth');
 Route::get('/bookings/success/{id}', [HomepageController::class, 'success'])->name('bookings.success')->middleware('auth');
 
-Route::get('/booking', function() {
-    return view('booking.index');
-});
-
 Route::resource('booking-services', BookingServiceController::class);
 
 Route::get('/storage/{folder}/{filename}', function ($folder, $filename) {
