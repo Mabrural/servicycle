@@ -194,7 +194,7 @@
                     Booking Servis
                 </h1>
                 <p class="text-lg md:text-xl text-indigo-100 max-w-2xl mx-auto">
-                    Pesan servis kendaraan Anda di Bengkel Maju Jaya dengan mudah dan cepat
+                    Pesan servis kendaraan Anda di {{ $workshop->name }} dengan mudah dan cepat
                 </p>
             </div>
         </div>
@@ -250,139 +250,99 @@
                 <div class="md:col-span-2">
                     <!-- Step 1: Vehicle Selection -->
                     <div id="step1" class="booking-step">
-                        <div class="bg-white rounded-2xl shadow-lg p-6 md:p-8 mb-8">
-                            <h2 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
-                                <i class="fas fa-car text-primary mr-3"></i>
-                                Pilih Kendaraan
-                            </h2>
+                        <form id="bookingForm" action="{{ route('save.booking') }}" method="POST">
+                            @csrf
+                            <input type="hidden" name="workshop_id" value="{{ $workshop->id }}">
 
-                            <!-- Vehicle List -->
-                            <div class="mb-6">
-                                <label class="block text-sm font-medium text-gray-700 mb-4">Pilih Kendaraan Anda</label>
-                                <div class="space-y-4" id="vehicleList">
-                                    <!-- Vehicle cards will be populated here -->
-                                    <div class="vehicle-card bg-white border-2 border-gray-200 rounded-xl p-6 cursor-pointer"
-                                        data-vehicle-id="1">
-                                        <div class="flex items-center justify-between">
-                                            <div class="flex items-center space-x-4">
-                                                <div
-                                                    class="w-12 h-12 bg-primary rounded-lg flex items-center justify-center">
-                                                    <i class="fas fa-car text-white"></i>
-                                                </div>
-                                                <div>
-                                                    <h3 class="font-semibold text-gray-800">Toyota Avanza</h3>
-                                                    <p class="text-sm text-gray-600">B 1234 ABC • 2020 • Hitam</p>
-                                                </div>
-                                            </div>
-                                            <div class="text-right">
-                                                <span class="text-sm text-gray-500">Mobil</span>
-                                            </div>
-                                        </div>
-                                    </div>
+                            <div class="bg-white rounded-2xl shadow-lg p-6 md:p-8 mb-8">
+                                <h2 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                                    <i class="fas fa-car text-primary mr-3"></i>
+                                    Pilih Kendaraan
+                                </h2>
 
-                                    <div class="vehicle-card bg-white border-2 border-gray-200 rounded-xl p-6 cursor-pointer"
-                                        data-vehicle-id="2">
-                                        <div class="flex items-center justify-between">
-                                            <div class="flex items-center space-x-4">
-                                                <div
-                                                    class="w-12 h-12 bg-green-500 rounded-lg flex items-center justify-center">
-                                                    <i class="fas fa-motorcycle text-white"></i>
-                                                </div>
-                                                <div>
-                                                    <h3 class="font-semibold text-gray-800">Honda Vario 160</h3>
-                                                    <p class="text-sm text-gray-600">B 5678 XYZ • 2022 • Merah</p>
+                                <!-- Vehicle List -->
+                                <div class="mb-6">
+                                    <label class="block text-sm font-medium text-gray-700 mb-4">Pilih Kendaraan Anda</label>
+
+                                    <div class="space-y-4" id="vehicleList">
+                                        @forelse ($vehicles as $vehicle)
+                                            <div class="vehicle-card bg-white border-2 border-gray-200 rounded-xl p-6 cursor-pointer hover:border-primary transition"
+                                                data-vehicle-id="{{ $vehicle->id }}">
+                                                <div class="flex items-center justify-between">
+                                                    <div class="flex items-center space-x-4">
+                                                        <div
+                                                            class="w-12 h-12 
+                                                        @if ($vehicle->type === 'Mobil') bg-primary 
+                                                        @elseif($vehicle->type === 'Motor') bg-green-500 
+                                                        @else bg-gray-400 @endif
+                                                        rounded-lg flex items-center justify-center">
+                                                            @if ($vehicle->type === 'Mobil')
+                                                                <i class="fas fa-car text-white"></i>
+                                                            @elseif($vehicle->type === 'Motor')
+                                                                <i class="fas fa-motorcycle text-white"></i>
+                                                            @else
+                                                                <img src="{{ $vehicle->image ? url('/storage/vehicle_images/' . $vehicle->image) : asset('img/no-vehicle.jpg') }}"
+                                                                    alt="{{ $vehicle->name ?? 'Vehicle Image' }}"
+                                                                    class="w-10 h-10 object-cover rounded-lg" />
+                                                            @endif
+                                                        </div>
+                                                        <div>
+                                                            <h3 class="font-semibold text-gray-800">{{ $vehicle->brand }}
+                                                                {{ $vehicle->model }}</h3>
+                                                            <p class="text-sm text-gray-600">
+                                                                {{ $vehicle->license_plate }} • {{ $vehicle->year }} •
+                                                                {{ $vehicle->color }}
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="text-right">
+                                                        <span class="text-sm text-gray-500">
+                                                            @if ($vehicle->vehicle_type === 'mobil')
+                                                                Mobil
+                                                            @elseif($vehicle->vehicle_type === 'motor')
+                                                                Motor
+                                                            @else
+                                                                {{ $vehicle->vehicle_type }}
+                                                            @endif
+                                                        </span>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div class="text-right">
-                                                <span class="text-sm text-gray-500">Motor</span>
-                                            </div>
-                                        </div>
+                                        @empty
+                                            <p class="text-gray-500 text-sm">Belum ada kendaraan terdaftar. Silakan
+                                                tambahkan
+                                                kendaraan terlebih dahulu.</p>
+                                        @endforelse
                                     </div>
+                                </div>
+
+                                <!-- Add New Vehicle Button -->
+                                <div class="mb-6">
+                                    <a href="{{ route('vehicles.create') }}"
+                                        class="w-full py-4 border-2 border-dashed border-gray-300 rounded-xl text-gray-600 hover:text-primary hover:border-primary transition-all duration-300 flex items-center justify-center gap-2">
+                                        <i class="fas fa-plus"></i>
+                                        <span>Tambah Kendaraan Baru</span>
+                                    </a>
+                                </div>
+
+                                <!-- Notes -->
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-3">Catatan Servis
+                                        (Opsional)</label>
+                                    <textarea name="notes"
+                                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-primary form-input"
+                                        rows="3" placeholder="Jelaskan keluhan atau permintaan khusus servis..." id="notes">{{ old('notes') }}</textarea>
                                 </div>
                             </div>
 
-                            <!-- Add New Vehicle Button -->
-                            <div class="mb-6">
-                                <button type="button" id="addNewVehicle"
-                                    class="w-full py-4 border-2 border-dashed border-gray-300 rounded-xl text-gray-500 hover:text-primary hover:border-primary transition-all duration-300 flex items-center justify-center">
-                                    <i class="fas fa-plus mr-2"></i>
-                                    Tambah Kendaraan Baru
+                            <div class="flex justify-end">
+                                <button type="button" id="nextToStep2"
+                                    class="bg-primary text-white px-8 py-3 rounded-lg font-medium hover:bg-secondary transition-all duration-300 btn-glow flex items-center">
+                                    Lanjut ke Jadwal
+                                    <i class="fas fa-arrow-right ml-2"></i>
                                 </button>
                             </div>
-
-                            <!-- New Vehicle Form (Hidden by default) -->
-                            <div id="newVehicleForm" class="hidden bg-gray-50 rounded-xl p-6 mb-6">
-                                <h3 class="text-lg font-semibold text-gray-800 mb-4">Tambah Kendaraan Baru</h3>
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-2">Jenis Kendaraan</label>
-                                        <select
-                                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-primary form-input"
-                                            id="vehicle_type">
-                                            <option value="">Pilih jenis</option>
-                                            <option value="mobil">Mobil</option>
-                                            <option value="motor">Motor</option>
-                                        </select>
-                                    </div>
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-2">Merek</label>
-                                        <input type="text"
-                                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-primary form-input"
-                                            id="brand" placeholder="Contoh: Toyota">
-                                    </div>
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-2">Model</label>
-                                        <input type="text"
-                                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-primary form-input"
-                                            id="model" placeholder="Contoh: Avanza">
-                                    </div>
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-2">Tahun</label>
-                                        <input type="number"
-                                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-primary form-input"
-                                            id="year" placeholder="Contoh: 2020">
-                                    </div>
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-2">Nomor Plat</label>
-                                        <input type="text"
-                                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-primary form-input"
-                                            id="license_plate" placeholder="Contoh: B 1234 ABC">
-                                    </div>
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-2">Warna</label>
-                                        <input type="text"
-                                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-primary form-input"
-                                            id="color" placeholder="Contoh: Hitam">
-                                    </div>
-                                </div>
-                                <div class="flex justify-end space-x-3 mt-4">
-                                    <button type="button" id="cancelAddVehicle"
-                                        class="px-6 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-all duration-300">
-                                        Batal
-                                    </button>
-                                    <button type="button" id="saveVehicle"
-                                        class="px-6 py-2 bg-primary text-white rounded-lg hover:bg-secondary transition-all duration-300">
-                                        Simpan Kendaraan
-                                    </button>
-                                </div>
-                            </div>
-
-                            <!-- Notes -->
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-3">Catatan Servis
-                                    (Opsional)</label>
-                                <textarea class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-primary form-input"
-                                    rows="3" placeholder="Jelaskan keluhan atau permintaan khusus servis..." id="notes"></textarea>
-                            </div>
-                        </div>
-
-                        <div class="flex justify-end">
-                            <button id="nextToStep2"
-                                class="bg-primary text-white px-8 py-3 rounded-lg font-medium hover:bg-secondary transition-all duration-300 btn-glow flex items-center">
-                                Lanjut ke Jadwal
-                                <i class="fas fa-arrow-right ml-2"></i>
-                            </button>
-                        </div>
+                        </form>
                     </div>
 
                     <!-- Step 2: Schedule Selection -->
@@ -397,17 +357,21 @@
                                 <!-- Date Selection -->
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-3">Tanggal Servis</label>
-                                    <input type="text" id="datePicker"
+                                    <input type="text" name="booking_date" id="datePicker"
                                         class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-primary flatpickr-input"
-                                        placeholder="Pilih tanggal...">
+                                        placeholder="Pilih tanggal..." value="{{ old('booking_date') }}">
+                                    @error('booking_date')
+                                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                                    @enderror
                                 </div>
 
                                 <!-- Workshop Information -->
                                 <div class="bg-blue-50 rounded-xl p-4">
                                     <h4 class="font-semibold text-gray-800 mb-2">Informasi Bengkel</h4>
-                                    <p class="text-sm text-gray-600">Bengkel Maju Jaya</p>
-                                    <p class="text-sm text-gray-600">Jl. Ahmad Yani No. 45, Batam Center</p>
-                                    <p class="text-sm text-gray-600">Jam Operasional: 08:00 - 17:00</p>
+                                    <p class="text-sm text-gray-600">{{ $workshop->name }}</p>
+                                    <p class="text-sm text-gray-600">{{ $workshop->address }}</p>
+                                    <p class="text-sm text-gray-600">Jam Operasional:
+                                        {{ $workshop->operating_hours ?? '08:00 - 17:00' }}</p>
                                 </div>
                             </div>
 
@@ -427,12 +391,12 @@
                         </div>
 
                         <div class="flex justify-between">
-                            <button id="backToStep1"
+                            <button type="button" id="backToStep1"
                                 class="bg-gray-200 text-gray-700 px-8 py-3 rounded-lg font-medium hover:bg-gray-300 transition-all duration-300 flex items-center">
                                 <i class="fas fa-arrow-left mr-2"></i>
                                 Kembali
                             </button>
-                            <button id="nextToStep3"
+                            <button type="button" id="nextToStep3"
                                 class="bg-primary text-white px-8 py-3 rounded-lg font-medium hover:bg-secondary transition-all duration-300 btn-glow flex items-center">
                                 Lanjut ke Konfirmasi
                                 <i class="fas fa-arrow-right ml-2"></i>
@@ -454,7 +418,7 @@
                                 <div class="space-y-3">
                                     <div class="flex justify-between items-center">
                                         <span class="text-gray-600">Bengkel</span>
-                                        <span class="font-medium">Bengkel Maju Jaya</span>
+                                        <span class="font-medium">{{ $workshop->name }}</span>
                                     </div>
                                     <div class="flex justify-between items-center">
                                         <span class="text-gray-600">Kendaraan</span>
@@ -482,7 +446,8 @@
                             <!-- Terms & Conditions -->
                             <div class="mb-6">
                                 <label class="flex items-start">
-                                    <input type="checkbox" id="termsAgreement" class="mt-1 mr-3 text-primary rounded">
+                                    <input type="checkbox" id="termsAgreement" class="mt-1 mr-3 text-primary rounded"
+                                        required>
                                     <span class="text-sm text-gray-600">
                                         Saya menyetujui
                                         <a href="#" class="text-primary hover:underline">Syarat & Ketentuan</a>
@@ -495,12 +460,12 @@
                         </div>
 
                         <div class="flex justify-between">
-                            <button id="backToStep2"
+                            <button type="button" id="backToStep2"
                                 class="bg-gray-200 text-gray-700 px-8 py-3 rounded-lg font-medium hover:bg-gray-300 transition-all duration-300 flex items-center">
                                 <i class="fas fa-arrow-left mr-2"></i>
                                 Kembali
                             </button>
-                            <button id="confirmBooking"
+                            <button type="submit" id="confirmBooking" form="bookingForm"
                                 class="bg-accent text-white px-8 py-3 rounded-lg font-medium hover:bg-emerald-600 transition-all duration-300 btn-glow flex items-center">
                                 <i class="fas fa-check mr-2"></i>
                                 Konfirmasi Booking
@@ -521,18 +486,32 @@
                                 </div>
                             </div>
                             <div>
-                                <h4 class="font-semibold text-gray-800">Bengkel Maju Jaya</h4>
-                                <p class="text-sm text-gray-600 mt-1">Jl. Ahmad Yani No. 45, Batam Center</p>
-                                <div class="flex items-center mt-2">
-                                    <div class="rating-stars text-yellow-400">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star-half-alt"></i>
+                                <h4 class="font-semibold text-gray-800">
+                                    {{ $workshop->name }}
+                                </h4>
+                                <p class="text-sm text-gray-600 mt-1">
+                                    {{ $workshop->address }}
+                                </p>
+
+                                @if ($workshop->rating)
+                                    <div class="flex items-center mt-2">
+                                        <div class="rating-stars text-yellow-400">
+                                            @for ($i = 1; $i <= 5; $i++)
+                                                @if ($i <= floor($workshop->rating))
+                                                    <i class="fas fa-star"></i>
+                                                @elseif ($i - $workshop->rating < 1)
+                                                    <i class="fas fa-star-half-alt"></i>
+                                                @else
+                                                    <i class="far fa-star"></i>
+                                                @endif
+                                            @endfor
+                                        </div>
+                                        <span class="text-sm text-gray-600 ml-2">
+                                            {{ number_format($workshop->rating, 1) }}
+                                            ({{ $workshop->review_count ?? 0 }})
+                                        </span>
                                     </div>
-                                    <span class="text-sm text-gray-600 ml-2">4.8 (124)</span>
-                                </div>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -565,15 +544,15 @@
                         <div class="space-y-3">
                             <div class="flex items-center text-gray-600">
                                 <i class="fas fa-phone text-primary mr-3"></i>
-                                <span>+62 812 3456 7890</span>
+                                <span>{{ $workshop->phone ?? '+62 812 3456 7890' }}</span>
                             </div>
                             <div class="flex items-center text-gray-600">
                                 <i class="fas fa-envelope text-primary mr-3"></i>
-                                <span>support@servicycle.com</span>
+                                <span>{{ $workshop->email ?? 'support@servicycle.com' }}</span>
                             </div>
                             <div class="flex items-center text-gray-600">
                                 <i class="fas fa-clock text-primary mr-3"></i>
-                                <span>24/7 Customer Service</span>
+                                <span>{{ $workshop->service_hours ?? '24/7 Customer Service' }}</span>
                             </div>
                         </div>
                     </div>
@@ -582,8 +561,9 @@
         </div>
     </section>
 
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script>
-        // Booking Process Logic
         document.addEventListener('DOMContentLoaded', function() {
             // Initialize date picker
             flatpickr("#datePicker", {
@@ -595,7 +575,7 @@
             // State management
             let bookingData = {
                 vehicle_id: null,
-                workshop_id: 1, // Default workshop ID
+                workshop_id: {{ $workshop->id }},
                 booking_date: null,
                 notes: '',
                 status: 'pending'
@@ -605,6 +585,7 @@
             const steps = document.querySelectorAll('.booking-step');
             const stepIndicators = document.querySelectorAll('.step-indicator');
 
+            // Next to Step 2
             document.getElementById('nextToStep2').addEventListener('click', function() {
                 if (!bookingData.vehicle_id) {
                     alert('Silakan pilih kendaraan terlebih dahulu');
@@ -613,28 +594,42 @@
                 showStep(2);
             });
 
+            // Back to Step 1
             document.getElementById('backToStep1').addEventListener('click', function() {
                 showStep(1);
             });
 
+            // Next to Step 3
             document.getElementById('nextToStep3').addEventListener('click', function() {
-                if (!bookingData.booking_date) {
+                const bookingDate = document.getElementById('datePicker').value;
+                if (!bookingDate) {
                     alert('Silakan pilih tanggal servis terlebih dahulu');
                     return;
                 }
+                bookingData.booking_date = bookingDate;
                 showStep(3);
             });
 
+            // Back to Step 2
             document.getElementById('backToStep2').addEventListener('click', function() {
                 showStep(2);
             });
 
             function showStep(stepNumber) {
+                console.log('Showing step:', stepNumber);
+
                 // Hide all steps
-                steps.forEach(step => step.classList.add('hidden'));
+                steps.forEach(step => {
+                    step.classList.add('hidden');
+                    console.log('Hiding step:', step.id);
+                });
 
                 // Show current step
-                document.getElementById(`step${stepNumber}`).classList.remove('hidden');
+                const currentStep = document.getElementById(`step${stepNumber}`);
+                if (currentStep) {
+                    currentStep.classList.remove('hidden');
+                    console.log('Showing step:', currentStep.id);
+                }
 
                 // Update step indicators
                 stepIndicators.forEach((indicator, index) => {
@@ -654,107 +649,40 @@
             const vehicleCards = document.querySelectorAll('.vehicle-card');
             vehicleCards.forEach(card => {
                 card.addEventListener('click', function() {
-                    vehicleCards.forEach(c => c.classList.remove('selected'));
-                    this.classList.add('selected');
+                    // Remove selected class from all cards
+                    vehicleCards.forEach(c => c.classList.remove('selected', 'border-primary'));
 
+                    // Add selected class to clicked card
+                    this.classList.add('selected', 'border-primary');
+
+                    // Get vehicle data
                     const vehicleId = this.getAttribute('data-vehicle-id');
-                    bookingData.vehicle_id = vehicleId;
-
-                    // Update sidebar
                     const vehicleName = this.querySelector('h3').textContent;
                     const vehicleDetails = this.querySelector('p').textContent;
+
+                    // Update booking data
+                    bookingData.vehicle_id = vehicleId;
+
+                    // Update hidden input in form
+                    const vehicleInput = document.querySelector('input[name="vehicle_id"]');
+                    if (!vehicleInput) {
+                        // Create hidden input if it doesn't exist
+                        const form = document.getElementById('bookingForm');
+                        const hiddenInput = document.createElement('input');
+                        hiddenInput.type = 'hidden';
+                        hiddenInput.name = 'vehicle_id';
+                        hiddenInput.value = vehicleId;
+                        form.appendChild(hiddenInput);
+                    } else {
+                        vehicleInput.value = vehicleId;
+                    }
+
+                    // Update sidebar and previews
                     document.getElementById('sidebarVehicle').textContent = vehicleName;
-
                     updatePreviews();
+
+                    console.log('Vehicle selected:', vehicleId, vehicleName);
                 });
-            });
-
-            // Add New Vehicle
-            document.getElementById('addNewVehicle').addEventListener('click', function() {
-                document.getElementById('newVehicleForm').classList.remove('hidden');
-                this.classList.add('hidden');
-            });
-
-            document.getElementById('cancelAddVehicle').addEventListener('click', function() {
-                document.getElementById('newVehicleForm').classList.add('hidden');
-                document.getElementById('addNewVehicle').classList.remove('hidden');
-                // Reset form
-                document.getElementById('newVehicleForm').querySelectorAll('input, select').forEach(
-                    element => {
-                        element.value = '';
-                    });
-            });
-
-            document.getElementById('saveVehicle').addEventListener('click', function() {
-                // Simple validation
-                const vehicleType = document.getElementById('vehicle_type').value;
-                const brand = document.getElementById('brand').value;
-                const model = document.getElementById('model').value;
-                const year = document.getElementById('year').value;
-                const licensePlate = document.getElementById('license_plate').value;
-                const color = document.getElementById('color').value;
-
-                if (!vehicleType || !brand || !model || !year || !licensePlate || !color) {
-                    alert('Harap lengkapi semua data kendaraan');
-                    return;
-                }
-
-                // Simulate adding new vehicle (in real app, this would be an API call)
-                const newVehicleId = Date.now(); // Temporary ID
-                const vehicleCard = document.createElement('div');
-                vehicleCard.className =
-                    'vehicle-card bg-white border-2 border-gray-200 rounded-xl p-6 cursor-pointer selected';
-                vehicleCard.setAttribute('data-vehicle-id', newVehicleId);
-
-                const iconClass = vehicleType === 'mobil' ? 'fa-car' : 'fa-motorcycle';
-                const iconColor = vehicleType === 'mobil' ? 'bg-primary' : 'bg-green-500';
-
-                vehicleCard.innerHTML = `
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center space-x-4">
-                            <div class="w-12 h-12 ${iconColor} rounded-lg flex items-center justify-center">
-                                <i class="fas ${iconClass} text-white"></i>
-                            </div>
-                            <div>
-                                <h3 class="font-semibold text-gray-800">${brand} ${model}</h3>
-                                <p class="text-sm text-gray-600">${licensePlate} • ${year} • ${color}</p>
-                            </div>
-                        </div>
-                        <div class="text-right">
-                            <span class="text-sm text-gray-500">${vehicleType === 'mobil' ? 'Mobil' : 'Motor'}</span>
-                        </div>
-                    </div>
-                `;
-
-                // Add click event to new vehicle card
-                vehicleCard.addEventListener('click', function() {
-                    vehicleCards.forEach(c => c.classList.remove('selected'));
-                    document.querySelectorAll('.vehicle-card').forEach(c => c.classList.remove(
-                        'selected'));
-                    this.classList.add('selected');
-
-                    bookingData.vehicle_id = newVehicleId;
-                    document.getElementById('sidebarVehicle').textContent = `${brand} ${model}`;
-                    updatePreviews();
-                });
-
-                document.getElementById('vehicleList').appendChild(vehicleCard);
-
-                // Select the new vehicle
-                bookingData.vehicle_id = newVehicleId;
-                document.getElementById('sidebarVehicle').textContent = `${brand} ${model}`;
-
-                // Hide form and show button again
-                document.getElementById('newVehicleForm').classList.add('hidden');
-                document.getElementById('addNewVehicle').classList.remove('hidden');
-
-                // Reset form
-                document.getElementById('newVehicleForm').querySelectorAll('input, select').forEach(
-                    element => {
-                        element.value = '';
-                    });
-
-                updatePreviews();
             });
 
             // Date Selection
@@ -785,71 +713,44 @@
                 }
 
                 // Notes preview
-                document.getElementById('notesPreview').textContent = bookingData.notes || '-';
-                document.getElementById('confirmNotes').textContent = bookingData.notes || '-';
+                const notes = document.getElementById('notes').value;
+                document.getElementById('notesPreview').textContent = notes || '-';
+                document.getElementById('confirmNotes').textContent = notes || '-';
 
                 // Date preview
-                if (bookingData.booking_date) {
-                    document.getElementById('confirmDate').textContent = bookingData.booking_date;
+                const bookingDate = document.getElementById('datePicker').value;
+                if (bookingDate) {
+                    document.getElementById('confirmDate').textContent = bookingDate;
                 }
             }
 
-            // Confirm Booking
-            document.getElementById('confirmBooking').addEventListener('click', function() {
-                if (!document.getElementById('termsAgreement').checked) {
+            // Form submission handling
+            document.getElementById('bookingForm').addEventListener('submit', function(e) {
+                if (!document.getElementById('termsAgreement')?.checked) {
+                    e.preventDefault();
                     alert('Harap setujui syarat dan ketentuan terlebih dahulu');
                     return;
                 }
 
                 // Validate all required data
                 if (!bookingData.vehicle_id || !bookingData.booking_date) {
+                    e.preventDefault();
                     alert('Harap lengkapi semua data yang diperlukan');
                     return;
                 }
 
-                // Simulate booking submission
-                console.log('Booking Data:', bookingData);
+                // Show loading state
+                const submitBtn = document.getElementById('confirmBooking');
+                const originalText = submitBtn.innerHTML;
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Memproses...';
+                submitBtn.disabled = true;
 
-                // Show success message
-                alert('Booking berhasil! Anda akan menerima konfirmasi via email dan WhatsApp.');
-
-                // In a real app, you would redirect to success page or dashboard
-                // window.location.href = '/booking/success';
+                // Form will submit normally
+                console.log('Submitting booking data:', bookingData);
             });
 
-            // Mobile dropdown functionality
-            (function() {
-                const btn = document.getElementById('userMenuMobile');
-                const menu = document.getElementById('dropdownMobileMenu');
-
-                if (!btn || !menu) return;
-
-                btn.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    const isHidden = menu.classList.contains('hidden');
-                    btn.setAttribute('aria-expanded', isHidden ? 'true' : 'false');
-                    menu.classList.toggle('hidden');
-                });
-
-                menu.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                });
-
-                document.addEventListener('click', function() {
-                    if (!menu.classList.contains('hidden')) {
-                        menu.classList.add('hidden');
-                        btn.setAttribute('aria-expanded', 'false');
-                    }
-                });
-
-                document.addEventListener('keydown', function(e) {
-                    if (e.key === 'Escape' && !menu.classList.contains('hidden')) {
-                        menu.classList.add('hidden');
-                        btn.setAttribute('aria-expanded', 'false');
-                        btn.focus();
-                    }
-                });
-            })();
+            // Initialize the first step
+            showStep(1);
         });
     </script>
 @endsection

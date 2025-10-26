@@ -200,6 +200,25 @@
         </div>
     </section>
 
+    <!-- Error Messages -->
+    @if($errors->any())
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
+        <div class="bg-red-50 border border-red-200 rounded-xl p-4">
+            <div class="flex items-center">
+                <i class="fas fa-exclamation-circle text-red-500 mr-3"></i>
+                <div>
+                    <h4 class="text-sm font-medium text-red-800">Terjadi Kesalahan</h4>
+                    <ul class="mt-1 text-sm text-red-600">
+                        @foreach($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    @endif
+
     <!-- Booking Process -->
     <section class="py-12 md:py-16 bg-white">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -207,8 +226,7 @@
             <div class="mb-12">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center">
-                        <div
-                            class="step-indicator w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center font-bold">
+                        <div class="step-indicator w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center font-bold active">
                             1
                         </div>
                         <div class="ml-3">
@@ -220,8 +238,7 @@
                     <div class="flex-1 h-1 bg-gray-200 mx-4"></div>
 
                     <div class="flex items-center">
-                        <div
-                            class="step-indicator w-10 h-10 rounded-full bg-gray-200 text-gray-600 flex items-center justify-center font-bold">
+                        <div class="step-indicator w-10 h-10 rounded-full bg-gray-200 text-gray-600 flex items-center justify-center font-bold">
                             2
                         </div>
                         <div class="ml-3">
@@ -233,8 +250,7 @@
                     <div class="flex-1 h-1 bg-gray-200 mx-4"></div>
 
                     <div class="flex items-center">
-                        <div
-                            class="step-indicator w-10 h-10 rounded-full bg-gray-200 text-gray-600 flex items-center justify-center font-bold">
+                        <div class="step-indicator w-10 h-10 rounded-full bg-gray-200 text-gray-600 flex items-center justify-center font-bold">
                             3
                         </div>
                         <div class="ml-3">
@@ -253,6 +269,7 @@
                         <form id="bookingForm" action="{{ route('save.booking') }}" method="POST">
                             @csrf
                             <input type="hidden" name="workshop_id" value="{{ $workshop->id }}">
+                            <!-- Vehicle ID akan ditambahkan via JavaScript -->
 
                             <div class="bg-white rounded-2xl shadow-lg p-6 md:p-8 mb-8">
                                 <h2 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
@@ -270,12 +287,11 @@
                                                 data-vehicle-id="{{ $vehicle->id }}">
                                                 <div class="flex items-center justify-between">
                                                     <div class="flex items-center space-x-4">
-                                                        <div
-                                                            class="w-12 h-12 
-                                                        @if ($vehicle->type === 'Mobil') bg-primary 
-                                                        @elseif($vehicle->type === 'Motor') bg-green-500 
-                                                        @else bg-gray-400 @endif
-                                                        rounded-lg flex items-center justify-center">
+                                                        <div class="w-12 h-12 
+                                                            @if ($vehicle->type === 'Mobil') bg-primary 
+                                                            @elseif($vehicle->type === 'Motor') bg-green-500 
+                                                            @else bg-gray-400 @endif
+                                                            rounded-lg flex items-center justify-center">
                                                             @if ($vehicle->type === 'Mobil')
                                                                 <i class="fas fa-car text-white"></i>
                                                             @elseif($vehicle->type === 'Motor')
@@ -360,6 +376,7 @@
                                     <input type="text" name="booking_date" id="datePicker"
                                         class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-primary flatpickr-input"
                                         placeholder="Pilih tanggal..." value="{{ old('booking_date') }}">
+                                    <p class="text-sm text-gray-500 mt-1">Waktu servis akan dijadwalkan pukul 09:00 pagi</p>
                                     @error('booking_date')
                                         <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                                     @enderror
@@ -428,6 +445,10 @@
                                         <span class="text-gray-600">Tanggal Servis</span>
                                         <span id="confirmDate" class="font-medium">-</span>
                                     </div>
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-gray-600">Waktu Servis</span>
+                                        <span class="font-medium">09:00 WIB</span>
+                                    </div>
                                     <div class="flex justify-between items-start">
                                         <span class="text-gray-600">Catatan</span>
                                         <span id="confirmNotes" class="font-medium text-right">-</span>
@@ -446,7 +467,7 @@
                             <!-- Terms & Conditions -->
                             <div class="mb-6">
                                 <label class="flex items-start">
-                                    <input type="checkbox" id="termsAgreement" class="mt-1 mr-3 text-primary rounded"
+                                    <input type="checkbox" id="termsAgreement" class="mt-1 mr-3 text-primary rounded focus:ring-primary"
                                         required>
                                     <span class="text-sm text-gray-600">
                                         Saya menyetujui
@@ -466,7 +487,7 @@
                                 Kembali
                             </button>
                             <button type="submit" id="confirmBooking" form="bookingForm"
-                                class="bg-accent text-white px-8 py-3 rounded-lg font-medium hover:bg-emerald-600 transition-all duration-300 btn-glow flex items-center">
+                                class="bg-green-600 text-white px-8 py-3 rounded-lg font-medium hover:bg-green-700 transition-all duration-300 btn-glow flex items-center">
                                 <i class="fas fa-check mr-2"></i>
                                 Konfirmasi Booking
                             </button>
@@ -528,6 +549,10 @@
                                 <span class="text-gray-600">Tanggal</span>
                                 <span id="sidebarDate" class="font-medium">Belum dipilih</span>
                             </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Waktu</span>
+                                <span class="font-medium">09:00 WIB</span>
+                            </div>
                             <div class="border-t pt-3">
                                 <div class="flex justify-between items-center">
                                     <span class="text-lg font-bold text-gray-800">Status</span>
@@ -569,7 +594,8 @@
             flatpickr("#datePicker", {
                 minDate: "today",
                 dateFormat: "d-m-Y",
-                locale: "id"
+                locale: "id",
+                disableMobile: true // Untuk konsistensi behavior
             });
 
             // State management
@@ -616,28 +642,26 @@
             });
 
             function showStep(stepNumber) {
-                console.log('Showing step:', stepNumber);
-
                 // Hide all steps
                 steps.forEach(step => {
                     step.classList.add('hidden');
-                    console.log('Hiding step:', step.id);
                 });
 
                 // Show current step
                 const currentStep = document.getElementById(`step${stepNumber}`);
                 if (currentStep) {
                     currentStep.classList.remove('hidden');
-                    console.log('Showing step:', currentStep.id);
                 }
 
                 // Update step indicators
                 stepIndicators.forEach((indicator, index) => {
-                    indicator.classList.remove('active', 'completed');
+                    indicator.classList.remove('active', 'completed', 'bg-primary', 'bg-gray-200', 'bg-green-500');
                     if (index + 1 === stepNumber) {
-                        indicator.classList.add('active');
+                        indicator.classList.add('active', 'bg-primary');
                     } else if (index + 1 < stepNumber) {
-                        indicator.classList.add('completed');
+                        indicator.classList.add('completed', 'bg-green-500', 'text-white');
+                    } else {
+                        indicator.classList.add('bg-gray-200');
                     }
                 });
 
@@ -664,15 +688,15 @@
                     bookingData.vehicle_id = vehicleId;
 
                     // Update hidden input in form
-                    const vehicleInput = document.querySelector('input[name="vehicle_id"]');
+                    let vehicleInput = document.querySelector('input[name="vehicle_id"]');
                     if (!vehicleInput) {
                         // Create hidden input if it doesn't exist
                         const form = document.getElementById('bookingForm');
-                        const hiddenInput = document.createElement('input');
-                        hiddenInput.type = 'hidden';
-                        hiddenInput.name = 'vehicle_id';
-                        hiddenInput.value = vehicleId;
-                        form.appendChild(hiddenInput);
+                        vehicleInput = document.createElement('input');
+                        vehicleInput.type = 'hidden';
+                        vehicleInput.name = 'vehicle_id';
+                        vehicleInput.value = vehicleId;
+                        form.appendChild(vehicleInput);
                     } else {
                         vehicleInput.value = vehicleId;
                     }
@@ -680,8 +704,6 @@
                     // Update sidebar and previews
                     document.getElementById('sidebarVehicle').textContent = vehicleName;
                     updatePreviews();
-
-                    console.log('Vehicle selected:', vehicleId, vehicleName);
                 });
             });
 
@@ -729,14 +751,14 @@
                 if (!document.getElementById('termsAgreement')?.checked) {
                     e.preventDefault();
                     alert('Harap setujui syarat dan ketentuan terlebih dahulu');
-                    return;
+                    return false;
                 }
 
                 // Validate all required data
                 if (!bookingData.vehicle_id || !bookingData.booking_date) {
                     e.preventDefault();
                     alert('Harap lengkapi semua data yang diperlukan');
-                    return;
+                    return false;
                 }
 
                 // Show loading state
@@ -745,8 +767,9 @@
                 submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Memproses...';
                 submitBtn.disabled = true;
 
-                // Form will submit normally
+                // Allow form to submit normally
                 console.log('Submitting booking data:', bookingData);
+                return true;
             });
 
             // Initialize the first step
