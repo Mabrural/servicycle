@@ -22,6 +22,18 @@ class BookingService extends Model
         'booking_date' => 'datetime',
     ];
 
+    // Semua status servis
+    public const STATUS = [
+        'menunggu_konfirmasi',
+        'diterima',
+        'dikerjakan',
+        'selesai',
+        'diambil',
+        'ditolak',
+        'dibatalkan',
+    ];
+
+
     // Relasi ke user (creator)
     public function creator()
     {

@@ -34,6 +34,22 @@ class BookingServiceController extends Controller
         return view('history.index', compact('bookings'));
     }
 
+    public function updateStatus(Request $request, $id)
+    {
+        $booking = BookingService::findOrFail($id);
+
+        $request->validate([
+            'status' => 'required|in:menunggu_konfirmasi,diterima,dikerjakan,selesai,diambil,ditolak,dibatalkan',
+        ]);
+
+        $booking->update([
+            'status' => $request->status,
+        ]);
+
+        return redirect()->back()->with('success', 'Status booking berhasil diperbarui menjadi: ' . ucfirst(str_replace('_', ' ', $request->status)));
+    }
+
+
     // Simpan booking baru
     public function store(Request $request)
     {

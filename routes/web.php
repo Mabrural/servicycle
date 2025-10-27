@@ -64,55 +64,49 @@ Route::middleware(['auth', 'verified', 'is_set_role', 'admin'])->group(function 
     Route::patch('/admin/user-management/{id}/toggle-role', [UserController::class, 'toggleRole'])->name('user-management.toggleRole');
     Route::patch('/admin/user-management//{id}/toggle-status', [UserController::class, 'toggleStatus'])->name('user-management.toggleStatus');
 
-    Route::get('/admin/subscription-management', function(){
+    Route::get('/admin/subscription-management', function () {
         return view('subscription-management.index');
     })->name('subscription-management');
 
-    Route::get('/admin/report-analytic', function(){
+    Route::get('/admin/report-analytic', function () {
         return view('report.admin');
     })->name('report');
 
-    Route::get('/admin/notification-management', function(){
+    Route::get('/admin/notification-management', function () {
         return view('notification-management.index');
     })->name('notification.management');
 
-    Route::get('admin/setting', function(){
+    Route::get('admin/setting', function () {
         return view('setting.index');
     })->name('setting');
 });
 
-Route::middleware(['auth', 'verified', 'is_set_role', 'vehicle_owner'])->group(function(){
+Route::middleware(['auth', 'verified', 'is_set_role', 'vehicle_owner'])->group(function () {
     // pemilik kendaraan
     Route::get('/user/dashboard', [UserDashboardController::class, 'index'])->name('dashboard.user');
 
-    // Route::resource('kendaraan-saya', VehicleController::class);
     Route::resource('/user/vehicles', VehicleController::class);
 
     Route::get('/user/history', [BookingServiceController::class, 'historyService'])->name('history');
 
-    // Route::get('/user/history', function(){
-    //     return view('history.index');
-    // })->name('history');
-
-    Route::get('/user/schedule', function(){
+    Route::get('/user/schedule', function () {
         return view('schedule.index');
     })->name('schedule');
 
-    Route::get('/user/notification', function(){
+    Route::get('/user/notification', function () {
         return view('notification.user');
     })->name('notification.user');
 
-    Route::get('/user/record', function(){
+    Route::get('/user/record', function () {
         return view('record.index');
     })->name('record');
 
-    Route::get('/user/upgrade-premium', function(){
+    Route::get('/user/upgrade-premium', function () {
         return view('upgrade-premium.user');
     })->name('upgrade-premium.user');
-
 });
 
-Route::middleware(['auth', 'verified', 'is_set_role', 'workshop'])->group(function(){
+Route::middleware(['auth', 'verified', 'is_set_role', 'workshop'])->group(function () {
     // Bengkel
 
     Route::get('/workshops/dashboard', [WorkshopDashboardController::class, 'index'])->name('dashboard.workshop');
@@ -120,19 +114,19 @@ Route::middleware(['auth', 'verified', 'is_set_role', 'workshop'])->group(functi
     Route::resource('workshops/my-workshop', WorkshopController::class);
 
     Route::get('/workshops/booking', [BookingServiceController::class, 'index'])->name('workshop.booking');
+    Route::post('/workshops/booking/{id}/status', [BookingServiceController::class, 'updateStatus'])->name('booking.updateStatus');
 
-    Route::get('/workshops/service-and-sparepart', function(){
+    Route::get('/workshops/service-and-sparepart', function () {
         return view('service-and-sparepart.index');
     })->name('service-and-sparepart');
 
-    Route::get('/workshops/invoice', function(){
+    Route::get('/workshops/invoice', function () {
         return view('invoice.index');
     })->name('invoice');
 
-    Route::get('/workshops/promote', function(){
+    Route::get('/workshops/promote', function () {
         return view('promote.index');
     })->name('promote');
-
 });
 
 // routes/web.php
