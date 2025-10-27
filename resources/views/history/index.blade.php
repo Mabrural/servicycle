@@ -77,15 +77,20 @@
                                 <td>{{ $booking->vehicle->license_plate ?? '-' }}</td>
                                 <td>{{ $booking->workshop->name ?? '-' }}</td>
                                 <td>
-                                    @if ($booking->status === 'selesai')
-                                        <span class="badge bg-success">Selesai</span>
-                                    @elseif ($booking->status === 'proses')
-                                        <span class="badge bg-warning text-dark">Proses</span>
-                                    @elseif ($booking->status === 'batal')
-                                        <span class="badge bg-danger">Dibatalkan</span>
-                                    @else
-                                        <span class="badge bg-secondary">Menunggu</span>
-                                    @endif
+                                    @php
+                                        $status = strtolower($booking->status);
+                                        $badgeClass = match ($status) {
+                                            'pending' => 'bg-warning text-dark',
+                                            'accepted' => 'bg-success',
+                                            'in_progress' => 'bg-info text-dark',
+                                            'completed' => 'bg-primary',
+                                            'cancelled' => 'bg-danger',
+                                            default => 'bg-secondary',
+                                        };
+                                    @endphp
+                                    <span class="badge {{ $badgeClass }}">
+                                        {{ ucfirst(str_replace('_', ' ', $booking->status ?? 'Tidak Diketahui')) }}
+                                    </span>
                                 </td>
                                 <td>{{ $booking->booking_date ? $booking->booking_date->translatedFormat('d M Y h:i') : '-' }}
                                 </td>
