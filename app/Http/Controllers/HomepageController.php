@@ -140,6 +140,6 @@ class HomepageController extends Controller
             ->where('created_by', Auth::id())
             ->firstOrFail();
 
-        return view('bookings.success', compact('booking'));
+        return view('homepage.booking-success', compact('booking'));
     }
 }

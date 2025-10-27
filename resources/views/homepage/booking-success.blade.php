@@ -26,11 +26,11 @@
                 </div>
 
                 <div class="space-y-3">
-                    <a href="{{ route('homepage') }}"
+                    <a href="{{ url('/') }}"
                         class="block w-full bg-primary text-white py-3 rounded-lg font-medium hover:bg-secondary transition">
                         Kembali ke Beranda
                     </a>
-                    <a href="{{ route('profile.bookings') }}"
+                    <a href="{{ url('/user/history') }}"
                         class="block w-full border border-gray-300 text-gray-700 py-3 rounded-lg font-medium hover:bg-gray-50 transition">
                         Lihat Booking Saya
                     </a>
