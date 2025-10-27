@@ -26,7 +26,12 @@ class BookingServiceController extends Controller
     // function untuk menampilkan history servis by user
     public function historyService()
     {
-        return view('history.index');
+        $bookings = BookingService::with(['workshop', 'vehicle'])
+            ->where('created_by', Auth::id())
+            ->latest()
+            ->get();
+
+        return view('history.index', compact('bookings'));
     }
 
     // Simpan booking baru
@@ -81,5 +86,4 @@ class BookingServiceController extends Controller
 
         return response()->json(['message' => 'Booking berhasil dihapus.']);
     }
-    
 }
