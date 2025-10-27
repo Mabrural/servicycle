@@ -9,10 +9,12 @@ use Illuminate\Support\Facades\Auth;
 class BookingServiceController extends Controller
 {
     // Tampilkan semua booking (bisa disesuaikan per role)
+ 
     public function index()
     {
         $bookings = BookingService::with(['creator', 'workshop', 'vehicle'])->latest()->get();
-        return response()->json($bookings);
+        dd($bookings);
+        return view('booking.workshop.index', compact('bookings'));
     }
 
     // Simpan booking baru

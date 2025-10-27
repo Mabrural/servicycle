@@ -115,12 +115,12 @@ Route::middleware(['auth', 'verified', 'is_set_role', 'workshop'])->group(functi
 
     Route::get('/workshops/dashboard', [WorkshopDashboardController::class, 'index'])->name('dashboard.workshop');
 
-    // Route::resource('profil-bengkel', WorkshopController::class);
     Route::resource('workshops/my-workshop', WorkshopController::class);
 
-    Route::get('/workshops/booking', function(){
-        return view('booking.workshop.index');
-    })->name('workshop.booking');
+    Route::get('/workshops/booking', [BookingServiceController::class, 'index'])->name('workshop.booking');
+    // Route::get('/workshops/booking', function(){
+    //     return view('booking.workshop.index');
+    // })->name('workshop.booking');
 
     Route::get('/workshops/service-and-sparepart', function(){
         return view('service-and-sparepart.index');
