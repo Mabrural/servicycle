@@ -23,6 +23,12 @@ class BookingServiceController extends Controller
         return view('booking.workshop.index', compact('bookings'));
     }
 
+    // function untuk menampilkan history servis by user
+    public function historyService()
+    {
+        return view('history.index');
+    }
+
     // Simpan booking baru
     public function store(Request $request)
     {
@@ -75,4 +81,5 @@ class BookingServiceController extends Controller
 
         return response()->json(['message' => 'Booking berhasil dihapus.']);
     }
+    
 }

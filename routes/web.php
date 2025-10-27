@@ -88,9 +88,11 @@ Route::middleware(['auth', 'verified', 'is_set_role', 'vehicle_owner'])->group(f
     // Route::resource('kendaraan-saya', VehicleController::class);
     Route::resource('/user/vehicles', VehicleController::class);
 
-    Route::get('/user/history', function(){
-        return view('history.index');
-    })->name('history');
+    Route::get('/user/history', [BookingServiceController::class, 'historyService'])->name('history');
+
+    // Route::get('/user/history', function(){
+    //     return view('history.index');
+    // })->name('history');
 
     Route::get('/user/schedule', function(){
         return view('schedule.index');
@@ -118,9 +120,6 @@ Route::middleware(['auth', 'verified', 'is_set_role', 'workshop'])->group(functi
     Route::resource('workshops/my-workshop', WorkshopController::class);
 
     Route::get('/workshops/booking', [BookingServiceController::class, 'index'])->name('workshop.booking');
-    // Route::get('/workshops/booking', function(){
-    //     return view('booking.workshop.index');
-    // })->name('workshop.booking');
 
     Route::get('/workshops/service-and-sparepart', function(){
         return view('service-and-sparepart.index');
