@@ -3,17 +3,23 @@
 namespace App\Http\Controllers;
 
 use App\Models\BookingService;
+use App\Models\Workshop;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class BookingServiceController extends Controller
 {
     // Tampilkan semua booking (bisa disesuaikan per role)
- 
+
     public function index()
     {
-        $bookings = BookingService::with(['creator', 'workshop', 'vehicle'])->latest()->get();
-        dd($bookings);
+        $workshop = Workshop::where('created_by', Auth::id())->first();
+
+        $bookings = BookingService::with(['creator', 'workshop', 'vehicle'])
+            ->where('workshop_id', $workshop->id ?? null)
+            ->latest()
+            ->get();
+
         return view('booking.workshop.index', compact('bookings'));
     }
 
@@ -70,4 +76,3 @@ class BookingServiceController extends Controller
         return response()->json(['message' => 'Booking berhasil dihapus.']);
     }
 }
-
