@@ -37,122 +37,94 @@ class HomepageController extends Controller
     }
 
     // function untuk menyimpan data booking servis
-    // public function store(Request $request)
-    // {
-    //     // Validasi data
-    //     $validated = $request->validate([
-    //         'workshop_id' => 'required|exists:workshops,id',
-    //         'vehicle_id' => 'required|exists:vehicles,id',
-    //         'booking_date' => 'required|date_format:d-m-Y',
-    //         'notes' => 'nullable|string|max:500',
-    //     ]);
-
-    //     try {
-    //         // Debug data yang diterima
-    //         Log::info('Booking data received:', $validated);
-
-    //         // Format tanggal dari d-m-Y ke Y-m-d H:i:s
-    //         // Tambahkan waktu default (09:00:00) jika hanya tanggal saja
-    //         $bookingDate = \Carbon\Carbon::createFromFormat('d-m-Y', $validated['booking_date'])
-    //             ->setTime(9, 0, 0) // Set waktu default ke 09:00:00
-    //             ->format('Y-m-d H:i:s');
-
-    //         Log::info('Formatted booking date:', ['formatted' => $bookingDate]);
-
-    //         // Pastikan vehicle milik user yang login
-    //         $vehicle = Vehicle::where('id', $validated['vehicle_id'])
-    //             ->where('created_by', Auth::id())
-    //             ->first();
-
-    //         if (!$vehicle) {
-    //             return redirect()->back()
-    //                 ->with('error', 'Kendaraan tidak ditemukan atau tidak memiliki akses')
-    //                 ->withInput();
-    //         }
-
-    //         // Buat booking
-    //         $booking = BookingService::create([
-    //             'created_by' => Auth::id(),
-    //             'workshop_id' => $validated['workshop_id'],
-    //             'vehicle_id' => $validated['vehicle_id'],
-    //             'booking_date' => $bookingDate,
-    //             'status' => 'pending',
-    //             'notes' => $validated['notes'] ?? null,
-    //         ]);
-
-    //         log::info('Booking created successfully:', ['booking_id' => $booking->id]);
-
-    //         return redirect()->route('bookings.success', $booking->id)
-    //             ->with('success', 'Booking servis berhasil dibuat!');
-    //     } catch (\Exception $e) {
-    //         Log::error('Booking creation failed:', [
-    //             'error' => $e->getMessage(),
-    //             'trace' => $e->getTraceAsString()
-    //         ]);
-
-
-    //         return redirect()->back()
-    //             ->with('error', 'Terjadi kesalahan saat membuat booking: ' . $e->getMessage())
-    //             ->withInput();
-    //     }
-    // }
-
-    // function untuk menyimpan data booking servis
     public function store(Request $request)
     {
-        // Validasi data
-        $validated = $request->validate([
-            'workshop_id' => 'required|exists:workshops,id',
-            'vehicle_id' => 'required|exists:vehicles,id',
-            'booking_date' => 'required|string',
-            'booking_time' => 'required|string',
-            'notes' => 'nullable|string|max:500',
-        ]);
-
         try {
-            // Debug data yang diterima
-            Log::info('Booking data received:', $validated);
-
-            // Format tanggal dan waktu dari "d-m-Y H:i" ke format database
-            $dateTimeString = $validated['booking_date'] . ' ' . $validated['booking_time'];
-            $bookingDateTime = \Carbon\Carbon::createFromFormat('d-m-Y H:i', $dateTimeString)
-                ->format('Y-m-d H:i:s');
-
-            Log::info('Formatted booking datetime:', [
-                'input' => $dateTimeString,
-                'formatted' => $bookingDateTime
+            // Validasi data
+            $validated = $request->validate([
+                'workshop_id' => 'required|exists:workshops,id',
+                'vehicle_id' => 'required|exists:vehicles,id',
+                'booking_date' => 'required|string', // Format: d-m-Y
+                'booking_time' => 'required|string', // Format: H:i
+                'notes' => 'nullable|string|max:500',
             ]);
 
-            // Pastikan vehicle milik user yang login
+            Log::info('Raw booking data received:', $validated);
+
+            // Cek vehicle ownership
             $vehicle = Vehicle::where('id', $validated['vehicle_id'])
                 ->where('created_by', Auth::id())
                 ->first();
 
             if (!$vehicle) {
                 return redirect()->back()
-                    ->with('error', 'Kendaraan tidak ditemukan atau tidak memiliki akses')
+                    ->withErrors(['vehicle_id' => 'Kendaraan tidak ditemukan atau tidak memiliki akses'])
                     ->withInput();
             }
+
+            // Format tanggal - PERBAIKAN DI SINI
+            // Frontend mengirim: booking_date = "27-10-2025" dan booking_time = "09:00"
+            $dateString = $validated['booking_date']; // "27-10-2025"
+            $timeString = $validated['booking_time']; // "09:00"
+
+            // Gabungkan dan format ke database
+            $dateTimeString = $dateString . ' ' . $timeString; // "27-10-2025 09:00"
+
+            try {
+                $bookingDateTime = \Carbon\Carbon::createFromFormat('d-m-Y H:i', $dateTimeString);
+
+                // Validasi bahwa tanggal tidak di masa lalu
+                if ($bookingDateTime->isPast()) {
+                    return redirect()->back()
+                        ->withErrors(['booking_date' => 'Tanggal booking tidak boleh di masa lalu'])
+                        ->withInput();
+                }
+
+                $formattedDateTime = $bookingDateTime->format('Y-m-d H:i:s');
+            } catch (\Exception $e) {
+                Log::error('Date parsing error:', [
+                    'date_string' => $dateTimeString,
+                    'error' => $e->getMessage()
+                ]);
+
+                return redirect()->back()
+                    ->withErrors(['booking_date' => 'Format tanggal tidak valid. Gunakan format: DD-MM-YYYY'])
+                    ->withInput();
+            }
+
+            Log::info('Formatted booking datetime:', [
+                'input' => $dateTimeString,
+                'formatted' => $formattedDateTime
+            ]);
 
             // Buat booking
             $booking = BookingService::create([
                 'created_by' => Auth::id(),
                 'workshop_id' => $validated['workshop_id'],
                 'vehicle_id' => $validated['vehicle_id'],
-                'booking_date' => $bookingDateTime,
+                'booking_date' => $formattedDateTime,
                 'status' => 'pending',
                 'notes' => $validated['notes'] ?? null,
             ]);
 
-            Log::info('Booking created successfully:', ['booking_id' => $booking->id]);
+            Log::info('Booking created successfully:', [
+                'booking_id' => $booking->id,
+                'booking_data' => $booking->toArray()
+            ]);
 
+            // Redirect ke success page
             return redirect()->route('bookings.success', $booking->id)
                 ->with('success', 'Booking servis berhasil dibuat!');
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            Log::error('Validation failed:', ['errors' => $e->errors()]);
+            return redirect()->back()
+                ->withErrors($e->errors())
+                ->withInput();
         } catch (\Exception $e) {
             Log::error('Booking creation failed:', [
                 'error' => $e->getMessage(),
                 'trace' => $e->getTraceAsString(),
-                'input_data' => $validated
+                'input_data' => $request->all()
             ]);
 
             return redirect()->back()
@@ -164,9 +136,10 @@ class HomepageController extends Controller
     public function success($id)
     {
         $booking = BookingService::with(['workshop', 'vehicle'])
+            ->where('id', $id)
             ->where('created_by', Auth::id())
-            ->findOrFail($id);
+            ->firstOrFail();
 
-        return view('homepage.booking-success', compact('booking'));
+        return view('bookings.success', compact('booking'));
     }
 }

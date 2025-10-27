@@ -222,33 +222,34 @@
         </div>
     </section>
 
-    <!-- Error Messages -->
-    @if($errors->any())
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
-        <div class="bg-red-50 border border-red-200 rounded-xl p-4">
-            <div class="flex items-center">
-                <i class="fas fa-exclamation-circle text-red-500 mr-3"></i>
-                <div>
-                    <h4 class="text-sm font-medium text-red-800">Terjadi Kesalahan</h4>
-                    <ul class="mt-1 text-sm text-red-600">
-                        @foreach($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-    @endif
 
     <!-- Booking Process -->
-    <section class="py-12 md:py-16 bg-white">
+    <section class="py-6 md:py-6 bg-white">
+        <!-- Error Messages -->
+        @if ($errors->any())
+            <div class="max-w-4xl mx-auto  sm:px-6 lg:px-8 mt-0 mb-5">
+                <div class="bg-red-50 border border-red-200 rounded-xl p-4">
+                    <div class="flex items-center">
+                        <i class="fas fa-exclamation-circle text-red-500 mr-3"></i>
+                        <div>
+                            <h4 class="text-sm font-medium text-red-800">Terjadi Kesalahan</h4>
+                            <ul class="mt-1 text-sm text-red-600">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endif
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <!-- Progress Steps -->
             <div class="mb-12">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center">
-                        <div class="step-indicator w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center font-bold active">
+                        <div
+                            class="step-indicator w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center font-bold active">
                             1
                         </div>
                         <div class="ml-3">
@@ -260,7 +261,8 @@
                     <div class="flex-1 h-1 bg-gray-200 mx-4"></div>
 
                     <div class="flex items-center">
-                        <div class="step-indicator w-10 h-10 rounded-full bg-gray-200 text-gray-600 flex items-center justify-center font-bold">
+                        <div
+                            class="step-indicator w-10 h-10 rounded-full bg-gray-200 text-gray-600 flex items-center justify-center font-bold">
                             2
                         </div>
                         <div class="ml-3">
@@ -272,7 +274,8 @@
                     <div class="flex-1 h-1 bg-gray-200 mx-4"></div>
 
                     <div class="flex items-center">
-                        <div class="step-indicator w-10 h-10 rounded-full bg-gray-200 text-gray-600 flex items-center justify-center font-bold">
+                        <div
+                            class="step-indicator w-10 h-10 rounded-full bg-gray-200 text-gray-600 flex items-center justify-center font-bold">
                             3
                         </div>
                         <div class="ml-3">
@@ -311,7 +314,8 @@
                                                 data-vehicle-id="{{ $vehicle->id }}">
                                                 <div class="flex items-center justify-between">
                                                     <div class="flex items-center space-x-4">
-                                                        <div class="w-12 h-12 
+                                                        <div
+                                                            class="w-12 h-12 
                                                             @if ($vehicle->type === 'Mobil') bg-primary 
                                                             @elseif($vehicle->type === 'Motor') bg-green-500 
                                                             @else bg-gray-400 @endif
@@ -501,8 +505,8 @@
                             <!-- Terms & Conditions -->
                             <div class="mb-6">
                                 <label class="flex items-start">
-                                    <input type="checkbox" id="termsAgreement" class="mt-1 mr-3 text-primary rounded focus:ring-primary"
-                                        required>
+                                    <input type="checkbox" id="termsAgreement"
+                                        class="mt-1 mr-3 text-primary rounded focus:ring-primary" required>
                                     <span class="text-sm text-gray-600">
                                         Saya menyetujui
                                         <a href="#" class="text-primary hover:underline">Syarat & Ketentuan</a>
@@ -644,7 +648,7 @@
                 timeSlotsContainer.innerHTML = '';
 
                 const timeSlots = [
-                    '08:00', '09:00', '10:00', '11:00', 
+                    '08:00', '09:00', '10:00', '11:00',
                     '13:00', '14:00', '15:00', '16:00'
                 ];
 
@@ -653,16 +657,16 @@
                     timeSlot.className = 'time-slot';
                     timeSlot.textContent = time;
                     timeSlot.setAttribute('data-time', time);
-                    
+
                     timeSlot.addEventListener('click', function() {
                         // Remove selected class from all time slots
                         document.querySelectorAll('.time-slot').forEach(slot => {
                             slot.classList.remove('selected');
                         });
-                        
+
                         // Add selected class to clicked time slot
                         this.classList.add('selected');
-                        
+
                         // Update booking data
                         bookingData.booking_time = time;
                         document.getElementById('booking_time').value = time;
@@ -710,25 +714,25 @@
             document.getElementById('nextToStep3').addEventListener('click', function() {
                 const selectedDate = document.getElementById('datePicker').value;
                 const selectedTime = bookingData.booking_time;
-                
+
                 if (!selectedDate) {
                     alert('Silakan pilih tanggal servis terlebih dahulu');
                     return;
                 }
-                
+
                 if (!selectedTime) {
                     alert('Silakan pilih waktu servis terlebih dahulu');
                     return;
                 }
-                
+
                 // Combine date and time for the hidden input
                 bookingData.selected_date = selectedDate;
                 bookingData.booking_time = selectedTime;
                 bookingData.booking_date = `${selectedDate} ${selectedTime}`;
-                
+
                 document.getElementById('booking_date').value = bookingData.booking_date;
                 document.getElementById('booking_time').value = bookingData.booking_time;
-                
+
                 showStep(3);
             });
 
@@ -751,7 +755,8 @@
 
                 // Update step indicators
                 stepIndicators.forEach((indicator, index) => {
-                    indicator.classList.remove('active', 'completed', 'bg-primary', 'bg-gray-200', 'bg-green-500');
+                    indicator.classList.remove('active', 'completed', 'bg-primary', 'bg-gray-200',
+                        'bg-green-500');
                     if (index + 1 === stepNumber) {
                         indicator.classList.add('active', 'bg-primary');
                     } else if (index + 1 < stepNumber) {
@@ -818,40 +823,43 @@
                 // Date and time preview
                 const selectedDate = document.getElementById('datePicker').value;
                 const selectedTime = bookingData.booking_time;
-                
+
                 if (selectedDate) {
                     document.getElementById('confirmDate').textContent = selectedDate;
                 }
-                
+
                 if (selectedTime) {
                     document.getElementById('confirmTime').textContent = selectedTime;
                     document.getElementById('sidebarTime').textContent = selectedTime;
                 }
             }
 
-            // Form submission handling
+            // GANTI event handler submit dengan yang ini:
             document.getElementById('bookingForm').addEventListener('submit', function(e) {
+                // Validasi terms agreement
                 if (!document.getElementById('termsAgreement')?.checked) {
                     e.preventDefault();
                     alert('Harap setujui syarat dan ketentuan terlebih dahulu');
                     return false;
                 }
 
-                // Validate all required data
+                // Validasi data required
                 if (!bookingData.vehicle_id || !bookingData.selected_date || !bookingData.booking_time) {
                     e.preventDefault();
                     alert('Harap lengkapi semua data yang diperlukan');
                     return false;
                 }
 
-                // Show loading state
-                const submitBtn = document.getElementById('confirmBooking');
-                const originalText = submitBtn.innerHTML;
-                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Memproses...';
-                submitBtn.disabled = true;
+                // Pastikan hidden inputs terisi
+                document.getElementById('booking_date').value = bookingData.selected_date;
+                document.getElementById('booking_time').value = bookingData.booking_time;
+                document.getElementById('vehicle_id').value = bookingData.vehicle_id;
 
-                // Allow form to submit normally
-                console.log('Submitting booking data:', bookingData);
+                // Hanya ubah tampilan button, jangan ganggu submit
+                const submitBtn = document.getElementById('confirmBooking');
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Memproses...';
+
+                // Biarkan form submit normal
                 return true;
             });
 
