@@ -41,8 +41,8 @@
             </div>
         </div>
         <div class="flex-1 mt-10 md:mt-0 animate-float">
-            <img src="{{ asset('img/ilustrasi.png') }}" alt="Ilustrasi ServiCycle"
-                class="w-full rounded-xl shadow-2xl" />
+            <img src="{{ asset('img/mobil.png') }}" alt="Ilustrasi ServiCycle"
+                class="w-full rounded-xl" />
         </div>
     </div>
 </section>

@@ -103,7 +103,7 @@ class HomepageController extends Controller
                 'workshop_id' => $validated['workshop_id'],
                 'vehicle_id' => $validated['vehicle_id'],
                 'booking_date' => $formattedDateTime,
-                'status' => 'pending',
+                'status' => 'menunggu_konfirmasi',
                 'notes' => $validated['notes'] ?? null,
             ]);
 
