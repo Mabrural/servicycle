@@ -8,6 +8,8 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
+use App\Mail\LoginMail;
+use Illuminate\Support\Facades\Mail;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -29,6 +31,11 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerate();
 
         $user = Auth::user();
+
+        // Kirim email notifikasi login berhasil
+        if ($user && $user->email) {
+            Mail::to($user->email)->send(new LoginMail($user));
+        }
 
         // Tentukan route default berdasarkan role
         switch ($user->role) {
