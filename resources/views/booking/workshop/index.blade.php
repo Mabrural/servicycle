@@ -84,10 +84,10 @@
                                         $badgeClass = match ($status) {
                                             'menunggu_konfirmasi' => 'bg-warning text-dark',
                                             'diterima' => 'bg-success',
-                                            'dikerjakan' => 'bg-info text-dark',
+                                            'dikerjakan' => 'bg-info',
                                             'selesai' => 'bg-primary',
-                                            'diambil' => 'bg-danger',
-                                            default => 'bg-secondary',
+                                            'diambil' => 'bg-info',
+                                            default => 'bg-danger',
                                         };
                                     @endphp
                                     <span class="badge {{ $badgeClass }}">
