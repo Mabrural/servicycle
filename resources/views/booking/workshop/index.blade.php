@@ -82,11 +82,11 @@
                                     @php
                                         $status = strtolower($booking->status);
                                         $badgeClass = match ($status) {
-                                            'pending' => 'bg-warning text-dark',
-                                            'accepted' => 'bg-success',
-                                            'in_progress' => 'bg-info text-dark',
-                                            'completed' => 'bg-primary',
-                                            'cancelled' => 'bg-danger',
+                                            'menunggu_konfirmasi' => 'bg-warning text-dark',
+                                            'diterima' => 'bg-success',
+                                            'dikerjakan' => 'bg-info text-dark',
+                                            'selesai' => 'bg-primary',
+                                            'diambil' => 'bg-danger',
                                             default => 'bg-secondary',
                                         };
                                     @endphp
