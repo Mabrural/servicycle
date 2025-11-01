@@ -257,4 +257,14 @@ class HomepageController extends Controller
 
         return view('homepage.booking-success', compact('booking'));
     }
+
+    public function syaratKetentuan()
+    {
+        return view('homepage.syarat-ketentuan');
+    }
+
+    public function kebijakanPrivasi()
+    {
+        return view('homepage.kebijakan-privasi');
+    }
 }

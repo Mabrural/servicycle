@@ -21,6 +21,8 @@ Route::get('/', [HomepageController::class, 'index']);
 
 Route::get('/workshop/{id}', [HomepageController::class, 'getWorkshopDetails'])->name('workshops.show');
 Route::get('/workshop/{id}/booking', [HomepageController::class, 'bookingService'])->name('workshops.booking')->middleware(['auth', 'vehicle_owner']);
+Route::get('/workshop/booking/syarat-ketentuan', [HomepageController::class, 'syaratKetentuan'])->name('workshops.syarat')->middleware(['auth', 'vehicle_owner']);
+Route::get('/workshop/booking/kebijakan-privasi', [HomepageController::class, 'kebijakanPrivasi'])->name('workshops.kebijakan')->middleware(['auth', 'vehicle_owner']);
 // simpan data booking
 // Route::post('/save-bookings', [HomepageController::class, 'store'])->name('save.booking')->middleware(['auth', 'vehicle_owner']);
 Route::post('/bookings/store', [HomepageController::class, 'store'])->name('save.booking')->middleware('auth');

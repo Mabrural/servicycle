@@ -509,9 +509,9 @@
                                         class="mt-1 mr-3 text-primary rounded focus:ring-primary" required>
                                     <span class="text-sm text-gray-600">
                                         Saya menyetujui
-                                        <a href="#" class="text-primary hover:underline">Syarat & Ketentuan</a>
+                                        <a href="{{ route('workshops.syarat') }}" class="text-primary hover:underline">Syarat & Ketentuan</a>
                                         dan
-                                        <a href="#" class="text-primary hover:underline">Kebijakan Privasi</a>
+                                        <a href="{{ route('workshops.kebijakan') }}" class="text-primary hover:underline">Kebijakan Privasi</a>
                                         ServiCycle
                                     </span>
                                 </label>
