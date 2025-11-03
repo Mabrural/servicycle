@@ -365,10 +365,10 @@
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                                 <!-- Nomor Rangka (VIN) -->
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">Nomor Rangka (VIN)</label>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Nomor Rangka (VIN) *</label>
                                     <input type="text" name="vin" id="vin" value="{{ old('vin') }}"
                                         class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300 mobile-form-input"
-                                        placeholder="Opsional">
+                                        placeholder="Contoh: MH8BG41CACJ-922936" required>
                                     <div id="vin-error" class="error-message"></div>
                                 </div>
 
@@ -721,11 +721,15 @@
                     document.getElementById('color').focus();
                 }
             } else if (step === 2) {
+                const vin = document.getElementById('vin').value;
                 const engineCapacity = document.getElementById('engine_capacity').value;
                 const transmission = document.getElementById('transmission').value;
                 const fuelType = document.getElementById('fuel_type').value;
 
-                if (!engineCapacity) {
+                if (!vin) {
+                    errorMessage = 'Nomor Rangka harus diisi';
+                    document.getElementById('vin').focus();
+                } else if (!engineCapacity) {
                     errorMessage = 'Kapasitas mesin harus diisi';
                     document.getElementById('engine_capacity').focus();
                 } else if (!transmission) {
