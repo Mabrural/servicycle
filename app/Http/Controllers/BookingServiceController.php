@@ -102,4 +102,14 @@ class BookingServiceController extends Controller
 
         return response()->json(['message' => 'Booking berhasil dihapus.']);
     }
+
+    // untuk jalur update status dari email
+    public function updateStatusFromEmail($id, $status)
+    {
+        $booking = BookingService::findOrFail($id);
+        $booking->status = $status;
+        $booking->save();
+
+        return redirect()->route('workshop.booking')->with('success', "Booking berhasil $status.");
+    }
 }

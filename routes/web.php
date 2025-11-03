@@ -24,9 +24,13 @@ Route::get('/workshop/{id}/booking', [HomepageController::class, 'bookingService
 Route::get('/workshop/booking/syarat-ketentuan', [HomepageController::class, 'syaratKetentuan'])->name('workshops.syarat')->middleware(['auth', 'vehicle_owner']);
 Route::get('/workshop/booking/kebijakan-privasi', [HomepageController::class, 'kebijakanPrivasi'])->name('workshops.kebijakan')->middleware(['auth', 'vehicle_owner']);
 // simpan data booking
-// Route::post('/save-bookings', [HomepageController::class, 'store'])->name('save.booking')->middleware(['auth', 'vehicle_owner']);
 Route::post('/bookings/store', [HomepageController::class, 'store'])->name('save.booking')->middleware('auth');
 Route::get('/bookings/success/{id}', [HomepageController::class, 'success'])->name('bookings.success')->middleware('auth');
+
+// untuk terima/tolak servis oleh bengkel melalui email
+Route::get('/workshops/booking/{id}/status/{status}', [BookingServiceController::class, 'updateStatusFromEmail'])
+    ->name('booking.updateStatus.email');
+
 
 Route::resource('booking-services', BookingServiceController::class);
 
