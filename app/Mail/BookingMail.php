@@ -26,7 +26,7 @@ class BookingMail extends Mailable
      */
     public function build()
     {
-        return $this->subject('📅 Booking Servis Baru dari ' . $this->booking->creator->name)
+        return $this->subject('Booking Servis Baru dari ' . $this->booking->creator->name)
                     ->view('emails.booking');
     }
 }

@@ -9,7 +9,7 @@
     <p>Ada booking servis baru dari pelanggan <strong>{{ $booking->creator->name }}</strong>.</p>
 
     <ul>
-        <li><strong>Kendaraan:</strong> {{ $booking->vehicle->plate_number ?? '-' }}</li>
+        <li><strong>Kendaraan:</strong> {{ $booking->vehicle->license_plate ?? '-' }} / {{ $booking->vehicle->brand }} / {{ $booking->vehicle->model }} / {{ $booking->vehicle->year }}</li>
         <li><strong>Tanggal Booking:</strong> {{ $booking->booking_date->format('d M Y H:i') }}</li>
         <li><strong>Status:</strong> {{ ucfirst(str_replace('_', ' ', $booking->status)) }}</li>
         @if ($booking->notes)
