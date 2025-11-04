@@ -88,11 +88,18 @@ class BookingServiceController extends Controller
     }
 
     // Tampilkan detail booking
-    public function show(BookingService $bookingService)
-    {
-        return response()->json($bookingService->load(['creator', 'workshop', 'vehicle']));
-    }
+    // public function show(BookingService $bookingService)
+    // {
+    //     return response()->json($bookingService->load(['creator', 'workshop', 'vehicle']));
+    // }
 
+   public function show(BookingService $bookingService)
+{
+    // Eager load relationships
+    $bookingService->load(['creator', 'workshop', 'vehicle']);
+    
+    return view('history.show', compact('bookingService'));
+}
     // Update data booking
     public function update(Request $request, BookingService $bookingService)
     {
