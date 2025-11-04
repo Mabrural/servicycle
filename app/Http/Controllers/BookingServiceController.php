@@ -159,4 +159,13 @@ class BookingServiceController extends Controller
         return redirect()->route('workshop.booking')
             ->with('success', "Booking berhasil $status.");
     }
+
+
+    public function verifyFromEmail($id)
+{
+    $booking = BookingService::with(['creator', 'vehicle', 'workshop'])->findOrFail($id);
+
+    return view('booking.verify-from-email', compact('booking'));
+}
+
 }

@@ -31,6 +31,10 @@ Route::get('/bookings/success/{id}', [HomepageController::class, 'success'])->na
 Route::get('/workshops/booking/{id}/status/{status}', [BookingServiceController::class, 'updateStatusFromEmail'])
     ->name('booking.updateStatus.email');
 
+    // verify acc / reject via link email
+    Route::get('/booking/verify/{id}', [BookingServiceController::class, 'verifyFromEmail'])
+    ->name('booking.verify');
+
 
 Route::resource('booking-services', BookingServiceController::class);
 
