@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\BookingStatusMail;
 use App\Models\BookingService;
 use App\Models\Workshop;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class BookingServiceController extends Controller
 {
@@ -34,19 +36,34 @@ class BookingServiceController extends Controller
         return view('history.index', compact('bookings'));
     }
 
+    // public function updateStatus(Request $request, $id)
+    // {
+    //     $booking = BookingService::findOrFail($id);
+
+    //     $request->validate([
+    //         'status' => 'required|in:menunggu_konfirmasi,diterima,dikerjakan,selesai,diambil,ditolak,dibatalkan',
+    //     ]);
+
+    //     $booking->update([
+    //         'status' => $request->status,
+    //     ]);
+
+    //     return redirect()->back()->with('success', 'Status booking berhasil diperbarui menjadi: ' . ucfirst(str_replace('_', ' ', $request->status)));
+    // }
+
+    // update status servis dari aplikasi
     public function updateStatus(Request $request, $id)
     {
         $booking = BookingService::findOrFail($id);
+        $booking->status = $request->status;
+        $booking->save();
 
-        $request->validate([
-            'status' => 'required|in:menunggu_konfirmasi,diterima,dikerjakan,selesai,diambil,ditolak,dibatalkan',
-        ]);
+        // Kirim email ke user yang melakukan booking
+        if ($booking->creator && $booking->creator->email) {
+            Mail::to($booking->creator->email)->send(new BookingStatusMail($booking));
+        }
 
-        $booking->update([
-            'status' => $request->status,
-        ]);
-
-        return redirect()->back()->with('success', 'Status booking berhasil diperbarui menjadi: ' . ucfirst(str_replace('_', ' ', $request->status)));
+        return back()->with('success', 'Status booking berhasil diperbarui dan email notifikasi telah dikirim.');
     }
 
 
