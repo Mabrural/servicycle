@@ -121,12 +121,42 @@ class BookingServiceController extends Controller
     }
 
     // untuk jalur update status dari email
+    // public function updateStatusFromEmail($id, $status)
+    // {
+    //     $booking = BookingService::findOrFail($id);
+    //     $booking->status = $status;
+    //     $booking->save();
+
+    //     return redirect()->route('workshop.booking')->with('success', "Booking berhasil $status.");
+    // }
     public function updateStatusFromEmail($id, $status)
     {
+        // Pastikan status yang dikirim valid
+        $allowedStatuses = ['diterima', 'ditolak'];
+
+        if (!in_array($status, $allowedStatuses)) {
+            return redirect()->route('workshop.booking')
+                ->with('error', 'Status tidak valid.');
+        }
+
         $booking = BookingService::findOrFail($id);
+
+        // Cek jika status yang dikirim sama dengan status yang ada di database
+        if ($booking->status === $status) {
+            return redirect()->route('workshop.booking')
+                ->with('info', 'Anda sudah pernah ' . ($status === 'diterima' ? 'menerima' : 'menolak') . ' servis ini.');
+        }
+
+        // Update status
         $booking->status = $status;
         $booking->save();
 
-        return redirect()->route('workshop.booking')->with('success', "Booking berhasil $status.");
+        // Kirim email ke user yang melakukan booking
+        if ($booking->creator && $booking->creator->email) {
+            Mail::to($booking->creator->email)->send(new BookingStatusMail($booking));
+        }
+
+        return redirect()->route('workshop.booking')
+            ->with('success', "Booking berhasil $status.");
     }
 }
