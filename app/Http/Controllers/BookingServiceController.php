@@ -26,14 +26,62 @@ class BookingServiceController extends Controller
     }
 
     // function untuk menampilkan history servis by user
-    public function historyService()
-    {
-        $bookings = BookingService::with(['workshop', 'vehicle'])
-            ->where('created_by', Auth::id())
-            ->latest()
-            ->get();
+    // public function historyService()
+    // {
+    //     $bookings = BookingService::with(['workshop', 'vehicle'])
+    //         ->where('created_by', Auth::id())
+    //         ->latest()
+    //         ->get();
 
-        return view('history.index', compact('bookings'));
+    //     return view('history.index', compact('bookings'));
+    // }
+
+    public function historyService(Request $request)
+    {
+        // dd($request);
+        $query = BookingService::with(['workshop', 'vehicle'])
+            ->where('created_by', Auth::id());
+
+        // Filter berdasarkan periode
+        if ($request->filled('periode')) {
+            $query->where(function ($q) use ($request) {
+                match ($request->periode) {
+                    'bulan_ini' => $q->whereMonth('booking_date', now()->month)
+                        ->whereYear('booking_date', now()->year),
+                    '3_bulan_terakhir' => $q->where('booking_date', '>=', now()->subMonths(3)),
+                    '6_bulan_terakhir' => $q->where('booking_date', '>=', now()->subMonths(6)),
+                    'tahun_ini' => $q->whereYear('booking_date', now()->year),
+                    default => null,
+                };
+            });
+        }
+
+        // Filter berdasarkan status
+        if ($request->filled('status') && $request->status !== 'semua') {
+            $query->where('status', $request->status);
+        }
+
+        // Filter berdasarkan pencarian kendaraan/plat
+        if ($request->filled('search')) {
+            $searchTerm = $request->search;
+            $query->whereHas('vehicle', function ($q) use ($searchTerm) {
+                $q->where('license_plate', 'like', "%{$searchTerm}%")
+                    ->orWhere('brand', 'like', "%{$searchTerm}%")
+                    ->orWhere('model', 'like', "%{$searchTerm}%");
+            });
+        }
+
+        // $bookings = $query->latest()->get();
+        // Di controller, ganti ->get() dengan ->paginate()
+        $bookings = $query->latest()->paginate(10);
+
+        // Dan tambahkan parameter fisdr ke pagination
+        $bookings->appends($request->except('page'));
+
+        // Untuk menjaga filter saat refresh
+        $filters = $request->only(['periode', 'status', 'search']);
+
+        return view('history.index', compact('bookings', 'filters'));
     }
 
     // update status servis dari aplikasi
