@@ -36,21 +36,6 @@ class BookingServiceController extends Controller
         return view('history.index', compact('bookings'));
     }
 
-    // public function updateStatus(Request $request, $id)
-    // {
-    //     $booking = BookingService::findOrFail($id);
-
-    //     $request->validate([
-    //         'status' => 'required|in:menunggu_konfirmasi,diterima,dikerjakan,selesai,diambil,ditolak,dibatalkan',
-    //     ]);
-
-    //     $booking->update([
-    //         'status' => $request->status,
-    //     ]);
-
-    //     return redirect()->back()->with('success', 'Status booking berhasil diperbarui menjadi: ' . ucfirst(str_replace('_', ' ', $request->status)));
-    // }
-
     // update status servis dari aplikasi
     public function updateStatus(Request $request, $id)
     {
@@ -88,18 +73,13 @@ class BookingServiceController extends Controller
     }
 
     // Tampilkan detail booking
-    // public function show(BookingService $bookingService)
-    // {
-    //     return response()->json($bookingService->load(['creator', 'workshop', 'vehicle']));
-    // }
+    public function show(BookingService $bookingService)
+    {
+        // Eager load relationships
+        $bookingService->load(['creator', 'workshop', 'vehicle']);
 
-   public function show(BookingService $bookingService)
-{
-    // Eager load relationships
-    $bookingService->load(['creator', 'workshop', 'vehicle']);
-    
-    return view('history.show', compact('bookingService'));
-}
+        return view('history.show', compact('bookingService'));
+    }
     // Update data booking
     public function update(Request $request, BookingService $bookingService)
     {
@@ -128,14 +108,6 @@ class BookingServiceController extends Controller
     }
 
     // untuk jalur update status dari email
-    // public function updateStatusFromEmail($id, $status)
-    // {
-    //     $booking = BookingService::findOrFail($id);
-    //     $booking->status = $status;
-    //     $booking->save();
-
-    //     return redirect()->route('workshop.booking')->with('success', "Booking berhasil $status.");
-    // }
     public function updateStatusFromEmail($id, $status)
     {
         // Pastikan status yang dikirim valid
@@ -169,10 +141,9 @@ class BookingServiceController extends Controller
 
 
     public function verifyFromEmail($id)
-{
-    $booking = BookingService::with(['creator', 'vehicle', 'workshop'])->findOrFail($id);
+    {
+        $booking = BookingService::with(['creator', 'vehicle', 'workshop'])->findOrFail($id);
 
-    return view('booking.verify-from-email', compact('booking'));
-}
-
+        return view('booking.verify-from-email', compact('booking'));
+    }
 }
