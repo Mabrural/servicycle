@@ -59,10 +59,9 @@
         <div id="content" class="hidden fade-in">
             <!-- Status Card -->
             <div class="bg-white rounded-xl shadow-sm p-6 mb-6 border-l-4 
-                @if($bookingService->status === 'selesai') border-green-500 
-                @elseif($bookingService->status === 'dikerjakan') border-blue-500 
-                @elseif($bookingService->status === 'ditolak') border-red-500 
-                @elseif($bookingService->status === 'diambil') border-purple-500
+                @if($bookingService->status === 'completed') border-green-500 
+                @elseif($bookingService->status === 'in_progress') border-blue-500 
+                @elseif($bookingService->status === 'cancelled') border-red-500 
                 @else border-yellow-500 @endif">
                 <div class="flex flex-col md:flex-row md:items-center md:justify-between">
                     <div>
@@ -71,16 +70,14 @@
                     </div>
                     <div class="mt-4 md:mt-0">
                         <span class="status-badge 
-                            @if($bookingService->status === 'selesai') bg-green-100 text-green-800
-                            @elseif($bookingService->status === 'dikerjakan') bg-blue-100 text-blue-800
-                            @elseif($bookingService->status === 'ditolak') bg-red-100 text-red-800
-                            @elseif($bookingService->status === 'diambil') bg-purple-100 text-purple-800
+                            @if($bookingService->status === 'completed') bg-green-100 text-green-800
+                            @elseif($bookingService->status === 'in_progress') bg-blue-100 text-blue-800
+                            @elseif($bookingService->status === 'cancelled') bg-red-100 text-red-800
                             @else bg-yellow-100 text-yellow-800 @endif">
                             <i class="fas 
-                                @if($bookingService->status === 'selesai') fa-check-circle 
-                                @elseif($bookingService->status === 'dikerjakan') fa-tools 
-                                @elseif($bookingService->status === 'ditolak') fa-times-circle 
-                                @elseif($bookingService->status === 'diambil') fa-car
+                                @if($bookingService->status === 'completed') fa-check-circle 
+                                @elseif($bookingService->status === 'in_progress') fa-tools 
+                                @elseif($bookingService->status === 'cancelled') fa-times-circle 
                                 @else fa-clock @endif mr-2"></i>
                             {{ ucfirst(str_replace('_', ' ', $bookingService->status)) }}
                         </span>
@@ -228,25 +225,15 @@
                 </h3>
                 <div class="space-y-4">
                     @php
+                        $timeline = [
+                            'created' => ['icon' => 'plus-circle', 'color' => 'gray', 'label' => 'Booking Dibuat'],
+                            'confirmed' => ['icon' => 'check-circle', 'color' => 'green', 'label' => 'Dikonfirmasi'],
+                            'in_progress' => ['icon' => 'tools', 'color' => 'blue', 'label' => 'Servis Dimulai'],
+                            'completed' => ['icon' => 'check-double', 'color' => 'green', 'label' => 'Servis Selesai'],
+                            'cancelled' => ['icon' => 'times-circle', 'color' => 'red', 'label' => 'Dibatalkan']
+                        ];
+                        
                         $currentStatus = $bookingService->status;
-                        
-                        // Timeline untuk status normal (diterima)
-                        $normalTimeline = [
-                            'menunggu_konfirmasi' => ['icon' => 'clock', 'color' => 'yellow', 'label' => 'Menunggu Konfirmasi'],
-                            'diterima' => ['icon' => 'check-circle', 'color' => 'green', 'label' => 'Diterima'],
-                            'dikerjakan' => ['icon' => 'tools', 'color' => 'blue', 'label' => 'Dikerjakan'],
-                            'selesai' => ['icon' => 'check-double', 'color' => 'green', 'label' => 'Selesai'],
-                            'diambil' => ['icon' => 'car', 'color' => 'purple', 'label' => 'Diambil']
-                        ];
-                        
-                        // Timeline untuk status ditolak
-                        $rejectedTimeline = [
-                            'menunggu_konfirmasi' => ['icon' => 'clock', 'color' => 'yellow', 'label' => 'Menunggu Konfirmasi'],
-                            'ditolak' => ['icon' => 'times-circle', 'color' => 'red', 'label' => 'Ditolak']
-                        ];
-                        
-                        // Pilih timeline berdasarkan status
-                        $timeline = $currentStatus === 'ditolak' ? $rejectedTimeline : $normalTimeline;
                     @endphp
 
                     @foreach($timeline as $status => $info)
@@ -254,23 +241,16 @@
                             $isActive = false;
                             $isCompleted = false;
                             
-                            // Logika untuk timeline normal (diterima)
-                            if ($currentStatus !== 'ditolak') {
-                                if ($currentStatus === 'diambil') {
-                                    $isCompleted = true;
-                                } elseif ($currentStatus === 'selesai') {
-                                    $isCompleted = in_array($status, ['menunggu_konfirmasi', 'diterima', 'dikerjakan', 'selesai']);
-                                } elseif ($currentStatus === 'dikerjakan') {
-                                    $isCompleted = in_array($status, ['menunggu_konfirmasi', 'diterma', 'dikerjakan']);
-                                } elseif ($currentStatus === 'diterima') {
-                                    $isCompleted = in_array($status, ['menunggu_konfirmasi', 'diterima']);
-                                } else {
-                                    $isCompleted = $status === 'menunggu_konfirmasi';
-                                }
-                            } 
-                            // Logika untuk timeline ditolak
-                            else {
-                                $isCompleted = $status === 'menunggu_konfirmasi' || $status === 'ditolak';
+                            if ($currentStatus === 'completed' && in_array($status, ['created', 'confirmed', 'in_progress', 'completed'])) {
+                                $isCompleted = true;
+                            } elseif ($currentStatus === 'in_progress' && in_array($status, ['created', 'confirmed', 'in_progress'])) {
+                                $isCompleted = true;
+                            } elseif ($currentStatus === 'confirmed' && in_array($status, ['created', 'confirmed'])) {
+                                $isCompleted = true;
+                            } elseif ($currentStatus === 'created' && $status === 'created') {
+                                $isCompleted = true;
+                            } elseif ($currentStatus === 'cancelled') {
+                                $isCompleted = $status === 'created' || $status === 'cancelled';
                             }
                             
                             $isActive = $status === $currentStatus && !$isCompleted;
