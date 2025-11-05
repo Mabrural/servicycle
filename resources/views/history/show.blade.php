@@ -261,7 +261,7 @@
                                 } elseif ($currentStatus === 'selesai') {
                                     $isCompleted = in_array($status, ['menunggu_konfirmasi', 'diterima', 'dikerjakan', 'selesai']);
                                 } elseif ($currentStatus === 'dikerjakan') {
-                                    $isCompleted = in_array($status, ['menunggu_konfirmasi', 'diterma', 'dikerjakan']);
+                                    $isCompleted = in_array($status, ['menunggu_konfirmasi', 'diterima', 'dikerjakan']);
                                 } elseif ($currentStatus === 'diterima') {
                                     $isCompleted = in_array($status, ['menunggu_konfirmasi', 'diterima']);
                                 } else {
