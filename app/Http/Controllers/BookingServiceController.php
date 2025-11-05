@@ -38,7 +38,6 @@ class BookingServiceController extends Controller
 
     public function historyService(Request $request)
     {
-        // dd($request);
         $query = BookingService::with(['workshop', 'vehicle'])
             ->where('created_by', Auth::id());
 
@@ -71,12 +70,7 @@ class BookingServiceController extends Controller
             });
         }
 
-        // $bookings = $query->latest()->get();
-        // Di controller, ganti ->get() dengan ->paginate()
-        $bookings = $query->latest()->paginate(10);
-
-        // Dan tambahkan parameter fisdr ke pagination
-        $bookings->appends($request->except('page'));
+        $bookings = $query->latest()->paginate(10)->withQueryString();
 
         // Untuk menjaga filter saat refresh
         $filters = $request->only(['periode', 'status', 'search']);

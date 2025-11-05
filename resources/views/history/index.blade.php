@@ -203,10 +203,56 @@
                 </table>
             </div>
 
-            {{-- Pagination (opsional untuk data banyak) --}}
+            {{-- Pagination --}}
             @if ($bookings->hasPages())
                 <div class="card-footer bg-white">
-                    {{ $bookings->links() }}
+                    <div class="d-flex flex-column flex-md-row justify-content-between align-items-center">
+                        {{-- Info hasil --}}
+                        <div class="mb-2 mb-md-0">
+                            <p class="small text-muted mb-0">
+                                Menampilkan
+                                <span class="fw-semibold">{{ $bookings->firstItem() ?? 0 }}</span>
+                                sampai
+                                <span class="fw-semibold">{{ $bookings->lastItem() ?? 0 }}</span>
+                                dari
+                                <span class="fw-semibold">{{ $bookings->total() }}</span>
+                                hasil
+                            </p>
+                        </div>
+
+                        {{-- Navigation --}}
+                        <nav aria-label="Page navigation">
+                            <ul class="pagination pagination-sm mb-0">
+                                {{-- Previous Page Link --}}
+                                <li class="page-item {{ $bookings->onFirstPage() ? 'disabled' : '' }}">
+                                    <a class="page-link" href="{{ $bookings->previousPageUrl() }}"
+                                        aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                </li>
+
+                                {{-- Pagination Elements --}}
+                                @foreach ($bookings->links()->elements[0] as $page => $url)
+                                    @if ($page == $bookings->currentPage())
+                                        <li class="page-item active" aria-current="page">
+                                            <span class="page-link">{{ $page }}</span>
+                                        </li>
+                                    @else
+                                        <li class="page-item">
+                                            <a class="page-link" href="{{ $url }}">{{ $page }}</a>
+                                        </li>
+                                    @endif
+                                @endforeach
+
+                                {{-- Next Page Link --}}
+                                <li class="page-item {{ !$bookings->hasMorePages() ? 'disabled' : '' }}">
+                                    <a class="page-link" href="{{ $bookings->nextPageUrl() }}" aria-label="Next">
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
                 </div>
             @endif
         </div>
