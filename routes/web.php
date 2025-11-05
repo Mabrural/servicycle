@@ -98,6 +98,8 @@ Route::middleware(['auth', 'verified', 'is_set_role', 'vehicle_owner'])->group(f
     Route::resource('/user/vehicles', VehicleController::class);
 
     Route::get('/user/history', [BookingServiceController::class, 'historyService'])->name('history');
+    Route::post('/user/history/{id}/cancel', [BookingServiceController::class, 'cancel'])
+    ->name('booking.cancel');
 
     Route::get('/user/schedule', function () {
         return view('schedule.index');

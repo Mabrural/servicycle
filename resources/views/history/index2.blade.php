@@ -175,17 +175,6 @@
                                     @endif
                                 </td>
                                 <td>
-                                    @if ($booking->status === 'menunggu_konfirmasi')
-                                        <form action="{{ route('booking.cancel', $booking->id) }}" method="POST"
-                                            class="d-inline"
-                                            onsubmit="return confirm('Apakah Anda yakin ingin membatalkan servis ini?')">
-                                            @csrf
-                                            <button type="submit" class="btn btn-sm btn-outline-danger">
-                                                <i class="bi bi-x-circle"></i> Batalkan
-                                            </button>
-                                        </form>
-                                    @endif
-
                                     <a href="{{ route('booking-services.show', $booking->id) }}"
                                         class="btn btn-sm btn-outline-primary">
                                         <i class="bi bi-eye"></i> Detail

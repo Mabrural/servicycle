@@ -181,11 +181,27 @@ class BookingServiceController extends Controller
             ->with('success', "Booking berhasil $status.");
     }
 
-
     public function verifyFromEmail($id)
     {
         $booking = BookingService::with(['creator', 'vehicle', 'workshop'])->findOrFail($id);
 
         return view('booking.verify-from-email', compact('booking'));
+    }
+
+    public function cancel($id)
+    {
+        $booking = BookingService::findOrFail($id);
+
+        // Cegah pembatalan jika status bukan menunggu konfirmasi
+        if ($booking->status !== 'menunggu_konfirmasi') {
+            return redirect()->back()->with('error', 'Servis ini tidak dapat dibatalkan.');
+        }
+
+        // Update status
+        $booking->update([
+            'status' => 'dibatalkan',
+        ]);
+
+        return redirect()->back()->with('success', 'Servis berhasil dibatalkan.');
     }
 }
