@@ -13,16 +13,64 @@ class BookingServiceController extends Controller
 {
     // Tampilkan semua booking (bisa disesuaikan per role)
 
-    public function index()
+    // public function index()
+    // {
+    //     $workshop = Workshop::where('created_by', Auth::id())->first();
+
+    //     $bookings = BookingService::with(['creator', 'workshop', 'vehicle'])
+    //         ->where('workshop_id', $workshop->id ?? null)
+    //         ->latest()
+    //         ->get();
+
+    //     return view('booking.workshop.index', compact('bookings'));
+    // }
+    public function index(Request $request)
     {
         $workshop = Workshop::where('created_by', Auth::id())->first();
 
-        $bookings = BookingService::with(['creator', 'workshop', 'vehicle'])
-            ->where('workshop_id', $workshop->id ?? null)
-            ->latest()
-            ->get();
+        $query = BookingService::with(['creator', 'workshop', 'vehicle'])
+            ->where('workshop_id', $workshop->id ?? null);
 
-        return view('booking.workshop.index', compact('bookings'));
+        // Filter berdasarkan periode
+        if ($request->filled('periode')) {
+            $query->where(function ($q) use ($request) {
+                match ($request->periode) {
+                    'bulan_ini' => $q->whereMonth('booking_date', now()->month)
+                        ->whereYear('booking_date', now()->year),
+                    '3_bulan_terakhir' => $q->where('booking_date', '>=', now()->subMonths(3)),
+                    '6_bulan_terakhir' => $q->where('booking_date', '>=', now()->subMonths(6)),
+                    'tahun_ini' => $q->whereYear('booking_date', now()->year),
+                    default => null,
+                };
+            });
+        }
+
+        // Filter berdasarkan status
+        if ($request->filled('status') && $request->status !== 'semua') {
+            $query->where('status', $request->status);
+        }
+
+        // Filter berdasarkan pencarian
+        if ($request->filled('search')) {
+            $searchTerm = $request->search;
+            $query->where(function ($q) use ($searchTerm) {
+                $q->whereHas('creator', function ($q) use ($searchTerm) {
+                    $q->where('name', 'like', "%{$searchTerm}%");
+                })
+                    ->orWhereHas('vehicle', function ($q) use ($searchTerm) {
+                        $q->where('license_plate', 'like', "%{$searchTerm}%")
+                            ->orWhere('brand', 'like', "%{$searchTerm}%")
+                            ->orWhere('model', 'like', "%{$searchTerm}%");
+                    });
+            });
+        }
+
+        $bookings = $query->latest()->paginate(10)->withQueryString();
+
+        // Untuk menjaga filter saat refresh
+        $filters = $request->only(['periode', 'status', 'search']);
+
+        return view('booking.workshop.index', compact('bookings', 'filters'));
     }
 
     // function untuk menampilkan history servis by user

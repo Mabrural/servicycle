@@ -9,47 +9,91 @@
                 <h3 class="fw-bold mb-1">Manajemen Booking Servis</h3>
                 <p class="text-muted mb-0">Pantau dan kelola semua booking servis kendaraan pelanggan.</p>
             </div>
-            <button class="btn btn-outline-secondary btn-sm" id="refreshButton" onclick="location.reload()">
-                <i class="bi bi-arrow-clockwise"></i> Refresh
-            </button>
         </div>
 
-        {{-- Filter & Search (opsional, masih sama seperti template awal) --}}
+        {{-- Filter & Search --}}
         <div class="card border-0 shadow-sm mb-4">
             <div class="card-body">
-                <form class="row g-3 align-items-end">
+                <form method="GET" action="{{ route('workshop.booking') }}" class="row g-3 align-items-end">
                     <div class="col-md-3">
-                        <label class="form-label fw-semibold">Status Booking</label>
-                        <select class="form-select" name="status">
-                            <option value="">Semua</option>
-                            <option value="pending">Menunggu Konfirmasi</option>
-                            <option value="accepted">Diterima</option>
-                            <option value="in_progress">Dalam Proses</option>
-                            <option value="completed">Selesai</option>
-                            <option value="cancelled">Dibatalkan</option>
+                        <label for="periode" class="form-label fw-semibold">Periode</label>
+                        <select name="periode" id="periode" class="form-select">
+                            <option value="semua" {{ ($filters['periode'] ?? '') === 'semua' ? 'selected' : '' }}>Semua
+                            </option>
+                            <option value="bulan_ini" {{ ($filters['periode'] ?? '') === 'bulan_ini' ? 'selected' : '' }}>
+                                Bulan ini</option>
+                            <option value="3_bulan_terakhir"
+                                {{ ($filters['periode'] ?? '') === '3_bulan_terakhir' ? 'selected' : '' }}>3 bulan terakhir
+                            </option>
+                            <option value="6_bulan_terakhir"
+                                {{ ($filters['periode'] ?? '') === '6_bulan_terakhir' ? 'selected' : '' }}>6 bulan terakhir
+                            </option>
+                            <option value="tahun_ini" {{ ($filters['periode'] ?? '') === 'tahun_ini' ? 'selected' : '' }}>
+                                Tahun ini</option>
                         </select>
                     </div>
                     <div class="col-md-3">
-                        <label class="form-label fw-semibold">Tanggal Booking</label>
-                        <input type="date" class="form-control" name="booking_date">
+                        <label for="status" class="form-label fw-semibold">Status Booking</label>
+                        <select name="status" id="status" class="form-select">
+                            <option value="semua" {{ ($filters['status'] ?? '') === 'semua' ? 'selected' : '' }}>Semua
+                            </option>
+                            <option value="menunggu_konfirmasi"
+                                {{ ($filters['status'] ?? '') === 'menunggu_konfirmasi' ? 'selected' : '' }}>Menunggu
+                                Konfirmasi</option>
+                            <option value="diterima" {{ ($filters['status'] ?? '') === 'diterima' ? 'selected' : '' }}>
+                                Diterima</option>
+                            <option value="dikerjakan" {{ ($filters['status'] ?? '') === 'dikerjakan' ? 'selected' : '' }}>
+                                Proses</option>
+                            <option value="selesai" {{ ($filters['status'] ?? '') === 'selesai' ? 'selected' : '' }}>
+                                Selesai</option>
+                            <option value="diambil" {{ ($filters['status'] ?? '') === 'diambil' ? 'selected' : '' }}>
+                                Diambil</option>
+                            <option value="ditolak" {{ ($filters['status'] ?? '') === 'ditolak' ? 'selected' : '' }}>
+                                Ditolak</option>
+                            <option value="dibatalkan" {{ ($filters['status'] ?? '') === 'dibatalkan' ? 'selected' : '' }}>
+                                Dibatalkan</option>
+                        </select>
                     </div>
                     <div class="col-md-4">
-                        <label class="form-label fw-semibold">Cari Nama / Plat Nomor</label>
-                        <input type="text" class="form-control" name="keyword" placeholder="Contoh: Andi / BM 1234 XY">
+                        <label for="search" class="form-label fw-semibold">Cari Pelanggan / Kendaraan / Plat</label>
+                        <input type="text" name="search" id="search" class="form-control"
+                            placeholder="Contoh: Andi, BM 1234 XY, atau Avanza" value="{{ $filters['search'] ?? '' }}">
                     </div>
                     <div class="col-md-2 d-grid">
-                        <button class="btn btn-primary">
+                        <button type="submit" class="btn btn-primary">
                             <i class="bi bi-search"></i> Cari
                         </button>
                     </div>
                 </form>
+
+                {{-- Reset Filter --}}
+                @if (!empty(array_filter($filters ?? [])))
+                    <div class="mt-3">
+                        <a href="{{ route('workshop.booking') }}" class="btn btn-sm btn-outline-secondary">
+                            <i class="bi bi-x-circle"></i> Reset Filter
+                        </a>
+                        <small class="text-muted ms-2">
+                            Menampilkan {{ $bookings->count() }} hasil
+                        </small>
+                    </div>
+                @endif
             </div>
         </div>
 
         {{-- Daftar Booking Servis --}}
         <div class="card border-0 shadow-sm">
-            <div class="card-header bg-white fw-bold">
-                📅 Daftar Booking Servis
+            <div class="card-header bg-white fw-bold d-flex align-items-center justify-content-between">
+                <span>📅 Daftar Booking Servis</span>
+                <div>
+                    @if (!empty(array_filter($filters ?? [])))
+                        <a href="{{ route('workshop.booking') }}" class="btn btn-outline-secondary btn-sm me-2">
+                            <i class="bi bi-x-circle"></i> Reset
+                        </a>
+                    @endif
+                    <a href="{{ route('workshop.booking') }}" class="btn btn-outline-secondary btn-sm">
+                        <i class="bi bi-arrow-clockwise"></i> Refresh
+                    </a>
+                </div>
             </div>
 
             <div class="table-responsive">
@@ -71,13 +115,46 @@
                             <tr>
                                 <td>{{ $index + 1 }}</td>
                                 <td>
-                                    <strong>{{ $booking->creator->name ?? '-' }}</strong><br>
-                                    <small class="text-muted">{{ $booking->creator->email ?? '-' }}</small>
+                                    <div class="d-flex align-items-center">
+                                        <div class="flex-shrink-0">
+                                            <i class="bi bi-person-circle text-muted me-2"></i>
+                                        </div>
+                                        <div class="flex-grow-1">
+                                            <div class="fw-medium">{{ $booking->creator->name ?? '-' }}</div>
+                                            <small class="text-muted">{{ $booking->creator->email ?? '-' }}</small>
+                                        </div>
+                                    </div>
                                 </td>
-                                <td>{{ $booking->vehicle->brand ?? '-' }} {{ $booking->vehicle->model ?? '' }}</td>
-                                <td>{{ $booking->vehicle->license_plate ?? '-' }}</td>
-                                <td>{{ $booking->notes ?? '-' }}</td>
-                                <td>{{ $booking->booking_date ? $booking->booking_date->format('d M Y, H:i') : '-' }}</td>
+                                <td>
+                                    <div class="fw-medium">{{ $booking->vehicle->brand ?? '-' }}
+                                        {{ $booking->vehicle->model ?? '' }}</div>
+                                    <small class="text-muted">{{ $booking->vehicle->year ?? '' }}</small>
+                                </td>
+                                <td>
+                                    <span class="badge bg-dark">{{ $booking->vehicle->license_plate ?? '-' }}</span>
+                                </td>
+                                <td>
+                                    @if ($booking->notes)
+                                        <span class="d-inline-block text-truncate" style="max-width: 150px;"
+                                            title="{{ $booking->notes }}">
+                                            {{ $booking->notes }}
+                                        </span>
+                                    @else
+                                        <span class="text-muted">-</span>
+                                    @endif
+                                </td>
+                                <td>
+                                    @if ($booking->booking_date)
+                                        <div class="text-nowrap">
+                                            <div class="fw-medium">{{ $booking->booking_date->translatedFormat('d M Y') }}
+                                            </div>
+                                            <small
+                                                class="text-muted">{{ $booking->booking_date->translatedFormat('H:i') }}</small>
+                                        </div>
+                                    @else
+                                        -
+                                    @endif
+                                </td>
                                 <td>
                                     @php
                                         $status = strtolower($booking->status);
@@ -87,14 +164,16 @@
                                             'dikerjakan' => 'bg-info',
                                             'selesai' => 'bg-primary',
                                             'diambil' => 'bg-info',
-                                            default => 'bg-danger',
+                                            'ditolak' => 'bg-danger',
+                                            'dibatalkan' => 'bg-danger',
+                                            default => 'bg-secondary',
                                         };
                                     @endphp
                                     <span class="badge {{ $badgeClass }}">
                                         {{ ucfirst(str_replace('_', ' ', $booking->status ?? 'Tidak Diketahui')) }}
                                     </span>
                                 </td>
-                                <td>
+                                <td class="text-center">
                                     @php $status = $booking->status; @endphp
 
                                     {{-- Bengkel menerima booking --}}
@@ -124,7 +203,7 @@
                                             @csrf
                                             <input type="hidden" name="status" value="dikerjakan">
                                             <button type="submit" class="btn btn-sm btn-primary">
-                                                <i class="bi bi-hammer"></i> Mulai Dikerjakan
+                                                <i class="bi bi-hammer"></i> Mulai
                                             </button>
                                         </form>
 
@@ -135,7 +214,7 @@
                                             @csrf
                                             <input type="hidden" name="status" value="selesai">
                                             <button type="submit" class="btn btn-sm btn-success">
-                                                <i class="bi bi-check-circle"></i> Tandai Selesai
+                                                <i class="bi bi-check-circle"></i> Selesai
                                             </button>
                                         </form>
 
@@ -146,55 +225,133 @@
                                             @csrf
                                             <input type="hidden" name="status" value="diambil">
                                             <button type="submit" class="btn btn-sm btn-secondary">
-                                                <i class="bi bi-car-front"></i> Sudah Diambil
+                                                <i class="bi bi-car-front"></i> Diambil
                                             </button>
                                         </form>
                                     @else
-                                        <span class="text-muted small">
-                                            @switch($status)
-                                                @case('ditolak')
-                                                    Ditolak
-                                                @break
-
-                                                @case('dibatalkan')
-                                                    Dibatalkan
-                                                @break
-
-                                                @case('diambil')
-                                                    Selesai (Sudah Diambil)
-                                                @break
-
-                                                @default
-                                                    Tidak ada aksi
-                                            @endswitch
-                                        </span>
+                                        {{-- Tombol Detail --}}
+                                        <a href="{{ route('booking-services.show', $booking->id) }}"
+                                            class="btn btn-sm btn-outline-primary ms-1">
+                                            Detail
+                                        </a>
                                     @endif
                                 </td>
-
                             </tr>
-                            @empty
-                                <tr>
-                                    <td colspan="8" class="text-center text-muted py-4">
-                                        <i class="bi bi-inbox fs-3 d-block mb-2"></i>
-                                        Tidak ada data booking servis.
-                                    </td>
-                                </tr>
-                            @endforelse
-                        </tbody>
-                    </table>
-                </div>
+                        @empty
+                            <tr>
+                                <td colspan="8" class="text-center text-muted py-4">
+                                    <div class="py-3">
+                                        <i class="bi bi-calendar-x display-4 text-muted"></i>
+                                        <h5 class="mt-3">Belum ada booking servis</h5>
+                                        <p class="text-muted">
+                                            @if (!empty(array_filter($filters ?? [])))
+                                                Tidak ada data yang sesuai dengan filter yang dipilih.
+                                                <a href="{{ route('workshop.booking') }}" class="text-primary">Reset
+                                                    filter</a>
+                                            @else
+                                                Belum ada booking servis yang masuk.
+                                            @endif
+                                        </p>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
             </div>
-            @if (session('success'))
-                <script>
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Berhasil!',
-                        text: '{{ session('success') }}',
-                        timer: 2000,
-                        showConfirmButton: false
-                    });
-                </script>
-            @endif
 
+            {{-- Pagination --}}
+            @if ($bookings->hasPages())
+                <div class="card-footer bg-white">
+                    <div class="d-flex flex-column flex-md-row justify-content-between align-items-center">
+                        {{-- Info hasil --}}
+                        <div class="mb-2 mb-md-0">
+                            <p class="small text-muted mb-0">
+                                Menampilkan
+                                <span class="fw-semibold">{{ $bookings->firstItem() ?? 0 }}</span>
+                                sampai
+                                <span class="fw-semibold">{{ $bookings->lastItem() ?? 0 }}</span>
+                                dari
+                                <span class="fw-semibold">{{ $bookings->total() }}</span>
+                                hasil
+                            </p>
+                        </div>
+
+                        {{-- Navigation --}}
+                        <nav aria-label="Page navigation">
+                            <ul class="pagination pagination-sm mb-0">
+                                {{-- Previous Page Link --}}
+                                <li class="page-item {{ $bookings->onFirstPage() ? 'disabled' : '' }}">
+                                    <a class="page-link" href="{{ $bookings->previousPageUrl() }}"
+                                        aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                </li>
+
+                                {{-- Pagination Elements --}}
+                                @foreach ($bookings->links()->elements[0] as $page => $url)
+                                    @if ($page == $bookings->currentPage())
+                                        <li class="page-item active" aria-current="page">
+                                            <span class="page-link">{{ $page }}</span>
+                                        </li>
+                                    @else
+                                        <li class="page-item">
+                                            <a class="page-link" href="{{ $url }}">{{ $page }}</a>
+                                        </li>
+                                    @endif
+                                @endforeach
+
+                                {{-- Next Page Link --}}
+                                <li class="page-item {{ !$bookings->hasMorePages() ? 'disabled' : '' }}">
+                                    <a class="page-link" href="{{ $bookings->nextPageUrl() }}" aria-label="Next">
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            @endif
         </div>
-    @endsection
+    </div>
+@endsection
+
+@push('scripts')
+    <script>
+        // Auto submit form ketika select berubah
+        document.addEventListener('DOMContentLoaded', function() {
+            const periodeSelect = document.getElementById('periode');
+            const statusSelect = document.getElementById('status');
+
+            [periodeSelect, statusSelect].forEach(select => {
+                select.addEventListener('change', function() {
+                    this.form.submit();
+                });
+            });
+
+            // Debounce untuk search input
+            let searchTimeout;
+            const searchInput = document.getElementById('search');
+            searchInput.addEventListener('input', function() {
+                clearTimeout(searchTimeout);
+                searchTimeout = setTimeout(() => {
+                    this.form.submit();
+                }, 500);
+            });
+        });
+    </script>
+@endpush
+
+@if (session('success'))
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil!',
+                text: '{{ session('success') }}',
+                timer: 2000,
+                showConfirmButton: false
+            });
+        });
+    </script>
+@endif
