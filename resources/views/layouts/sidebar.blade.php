@@ -140,7 +140,7 @@
                 </a>
             </li>
 
-            <!-- Servis & Sparepart -->
+            {{-- <!-- Servis & Sparepart -->
             <li class="menu-item {{ Route::is('service-and-sparepart') ? 'active' : '' }}">
                 <a href="{{ route('service-and-sparepart') }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-wrench"></i>
@@ -154,7 +154,7 @@
                     <i class="menu-icon tf-icons bx bx-receipt"></i>
                     <div data-i18n="Analytics">Invoice Servis</div>
                 </a>
-            </li>
+            </li> --}}
 
             <!-- Promosi Bengkel (Premium) -->
             <li class="menu-item {{ Route::is('promote') ? 'active' : '' }}">
