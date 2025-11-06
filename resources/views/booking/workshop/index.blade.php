@@ -113,7 +113,7 @@
                     <tbody>
                         @forelse ($bookings as $index => $booking)
                             <tr>
-                                <td>{{ $index + 1 }}</td>
+                                <td>{{ $bookings->firstItem() + $loop->index }}</td>
                                 <td>
                                     <div class="d-flex align-items-center">
                                         <div class="flex-shrink-0">
