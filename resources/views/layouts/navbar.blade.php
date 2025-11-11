@@ -10,13 +10,13 @@
 
      <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
          <!-- Search -->
-         <div class="navbar-nav align-items-center">
+         {{-- <div class="navbar-nav align-items-center">
              <div class="nav-item d-flex align-items-center">
                  <i class="bx bx-search fs-4 lh-0"></i>
                  <input type="text" class="form-control border-0 shadow-none" placeholder="Search..."
                      aria-label="Search..." />
              </div>
-         </div>
+         </div> --}}
          <!-- /Search -->
 
          <ul class="navbar-nav flex-row align-items-center ms-auto">
@@ -80,22 +80,35 @@
              <!-- User -->
              <li class="nav-item navbar-dropdown dropdown-user dropdown">
                  <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
-                     <div class="avatar avatar-online">
+                     {{-- <div class="avatar avatar-online">
                          <div class="avatar avatar-online d-flex align-items-center justify-content-center rounded-circle bg-primary text-white fw-bold"
                              style="width: 40px; height: 40px; font-size: 16px;">
                              {{ collect(explode(' ', Auth::user()->name))->map(fn($word) => strtoupper(substr($word, 0, 1)))->join('') }}
                          </div>
+                     </div> --}}
+                     <div class="d-flex align-items-center">
+                         <div class="avatar avatar-online me-2">
+                             <img src="{{ asset('img/user-default.webp') }}" alt="Default Avatar" class="rounded-circle"
+                                 style="width: 40px; height: 40px; object-fit: cover;">
+                         </div>
+                         <div class="fw-semibold text-dark">
+                             {{-- {{ Auth::user()->name }} --}}
+                         </div>
+                         <i class="bx bx-chevron-down text-muted" style="font-size: 1.2rem;"></i>
                      </div>
+
                  </a>
                  <ul class="dropdown-menu dropdown-menu-end">
                      <li>
                          <a class="dropdown-item" href="#">
                              <div class="d-flex">
                                  <div class="flex-shrink-0 me-3">
-                                     <div class="avatar avatar-online d-flex align-items-center justify-content-center rounded-circle bg-primary text-white fw-bold"
+                                     {{-- <div class="avatar avatar-online d-flex align-items-center justify-content-center rounded-circle bg-primary text-white fw-bold"
                                          style="width: 40px; height: 40px; font-size: 16px;">
                                          {{ collect(explode(' ', Auth::user()->name))->map(fn($word) => strtoupper(substr($word, 0, 1)))->join('') }}
-                                     </div>
+                                     </div> --}}
+                                     <img src="{{ asset('img/user-default.webp') }}" alt="Default Avatar"
+                                         class="rounded-circle" style="width: 40px; height: 40px; object-fit: cover;">
                                  </div>
                                  <div class="flex-grow-1">
                                      <span class="fw-semibold d-block">{{ Auth::user()->name }}</span>
