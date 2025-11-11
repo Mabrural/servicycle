@@ -23,10 +23,10 @@
                     class="bg-white text-primary px-6 py-3 md:px-8 md:py-4 rounded-lg font-medium hover:bg-gray-100 transition-all duration-300 flex items-center justify-center btn-glow text-sm md:text-base">
                     <i class="fas fa-map-marker-alt mr-2"></i> Cari Bengkel Terdekat
                 </a>
-                <a href="#features"
+                {{-- <a href="#features"
                     class="bg-transparent border-2 border-white px-6 py-3 md:px-8 md:py-4 rounded-lg font-medium hover:bg-white hover:text-primary transition-all duration-300 flex items-center justify-center text-sm md:text-base">
                     <i class="fas fa-play-circle mr-2"></i> Lihat Demo
-                </a>
+                </a> --}}
             </div>
             <div
                 class="mt-8 md:mt-10 flex flex-col sm:flex-row items-start sm:items-center space-y-4 sm:space-y-0 sm:space-x-6">
@@ -34,10 +34,10 @@
                     <i class="fas fa-check-circle text-green-300 text-xl mr-2"></i>
                     <span class="text-sm md:text-base">Gratis untuk digunakan</span>
                 </div>
-                <div class="flex items-center">
+                {{-- <div class="flex items-center">
                     <i class="fas fa-check-circle text-green-300 text-xl mr-2"></i>
                     <span class="text-sm md:text-base">Tanpa kartu kredit</span>
-                </div>
+                </div> --}}
             </div>
         </div>
         <div class="flex-1 mt-10 md:mt-0 animate-float">
