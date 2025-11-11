@@ -10,11 +10,6 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
-    // public function index()
-    // {
-    //     $users = User::all();
-    //     return view('manajemen-pengguna.index', compact('users'));
-    // }
     public function index()
     {
         $users = User::orderBy('created_at', 'desc')->paginate(10);
