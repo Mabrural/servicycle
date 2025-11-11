@@ -11,7 +11,7 @@
         <!-- Desktop Navigation -->
         <nav class="desktop-nav hidden md:flex space-x-8 items-center">
             <a href="#workshops" class="nav-link text-gray-600 hover:text-primary">Bengkel</a>
-            <a href="#promo" class="nav-link text-gray-600 hover:text-primary">Promo</a>
+            {{-- <a href="#promo" class="nav-link text-gray-600 hover:text-primary">Promo</a> --}}
             <a href="#mitra" class="nav-link text-gray-600 hover:text-primary">Gabung Mitra</a>
         </nav>
 

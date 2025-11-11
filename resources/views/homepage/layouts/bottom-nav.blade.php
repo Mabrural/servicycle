@@ -4,10 +4,10 @@
         <i class="fas fa-map-marker-alt"></i>
         <span>Bengkel</span>
     </a>
-    <a href="#promo" class="bottom-nav-item" data-section="promo">
+    {{-- <a href="#promo" class="bottom-nav-item" data-section="promo">
         <i class="fas fa-tags"></i>
         <span>Promo</span>
-    </a>
+    </a> --}}
     <a href="#mitra" class="bottom-nav-item" data-section="mitra">
         <i class="fas fa-handshake"></i>
         <span>Mitra</span>
