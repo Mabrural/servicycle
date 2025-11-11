@@ -21,7 +21,7 @@
 
          <ul class="navbar-nav flex-row align-items-center ms-auto">
              <!-- Notifikasi Bell Dropdown -->
-             <li class="nav-item dropdown lh-1 me-3">
+             {{-- <li class="nav-item dropdown lh-1 me-3">
                  <a class="nav-link position-relative" href="#" id="notificationDropdown" role="button"
                      data-bs-toggle="dropdown" aria-expanded="false">
                      <i class="bx bx-bell fs-4"></i>
@@ -74,7 +74,7 @@
                          <a class="dropdown-item text-primary fw-semibold" href="#">Lihat semua notifikasi</a>
                      </li>
                  </ul>
-             </li>
+             </li> --}}
 
 
              <!-- User -->
