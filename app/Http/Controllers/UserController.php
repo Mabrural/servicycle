@@ -10,10 +10,55 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::orderBy('created_at', 'desc')->paginate(10);
-        return view('user-management.index', compact('users'));
+        $perPage = $request->get('per_page', 10);
+        $search = $request->get('search');
+        $role = $request->get('role');
+        $status = $request->get('status');
+        $sort = $request->get('sort', 'latest');
+
+        $users = User::query()
+            ->when($search, function ($query) use ($search) {
+                $query->where(function ($q) use ($search) {
+                    $q->where('name', 'like', "%{$search}%")
+                        ->orWhere('email', 'like', "%{$search}%");
+                });
+            })
+            ->when($role && $role !== 'all', function ($query) use ($role) {
+                $query->where('role', $role);
+            })
+            ->when($status && $status !== 'all', function ($query) use ($status) {
+                $query->where('is_active', $status === 'active');
+            })
+            ->when($sort, function ($query) use ($sort) {
+                switch ($sort) {
+                    case 'oldest':
+                        $query->orderBy('created_at', 'asc');
+                        break;
+                    case 'name_asc':
+                        $query->orderBy('name', 'asc');
+                        break;
+                    case 'name_desc':
+                        $query->orderBy('name', 'desc');
+                        break;
+                    default:
+                        $query->orderBy('created_at', 'desc');
+                }
+            })
+            ->paginate($perPage)
+            ->withQueryString();
+
+        $userStats = [
+            'total' => User::count(),
+            'admin' => User::where('role', 'admin')->count(),
+            'vehicle_owner' => User::where('role', 'vehicle_owner')->count(),
+            'workshop' => User::where('role', 'workshop')->count(),
+            'active' => User::where('is_active', true)->count(),
+            'inactive' => User::where('is_active', false)->count(),
+        ];
+
+        return view('user-management.index', compact('users', 'userStats'));
     }
 
 
