@@ -56,13 +56,14 @@
 <body class="bg-gray-50 min-h-screen">
     <div class="container mx-auto px-4 py-8 max-w-4xl">
         <!-- Header -->
-        <div class="flex justify-between items-center mb-8 fade-in">
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8 fade-in">
             <div>
-                <h1 class="text-3xl font-bold text-gray-800">Detail Servis Kendaraan</h1>
-                <p class="text-gray-600 mt-2">Informasi lengkap mengenai booking servis kendaraan Anda</p>
+                <h1 class="text-2xl sm:text-3xl font-bold text-gray-800">Detail Servis Kendaraan</h1>
+                <p class="text-gray-600 mt-2 text-sm sm:text-base">Informasi lengkap mengenai booking servis kendaraan
+                    Anda</p>
             </div>
             <a href="{{ url()->previous() }}"
-                class="bg-white text-gray-700 px-4 py-2 rounded-lg border border-gray-300 hover:bg-gray-50 transition duration-200 flex items-center gap-2">
+                class="bg-white text-gray-700 px-4 py-2 rounded-lg border border-gray-300 hover:bg-gray-50 transition duration-200 flex items-center gap-2 w-full sm:w-auto justify-center">
                 <i class="fas fa-arrow-left"></i>
                 Kembali
             </a>
@@ -120,19 +121,22 @@
                         Informasi Booking
                     </h3>
                     <div class="space-y-4">
-                        <div class="flex justify-between items-center py-2 border-b border-gray-100">
+                        <div
+                            class="flex flex-col sm:flex-row sm:justify-between sm:items-center py-2 border-b border-gray-100 gap-1">
                             <span class="text-gray-600 font-medium">ID Booking:</span>
                             <span class="text-gray-800 font-semibold">#{{ $bookingService->id }}</span>
                         </div>
-                        <div class="flex justify-between items-center py-2 border-b border-gray-100">
+                        <div
+                            class="flex flex-col sm:flex-row sm:justify-between sm:items-center py-2 border-b border-gray-100 gap-1">
                             <span class="text-gray-600 font-medium">Tanggal Booking:</span>
                             <span class="text-gray-800">{{ $bookingService->booking_date->format('d M Y H:i') }}</span>
                         </div>
-                        <div class="flex justify-between items-center py-2 border-b border-gray-100">
+                        <div
+                            class="flex flex-col sm:flex-row sm:justify-between sm:items-center py-2 border-b border-gray-100 gap-1">
                             <span class="text-gray-600 font-medium">Dibuat Oleh:</span>
                             <span class="text-gray-800">{{ $bookingService->creator->name ?? '-' }}</span>
                         </div>
-                        <div class="flex justify-between items-center py-2">
+                        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center py-2 gap-1">
                             <span class="text-gray-600 font-medium">Dibuat Pada:</span>
                             <span class="text-gray-800">{{ $bookingService->created_at->format('d M Y H:i') }}</span>
                         </div>
@@ -146,20 +150,23 @@
                         Informasi Kendaraan
                     </h3>
                     <div class="space-y-4">
-                        <div class="flex justify-between items-center py-2 border-b border-gray-100">
+                        <div
+                            class="flex flex-col sm:flex-row sm:justify-between sm:items-center py-2 border-b border-gray-100 gap-1">
                             <span class="text-gray-600 font-medium">Plat Nomor:</span>
                             <span
                                 class="text-gray-800 font-mono">{{ $bookingService->vehicle->license_plate ?? '-' }}</span>
                         </div>
-                        <div class="flex justify-between items-center py-2 border-b border-gray-100">
+                        <div
+                            class="flex flex-col sm:flex-row sm:justify-between sm:items-center py-2 border-b border-gray-100 gap-1">
                             <span class="text-gray-600 font-medium">Merek:</span>
                             <span class="text-gray-800">{{ $bookingService->vehicle->brand ?? '-' }}</span>
                         </div>
-                        <div class="flex justify-between items-center py-2 border-b border-gray-100">
+                        <div
+                            class="flex flex-col sm:flex-row sm:justify-between sm:items-center py-2 border-b border-gray-100 gap-1">
                             <span class="text-gray-600 font-medium">Model:</span>
                             <span class="text-gray-800">{{ $bookingService->vehicle->model ?? '-' }}</span>
                         </div>
-                        <div class="flex justify-between items-center py-2">
+                        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center py-2 gap-1">
                             <span class="text-gray-600 font-medium">Tahun:</span>
                             <span class="text-gray-800">{{ $bookingService->vehicle->year ?? '-' }}</span>
                         </div>
@@ -173,80 +180,42 @@
                         Informasi Bengkel
                     </h3>
                     <div class="space-y-4">
-                        <div class="flex justify-between items-center py-2 border-b border-gray-100">
+                        <div
+                            class="flex flex-col sm:flex-row sm:justify-between sm:items-center py-2 border-b border-gray-100 gap-1">
                             <span class="text-gray-600 font-medium">Nama Bengkel:</span>
                             <span class="text-gray-800">{{ $bookingService->workshop->name ?? '-' }}</span>
                         </div>
-                        <div class="flex justify-between items-center py-2 border-b border-gray-100">
+                        <div
+                            class="flex flex-col sm:flex-row sm:justify-between sm:items-center py-2 border-b border-gray-100 gap-1">
                             <span class="text-gray-600 font-medium">Alamat:</span>
                             <span
                                 class="text-gray-800 text-right">{{ $bookingService->workshop->address ?? '-' }}</span>
                         </div>
-                        <div class="flex justify-between items-center py-2 border-b border-gray-100">
+                        <div
+                            class="flex flex-col sm:flex-row sm:justify-between sm:items-center py-2 border-b border-gray-100 gap-1">
                             <span class="text-gray-600 font-medium">Telepon:</span>
                             <span class="text-gray-800">{{ $bookingService->workshop->phone ?? '-' }}</span>
                         </div>
-                        <div class="flex justify-between items-center py-2">
+                        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center py-2 gap-1">
                             <span class="text-gray-600 font-medium">Email:</span>
                             <span class="text-gray-800">{{ $bookingService->workshop->email ?? '-' }}</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- Informasi Servis -->
-                <div class="bg-white rounded-xl shadow-sm p-6">
-                    <h3 class="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
-                        <i class="fas fa-tools text-orange-500"></i>
-                        Detail Servis
-                    </h3>
-                    <div class="space-y-4">
-                        <div class="flex justify-between items-center py-2 border-b border-gray-100">
-                            <span class="text-gray-600 font-medium">Jenis Servis:</span>
-                            <span class="text-gray-800">{{ $bookingService->service_type ?? '-' }}</span>
-                        </div>
-                        <div class="flex justify-between items-center py-2 border-b border-gray-100">
-                            <span class="text-gray-600 font-medium">Keluhan:</span>
-                            <span
-                                class="text-gray-800 text-right">{{ $bookingService->issue_description ?? 'Tidak ada keluhan' }}</span>
-                        </div>
-                        <div class="flex justify-between items-center py-2 border-b border-gray-100">
-                            <span class="text-gray-600 font-medium">Estimasi Biaya:</span>
-                            <span class="text-gray-800 font-semibold">
-                                @if ($bookingService->estimated_cost)
-                                    Rp {{ number_format($bookingService->estimated_cost, 0, ',', '.') }}
-                                @else
-                                    -
-                                @endif
-                            </span>
-                        </div>
-                        <div class="flex justify-between items-center py-2">
-                            <span class="text-gray-600 font-medium">Biaya Akhir:</span>
-                            <span
-                                class="text-gray-800 font-semibold 
-                                @if ($bookingService->actual_cost) text-green-600 @endif">
-                                @if ($bookingService->actual_cost)
-                                    Rp {{ number_format($bookingService->actual_cost, 0, ',', '.') }}
-                                @else
-                                    -
-                                @endif
-                            </span>
+                <!-- Catatan Tambahan -->
+                @if ($bookingService->notes)
+                    <div class="bg-white rounded-xl shadow-sm p-6">
+                        <h3 class="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
+                            <i class="fas fa-sticky-note text-yellow-500"></i>
+                            Catatan Tambahan
+                        </h3>
+                        <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+                            <p class="text-gray-700">{{ $bookingService->notes }}</p>
                         </div>
                     </div>
-                </div>
+                @endif
             </div>
-
-            <!-- Catatan Tambahan -->
-            @if ($bookingService->notes)
-                <div class="bg-white rounded-xl shadow-sm p-6 mt-6">
-                    <h3 class="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
-                        <i class="fas fa-sticky-note text-yellow-500"></i>
-                        Catatan Tambahan
-                    </h3>
-                    <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
-                        <p class="text-gray-700">{{ $bookingService->notes }}</p>
-                    </div>
-                </div>
-            @endif
 
             <!-- Timeline Progress -->
             <div class="bg-white rounded-xl shadow-sm p-6 mt-6">
@@ -301,7 +270,6 @@
                         }
                     @endphp
 
-
                     @foreach ($timeline as $status => $info)
                         @php
                             $isActive = false;
@@ -337,7 +305,6 @@
 
                             $isActive = $status === $currentStatus && !$isCompleted;
                         @endphp
-
 
                         <div class="flex items-center space-x-4">
                             <div class="flex-shrink-0">
@@ -398,8 +365,13 @@
         document.addEventListener('DOMContentLoaded', function() {
             // Simulate loading for better UX
             setTimeout(() => {
-                document.getElementById('loadingState').classList.add('hidden');
-                document.getElementById('content').classList.remove('hidden');
+                const loadingState = document.getElementById('loadingState');
+                const content = document.getElementById('content');
+
+                if (loadingState && content) {
+                    loadingState.classList.add('hidden');
+                    content.classList.remove('hidden');
+                }
             }, 1000);
 
             // Format dates if needed
