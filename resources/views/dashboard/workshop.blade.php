@@ -1,51 +1,28 @@
 @extends('layouts.main')
 
 @section('container')
-<div class="container-xxl flex-grow-1 container-p-y">
-    <div class="container-fluid p-0">
-
-        {{-- Header --}}
+    <div class="container-xxl flex-grow-1 container-p-y">
         <h1 class="h3 mb-3"><strong>Bengkel</strong> Dashboard</h1>
         <p class="text-muted mb-4">Selamat datang, {{ Auth::user()->name ?? 'Mitra Bengkel' }} 👋</p>
 
         {{-- Ringkasan Data --}}
         <div class="row">
-            <div class="col-md-3 col-sm-6 mb-3">
+            <div class="col-md-6 col-sm-6 mb-3">
                 <div class="card border-0 shadow-sm">
                     <div class="card-body">
                         <h6 class="card-title text-muted mb-2">Servis Hari Ini</h6>
-                        <h3 class="fw-bold">12</h3>
-                        <small class="text-success"><i class="bi bi-arrow-up"></i> +3 dari kemarin</small>
+                        <h3 class="fw-bold">{{ $todayServices }}</h3>
+                        <small class="text-muted">Tanggal {{ now()->format('d M Y') }}</small>
                     </div>
                 </div>
             </div>
 
-            <div class="col-md-3 col-sm-6 mb-3">
+            <div class="col-md-6 col-sm-6 mb-3">
                 <div class="card border-0 shadow-sm">
                     <div class="card-body">
                         <h6 class="card-title text-muted mb-2">Antrian Aktif</h6>
-                        <h3 class="fw-bold">7</h3>
+                        <h3 class="fw-bold">{{ $activeQueue }}</h3>
                         <small class="text-warning"><i class="bi bi-hourglass-split"></i> Sedang dikerjakan</small>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-3 col-sm-6 mb-3">
-                <div class="card border-0 shadow-sm">
-                    <div class="card-body">
-                        <h6 class="card-title text-muted mb-2">Pendapatan Bulan Ini</h6>
-                        <h3 class="fw-bold">Rp 24.3 Jt</h3>
-                        <small class="text-success"><i class="bi bi-arrow-up"></i> +8%</small>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-3 col-sm-6 mb-3">
-                <div class="card border-0 shadow-sm">
-                    <div class="card-body">
-                        <h6 class="card-title text-muted mb-2">Rating Pelanggan</h6>
-                        <h3 class="fw-bold">4.8 / 5</h3>
-                        <small class="text-muted"><i class="bi bi-star-fill text-warning"></i> Berdasarkan 120 ulasan</small>
                     </div>
                 </div>
             </div>
@@ -90,80 +67,90 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Rizky Pratama</td>
-                                    <td>Toyota Avanza</td>
-                                    <td>Servis Rutin</td>
-                                    <td><span class="badge bg-success">Selesai</span></td>
-                                    <td>10:45 AM</td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>Dewi Anggraini</td>
-                                    <td>Honda Beat</td>
-                                    <td>Ganti Oli</td>
-                                    <td><span class="badge bg-warning text-dark">Proses</span></td>
-                                    <td>10:10 AM</td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>Bambang Sutanto</td>
-                                    <td>Daihatsu Xenia</td>
-                                    <td>Perbaikan Rem</td>
-                                    <td><span class="badge bg-info text-dark">Menunggu</span></td>
-                                    <td>09:35 AM</td>
-                                </tr>
+                                @forelse($latestServices as $i => $service)
+                                    <tr>
+                                        <td>{{ $i + 1 }}</td>
+                                        <td>{{ $service->creator->name ?? '-' }}</td>
+                                        <td>{{ $service->vehicle->full_name ?? '-' }}</td>
+                                        <td>{{ $service->notes ?? '-' }}</td>
+                                        <td>
+                                            @php
+                                                $statusColors = [
+                                                    'selesai' => 'success',
+                                                    'dikerjakan' => 'warning text-dark',
+                                                    'menunggu_konfirmasi' => 'info text-dark',
+                                                    'ditolak' => 'danger',
+                                                ];
+                                            @endphp
+                                            <span class="badge bg-{{ $statusColors[$service->status] ?? 'secondary' }}">
+                                                {{ ucfirst(str_replace('_', ' ', $service->status)) }}
+                                            </span>
+                                        </td>
+                                        <td>{{ $service->booking_date->format('d M Y H:i') }}</td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="6" class="text-center text-muted py-3">Belum ada data servis.</td>
+                                    </tr>
+                                @endforelse
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
-</div>
 
-{{-- Chart.js CDN --}}
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    {{-- Chart.js --}}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-<script>
-    // Grafik Garis - Tren Servis Bulanan
-    const ctxService = document.getElementById('serviceChart').getContext('2d');
-    new Chart(ctxService, {
-        type: 'line',
-        data: {
-            labels: ['Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep'],
-            datasets: [{
-                label: 'Jumlah Servis',
-                data: [25, 40, 55, 70, 65, 90],
-                borderColor: '#71dd37',
-                backgroundColor: 'rgba(113,221,55,0.2)',
-                fill: true,
-                tension: 0.3
-            }]
-        },
-        options: {
-            plugins: { legend: { display: false } },
-            scales: { y: { beginAtZero: true } }
-        }
-    });
+    <script>
+        // Grafik Tren Servis Bulanan
+        new Chart(document.getElementById('serviceChart'), {
+            type: 'line',
+            data: {
+                labels: {!! json_encode($months) !!},
+                datasets: [{
+                    label: 'Jumlah Servis',
+                    data: {!! json_encode($values) !!},
+                    borderColor: '#71dd37',
+                    backgroundColor: 'rgba(113,221,55,0.2)',
+                    fill: true,
+                    tension: 0.3
+                }]
+            },
+            options: {
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
 
-    // Grafik Pie - Jenis Layanan Terpopuler
-    const ctxType = document.getElementById('serviceTypeChart').getContext('2d');
-    new Chart(ctxType, {
-        type: 'doughnut',
-        data: {
-            labels: ['Servis Rutin', 'Ganti Oli', 'Perbaikan Rem', 'Tune Up'],
-            datasets: [{
-                data: [40, 25, 20, 15],
-                backgroundColor: ['#696cff', '#71dd37', '#03c3ec', '#ffab00'],
-                borderWidth: 0
-            }]
-        },
-        options: {
-            plugins: { legend: { position: 'bottom' } }
-        }
-    });
-</script>
+        // Grafik Layanan Terpopuler
+        new Chart(document.getElementById('serviceTypeChart'), {
+            type: 'doughnut',
+            data: {
+                labels: {!! json_encode($serviceTypes->keys()) !!},
+                datasets: [{
+                    data: {!! json_encode($serviceTypes->values()) !!},
+                    backgroundColor: ['#696cff', '#71dd37', '#03c3ec', '#ffab00'],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                plugins: {
+                    legend: {
+                        position: 'bottom'
+                    }
+                }
+            }
+        });
+    </script>
 @endsection
