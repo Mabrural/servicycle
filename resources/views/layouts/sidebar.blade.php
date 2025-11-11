@@ -39,7 +39,7 @@
             <li class="menu-item {{ Route::is('subscription-management') ? 'active' : '' }}">
                 <a href="{{ route('subscription-management') }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-receipt"></i>
-                    <div data-i18n="Analytics">Manajemen Langganan</div>
+                    <div data-i18n="Analytics">Langganan</div>
                 </a>
             </li>
             <!-- Laporan & Analitik -->
@@ -50,20 +50,20 @@
                 </a>
             </li>
             <!-- Manajemen Notifikasi Sistem -->
-            <li class="menu-item {{ Route::is('notification.management') ? 'active' : '' }}">
+            {{-- <li class="menu-item {{ Route::is('notification.management') ? 'active' : '' }}">
                 <a href="{{ route('notification.management') }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-bell"></i>
                     <div data-i18n="Analytics">Manajemen Notifikasi</div>
                 </a>
-            </li>
+            </li> --}}
 
             <!-- Pengaturan Aplikasi -->
-            <li class="menu-item {{ Route::is('setting') ? 'active' : '' }}">
+            {{-- <li class="menu-item {{ Route::is('setting') ? 'active' : '' }}">
                 <a href="{{ route('setting') }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-cog"></i>
                     <div data-i18n="Analytics">Pengaturan Aplikasi</div>
                 </a>
-            </li>
+            </li> --}}
         @endif
 
         @if (Auth::check() && Auth::user()->role === 'vehicle_owner')
@@ -88,28 +88,28 @@
             </li>
 
             <!-- Jadwal Servis -->
-            <li class="menu-item {{ Route::is('schedule') ? 'active' : '' }}">
+            {{-- <li class="menu-item {{ Route::is('schedule') ? 'active' : '' }}">
                 <a href="{{ route('schedule') }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-calendar"></i>
                     <div data-i18n="Analytics">Jadwal Servis</div>
                 </a>
-            </li>
+            </li> --}}
 
             <!-- Notifikasi Servis -->
-            <li class="menu-item {{ Route::is('notification.user') ? 'active' : '' }}">
+            {{-- <li class="menu-item {{ Route::is('notification.user') ? 'active' : '' }}">
                 <a href="{{ route('notification.user') }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-bell"></i>
                     <div data-i18n="Analytics">Notifikasi Servis</div>
                 </a>
-            </li>
+            </li> --}}
 
             <!-- Catatan Masalah -->
-            <li class="menu-item {{ Route::is('record') ? 'active' : '' }}">
+            {{-- <li class="menu-item {{ Route::is('record') ? 'active' : '' }}">
                 <a href="{{ route('record') }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-error"></i>
                     <div data-i18n="Analytics">Catatan Masalah</div>
                 </a>
-            </li>
+            </li> --}}
 
             <!-- Upgrade Premium -->
             <li class="menu-item {{ Route::is('upgrade-premium.user') ? 'active' : '' }}">
