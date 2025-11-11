@@ -373,8 +373,13 @@
             <div class="flex flex-col md:flex-row items-start md:items-center justify-between">
                 <div class="flex-1">
                     <div class="bg-white/10 backdrop-blur-sm rounded-lg px-4 py-2 inline-flex items-center mb-4">
-                        <i class="fas fa-location mr-2 text-yellow-300"></i>
+                        <i class="fas fa-star mr-2 text-yellow-300"></i>
                         <span class="text-sm md:text-base">
+                            @if ($workshop->rating)
+                                Rating {{ number_format($workshop->rating, 1) }}/5 •
+                            @else
+                                Belum ada rating •
+                            @endif
                             Lokasi: {{ $workshop->district }}, {{ $workshop->city }}
                         </span>
                     </div>
@@ -604,6 +609,49 @@
                                 </div>
                             @endif
                         </div>
+                    </div>
+
+                    <!-- Rating & Reviews -->
+                    <div class="bg-white rounded-2xl shadow-lg p-6 info-card">
+                        <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
+                            <i class="fas fa-star text-primary mr-3"></i>
+                            Rating & Ulasan
+                        </h3>
+
+                        <div class="text-center mb-4">
+                            <div class="text-4xl font-bold text-gray-800 mb-2">
+                                {{ $workshop->rating ? number_format($workshop->rating, 1) : '0.0' }}
+                            </div>
+                            <div class="rating-stars text-2xl mb-2">
+                                @if ($workshop->rating)
+                                    @for ($i = 1; $i <= 5; $i++)
+                                        @if ($i <= floor($workshop->rating))
+                                            <i class="fas fa-star"></i>
+                                        @elseif($i - 0.5 <= $workshop->rating)
+                                            <i class="fas fa-star-half-alt"></i>
+                                        @else
+                                            <i class="far fa-star"></i>
+                                        @endif
+                                    @endfor
+                                @else
+                                    @for ($i = 1; $i <= 5; $i++)
+                                        <i class="far fa-star"></i>
+                                    @endfor
+                                @endif
+                            </div>
+                            <p class="text-gray-600 text-sm">
+                                @if ($workshop->review_count)
+                                    Berdasarkan {{ $workshop->review_count }} ulasan
+                                @else
+                                    Belum ada ulasan
+                                @endif
+                            </p>
+                        </div>
+
+                        <button
+                            class="w-full bg-gray-100 text-gray-700 py-3 rounded-lg font-medium hover:bg-gray-200 transition-all duration-300 flex items-center justify-center">
+                            <i class="fas fa-comment-dots mr-2"></i> Lihat Semua Ulasan
+                        </button>
                     </div>
 
                     <!-- Quick Actions -->
