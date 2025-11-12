@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Oct 27, 2025 at 09:49 AM
+-- Generation Time: Nov 12, 2025 at 07:41 AM
 -- Server version: 8.0.30
 -- PHP Version: 8.3.6
 
@@ -44,7 +44,7 @@ CREATE TABLE `booking_services` (
 --
 
 INSERT INTO `booking_services` (`id`, `created_by`, `workshop_id`, `vehicle_id`, `booking_date`, `status`, `notes`, `created_at`, `updated_at`) VALUES
-(2, 58, 24, 23, '2025-10-28 09:00:00', 'pending', 'oil change only', '2025-10-27 09:40:57', '2025-10-27 09:40:57');
+(51, 66, 35, 30, '2025-11-13 10:00:00', 'diambil', 'ganti bearing roda depan', '2025-11-12 07:37:55', '2025-11-12 07:39:25');
 
 -- --------------------------------------------------------
 
@@ -101,6 +101,13 @@ CREATE TABLE `jobs` (
   `available_at` int UNSIGNED NOT NULL,
   `created_at` int UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `jobs`
+--
+
+INSERT INTO `jobs` (`id`, `queue`, `payload`, `attempts`, `reserved_at`, `available_at`, `created_at`) VALUES
+(1, 'default', '{\"uuid\":\"fbc6d2eb-260d-4070-8add-8945a466bd0d\",\"displayName\":\"App\\\\Mail\\\\VerifyWorkshopMail\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"Illuminate\\\\Mail\\\\SendQueuedMailable\",\"command\":\"O:34:\\\"Illuminate\\\\Mail\\\\SendQueuedMailable\\\":15:{s:8:\\\"mailable\\\";O:27:\\\"App\\\\Mail\\\\VerifyWorkshopMail\\\":3:{s:8:\\\"workshop\\\";O:45:\\\"Illuminate\\\\Contracts\\\\Database\\\\ModelIdentifier\\\":5:{s:5:\\\"class\\\";s:19:\\\"App\\\\Models\\\\Workshop\\\";s:2:\\\"id\\\";i:31;s:9:\\\"relations\\\";a:0:{}s:10:\\\"connection\\\";s:5:\\\"mysql\\\";s:15:\\\"collectionClass\\\";N;}s:2:\\\"to\\\";a:1:{i:0;a:2:{s:4:\\\"name\\\";N;s:7:\\\"address\\\";s:24:\\\"mabruralmutaqi@gmail.com\\\";}}s:6:\\\"mailer\\\";s:4:\\\"smtp\\\";}s:5:\\\"tries\\\";N;s:7:\\\"timeout\\\";N;s:13:\\\"maxExceptions\\\";N;s:17:\\\"shouldBeEncrypted\\\";b:0;s:10:\\\"connection\\\";N;s:5:\\\"queue\\\";N;s:5:\\\"delay\\\";N;s:11:\\\"afterCommit\\\";N;s:10:\\\"middleware\\\";a:0:{}s:7:\\\"chained\\\";a:0:{}s:15:\\\"chainConnection\\\";N;s:10:\\\"chainQueue\\\";N;s:19:\\\"chainCatchCallbacks\\\";N;s:3:\\\"job\\\";N;}\"},\"createdAt\":1762923417,\"delay\":null}', 0, NULL, 1762923417, 1762923417);
 
 -- --------------------------------------------------------
 
@@ -203,7 +210,9 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('pt4mpfbvAjlF0h4sgYJfb8UkUmBhmVP42R8KFb9S', 58, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36 Edg/141.0.0.0', 'YTo1OntzOjY6Il90b2tlbiI7czo0MDoiaGZqUGFDQktRcldyYUJmcUF1Z1dHZmJGUzJnZU9tcmo0MVBCamRRcCI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzQ6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC91c2VyL2hpc3RvcnkiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjM6InVybCI7YTowOnt9czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6NTg7fQ==', 1761558362);
+('1IaTSQg61Xef2sDCuTQRRrJDQSDzdj6GjKaciR7M', 65, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoicEJCMGpvaG14dWhadVFNYlRjUGRuSXROMzFHNzdJWTUyWVg5Y3d6bSI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NDk6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9hZG1pbi93b3Jrc2hvcC12ZXJpZmljYXRpb24iO31zOjUwOiJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aTo2NTt9', 1762933008),
+('2qCfiR1EeQ7yYJjVHXfDXgSVAyvcJeMZDxSV8RG4', 66, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiQ3M4UHhDeHpObWZ6a1Qza2FEV3NkSmxhSDRaOU9ZSGRCTG1veDBQZCI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzQ6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC91c2VyL2hpc3RvcnkiO31zOjUwOiJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aTo2Njt9', 1762933082),
+('xi17VHc7CHnQhJZ4x8hnPMYbB1Qu8ZYYHypQQI4I', 67, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiUmd2MFVrVlR3cVByVzBKRHJhbkVENTVxMmxJYVhjYjFaRmR4ZjJDeCI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NDE6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9ib29raW5nLXNlcnZpY2VzLzUxIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6Njc7fQ==', 1762933171);
 
 -- --------------------------------------------------------
 
@@ -232,17 +241,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `google_id`, `avatar`, `role`, `is_set_role`, `is_active`) VALUES
-(25, 'Mabrur Almutaqi', 'mabruralmutaqi@gmail.com', NULL, '$2y$12$oJPdua1Z7Q7d9fcjVxORreWrkEkCWVC76d6CIcUVrWJJiS.Kc9tp.', 'wwZn4yiFaGAf3vDZnnmhvbVJZX7zZYS6oYkx4SMAj8qQqmkWqPfzxb9lYL88', '2025-09-30 04:47:29', '2025-10-26 13:32:09', '115306521754361552074', 'https://lh3.googleusercontent.com/a/ACg8ocLXVt_ohIcbr_8xWVQIq39i4FKTUn5e3xepI-QIAMe7D6tCXuk=s96-c', 'admin', 1, 1),
-(51, 'mabrur al', 'mabrural814@gmail.com', NULL, '$2y$12$DukRhzLfvxnrcBT11kE3/eIvG8afWcVWrh6OZ94e38tCcp12amCOe', NULL, '2025-10-21 07:19:32', '2025-10-25 02:19:28', '105054842331965065215', 'https://lh3.googleusercontent.com/a/ACg8ocLTu9usFzJN5El9iJbDtz4FPuQkkhbPIi7hERK2aZWRfDkpDyc=s96-c', 'workshop', 1, 1),
-(52, 'almutaqi', 'almutaqi6@gmail.com', NULL, '$2y$12$cB0.q.YJAbTgsBssA0oVturL6Kt3VOiU6NvsVs39jZ6r5Kt7UdMFG', NULL, '2025-10-21 07:26:45', '2025-10-23 08:55:59', '112594718434082682550', 'https://lh3.googleusercontent.com/a/ACg8ocIN9lD0qiRMDtmO8_Vubtpbbnkdf6SzSHnKieFqwWsuBejeEg=s96-c', 'workshop', 1, 1),
-(53, 'Global Petro Pasifik', 'globalpetropasifik1@gmail.com', NULL, '$2y$12$4lRJkwGWDDq4PD0eKUIwtedH/GPVY8ziuvAExD0wa5ceZBdpq6BPC', NULL, '2025-10-21 07:44:49', '2025-10-26 15:16:27', '105364849534881686130', 'https://lh3.googleusercontent.com/a/ACg8ocLiM62KdP9OpHe0hbmspTF6wk3hHSJIutSlfISI5OU0GjBZxA=s96-c', 'workshop', 1, 1),
-(54, 'Nautica Samudera Lines', 'nauticasamuderalines@gmail.com', NULL, '$2y$12$wc/u4O.sXqO7rUx5VcVxf.Syk8beS0YTqfpidTCV5B8RBQx3hlNyO', NULL, '2025-10-21 09:18:01', '2025-10-21 09:18:03', '117124094153845000228', 'https://lh3.googleusercontent.com/a/ACg8ocLwYMvHd2b_AC1LPhunjliLU2BHGe4xlTC8x7vkJTUApqvw=s96-c', 'workshop', 1, 1),
-(55, 'bengkel poltek', 'bengkelcecesp@gmail.com', NULL, '$2y$12$U87lf2cmme3qFQi79Z5IOeMGzF0Kpfkkow5w5kELIQSfVwkT.cD2O', NULL, '2025-10-21 12:50:22', '2025-10-21 12:50:30', NULL, NULL, 'workshop', 1, 1),
-(56, 'nando', 'nando@gmail.com', NULL, '$2y$12$fWrFAn4kaCoYPgrPnjv61OgVRLxGcpFnicEUALTT5yqU3Y9Y2oTYa', NULL, '2025-10-21 12:56:02', '2025-10-21 12:56:06', NULL, NULL, 'vehicle_owner', 1, 1),
-(57, 'Bengkel Nongsa', 'abcd@gmail.com', NULL, '$2y$12$Erlh2b7UgC00HHa1/BCH/ekNocpLPNG8kWxGJc57QH9iNFymIzfo2', NULL, '2025-10-21 13:37:48', '2025-10-21 13:38:00', NULL, NULL, 'workshop', 1, 1),
-(58, 'aldo', 'aldo@gmail.com', NULL, '$2y$12$gq5t16lkOipmmUkftIiVUO5sOM55qlPhRX5BdcDuEz9x9uEsm8W1K', NULL, '2025-10-24 03:14:29', '2025-10-24 03:14:31', NULL, NULL, 'vehicle_owner', 1, 1),
-(60, 'Test', 'test@gmail.com', NULL, '$2y$12$N7rFPkIW2fgp4CO5IWFElOetoElB5H6FEonIL9SEzyVASQ/3ip5tW', NULL, '2025-10-24 11:37:14', '2025-10-24 11:37:18', NULL, NULL, 'vehicle_owner', 1, 1),
-(61, 'joni', 'joni@gmail.com', NULL, '$2y$12$y2d06mTCXXCV0ObG.cK09uQ9zboYxdGZIGXF6BAq6jPfjQ1BCmike', NULL, '2025-10-26 13:24:35', '2025-10-26 13:24:37', NULL, NULL, 'workshop', 1, 1);
+(65, 'Admin Servicycle', 'servicycledev@gmail.com', NULL, '$2y$12$4zAARNCwcqHPy/BLoJ3/PuZ4ZUX24D1omrAjJz1VXWXPsg/6qd8am', NULL, '2025-11-12 04:55:16', '2025-11-12 06:52:00', '103564940529593090215', 'https://lh3.googleusercontent.com/a/ACg8ocJlnf3v7gLEvAe7nJhEk2z4Hv54DNvfxfJwpoi9Kth1S2OJiw=s96-c', 'admin', 1, 1),
+(66, 'Mabrur Almutaqi', 'mabruralmutaqi@gmail.com', NULL, '$2y$12$UZywzx1GfoRe6FDDYiY/eO9SfJi8aUJSMNSMnNhqK4ItUv.EeKP0i', NULL, '2025-11-12 06:53:15', '2025-11-12 07:29:14', '115306521754361552074', 'https://lh3.googleusercontent.com/a/ACg8ocLXVt_ohIcbr_8xWVQIq39i4FKTUn5e3xepI-QIAMe7D6tCXuk=s96-c', 'vehicle_owner', 1, 1),
+(67, 'almutaqi', 'almutaqi6@gmail.com', NULL, '$2y$12$v9hs15SP6ty1wlH3ZqT1X.PFFtqfaqGc63lGNUproIx5OWflBYoYW', NULL, '2025-11-12 06:55:52', '2025-11-12 07:21:49', '112594718434082682550', 'https://lh3.googleusercontent.com/a/ACg8ocIN9lD0qiRMDtmO8_Vubtpbbnkdf6SzSHnKieFqwWsuBejeEg=s96-c', 'workshop', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -274,8 +275,7 @@ CREATE TABLE `vehicles` (
 --
 
 INSERT INTO `vehicles` (`id`, `vehicle_type`, `brand`, `model`, `year`, `license_plate`, `vin`, `color`, `engine_capacity`, `transmission`, `fuel_type`, `notes`, `image`, `created_by`, `created_at`, `updated_at`) VALUES
-(23, 'mobil', 'Suzuki', 'All New Satria F150', '2016', 'BP 6043 GQ', 'MH12390121003', 'Hitam', 150, 'matic', 'pertalite', NULL, 'b7afb0578468a59e501eccc979438e7847ef10f9e36be2fc7c90871faf4a6c0c.jpg', 58, '2025-10-24 03:15:22', '2025-10-24 03:15:22'),
-(26, 'mobil', 'Lexus', 'RM350', '2024', 'BP 6042 GQW', 'MH123901219', 'Hitam', 1500, 'matic', 'pertamax', NULL, 'f8cf1574e7f6422de65661f79e4e752fd6cde8a73ea6186d0e97123bb2bb2f4e.png', 60, '2025-10-24 11:51:13', '2025-10-25 04:33:18');
+(30, 'motor', 'Suzuki', 'All New Satria F150', '2016', 'BP 6042 GQ', 'MH12390121003', 'Biru', 150, 'manual', 'pertamax', NULL, 'c81d47107f45162663427708b68f7ecad934a7c1880feed09294d26c039004b2.jpg', 66, '2025-11-12 06:54:32', '2025-11-12 06:54:32');
 
 -- --------------------------------------------------------
 
@@ -312,13 +312,7 @@ CREATE TABLE `workshops` (
 --
 
 INSERT INTO `workshops` (`id`, `name`, `types`, `address`, `province`, `city`, `district`, `village`, `postal_code`, `latitude`, `longitude`, `phone`, `email`, `services`, `specialization`, `operating_hours`, `description`, `status`, `created_by`, `created_at`, `updated_at`) VALUES
-(24, 'Batam Jaya Motor', '[\"motor\"]', 'Ruko, Blk. L Jl. Golden Land No.7, Taman Baloi, Kec. Batam Kota, Kota Batam, Kepulauan Riau 29432', 'KEPULAUAN RIAU', 'KOTA B A T A M', 'BATAM KOTA', 'TAMAN BALOI', '29432', 1.109907, 104.041208, '6281278182919', 'admin@bengkel', '[\"service_rutin\", \"ganti_oli\", \"tune_up\", \"perbaikan_mesin\", \"perbaikan_rem\", \"ganti_ban\", \"servis_ac\", \"kelistrikan\"]', 'Khusus Motor', '24jam', 'Menyediakan servis motor lengkap mulai dari ganti oli, spooring roda, tune up, hingga perbaikan mesin. Cocok untuk semua jenis motor, baik matic maupun manual.', 'pending', 51, '2025-10-21 07:25:13', '2025-10-25 02:33:33'),
-(25, 'Sun Jaya Bengkel Motor', '[\"motor\"]', 'Ruko, Blk. L Jl. Golden Land No.8, Taman Baloi, Kec. Batam Kota, Kota Batam, Kepulauan Riau 29432', 'KEPULAUAN RIAU', 'KOTA B A T A M', 'BATAM KOTA', 'TAMAN BALOI', '29432', 1.110395, 104.041332, '08117033168', 'admin@bengkel', '[\"service_rutin\", \"ganti_oli\", \"tune_up\", \"perbaikan_mesin\", \"perbaikan_rem\", \"ganti_ban\", \"servis_ac\", \"kelistrikan\"]', 'All Tipe Khusus Motor', 'Senin-Sabtu 07:00-18:30, Minggu 07:30-17:30', 'Menyediakan servis motor lengkap mulai dari ganti oli, spooring roda, tune up, hingga perbaikan mesin. Cocok untuk semua jenis motor, baik matic maupun manual.', 'pending', 52, '2025-10-21 07:33:34', '2025-10-21 07:33:34'),
-(26, 'Singkawang Motor', '[\"motor\"]', 'Ruko Jl. Legenda Malaka No.5 Blok C1, Baloi Permai, Batam Kota, Batam City, Riau Islands 29444', 'KEPULAUAN RIAU', 'KOTA B A T A M', 'BATAM KOTA', 'BALOI PERMAI', '29444', 1.101934, 104.053380, '628127004106', NULL, '[\"service_rutin\", \"ganti_oli\", \"tune_up\", \"perbaikan_mesin\", \"perbaikan_rem\", \"ganti_ban\", \"servis_ac\", \"kelistrikan\"]', 'Powered by Zeneos', 'Buka Setiap Hari 08:00 - 18:00', 'Menyediakan servis motor lengkap mulai dari ganti oli, spooring roda, tune up, hingga perbaikan mesin. Cocok untuk semua jenis motor, baik matic maupun manual.', 'pending', 53, '2025-10-21 07:54:47', '2025-10-21 07:54:47'),
-(27, 'Dewa Motor Indonesia, Batu Aji Baru Batam', '[\"motor\"]', '9 No. 10, Baru, Jl. Batu Aji Baru Blk. A, Sungai Langkai, Kec. Sagulung, Kota Batam, Kepulauan Riau', 'KEPULAUAN RIAU', 'KOTA B A T A M', 'SAGULUNG', 'SUNGAI LANGKAI', NULL, 1.036671, 103.962733, '-', NULL, '[\"service_rutin\", \"ganti_oli\", \"tune_up\", \"perbaikan_mesin\", \"perbaikan_rem\", \"ganti_ban\", \"kelistrikan\"]', 'Ban & Sparepart Bergaransi', '08:00 - 20:00', 'Menyediakan servis motor lengkap mulai dari ganti oli, spooring roda, tune up, hingga perbaikan mesin. Cocok untuk semua jenis motor, baik matic maupun manual.', 'pending', 54, '2025-10-21 09:24:48', '2025-10-21 09:24:48'),
-(28, 'Bengkel Poltek', '[\"motor\"]', 'Politeknik', 'KEPULAUAN RIAU', 'KOTA B A T A M', 'BATAM KOTA', 'BELIAN', NULL, 1.118638, 104.047259, '0778468205', NULL, '[\"service_rutin\", \"ganti_oli\", \"tune_up\", \"perbaikan_mesin\", \"perbaikan_rem\"]', 'Semua brand', '08:00-17:00', 'Terpercaya di Batam', 'pending', 55, '2025-10-21 12:53:03', '2025-10-21 12:53:03'),
-(29, 'Bengkel Nongsa', '[\"mobil\"]', 'Nongsa', 'KEPULAUAN RIAU', 'KOTA B A T A M', 'NONGSA', 'SAMBAU', NULL, 1.110974, 104.133987, '082178192938', NULL, '[\"service_rutin\", \"ganti_oli\", \"tune_up\", \"perbaikan_mesin\", \"perbaikan_rem\", \"ganti_ban\", \"kelistrikan\"]', 'All Type', '09:00-18:00', 'Terpecaya, amanah, dan terbukti kualitas', 'pending', 57, '2025-10-21 13:40:03', '2025-10-21 13:40:03'),
-(30, 'Bengkel Mobil SP Plaza', '[\"mobil\"]', 'SP Plaza Blok C', 'KEPULAUAN RIAU', 'KOTA B A T A M', 'SAGULUNG', 'SUNGAI LANGKAI', '1234', 1.042772, 103.978098, '628123456789', 'bengkelsp@gmail.com', '[\"service_rutin\", \"ganti_oli\", \"tune_up\", \"perbaikan_mesin\", \"perbaikan_rem\", \"ganti_ban\", \"servis_ac\", \"kelistrikan\"]', 'Khusus Mobil', '07:00-21:00', 'Terpercaya di Batu Aji', 'pending', 61, '2025-10-26 13:28:46', '2025-10-26 13:28:46');
+(35, 'Batam Jaya Motor', '[\"motor\"]', 'Ruko, Blk. L Jl. Golden Land No.7, Taman Baloi, Kec. Batam Kota, Kota Batam, Kepulauan Riau 29432', 'KEPULAUAN RIAU', 'KOTA B A T A M', 'BATAM KOTA', 'TAMAN BALOI', '29432', 1.110079, 104.040903, '082178192938', 'almutaqi6@gmail.com', '[\"service_rutin\", \"ganti_oli\", \"tune_up\", \"perbaikan_mesin\", \"perbaikan_rem\", \"ganti_ban\", \"kelistrikan\"]', 'All Type', 'Setiap hari jam 07:00 - 18:00', 'Terpercaya di Batam', 'approved', 67, '2025-11-12 07:35:07', '2025-11-12 07:36:40');
 
 -- --------------------------------------------------------
 
@@ -342,25 +336,10 @@ CREATE TABLE `workshop_images` (
 --
 
 INSERT INTO `workshop_images` (`id`, `workshop_id`, `image_path`, `image_name`, `order`, `is_primary`, `created_at`, `updated_at`) VALUES
-(23, 24, 'workshop-images/iniWQOUpakkTmywjLvPIcTjEYBYSivn6aGEBoNFf.png', 'simpkara4.png', 0, 1, '2025-10-21 07:25:14', '2025-10-25 02:33:33'),
-(24, 24, 'workshop-images/2Dq4VMTr9Fxo6ZtcJXpL9yqCW5K123hBMT7ktCtN.png', 'simpkara3.png', 1, 0, '2025-10-21 07:25:14', '2025-10-25 02:33:33'),
-(25, 24, 'workshop-images/n8v3xdM67eYUxv9Q9htqb4yJPjy5ACN6HAcCRgIn.png', 'simpkara2.png', 2, 0, '2025-10-21 07:25:14', '2025-10-25 02:33:33'),
-(26, 24, 'workshop-images/ObyX3zzaVFsWNYzYBJsrbWrUQ5q8UJ5T6wZr237h.png', 'simpkara.png', 3, 0, '2025-10-21 07:25:14', '2025-10-25 02:33:33'),
-(27, 25, 'workshop-images/Y39gw3ieILlwWbdULgUQZBHuyrNnEIQhcgwMhvwP.png', 'sj1.png', 0, 1, '2025-10-21 07:33:34', '2025-10-21 07:33:34'),
-(28, 25, 'workshop-images/OmwDYIr72sSEVaSRrjP2kcC1SnJxWVdAnluO8Vha.png', 'sj2.png', 1, 0, '2025-10-21 07:33:34', '2025-10-21 07:33:34'),
-(29, 25, 'workshop-images/UYtXBS4rVPSDZc1iIxPCNey0x0z8GRYZooIqmM33.png', 'sj3.png', 2, 0, '2025-10-21 07:33:34', '2025-10-21 07:33:34'),
-(30, 25, 'workshop-images/NrK1q7P4rPWsbtxUPvZQeS9nrsr5bPfautZPnLSk.png', 'sj4.png', 3, 0, '2025-10-21 07:33:34', '2025-10-21 07:33:34'),
-(31, 26, 'workshop-images/6EidFykaDRsr0AzzSdeDjWVWq7x0zFZhKHSQkLdo.png', 'sw1.png', 0, 1, '2025-10-21 07:54:47', '2025-10-21 07:54:47'),
-(32, 26, 'workshop-images/ZZz5DlkmEKNI0z7kvhlv9dB5TwPLLmYKZquPgNC5.png', 'sw3.png', 1, 0, '2025-10-21 07:54:47', '2025-10-21 07:54:47'),
-(33, 26, 'workshop-images/Yw0ZeE14Q3JH5I5c6WM7myqRQzjnbSxYSv7lQ9b0.png', 'sw2.png', 2, 0, '2025-10-21 07:54:47', '2025-10-21 07:54:47'),
-(34, 27, 'workshop-images/K37NqGqqFLrnrZ397oDhjQby3977sKOtGUvWV2GS.png', 'dm1.png', 0, 1, '2025-10-21 09:24:48', '2025-10-21 09:24:48'),
-(35, 27, 'workshop-images/OzFillkU9XIjgC2dJH5MpU6NCqVGp9pQIZzM34aE.png', 'dm2.png', 1, 0, '2025-10-21 09:24:48', '2025-10-21 09:24:48'),
-(36, 27, 'workshop-images/Rn5D5sgBEcVPged7c61PJVHmuk99JyT81qIyZ0nA.png', 'dm3.png', 2, 0, '2025-10-21 09:24:48', '2025-10-21 09:24:48'),
-(37, 28, 'workshop-images/D6pgn3T7VsD1CLgHUlc92AzrhteHCMfgDnih0VSv.png', 'honda-btc.png', 0, 1, '2025-10-21 12:53:04', '2025-10-21 12:53:04'),
-(38, 29, 'workshop-images/gacG67lAD7wzbSN15ezGFKFeZtPlSRjuUUk5aXbm.png', 'suzuki-baloi.png', 0, 1, '2025-10-21 13:40:03', '2025-10-21 13:40:03'),
-(39, 29, 'workshop-images/ILemV2DcTLSpwNlh9ujinzQP1g2xFD2PHRv9YRHj.png', 'dm2.png', 1, 0, '2025-10-21 13:40:03', '2025-10-21 13:40:03'),
-(40, 30, 'workshop-images/lFehM6EXqFp8i0dzUXzyDPXjSIYmxfrvRfaNfIwo.png', 'dm2.png', 0, 1, '2025-10-26 13:28:47', '2025-10-26 13:28:47'),
-(41, 30, 'workshop-images/zFM4L1pjLxwukgp0RzR634F1wCUQbS7byTOv4BQn.png', 'dm3.png', 1, 0, '2025-10-26 13:28:47', '2025-10-26 13:28:47');
+(50, 35, 'workshop-images/yckvj1ryUsD213Vz9jdIqqL8nMfRvJ9Gn7AieFXF.png', 'simpkara4.png', 0, 1, '2025-11-12 07:35:13', '2025-11-12 07:35:13'),
+(51, 35, 'workshop-images/Co3D8hiA0bIGOle0WZLecLxcbJc6R8KYFB40inGg.png', 'sj2.png', 1, 0, '2025-11-12 07:35:13', '2025-11-12 07:35:13'),
+(52, 35, 'workshop-images/gz28tTY0Od5qkttZv6aVudYjvkXZJY7hT0EzRjyi.png', 'simpkara.png', 2, 0, '2025-11-12 07:35:13', '2025-11-12 07:35:13'),
+(53, 35, 'workshop-images/dViEmQflXMztuIELUzef53XJJZ2hsA385iGX4mkA.png', 'simpkara2.png', 3, 0, '2025-11-12 07:35:13', '2025-11-12 07:35:13');
 
 --
 -- Indexes for dumped tables
@@ -475,7 +454,7 @@ ALTER TABLE `workshop_images`
 -- AUTO_INCREMENT for table `booking_services`
 --
 ALTER TABLE `booking_services`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -487,7 +466,7 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `jobs`
 --
 ALTER TABLE `jobs`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `migrations`
@@ -505,25 +484,25 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
 
 --
 -- AUTO_INCREMENT for table `vehicles`
 --
 ALTER TABLE `vehicles`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `workshops`
 --
 ALTER TABLE `workshops`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT for table `workshop_images`
 --
 ALTER TABLE `workshop_images`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
 
 --
 -- Constraints for dumped tables
