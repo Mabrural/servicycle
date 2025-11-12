@@ -298,10 +298,10 @@
                             class="bg-white text-green-600 px-4 sm:px-6 py-2 sm:py-3 rounded-lg font-medium hover:bg-gray-100 transition-all duration-300 mobile-touch-button text-center mobile-full">
                             <i class="fas fa-tachometer-alt mr-2"></i>Dashboard Bengkel
                         </a>
-                        <button id="editRequestBtn"
+                        {{-- <button id="editRequestBtn"
                             class="bg-white/20 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-lg font-medium hover:bg-white/30 transition-all duration-300 mobile-touch-button text-center mobile-full">
                             <i class="fas fa-edit mr-2"></i>Ajukan Perubahan
-                        </button>
+                        </button> --}}
                     </div>
                 </div>
             </div>
@@ -1461,9 +1461,9 @@
             });
 
             // Edit request button
-            document.getElementById('editRequestBtn').addEventListener('click', function() {
-                requestEdit();
-            });
+            // document.getElementById('editRequestBtn').addEventListener('click', function() {
+            //     requestEdit();
+            // });
         }
 
         // Handle photo upload and preview
