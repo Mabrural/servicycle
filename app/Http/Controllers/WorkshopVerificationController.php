@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Workshop;
 use Illuminate\Http\Request;
+use App\Mail\WorkshopVerificationStatusMail;
+use Illuminate\Support\Facades\Mail;
 
 /**
  * Controller untuk verifikasi bengkel (approve / reject).
@@ -91,13 +93,31 @@ class WorkshopVerificationController extends Controller
      * @param int $id
      * @return \Illuminate\Http\RedirectResponse
      */
+    // public function update(Request $request, int $id)
+    // {
+    //     /** @var \Illuminate\Http\Request $request */
+    //     /** @var int $id */
+    //     /** @var \App\Models\Workshop $workshop */
+    //     $workshop = Workshop::findOrFail($id);
+
+    //     $status = $request->input('status');
+
+    //     if (!in_array($status, ['approved', 'rejected'], true)) {
+    //         return redirect()->back()->with('error', 'Status tidak valid.');
+    //     }
+
+    //     $workshop->status = $status;
+    //     $workshop->save();
+
+    //     $message = $status === 'approved'
+    //         ? 'Bengkel berhasil disetujui!'
+    //         : 'Bengkel telah ditolak.';
+
+    //     return redirect()->back()->with('success', $message);
+    // }
     public function update(Request $request, int $id)
     {
-        /** @var \Illuminate\Http\Request $request */
-        /** @var int $id */
-        /** @var \App\Models\Workshop $workshop */
         $workshop = Workshop::findOrFail($id);
-
         $status = $request->input('status');
 
         if (!in_array($status, ['approved', 'rejected'], true)) {
@@ -107,9 +127,14 @@ class WorkshopVerificationController extends Controller
         $workshop->status = $status;
         $workshop->save();
 
+        // Kirim email ke pemilik bengkel
+        if ($workshop->email) {
+            Mail::to($workshop->email)->send(new WorkshopVerificationStatusMail($workshop, $status));
+        }
+
         $message = $status === 'approved'
-            ? 'Bengkel berhasil disetujui!'
-            : 'Bengkel telah ditolak.';
+            ? 'Bengkel berhasil disetujui dan notifikasi email telah dikirim!'
+            : 'Bengkel telah ditolak dan notifikasi email telah dikirim.';
 
         return redirect()->back()->with('success', $message);
     }
