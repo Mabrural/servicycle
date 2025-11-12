@@ -539,7 +539,7 @@
                                     <label class="block text-sm font-medium text-gray-700 mb-2">Email Bengkel</label>
                                     <input type="email" id="email" name="email"
                                         class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300 mobile-form-input"
-                                        placeholder="bengkel@example.com">
+                                        placeholder="bengkel@example.com" value="{{ Auth::user()->email }}">
                                     <div id="email-error" class="error-message"></div>
                                 </div>
                             </div>
