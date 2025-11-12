@@ -4,334 +4,236 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Verifikasi Bengkel</title>
+
+    <!-- Bootstrap & FontAwesome -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <style>
-        :root {
-            --primary: #4361ee;
-            --primary-light: #4895ef;
-            --success: #4cc9f0;
-            --danger: #f72585;
-            --warning: #f8961e;
-            --light: #f8f9fa;
-            --dark: #212529;
-            --border-radius: 12px;
-            --shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
-            --transition: all 0.3s ease;
-        }
-        
         body {
-            background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
+            background: linear-gradient(135deg, #f6f9fc 0%, #edf2f7 100%);
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            min-height: 100vh;
-            padding: 20px 0;
+            padding: 2rem 0;
         }
-        
+
         .verification-card {
             border: none;
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow);
+            border-radius: 16px;
             overflow: hidden;
-            background: white;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+            background: #fff;
         }
-        
+
         .card-header {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
-            color: white;
-            border-bottom: none;
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            color: #fff;
             padding: 1.5rem;
         }
-        
+
         .card-header h4 {
             margin: 0;
-            font-weight: 700;
+            font-weight: 600;
             display: flex;
             align-items: center;
         }
-        
-        .card-header h4 i {
+
+        .card-header i {
             margin-right: 10px;
-            font-size: 1.5rem;
+            font-size: 1.4rem;
         }
-        
-        .card-body {
-            padding: 2rem;
-        }
-        
-        .info-table {
-            width: 100%;
-            border-collapse: separate;
-            border-spacing: 0;
-            margin-bottom: 2rem;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-        }
-        
-        .info-table tr {
-            transition: var(--transition);
-        }
-        
-        .info-table tr:hover {
-            background-color: rgba(67, 97, 238, 0.03);
-        }
-        
-        .info-table th, .info-table td {
-            padding: 1rem 1.5rem;
-            border-bottom: 1px solid #e9ecef;
-        }
-        
+
         .info-table th {
-            background-color: #f8f9fa;
-            font-weight: 600;
-            color: var(--dark);
             width: 35%;
-            border-right: 1px solid #e9ecef;
+            background-color: #f8f9fa;
+            color: #333;
+            font-weight: 600;
         }
-        
-        .info-table tr:last-child th, 
-        .info-table tr:last-child td {
-            border-bottom: none;
-        }
-        
+
         .status-badge {
-            padding: 0.5rem 1rem;
-            border-radius: 50px;
+            padding: 0.6rem 1.2rem;
+            border-radius: 30px;
             font-weight: 600;
-            font-size: 0.85rem;
+            text-transform: capitalize;
         }
-        
-        .btn-approve {
-            background: linear-gradient(135deg, #4CAF50 0%, #8BC34A 100%);
-            border: none;
-            color: white;
+
+        .btn-approve, .btn-reject {
             padding: 0.75rem 1.5rem;
-            border-radius: 8px;
+            border-radius: 10px;
             font-weight: 600;
-            transition: var(--transition);
-            box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+            border: none;
+            width: 100%;
+            transition: all 0.3s ease;
         }
-        
+
+        .btn-approve {
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+            color: white;
+        }
+
         .btn-approve:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(76, 175, 80, 0.4);
+            box-shadow: 0 6px 18px rgba(34,197,94,0.3);
         }
-        
+
         .btn-reject {
-            background: linear-gradient(135deg, #f44336 0%, #e91e63 100%);
-            border: none;
+            background: linear-gradient(135deg, #ef4444, #dc2626);
             color: white;
-            padding: 0.75rem 1.5rem;
-            border-radius: 8px;
-            font-weight: 600;
-            transition: var(--transition);
-            box-shadow: 0 4px 12px rgba(244, 67, 54, 0.3);
         }
-        
+
         .btn-reject:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(244, 67, 54, 0.4);
+            box-shadow: 0 6px 18px rgba(239,68,68,0.3);
         }
-        
-        .action-section {
+
+        .alert-section {
             background: #f8f9fa;
+            padding: 1.2rem;
             border-radius: 10px;
-            padding: 1.5rem;
-            margin-top: 1rem;
+            text-align: center;
         }
-        
-        .action-title {
+
+        .alert-section i {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .alert-section h5 {
             font-weight: 600;
-            margin-bottom: 1rem;
-            color: var(--dark);
-            display: flex;
-            align-items: center;
         }
-        
-        .action-title i {
-            margin-right: 8px;
-            color: var(--primary);
-        }
-        
-        .btn-group-custom {
-            display: flex;
-            gap: 1rem;
-        }
-        
-        /* Responsive styles */
-        @media (max-width: 768px) {
-            .card-body {
-                padding: 1.5rem;
-            }
-            
-            .info-table th, .info-table td {
-                padding: 0.75rem 1rem;
-            }
-            
-            .btn-group-custom {
-                flex-direction: column;
-            }
-            
-            .btn-approve, .btn-reject {
-                width: 100%;
-                text-align: center;
-            }
-        }
-        
-        @media (max-width: 576px) {
-            body {
-                padding: 10px;
-            }
-            
-            .card-body {
-                padding: 1rem;
-            }
-            
-            .info-table {
-                display: block;
-                overflow-x: auto;
-            }
-            
-            .info-table th {
-                width: 40%;
-            }
-            
-            .card-header h4 {
-                font-size: 1.25rem;
-            }
-        }
-        
-        /* Animation for status badge */
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-        
-        .status-badge {
-            animation: pulse 2s infinite;
-        }
-        
-        /* Custom styling for specific elements */
-        .workshop-name {
-            font-weight: 600;
-            color: var(--primary);
-        }
-        
-        .creator-info {
-            color: #6c757d;
-            font-size: 0.9rem;
-        }
-        
-        .map-link {
-            color: var(--primary);
-            text-decoration: none;
-            transition: var(--transition);
-        }
-        
-        .map-link:hover {
-            color: var(--primary-light);
-            text-decoration: underline;
-        }
+
     </style>
 </head>
 <body>
-    <div class="container mt-4">
-        <div class="row justify-content-center">
-            <div class="col-lg-8 col-md-10">
-                <div class="card verification-card">
-                    <div class="card-header">
-                        <h4><i class="fas fa-clipboard-check"></i> Verifikasi Bengkel</h4>
-                    </div>
-                    <div class="card-body">
-                        <table class="info-table">
-                            <tr>
-                                <th>Nama Bengkel</th>
-                                <td class="workshop-name">{{ $workshop->name }}</td>
-                            </tr>
-                            <tr>
-                                <th>Alamat</th>
-                                <td>{{ $workshop->address }}</td>
-                            </tr>
-                            <tr>
-                                <th>Kota</th>
-                                <td>{{ $workshop->city }}</td>
-                            </tr>
-                            <tr>
-                                <th>Pemilik</th>
-                                <td>
-                                    <span>{{ $workshop->creator->name ?? '-' }}</span>
-                                    <div class="creator-info">{{ $workshop->creator->email ?? '-' }}</div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Status</th>
-                                <td>
-                                    <span class="badge status-badge bg-warning text-dark">
-                                        <i class="fas fa-clock me-1"></i>
-                                        {{ ucfirst($workshop->status) }}
-                                    </span>
-                                </td>
-                            </tr>
-                        </table>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10">
+            <div class="card verification-card mt-4">
+                <div class="card-header">
+                    <h4><i class="fas fa-clipboard-check"></i> Verifikasi Bengkel</h4>
+                </div>
 
-                        <div class="action-section">
-                            <div class="action-title">
-                                <i class="fas fa-tasks"></i> Tindakan Verifikasi
-                            </div>
-                            <div class="btn-group-custom">
-                                <form action="{{ route('workshop-verify.update', $workshop->id) }}" method="POST" class="d-inline flex-fill">
-                                    @csrf
-                                    @method('PUT')
-                                    <input type="hidden" name="status" value="approved">
-                                    <button type="submit" class="btn btn-approve w-100">
-                                        <i class="fas fa-check-circle me-2"></i> Setujui Bengkel
-                                    </button>
-                                </form>
+                <div class="card-body p-4">
+                    <table class="table table-bordered align-middle">
+                        <tr>
+                            <th>Nama Bengkel</th>
+                            <td><strong class="text-primary">{{ $workshop->name }}</strong></td>
+                        </tr>
+                        <tr>
+                            <th>Alamat</th>
+                            <td>{{ $workshop->address }}</td>
+                        </tr>
+                        <tr>
+                            <th>Kota</th>
+                            <td>{{ $workshop->city }}</td>
+                        </tr>
+                        <tr>
+                            <th>Pemilik</th>
+                            <td>
+                                {{ $workshop->creator->name ?? '-' }}<br>
+                                <small class="text-muted">{{ $workshop->creator->email ?? '-' }}</small>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Status</th>
+                            <td>
+                                <span class="badge status-badge 
+                                    @if($workshop->status == 'pending') bg-warning text-dark
+                                    @elseif($workshop->status == 'approved') bg-success
+                                    @elseif($workshop->status == 'rejected') bg-danger
+                                    @endif">
+                                    <i class="fas fa-info-circle me-1"></i> {{ ucfirst($workshop->status) }}
+                                </span>
+                            </td>
+                        </tr>
+                    </table>
 
-                                <form action="{{ route('workshop-verify.update', $workshop->id) }}" method="POST" class="d-inline flex-fill">
-                                    @csrf
-                                    @method('PUT')
-                                    <input type="hidden" name="status" value="rejected">
-                                    <button type="submit" class="btn btn-reject w-100">
-                                        <i class="fas fa-times-circle me-2"></i> Tolak Bengkel
-                                    </button>
-                                </form>
-                            </div>
+                    {{-- Jika masih pending, tampilkan tombol --}}
+                    @if($workshop->status == 'pending')
+                        <div class="d-flex flex-column flex-md-row gap-3 mt-4">
+                            <form action="{{ route('workshop-verify.update', $workshop->id) }}" method="POST" class="flex-fill">
+                                @csrf
+                                @method('PATCH')
+                                <input type="hidden" name="status" value="approved">
+                                <button type="submit" class="btn btn-approve">
+                                    <i class="fas fa-check-circle me-2"></i> Setujui Bengkel
+                                </button>
+                            </form>
+
+                            <form id="rejectForm" action="{{ route('workshop-verify.update', $workshop->id) }}" method="POST" class="flex-fill">
+                                @csrf
+                                @method('PATCH')
+                                <input type="hidden" name="status" value="rejected">
+                                <button type="button" id="btnReject" class="btn btn-reject">
+                                    <i class="fas fa-times-circle me-2"></i> Tolak Bengkel
+                                </button>
+                            </form>
                         </div>
-                    </div>
+                    @else
+                        {{-- Jika sudah diverifikasi --}}
+                        <div class="alert-section mt-4">
+                            @if($workshop->status == 'approved')
+                                <i class="fas fa-check-circle text-success"></i>
+                                <h5>Bengkel ini sudah disetujui</h5>
+                            @elseif($workshop->status == 'rejected')
+                                <i class="fas fa-times-circle text-danger"></i>
+                                <h5>Bengkel ini telah ditolak</h5>
+                            @endif
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>
     </div>
+</div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        // Tambahkan konfirmasi sebelum menolak bengkel
-        document.addEventListener('DOMContentLoaded', function() {
-            const rejectButton = document.querySelector('.btn-reject');
-            
-            if (rejectButton) {
-                rejectButton.addEventListener('click', function(e) {
-                    if (!confirm('Apakah Anda yakin ingin menolak verifikasi bengkel ini?')) {
-                        e.preventDefault();
-                    }
-                });
-            }
-            
-            // Tambahkan animasi pada tombol setujui
-            const approveButton = document.querySelector('.btn-approve');
-            
-            if (approveButton) {
-                approveButton.addEventListener('mouseenter', function() {
-                    this.style.transform = 'translateY(-2px)';
-                });
-                
-                approveButton.addEventListener('mouseleave', function() {
-                    this.style.transform = 'translateY(0)';
-                });
-            }
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    // SweetAlert konfirmasi untuk tombol tolak
+    const rejectButton = document.getElementById('btnReject');
+    const rejectForm = document.getElementById('rejectForm');
+
+    if (rejectButton) {
+        rejectButton.addEventListener('click', function (e) {
+            e.preventDefault();
+            Swal.fire({
+                title: 'Tolak Bengkel?',
+                text: 'Apakah Anda yakin ingin menolak verifikasi bengkel ini?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Ya, tolak',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    rejectForm.submit();
+                }
+            });
         });
-    </script>
+    }
+
+    // SweetAlert notifikasi jika sukses (ambil dari session)
+    @if(session('success'))
+    Swal.fire({
+        title: 'Berhasil!',
+        text: '{{ session('success') }}',
+        icon: 'success',
+        timer: 2500,
+        showConfirmButton: false
+    });
+    @elseif(session('error'))
+    Swal.fire({
+        title: 'Gagal!',
+        text: '{{ session('error') }}',
+        icon: 'error',
+        timer: 2500,
+        showConfirmButton: false
+    });
+    @endif
+});
+</script>
 </body>
 </html>
