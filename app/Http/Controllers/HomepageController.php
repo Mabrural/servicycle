@@ -14,11 +14,20 @@ use Illuminate\Support\Facades\Mail;
 
 class HomepageController extends Controller
 {
+    // public function index()
+    // {
+    //     $workshops = Workshop::select('id', 'name', 'city', 'address', 'latitude', 'longitude')->get();
+    //     return view('homepage.index', compact('workshops'));
+    // }
     public function index()
     {
-        $workshops = Workshop::select('id', 'name', 'city', 'address', 'latitude', 'longitude')->get();
+        $workshops = Workshop::select('id', 'name', 'city', 'address', 'latitude', 'longitude')
+            ->where('status', 'approved')
+            ->get();
+
         return view('homepage.index', compact('workshops'));
     }
+
 
     public function getWorkshopDetails($id)
     {
