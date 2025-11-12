@@ -21,7 +21,7 @@ class WorkshopVerificationController extends Controller
         /** @var \Illuminate\Http\Request $request */
         $search = $request->input('search');
         $status = $request->input('status', 'all');
-        $sort   = $request->input('sort', 'latest');
+        $sort = $request->input('sort', 'latest');
 
         // Query dasar
         $query = Workshop::with('creator');
@@ -59,8 +59,8 @@ class WorkshopVerificationController extends Controller
 
         // Ambil statistik (total, pending, approved, rejected)
         $stats = [
-            'total'    => Workshop::count(),
-            'pending'  => Workshop::where('status', 'pending')->count(),
+            'total' => Workshop::count(),
+            'pending' => Workshop::where('status', 'pending')->count(),
             'approved' => Workshop::where('status', 'approved')->count(),
             'rejected' => Workshop::where('status', 'rejected')->count(),
         ];
@@ -129,4 +129,11 @@ class WorkshopVerificationController extends Controller
 
         return redirect()->back()->with('success', 'Data bengkel dihapus.');
     }
+
+    public function show($id)
+    {
+        $workshop = Workshop::with('creator')->findOrFail($id);
+        return view('workshops.verification.show', compact('workshop'));
+    }
+
 }

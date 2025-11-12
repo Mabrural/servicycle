@@ -8,6 +8,7 @@ use App\Models\WorkshopImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
@@ -30,6 +31,121 @@ class WorkshopController extends Controller
     /**
      * Store a newly created workshop in storage.
      */
+    // public function store(Request $request)
+    // {
+    //     // Cek apakah user sudah memiliki workshop
+    //     if (Workshop::userHasWorkshop(Auth::id())) {
+    //         return response()->json([
+    //             'success' => false,
+    //             'message' => 'Anda sudah memiliki bengkel terdaftar.'
+    //         ], 422);
+    //     }
+
+    //     // Validasi data
+    //     $validator = Validator::make($request->all(), [
+    //         'name' => 'required|string|max:255',
+    //         'types' => 'required|array|min:1',
+    //         'types.*' => 'in:motor,mobil,sepeda',
+    //         'address' => 'required|string',
+    //         'province' => 'required|string|max:255',
+    //         'city' => 'required|string|max:255',
+    //         'district' => 'required|string|max:255',
+    //         'village' => 'required|string|max:255',
+    //         'postal_code' => 'nullable|string|max:10',
+    //         'latitude' => 'required|numeric|between:-90,90',
+    //         'longitude' => 'required|numeric|between:-180,180',
+    //         'phone' => 'required|string|max:20',
+    //         'email' => 'nullable|email|max:255',
+    //         'services' => 'required|array|min:1',
+    //         'services.*' => 'in:service_rutin,ganti_oli,tune_up,perbaikan_mesin,perbaikan_rem,ganti_ban,servis_ac,kelistrikan',
+    //         'specialization' => 'nullable|string|max:255',
+    //         'operating_hours' => 'required|string|max:255',
+    //         'custom_hours' => 'nullable|string|max:100',
+    //         'description' => 'nullable|string',
+    //         'photos' => 'nullable|array',
+    //         'photos.*' => 'image|mimes:jpeg,png,jpg|max:5120'
+    //     ], [
+    //         'types.required' => 'Pilih minimal satu jenis bengkel.',
+    //         'types.*.in' => 'Jenis bengkel yang dipilih tidak valid.',
+    //         'services.required' => 'Pilih minimal satu layanan.',
+    //         'services.*.in' => 'Layanan yang dipilih tidak valid.',
+    //         'latitude.between' => 'Latitude harus antara -90 dan 90.',
+    //         'longitude.between' => 'Longitude harus antara -180 dan 180.',
+    //         'photos.*.image' => 'File harus berupa gambar.',
+    //         'photos.*.mimes' => 'Format gambar harus jpeg, png, atau jpg.',
+    //         'photos.*.max' => 'Ukuran gambar maksimal 5MB.'
+    //     ]);
+
+    //     if ($validator->fails()) {
+    //         return response()->json([
+    //             'success' => false,
+    //             'message' => 'Validasi gagal',
+    //             'errors' => $validator->errors()
+    //         ], 422);
+    //     }
+
+    //     try {
+    //         DB::beginTransaction();
+
+    //         // Handle operating hours
+    //         $operatingHours = $request->operating_hours;
+    //         if ($operatingHours === 'custom' && $request->custom_hours) {
+    //             $operatingHours = $request->custom_hours;
+    //         }
+
+    //         // Create workshop
+    //         $workshop = Workshop::create([
+    //             'name' => $request->name,
+    //             'types' => $request->types,
+    //             'address' => $request->address,
+    //             'province' => $request->province,
+    //             'city' => $request->city,
+    //             'district' => $request->district,
+    //             'village' => $request->village,
+    //             'postal_code' => $request->postal_code,
+    //             'latitude' => $request->latitude,
+    //             'longitude' => $request->longitude,
+    //             'phone' => $request->phone,
+    //             'email' => $request->email,
+    //             'services' => $request->services,
+    //             'specialization' => $request->specialization,
+    //             'operating_hours' => $operatingHours,
+    //             'description' => $request->description,
+    //             'status' => 'pending',
+    //             'created_by' => Auth::id(),
+    //         ]);
+
+    //         // Handle photo uploads
+    //         if ($request->hasFile('photos')) {
+    //             foreach ($request->file('photos') as $index => $photo) {
+    //                 $path = $photo->store('workshop-images', 'public');
+
+    //                 WorkshopImage::create([
+    //                     'workshop_id' => $workshop->id,
+    //                     'image_path' => $path,
+    //                     'image_name' => $photo->getClientOriginalName(),
+    //                     'order' => $index,
+    //                     'is_primary' => $index === 0 // Set first image as primary
+    //                 ]);
+    //             }
+    //         }
+
+    //         DB::commit();
+
+    //         return response()->json([
+    //             'success' => true,
+    //             'message' => 'Bengkel berhasil didaftarkan! Status: Menunggu Verifikasi',
+    //             'workshop' => $workshop
+    //         ]);
+    //     } catch (\Exception $e) {
+    //         DB::rollBack();
+
+    //         return response()->json([
+    //             'success' => false,
+    //             'message' => 'Terjadi kesalahan saat menyimpan data: ' . $e->getMessage()
+    //         ], 500);
+    //     }
+    // }
     public function store(Request $request)
     {
         // Cek apakah user sudah memiliki workshop
@@ -114,6 +230,18 @@ class WorkshopController extends Controller
                 'created_by' => Auth::id(),
             ]);
 
+            // Kirim email ke semua admin
+            try {
+                $admins = \App\Models\User::where('role', 'admin')->get();
+                foreach ($admins as $admin) {
+                    Mail::to($admin->email)
+                        ->send(new \App\Mail\VerifyWorkshopMail($workshop));
+                }
+            } catch (\Exception $mailException) {
+                // Log error tapi jangan ganggu proses utama
+                \Illuminate\Support\Facades\Log::error('Gagal kirim email ke admin: ' . $mailException->getMessage());
+            }
+
             // Handle photo uploads
             if ($request->hasFile('photos')) {
                 foreach ($request->file('photos') as $index => $photo) {
@@ -145,6 +273,7 @@ class WorkshopController extends Controller
             ], 500);
         }
     }
+
 
     /**
      * Show list of workshops.

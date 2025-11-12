@@ -36,6 +36,13 @@ Route::get('/workshops/booking/{id}/status/{status}', [BookingServiceController:
 Route::get('/booking/verify/{id}', [BookingServiceController::class, 'verifyFromEmail'])
     ->name('booking.verify');
 
+// verify workshop by admin
+Route::get('/workshop-verify/{id}', [WorkshopVerificationController::class, 'show'])
+    ->name('workshop-verify.show');
+
+// Jika ingin pakai PATCH (lebih sesuai RESTful)
+Route::patch('/workshop-verify/{id}', [WorkshopVerificationController::class, 'update'])
+    ->name('workshop-verify.update');
 
 Route::resource('booking-services', BookingServiceController::class);
 
