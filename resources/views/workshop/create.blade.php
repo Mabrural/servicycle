@@ -294,9 +294,9 @@
                         </div>
                     </div>
                     <div class="mt-4 sm:mt-6 flex mobile-stack sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4">
-                        <a href="/mitra/dashboard"
+                        <a href="/workshops/dashboard"
                             class="bg-white text-green-600 px-4 sm:px-6 py-2 sm:py-3 rounded-lg font-medium hover:bg-gray-100 transition-all duration-300 mobile-touch-button text-center mobile-full">
-                            <i class="fas fa-tachometer-alt mr-2"></i>Dashboard Mitra
+                            <i class="fas fa-tachometer-alt mr-2"></i>Dashboard Bengkel
                         </a>
                         <button id="editRequestBtn"
                             class="bg-white/20 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-lg font-medium hover:bg-white/30 transition-all duration-300 mobile-touch-button text-center mobile-full">
