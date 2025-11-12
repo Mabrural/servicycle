@@ -18,7 +18,8 @@
 
     <ul class="menu-inner py-1">
         <!-- Dashboard -->
-        <li class="menu-item {{ Route::is('dashboard.admin') || Route::is('dashboard.workshop') || Route::is('dashboard.user') ? 'active' : '' }}">
+        <li
+            class="menu-item {{ Route::is('dashboard.admin') || Route::is('dashboard.workshop') || Route::is('dashboard.user') ? 'active' : '' }}">
             <a href="{{ route('dashboard') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
                 <div data-i18n="Analytics">Dashboard</div>
@@ -35,6 +36,16 @@
                     <div data-i18n="Analytics">Manajemen Pengguna</div>
                 </a>
             </li>
+
+            <!-- Verifikasi Bengkel -->
+            <li class="menu-item {{ Route::is('workshop-verification.*') ? 'active' : '' }}">
+                <a href="{{ route('workshop-verification.index') }}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-check-shield"></i>
+                    <div data-i18n="Workshop Verification">Verifikasi Bengkel</div>
+                </a>
+            </li>
+
+
             <!-- Manajemen Langganan -->
             <li class="menu-item {{ Route::is('subscription-management') ? 'active' : '' }}">
                 <a href="{{ route('subscription-management') }}" class="menu-link">
@@ -80,7 +91,7 @@
             </li>
 
             <!-- Riwayat Servis -->
-            <li class="menu-item {{ Route::is('history') ? 'active' : ''}}">
+            <li class="menu-item {{ Route::is('history') ? 'active' : '' }}">
                 <a href="{{ route('history') }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-wrench"></i>
                     <div data-i18n="Analytics">Riwayat Servis</div>

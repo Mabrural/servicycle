@@ -8,6 +8,7 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VehicleController;
 use App\Http\Controllers\WorkshopController;
+use App\Http\Controllers\WorkshopVerificationController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\HomepageController;
@@ -31,8 +32,8 @@ Route::get('/bookings/success/{id}', [HomepageController::class, 'success'])->na
 Route::get('/workshops/booking/{id}/status/{status}', [BookingServiceController::class, 'updateStatusFromEmail'])
     ->name('booking.updateStatus.email');
 
-    // verify acc / reject via link email
-    Route::get('/booking/verify/{id}', [BookingServiceController::class, 'verifyFromEmail'])
+// verify acc / reject via link email
+Route::get('/booking/verify/{id}', [BookingServiceController::class, 'verifyFromEmail'])
     ->name('booking.verify');
 
 
@@ -74,6 +75,11 @@ Route::middleware(['auth', 'verified', 'is_set_role', 'admin'])->group(function 
     Route::patch('/admin/user-management/{id}/toggle-role', [UserController::class, 'toggleRole'])->name('user-management.toggleRole');
     Route::patch('/admin/user-management//{id}/toggle-status', [UserController::class, 'toggleStatus'])->name('user-management.toggleStatus');
 
+
+    Route::resource('/admin/workshop-verification', WorkshopVerificationController::class)
+        ->names('workshop-verification')
+        ->except(['create', 'edit', 'show']);
+
     Route::get('/admin/subscription-management', function () {
         return view('subscription-management.index');
     })->name('subscription-management');
@@ -99,7 +105,7 @@ Route::middleware(['auth', 'verified', 'is_set_role', 'vehicle_owner'])->group(f
 
     Route::get('/user/history', [BookingServiceController::class, 'historyService'])->name('history');
     Route::post('/user/history/{id}/cancel', [BookingServiceController::class, 'cancel'])
-    ->name('booking.cancel');
+        ->name('booking.cancel');
 
     Route::get('/user/schedule', function () {
         return view('schedule.index');
