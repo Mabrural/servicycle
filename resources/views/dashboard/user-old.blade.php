@@ -5,25 +5,8 @@
         <div class="container-fluid p-0">
 
             {{-- Header --}}
-            <div class="d-flex justify-content-between align-items-center flex-wrap mb-3">
-                <div>
-                    <h1 class="h3 mb-2"><strong>User</strong> Dashboard</h1>
-                    <p class="text-muted mb-0">Selamat datang, {{ Auth::user()->name ?? 'Pengguna' }} 👋</p>
-                </div>
-                {{-- Tombol Booking Cepat --}}
-                <a href="{{ url('/#workshops') }}" class="btn btn-primary mt-3 mt-md-0">
-                    <i class="bi bi-tools me-2"></i> Booking Servis Sekarang
-                </a>
-            </div>
-
-            {{-- Info cepat booking --}}
-            <div class="alert alert-info border-0 shadow-sm d-flex align-items-center mb-4" role="alert">
-                <i class="bi bi-info-circle-fill me-2 fs-5"></i>
-                <div>
-                    Ingin melakukan servis kendaraan? Klik tombol <strong>“Booking Servis Sekarang”</strong> di atas
-                    atau kunjungi menu <strong>Homepage</strong> untuk melihat daftar bengkel terdekat.
-                </div>
-            </div>
+            <h1 class="h3 mb-3"><strong>User</strong> Dashboard</h1>
+            <p class="text-muted mb-4">Selamat datang, {{ Auth::user()->name ?? 'Pengguna' }} 👋</p>
 
             {{-- Ringkasan Data --}}
             <div class="row">
