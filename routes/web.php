@@ -114,9 +114,19 @@ Route::middleware(['auth', 'verified', 'is_set_role', 'vehicle_owner'])->group(f
     Route::post('/user/history/{id}/cancel', [BookingServiceController::class, 'cancel'])
         ->name('booking.cancel');
 
-    Route::get('/user/diagnosis', function () {
+    // start expert system
+    Route::get('/user/expert-system/', function () {
         return view('expert-system.index');
+    })->name('expert-system');
+
+    Route::get('/user/expert-system/diagnosis', function () {
+        return view('expert-system.diagnosis');
     })->name('diagnosis');
+
+    Route::get('/user/expert-system/diagnosis/hasil', function () {
+        return view('expert-system.result');
+    })->name('diagnosis.result');
+    // end expert system
 
     Route::get('/user/schedule', function () {
         return view('schedule.index');

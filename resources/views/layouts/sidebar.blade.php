@@ -123,8 +123,8 @@
             </li> --}}
 
             <!-- Diagnosis Kendaraan -->
-            <li class="menu-item {{ Route::is('diagnosis') ? 'active' : '' }}">
-                <a href="{{ route('diagnosis') }}"
+            <li class="menu-item {{ Route::is('expert-system') ? 'active' : '' }}">
+                <a href="{{ route('expert-system') }}"
                     class="menu-link d-flex align-items-center justify-content-between">
                     <div class="d-flex align-items-center">
                         <i class="menu-icon tf-icons bx bx-chip"></i>
