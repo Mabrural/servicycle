@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Nov 12, 2025 at 07:41 AM
+-- Generation Time: Nov 13, 2025 at 09:24 AM
 -- Server version: 8.0.30
 -- PHP Version: 8.3.6
 
@@ -210,9 +210,8 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('1IaTSQg61Xef2sDCuTQRRrJDQSDzdj6GjKaciR7M', 65, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoicEJCMGpvaG14dWhadVFNYlRjUGRuSXROMzFHNzdJWTUyWVg5Y3d6bSI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NDk6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9hZG1pbi93b3Jrc2hvcC12ZXJpZmljYXRpb24iO31zOjUwOiJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aTo2NTt9', 1762933008),
-('2qCfiR1EeQ7yYJjVHXfDXgSVAyvcJeMZDxSV8RG4', 66, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiQ3M4UHhDeHpObWZ6a1Qza2FEV3NkSmxhSDRaOU9ZSGRCTG1veDBQZCI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzQ6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC91c2VyL2hpc3RvcnkiO31zOjUwOiJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aTo2Njt9', 1762933082),
-('xi17VHc7CHnQhJZ4x8hnPMYbB1Qu8ZYYHypQQI4I', 67, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiUmd2MFVrVlR3cVByVzBKRHJhbkVENTVxMmxJYVhjYjFaRmR4ZjJDeCI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NDE6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9ib29raW5nLXNlcnZpY2VzLzUxIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6Njc7fQ==', 1762933171);
+('AEVowYSlYcjZraY2CeNQZfxUnirtBeScnRnflIwc', 66, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiMnlQWGJ4OHdtVlVuWkpYdGtHRUEwR0F2UzAyVTNGWEtlRmI1dzl6RiI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzU6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC91c2VyL3ZlaGljbGVzIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6NjY7fQ==', 1763025242),
+('GLcn22GWV8bQllw6jFyB3yJ7sdn5x5pX8aSXPk5L', 66, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiQWhWeWFkYWhFNktrdVVIbjU1QjBwMnVFUldwOW15Z1hhRjdOcEQzdCI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzY6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC91c2VyL2Rhc2hib2FyZCI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjY2O30=', 1763016317);
 
 -- --------------------------------------------------------
 
@@ -242,8 +241,9 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `google_id`, `avatar`, `role`, `is_set_role`, `is_active`) VALUES
 (65, 'Admin Servicycle', 'servicycledev@gmail.com', NULL, '$2y$12$4zAARNCwcqHPy/BLoJ3/PuZ4ZUX24D1omrAjJz1VXWXPsg/6qd8am', NULL, '2025-11-12 04:55:16', '2025-11-12 06:52:00', '103564940529593090215', 'https://lh3.googleusercontent.com/a/ACg8ocJlnf3v7gLEvAe7nJhEk2z4Hv54DNvfxfJwpoi9Kth1S2OJiw=s96-c', 'admin', 1, 1),
-(66, 'Mabrur Almutaqi', 'mabruralmutaqi@gmail.com', NULL, '$2y$12$UZywzx1GfoRe6FDDYiY/eO9SfJi8aUJSMNSMnNhqK4ItUv.EeKP0i', NULL, '2025-11-12 06:53:15', '2025-11-12 07:29:14', '115306521754361552074', 'https://lh3.googleusercontent.com/a/ACg8ocLXVt_ohIcbr_8xWVQIq39i4FKTUn5e3xepI-QIAMe7D6tCXuk=s96-c', 'vehicle_owner', 1, 1),
-(67, 'almutaqi', 'almutaqi6@gmail.com', NULL, '$2y$12$v9hs15SP6ty1wlH3ZqT1X.PFFtqfaqGc63lGNUproIx5OWflBYoYW', NULL, '2025-11-12 06:55:52', '2025-11-12 07:21:49', '112594718434082682550', 'https://lh3.googleusercontent.com/a/ACg8ocIN9lD0qiRMDtmO8_Vubtpbbnkdf6SzSHnKieFqwWsuBejeEg=s96-c', 'workshop', 1, 1);
+(66, 'Mabrur Almutaqi', 'mabruralmutaqi@gmail.com', NULL, '$2y$12$awkIy9Dr.x4G25fSYRJKFupFyQQemCwzINGVg6tAkMZnD9daKL/uG', NULL, '2025-11-12 06:53:15', '2025-11-13 09:13:03', '115306521754361552074', 'https://lh3.googleusercontent.com/a/ACg8ocLXVt_ohIcbr_8xWVQIq39i4FKTUn5e3xepI-QIAMe7D6tCXuk=s96-c', 'vehicle_owner', 1, 1),
+(67, 'almutaqi', 'almutaqi6@gmail.com', NULL, '$2y$12$C9x/OIcWMRDrFQqzfLp2N.bFfEySUhT0f4JFPktUGRo3tfqgJTCa2', NULL, '2025-11-12 06:55:52', '2025-11-12 13:43:08', '112594718434082682550', 'https://lh3.googleusercontent.com/a/ACg8ocIN9lD0qiRMDtmO8_Vubtpbbnkdf6SzSHnKieFqwWsuBejeEg=s96-c', 'workshop', 1, 1),
+(68, 'mabrur al', 'mabrural814@gmail.com', NULL, '$2y$12$CwuH4JcU/Y7jGVg8//0fMO2vRWztmOPXhQs4tGxrhufAlnB0d7LTu', NULL, '2025-11-12 13:43:01', '2025-11-12 13:43:01', '105054842331965065215', 'https://lh3.googleusercontent.com/a/ACg8ocLTu9usFzJN5El9iJbDtz4FPuQkkhbPIi7hERK2aZWRfDkpDyc=s96-c', 'vehicle_owner', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -484,7 +484,7 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
 
 --
 -- AUTO_INCREMENT for table `vehicles`
