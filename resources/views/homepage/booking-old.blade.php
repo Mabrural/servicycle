@@ -195,186 +195,6 @@
             color: #9ca3af;
             cursor: not-allowed;
         }
-
-        /* Mobile Responsive Improvements */
-        @media (max-width: 640px) {
-            .booking-hero {
-                padding-top: 1.5rem;
-                padding-bottom: 1.5rem;
-            }
-
-            .booking-hero h1 {
-                font-size: 1.75rem;
-                margin-bottom: 0.75rem;
-            }
-
-            .booking-hero p {
-                font-size: 0.9rem;
-            }
-
-            .step-indicator {
-                width: 8px;
-                height: 8px;
-                font-size: 0;
-            }
-
-            .step-indicator+.ml-3 {
-                margin-left: 0.5rem;
-            }
-
-            .step-indicator+.ml-3 p {
-                font-size: 0.75rem;
-            }
-
-            .step-indicator+.ml-3 p.text-sm {
-                font-size: 0.7rem;
-            }
-
-            .flex-1.h-1.mx-4 {
-                margin-left: 0.25rem;
-                margin-right: 0.25rem;
-            }
-
-            .grid.md\:grid-cols-3.gap-8 {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
-            }
-
-            .bg-white.rounded-2xl.shadow-lg.p-6.md\:p-8 {
-                padding: 1rem;
-                border-radius: 1rem;
-            }
-
-            .text-2xl.font-bold {
-                font-size: 1.25rem;
-            }
-
-            .vehicle-card {
-                padding: 0.75rem;
-            }
-
-            .vehicle-card .flex.items-center.space-x-4 {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 0.5rem;
-            }
-
-            .vehicle-card .flex.items-center.justify-between {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 0.5rem;
-            }
-
-            .vehicle-card .text-right {
-                text-align: left;
-                width: 100%;
-            }
-
-            .time-slots-grid {
-                grid-template-columns: repeat(3, 1fr);
-                gap: 0.5rem;
-            }
-
-            .time-slot {
-                padding: 0.5rem;
-                font-size: 0.8rem;
-            }
-
-            .flex.justify-between {
-                flex-direction: column;
-                gap: 1rem;
-            }
-
-            .flex.justify-between button {
-                width: 100%;
-            }
-
-            .space-y-6>div {
-                margin-bottom: 1rem;
-            }
-
-            .bg-white.rounded-2xl.shadow-lg.p-6 {
-                padding: 1rem;
-            }
-
-            .text-xl.font-bold {
-                font-size: 1.125rem;
-            }
-
-            .flex.items-start.space-x-4 {
-                flex-direction: column;
-                gap: 0.75rem;
-            }
-
-            .flex.items-start.space-x-4>div:first-child {
-                align-self: flex-start;
-            }
-
-            .bg-blue-50.rounded-xl.p-4,
-            .bg-gray-50.rounded-xl.p-4,
-            .bg-yellow-50.rounded-xl.p-4 {
-                padding: 0.75rem;
-            }
-
-            .flex.justify-between.items-center {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 0.5rem;
-            }
-
-            .flex.justify-between.items-center>span:last-child {
-                align-self: flex-end;
-            }
-
-            .space-y-3>div {
-                padding: 0.25rem 0;
-            }
-
-            .flex.items-center.text-gray-600 {
-                font-size: 0.875rem;
-            }
-
-            .btn-glow {
-                width: 100%;
-                justify-content: center;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .time-slots-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .step-indicator+.ml-3 p:last-child {
-                display: none;
-            }
-
-            .step-indicator+.ml-3 {
-                min-width: 60px;
-            }
-
-            .flex.items-center.justify-between {
-                flex-wrap: wrap;
-            }
-
-            .flex-1.h-1.mx-4 {
-                flex: 0 0 15px;
-            }
-        }
-
-        @media (max-width: 380px) {
-            .step-indicator+.ml-3 {
-                min-width: 50px;
-            }
-
-            .step-indicator+.ml-3 p {
-                font-size: 0.7rem;
-            }
-
-            .time-slots-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
     </style>
 
     <!-- Booking Hero -->
@@ -425,49 +245,48 @@
         @endif
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <!-- Progress Steps -->
-            <div class="mb-8 md:mb-12">
+            <div class="mb-12">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center">
                         <div
-                            class="step-indicator w-8 h-8 md:w-10 md:h-10 rounded-full bg-primary text-white flex items-center justify-center font-bold active">
-                            <span class="hidden md:inline">1</span>
+                            class="step-indicator w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center font-bold active">
+                            1
                         </div>
-                        <div class="ml-2 md:ml-3">
-                            <p class="font-semibold text-gray-800 text-sm md:text-base">Pilih Kendaraan</p>
-                            <p class="text-xs md:text-sm text-gray-600 hidden md:block">Pilih kendaraan yang akan diservis
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="flex-1 h-1 bg-gray-200 mx-2 md:mx-4"></div>
-
-                    <div class="flex items-center">
-                        <div
-                            class="step-indicator w-8 h-8 md:w-10 md:h-10 rounded-full bg-gray-200 text-gray-600 flex items-center justify-center font-bold">
-                            <span class="hidden md:inline">2</span>
-                        </div>
-                        <div class="ml-2 md:ml-3">
-                            <p class="font-semibold text-gray-600 text-sm md:text-base">Jadwal Servis</p>
-                            <p class="text-xs md:text-sm text-gray-500 hidden md:block">Pilih tanggal & waktu servis</p>
+                        <div class="ml-3">
+                            <p class="font-semibold text-gray-800">Pilih Kendaraan</p>
+                            <p class="text-sm text-gray-600">Pilih kendaraan yang akan diservis</p>
                         </div>
                     </div>
 
-                    <div class="flex-1 h-1 bg-gray-200 mx-2 md:mx-4"></div>
+                    <div class="flex-1 h-1 bg-gray-200 mx-4"></div>
 
                     <div class="flex items-center">
                         <div
-                            class="step-indicator w-8 h-8 md:w-10 md:h-10 rounded-full bg-gray-200 text-gray-600 flex items-center justify-center font-bold">
-                            <span class="hidden md:inline">3</span>
+                            class="step-indicator w-10 h-10 rounded-full bg-gray-200 text-gray-600 flex items-center justify-center font-bold">
+                            2
                         </div>
-                        <div class="ml-2 md:ml-3">
-                            <p class="font-semibold text-gray-600 text-sm md:text-base">Konfirmasi</p>
-                            <p class="text-xs md:text-sm text-gray-500 hidden md:block">Review dan selesaikan</p>
+                        <div class="ml-3">
+                            <p class="font-semibold text-gray-600">Jadwal Servis</p>
+                            <p class="text-sm text-gray-500">Pilih tanggal & waktu servis</p>
+                        </div>
+                    </div>
+
+                    <div class="flex-1 h-1 bg-gray-200 mx-4"></div>
+
+                    <div class="flex items-center">
+                        <div
+                            class="step-indicator w-10 h-10 rounded-full bg-gray-200 text-gray-600 flex items-center justify-center font-bold">
+                            3
+                        </div>
+                        <div class="ml-3">
+                            <p class="font-semibold text-gray-600">Konfirmasi</p>
+                            <p class="text-sm text-gray-500">Review dan selesaikan</p>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="grid md:grid-cols-3 gap-6 md:gap-8">
+            <div class="grid md:grid-cols-3 gap-8">
                 <!-- Main Booking Form -->
                 <div class="md:col-span-2">
                     <!-- Step 1: Vehicle Selection -->
@@ -479,53 +298,49 @@
                             <input type="hidden" name="booking_date" id="booking_date" value="{{ old('booking_date') }}">
                             <input type="hidden" name="booking_time" id="booking_time" value="{{ old('booking_time') }}">
 
-                            <div class="bg-white rounded-xl md:rounded-2xl shadow-lg p-4 md:p-6 lg:p-8 mb-6 md:mb-8">
-                                <h2 class="text-xl md:text-2xl font-bold text-gray-800 mb-4 md:mb-6 flex items-center">
-                                    <i class="fas fa-car text-primary mr-2 md:mr-3"></i>
+                            <div class="bg-white rounded-2xl shadow-lg p-6 md:p-8 mb-8">
+                                <h2 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                                    <i class="fas fa-car text-primary mr-3"></i>
                                     Pilih Kendaraan
                                 </h2>
 
                                 <!-- Vehicle List -->
-                                <div class="mb-4 md:mb-6">
-                                    <label class="block text-sm font-medium text-gray-700 mb-3 md:mb-4">Pilih Kendaraan
-                                        Anda</label>
+                                <div class="mb-6">
+                                    <label class="block text-sm font-medium text-gray-700 mb-4">Pilih Kendaraan Anda</label>
 
-                                    <div class="space-y-3 md:space-y-4" id="vehicleList">
+                                    <div class="space-y-4" id="vehicleList">
                                         @forelse ($vehicles as $vehicle)
-                                            <div class="vehicle-card bg-white border-2 border-gray-200 rounded-lg md:rounded-xl p-4 md:p-6 cursor-pointer hover:border-primary transition"
+                                            <div class="vehicle-card bg-white border-2 border-gray-200 rounded-xl p-6 cursor-pointer hover:border-primary transition"
                                                 data-vehicle-id="{{ $vehicle->id }}">
-                                                <div
-                                                    class="flex flex-col md:flex-row md:items-center md:justify-between gap-3 md:gap-0">
-                                                    <div class="flex items-center space-x-3 md:space-x-4">
+                                                <div class="flex items-center justify-between">
+                                                    <div class="flex items-center space-x-4">
                                                         <div
-                                                            class="w-10 h-10 md:w-12 md:h-12 
+                                                            class="w-12 h-12 
                                                             @if ($vehicle->type === 'Mobil') bg-primary 
                                                             @elseif($vehicle->type === 'Motor') bg-green-500 
                                                             @else bg-gray-400 @endif
-                                                            rounded-lg flex items-center justify-center flex-shrink-0">
+                                                            rounded-lg flex items-center justify-center">
                                                             @if ($vehicle->type === 'Mobil')
-                                                                <i class="fas fa-car text-white text-sm md:text-base"></i>
+                                                                <i class="fas fa-car text-white"></i>
                                                             @elseif($vehicle->type === 'Motor')
-                                                                <i
-                                                                    class="fas fa-motorcycle text-white text-sm md:text-base"></i>
+                                                                <i class="fas fa-motorcycle text-white"></i>
                                                             @else
                                                                 <img src="{{ $vehicle->image ? url('/storage/vehicle_images/' . $vehicle->image) : asset('img/no-vehicle.jpg') }}"
                                                                     alt="{{ $vehicle->name ?? 'Vehicle Image' }}"
-                                                                    class="w-8 h-8 md:w-10 md:h-10 object-cover rounded-lg" />
+                                                                    class="w-10 h-10 object-cover rounded-lg" />
                                                             @endif
                                                         </div>
-                                                        <div class="flex-1">
-                                                            <h3 class="font-semibold text-gray-800 text-sm md:text-base">
-                                                                {{ $vehicle->brand }}
+                                                        <div>
+                                                            <h3 class="font-semibold text-gray-800">{{ $vehicle->brand }}
                                                                 {{ $vehicle->model }}</h3>
-                                                            <p class="text-xs md:text-sm text-gray-600">
+                                                            <p class="text-sm text-gray-600">
                                                                 {{ $vehicle->license_plate }} • {{ $vehicle->year }} •
                                                                 {{ $vehicle->color }}
                                                             </p>
                                                         </div>
                                                     </div>
-                                                    <div class="md:text-right">
-                                                        <span class="text-xs md:text-sm text-gray-500">
+                                                    <div class="text-right">
+                                                        <span class="text-sm text-gray-500">
                                                             @if ($vehicle->vehicle_type === 'mobil')
                                                                 Mobil
                                                             @elseif($vehicle->vehicle_type === 'motor')
@@ -538,8 +353,7 @@
                                                 </div>
                                             </div>
                                         @empty
-                                            <p class="text-gray-500 text-xs md:text-sm">Belum ada kendaraan terdaftar.
-                                                Silakan
+                                            <p class="text-gray-500 text-sm">Belum ada kendaraan terdaftar. Silakan
                                                 tambahkan
                                                 kendaraan terlebih dahulu.</p>
                                         @endforelse
@@ -547,9 +361,9 @@
                                 </div>
 
                                 <!-- Add New Vehicle Button -->
-                                <div class="mb-4 md:mb-6">
+                                <div class="mb-6">
                                     <a href="{{ route('vehicles.create') }}"
-                                        class="w-full py-3 md:py-4 border-2 border-dashed border-gray-300 rounded-lg md:rounded-xl text-gray-600 hover:text-primary hover:border-primary transition-all duration-300 flex items-center justify-center gap-2 text-sm md:text-base">
+                                        class="w-full py-4 border-2 border-dashed border-gray-300 rounded-xl text-gray-600 hover:text-primary hover:border-primary transition-all duration-300 flex items-center justify-center gap-2">
                                         <i class="fas fa-plus"></i>
                                         <span>Tambah Kendaraan Baru</span>
                                     </a>
@@ -557,17 +371,17 @@
 
                                 <!-- Notes -->
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2 md:mb-3">Catatan Servis
+                                    <label class="block text-sm font-medium text-gray-700 mb-3">Catatan Servis
                                         (Opsional)</label>
                                     <textarea name="notes"
-                                        class="w-full px-3 py-2 md:px-4 md:py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-primary form-input text-sm md:text-base"
+                                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-primary form-input"
                                         rows="3" placeholder="Jelaskan keluhan atau permintaan khusus servis..." id="notes">{{ old('notes') }}</textarea>
                                 </div>
                             </div>
 
                             <div class="flex justify-end">
                                 <button type="button" id="nextToStep2"
-                                    class="bg-primary text-white px-6 py-3 md:px-8 md:py-3 rounded-lg font-medium hover:bg-secondary transition-all duration-300 btn-glow flex items-center justify-center w-full md:w-auto">
+                                    class="bg-primary text-white px-8 py-3 rounded-lg font-medium hover:bg-secondary transition-all duration-300 btn-glow flex items-center">
                                     Lanjut ke Jadwal
                                     <i class="fas fa-arrow-right ml-2"></i>
                                 </button>
@@ -577,73 +391,68 @@
 
                     <!-- Step 2: Schedule Selection -->
                     <div id="step2" class="booking-step hidden">
-                        <div class="bg-white rounded-xl md:rounded-2xl shadow-lg p-4 md:p-6 lg:p-8 mb-6 md:mb-8">
-                            <h2 class="text-xl md:text-2xl font-bold text-gray-800 mb-4 md:mb-6 flex items-center">
-                                <i class="fas fa-calendar-alt text-primary mr-2 md:mr-3"></i>
+                        <div class="bg-white rounded-2xl shadow-lg p-6 md:p-8 mb-8">
+                            <h2 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                                <i class="fas fa-calendar-alt text-primary mr-3"></i>
                                 Pilih Jadwal Servis
                             </h2>
 
-                            <div class="grid grid-cols-1 gap-4 md:gap-6 mb-4 md:mb-6">
+                            <div class="grid grid-cols-1 gap-6 mb-6">
                                 <!-- Date Selection -->
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2 md:mb-3">Tanggal
-                                        Servis</label>
+                                    <label class="block text-sm font-medium text-gray-700 mb-3">Tanggal Servis</label>
                                     <input type="text" name="selected_date" id="datePicker"
-                                        class="w-full px-3 py-2 md:px-4 md:py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-primary flatpickr-input text-sm md:text-base"
+                                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-primary flatpickr-input"
                                         placeholder="Pilih tanggal..." value="{{ old('selected_date') }}">
                                     @error('booking_date')
-                                        <p class="text-red-500 text-xs md:text-sm mt-1">{{ $message }}</p>
+                                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                                     @enderror
                                 </div>
 
                                 <!-- Time Selection -->
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2 md:mb-3">Waktu
-                                        Servis</label>
+                                    <label class="block text-sm font-medium text-gray-700 mb-3">Waktu Servis</label>
                                     <div class="time-slots-grid" id="timeSlotsContainer">
                                         <!-- Time slots will be generated by JavaScript -->
                                     </div>
                                     @error('booking_time')
-                                        <p class="text-red-500 text-xs md:text-sm mt-1">{{ $message }}</p>
+                                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                                     @enderror
                                 </div>
 
                                 <!-- Workshop Information -->
-                                <div class="bg-blue-50 rounded-lg md:rounded-xl p-3 md:p-4">
-                                    <h4 class="font-semibold text-gray-800 mb-1 md:mb-2 text-sm md:text-base">Informasi
-                                        Bengkel</h4>
-                                    <p class="text-xs md:text-sm text-gray-600">{{ $workshop->name }}</p>
-                                    <p class="text-xs md:text-sm text-gray-600">{{ $workshop->address }}</p>
-                                    <p class="text-xs md:text-sm text-gray-600">Jam Operasional:
+                                <div class="bg-blue-50 rounded-xl p-4">
+                                    <h4 class="font-semibold text-gray-800 mb-2">Informasi Bengkel</h4>
+                                    <p class="text-sm text-gray-600">{{ $workshop->name }}</p>
+                                    <p class="text-sm text-gray-600">{{ $workshop->address }}</p>
+                                    <p class="text-sm text-gray-600">Jam Operasional:
                                         {{ $workshop->operating_hours ?? '08:00 - 17:00' }}</p>
                                 </div>
                             </div>
 
                             <!-- Selected Vehicle Preview -->
-                            <div class="bg-gray-50 rounded-lg md:rounded-xl p-3 md:p-4 mb-4 md:mb-6">
-                                <h4 class="font-semibold text-gray-800 mb-1 md:mb-2 text-sm md:text-base">Kendaraan
-                                    Terpilih</h4>
-                                <div id="selectedVehiclePreview" class="text-xs md:text-sm text-gray-600">
+                            <div class="bg-gray-50 rounded-xl p-4 mb-6">
+                                <h4 class="font-semibold text-gray-800 mb-2">Kendaraan Terpilih</h4>
+                                <div id="selectedVehiclePreview" class="text-sm text-gray-600">
                                     Pilih kendaraan terlebih dahulu
                                 </div>
                             </div>
 
                             <!-- Notes Preview -->
-                            <div class="bg-yellow-50 rounded-lg md:rounded-xl p-3 md:p-4">
-                                <h4 class="font-semibold text-gray-800 mb-1 md:mb-2 text-sm md:text-base">Catatan Servis
-                                </h4>
-                                <p id="notesPreview" class="text-xs md:text-sm text-gray-600">-</p>
+                            <div class="bg-yellow-50 rounded-xl p-4">
+                                <h4 class="font-semibold text-gray-800 mb-2">Catatan Servis</h4>
+                                <p id="notesPreview" class="text-sm text-gray-600">-</p>
                             </div>
                         </div>
 
-                        <div class="flex flex-col md:flex-row justify-between gap-3 md:gap-0">
+                        <div class="flex justify-between">
                             <button type="button" id="backToStep1"
-                                class="bg-gray-200 text-gray-700 px-6 py-3 md:px-8 md:py-3 rounded-lg font-medium hover:bg-gray-300 transition-all duration-300 flex items-center justify-center order-2 md:order-1">
+                                class="bg-gray-200 text-gray-700 px-8 py-3 rounded-lg font-medium hover:bg-gray-300 transition-all duration-300 flex items-center">
                                 <i class="fas fa-arrow-left mr-2"></i>
                                 Kembali
                             </button>
                             <button type="button" id="nextToStep3"
-                                class="bg-primary text-white px-6 py-3 md:px-8 md:py-3 rounded-lg font-medium hover:bg-secondary transition-all duration-300 btn-glow flex items-center justify-center order-1 md:order-2">
+                                class="bg-primary text-white px-8 py-3 rounded-lg font-medium hover:bg-secondary transition-all duration-300 btn-glow flex items-center">
                                 Lanjut ke Konfirmasi
                                 <i class="fas fa-arrow-right ml-2"></i>
                             </button>
@@ -652,48 +461,41 @@
 
                     <!-- Step 3: Confirmation -->
                     <div id="step3" class="booking-step hidden">
-                        <div class="bg-white rounded-xl md:rounded-2xl shadow-lg p-4 md:p-6 lg:p-8 mb-6 md:mb-8">
-                            <h2 class="text-xl md:text-2xl font-bold text-gray-800 mb-4 md:mb-6 flex items-center">
-                                <i class="fas fa-clipboard-check text-primary mr-2 md:mr-3"></i>
+                        <div class="bg-white rounded-2xl shadow-lg p-6 md:p-8 mb-8">
+                            <h2 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                                <i class="fas fa-clipboard-check text-primary mr-3"></i>
                                 Konfirmasi Booking
                             </h2>
 
                             <!-- Booking Summary -->
-                            <div class="bg-gray-50 rounded-lg md:rounded-xl p-4 md:p-6 mb-4 md:mb-6">
-                                <h3 class="text-lg font-semibold text-gray-800 mb-3 md:mb-4">Detail Booking</h3>
-                                <div class="space-y-2 md:space-y-3">
-                                    <div
-                                        class="flex flex-col md:flex-row md:justify-between md:items-center gap-1 md:gap-0">
-                                        <span class="text-gray-600 text-sm md:text-base">Bengkel</span>
-                                        <span class="font-medium text-sm md:text-base">{{ $workshop->name }}</span>
+                            <div class="bg-gray-50 rounded-xl p-6 mb-6">
+                                <h3 class="text-lg font-semibold text-gray-800 mb-4">Detail Booking</h3>
+                                <div class="space-y-3">
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-gray-600">Bengkel</span>
+                                        <span class="font-medium">{{ $workshop->name }}</span>
                                     </div>
-                                    <div
-                                        class="flex flex-col md:flex-row md:justify-between md:items-center gap-1 md:gap-0">
-                                        <span class="text-gray-600 text-sm md:text-base">Kendaraan</span>
-                                        <span id="confirmVehicle" class="font-medium text-sm md:text-base">-</span>
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-gray-600">Kendaraan</span>
+                                        <span id="confirmVehicle" class="font-medium">-</span>
                                     </div>
-                                    <div
-                                        class="flex flex-col md:flex-row md:justify-between md:items-center gap-1 md:gap-0">
-                                        <span class="text-gray-600 text-sm md:text-base">Tanggal Servis</span>
-                                        <span id="confirmDate" class="font-medium text-sm md:text-base">-</span>
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-gray-600">Tanggal Servis</span>
+                                        <span id="confirmDate" class="font-medium">-</span>
                                     </div>
-                                    <div
-                                        class="flex flex-col md:flex-row md:justify-between md:items-center gap-1 md:gap-0">
-                                        <span class="text-gray-600 text-sm md:text-base">Waktu Servis</span>
-                                        <span id="confirmTime" class="font-medium text-sm md:text-base">-</span>
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-gray-600">Waktu Servis</span>
+                                        <span id="confirmTime" class="font-medium">-</span>
                                     </div>
-                                    <div
-                                        class="flex flex-col md:flex-row md:justify-between md:items-start gap-1 md:gap-0">
-                                        <span class="text-gray-600 text-sm md:text-base">Catatan</span>
-                                        <span id="confirmNotes"
-                                            class="font-medium text-sm md:text-base text-right">-</span>
+                                    <div class="flex justify-between items-start">
+                                        <span class="text-gray-600">Catatan</span>
+                                        <span id="confirmNotes" class="font-medium text-right">-</span>
                                     </div>
-                                    <div class="border-t pt-2 md:pt-3">
-                                        <div
-                                            class="flex flex-col md:flex-row md:justify-between md:items-center gap-1 md:gap-0">
-                                            <span class="text-gray-800 font-semibold text-sm md:text-base">Status</span>
+                                    <div class="border-t pt-3">
+                                        <div class="flex justify-between items-center text-lg">
+                                            <span class="text-gray-800 font-semibold">Status</span>
                                             <span
-                                                class="px-2 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs md:text-sm font-medium w-fit">Menunggu
+                                                class="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-sm font-medium">Menunggu
                                                 Konfirmasi</span>
                                         </div>
                                     </div>
@@ -701,31 +503,29 @@
                             </div>
 
                             <!-- Terms & Conditions -->
-                            <div class="mb-4 md:mb-6">
+                            <div class="mb-6">
                                 <label class="flex items-start">
                                     <input type="checkbox" id="termsAgreement"
-                                        class="mt-1 mr-2 md:mr-3 text-primary rounded focus:ring-primary" required>
-                                    <span class="text-xs md:text-sm text-gray-600">
+                                        class="mt-1 mr-3 text-primary rounded focus:ring-primary" required>
+                                    <span class="text-sm text-gray-600">
                                         Saya menyetujui
-                                        <a href="{{ route('workshops.syarat') }}"
-                                            class="text-primary hover:underline">Syarat & Ketentuan</a>
+                                        <a href="{{ route('workshops.syarat') }}" class="text-primary hover:underline">Syarat & Ketentuan</a>
                                         dan
-                                        <a href="{{ route('workshops.kebijakan') }}"
-                                            class="text-primary hover:underline">Kebijakan Privasi</a>
+                                        <a href="{{ route('workshops.kebijakan') }}" class="text-primary hover:underline">Kebijakan Privasi</a>
                                         ServiCycle
                                     </span>
                                 </label>
                             </div>
                         </div>
 
-                        <div class="flex flex-col md:flex-row justify-between gap-3 md:gap-0">
+                        <div class="flex justify-between">
                             <button type="button" id="backToStep2"
-                                class="bg-gray-200 text-gray-700 px-6 py-3 md:px-8 md:py-3 rounded-lg font-medium hover:bg-gray-300 transition-all duration-300 flex items-center justify-center order-2 md:order-1">
+                                class="bg-gray-200 text-gray-700 px-8 py-3 rounded-lg font-medium hover:bg-gray-300 transition-all duration-300 flex items-center">
                                 <i class="fas fa-arrow-left mr-2"></i>
                                 Kembali
                             </button>
                             <button type="submit" id="confirmBooking" form="bookingForm"
-                                class="bg-green-600 text-white px-6 py-3 md:px-8 md:py-3 rounded-lg font-medium hover:bg-green-700 transition-all duration-300 btn-glow flex items-center justify-center order-1 md:order-2">
+                                class="bg-green-600 text-white px-8 py-3 rounded-lg font-medium hover:bg-green-700 transition-all duration-300 btn-glow flex items-center">
                                 <i class="fas fa-check mr-2"></i>
                                 Konfirmasi Booking
                             </button>
@@ -734,28 +534,27 @@
                 </div>
 
                 <!-- Sidebar Summary -->
-                <div class="space-y-4 md:space-y-6">
+                <div class="space-y-6">
                     <!-- Workshop Info -->
-                    <div class="bg-white rounded-xl md:rounded-2xl shadow-lg p-4 md:p-6">
-                        <h3 class="text-lg md:text-xl font-bold text-gray-800 mb-3 md:mb-4">Bengkel Tujuan</h3>
-                        <div class="flex flex-col md:flex-row md:items-start space-y-3 md:space-y-0 md:space-x-4">
+                    <div class="bg-white rounded-2xl shadow-lg p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-4">Bengkel Tujuan</h3>
+                        <div class="flex items-start space-x-4">
                             <div class="flex-shrink-0">
-                                <div
-                                    class="w-10 h-10 md:w-12 md:h-12 bg-primary rounded-lg flex items-center justify-center">
+                                <div class="w-12 h-12 bg-primary rounded-lg flex items-center justify-center">
                                     <i class="fas fa-tools text-white"></i>
                                 </div>
                             </div>
-                            <div class="flex-1">
-                                <h4 class="font-semibold text-gray-800 text-sm md:text-base">
+                            <div>
+                                <h4 class="font-semibold text-gray-800">
                                     {{ $workshop->name }}
                                 </h4>
-                                <p class="text-xs md:text-sm text-gray-600 mt-1">
+                                <p class="text-sm text-gray-600 mt-1">
                                     {{ $workshop->address }}
                                 </p>
 
                                 @if ($workshop->rating)
                                     <div class="flex items-center mt-2">
-                                        <div class="rating-stars text-yellow-400 text-xs md:text-sm">
+                                        <div class="rating-stars text-yellow-400">
                                             @for ($i = 1; $i <= 5; $i++)
                                                 @if ($i <= floor($workshop->rating))
                                                     <i class="fas fa-star"></i>
@@ -766,7 +565,7 @@
                                                 @endif
                                             @endfor
                                         </div>
-                                        <span class="text-xs md:text-sm text-gray-600 ml-2">
+                                        <span class="text-sm text-gray-600 ml-2">
                                             {{ number_format($workshop->rating, 1) }}
                                             ({{ $workshop->review_count ?? 0 }})
                                         </span>
@@ -777,46 +576,45 @@
                     </div>
 
                     <!-- Booking Summary -->
-                    <div class="bg-white rounded-xl md:rounded-2xl shadow-lg p-4 md:p-6">
-                        <h3 class="text-lg md:text-xl font-bold text-gray-800 mb-3 md:mb-4">Ringkasan Booking</h3>
-                        <div class="space-y-2 md:space-y-3">
-                            <div class="flex flex-col md:flex-row md:justify-between gap-1 md:gap-0">
-                                <span class="text-gray-600 text-sm md:text-base">Kendaraan</span>
-                                <span id="sidebarVehicle" class="font-medium text-sm md:text-base text-right">Belum
-                                    dipilih</span>
+                    <div class="bg-white rounded-2xl shadow-lg p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-4">Ringkasan Booking</h3>
+                        <div class="space-y-3">
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Kendaraan</span>
+                                <span id="sidebarVehicle" class="font-medium text-right">Belum dipilih</span>
                             </div>
-                            <div class="flex flex-col md:flex-row md:justify-between gap-1 md:gap-0">
-                                <span class="text-gray-600 text-sm md:text-base">Tanggal</span>
-                                <span id="sidebarDate" class="font-medium text-sm md:text-base">Belum dipilih</span>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Tanggal</span>
+                                <span id="sidebarDate" class="font-medium">Belum dipilih</span>
                             </div>
-                            <div class="flex flex-col md:flex-row md:justify-between gap-1 md:gap-0">
-                                <span class="text-gray-600 text-sm md:text-base">Waktu</span>
-                                <span id="sidebarTime" class="font-medium text-sm md:text-base">Belum dipilih</span>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Waktu</span>
+                                <span id="sidebarTime" class="font-medium">Belum dipilih</span>
                             </div>
-                            <div class="border-t pt-2 md:pt-3">
-                                <div class="flex flex-col md:flex-row md:justify-between md:items-center gap-1 md:gap-0">
-                                    <span class="text-base md:text-lg font-bold text-gray-800">Status</span>
+                            <div class="border-t pt-3">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-lg font-bold text-gray-800">Status</span>
                                     <span
-                                        class="px-2 py-1 bg-gray-100 text-gray-600 rounded-full text-xs font-medium w-fit">Draft</span>
+                                        class="px-2 py-1 bg-gray-100 text-gray-600 rounded-full text-xs font-medium">Draft</span>
                                 </div>
                             </div>
                         </div>
                     </div>
 
                     <!-- Support Info -->
-                    <div class="bg-white rounded-xl md:rounded-2xl shadow-lg p-4 md:p-6">
-                        <h3 class="text-lg md:text-xl font-bold text-gray-800 mb-3 md:mb-4">Butuh Bantuan?</h3>
-                        <div class="space-y-2 md:space-y-3">
-                            <div class="flex items-center text-gray-600 text-sm md:text-base">
-                                <i class="fas fa-phone text-primary mr-2 md:mr-3 text-sm md:text-base"></i>
+                    <div class="bg-white rounded-2xl shadow-lg p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-4">Butuh Bantuan?</h3>
+                        <div class="space-y-3">
+                            <div class="flex items-center text-gray-600">
+                                <i class="fas fa-phone text-primary mr-3"></i>
                                 <span>{{ $workshop->phone ?? '+62 812 3456 7890' }}</span>
                             </div>
-                            <div class="flex items-center text-gray-600 text-sm md:text-base">
-                                <i class="fas fa-envelope text-primary mr-2 md:mr-3 text-sm md:text-base"></i>
+                            <div class="flex items-center text-gray-600">
+                                <i class="fas fa-envelope text-primary mr-3"></i>
                                 <span>{{ $workshop->email ?? 'support@servicycle.com' }}</span>
                             </div>
-                            <div class="flex items-center text-gray-600 text-sm md:text-base">
-                                <i class="fas fa-clock text-primary mr-2 md:mr-3 text-sm md:text-base"></i>
+                            <div class="flex items-center text-gray-600">
+                                <i class="fas fa-clock text-primary mr-3"></i>
                                 <span>{{ $workshop->service_hours ?? '24/7 Customer Service' }}</span>
                             </div>
                         </div>
