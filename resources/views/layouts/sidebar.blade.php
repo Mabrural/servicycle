@@ -122,6 +122,20 @@
                 </a>
             </li> --}}
 
+            <!-- Diagnosis Kendaraan -->
+            <li class="menu-item {{ Route::is('diagnosis') ? 'active' : '' }}">
+                <a href="{{ route('diagnosis') }}"
+                    class="menu-link d-flex align-items-center justify-content-between">
+                    <div class="d-flex align-items-center">
+                        <i class="menu-icon tf-icons bx bx-chip"></i>
+                        <div data-i18n="Diagnosis Kendaraan">Diagnosis</div>
+                    </div>
+                    <span class="badge bg-label-warning ms-2" style="font-size: 0.7rem;">Coming Soon</span>
+                </a>
+            </li>
+
+
+
             <!-- Upgrade Premium -->
             <li class="menu-item {{ Route::is('upgrade-premium.user') ? 'active' : '' }}">
                 <a href="{{ route('upgrade-premium.user') }}" class="menu-link">
