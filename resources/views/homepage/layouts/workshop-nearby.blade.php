@@ -23,7 +23,14 @@
                          class="w-full h-44 object-cover object-center rounded-xl mb-2 bg-gray-100" />
 
                      <!-- Info Bengkel -->
-                     <div class="name font-semibold text-lg text-gray-800">{{ $workshop->name }}</div>
+                     <div class="name font-semibold text-lg text-gray-800">{{ $workshop->name }}
+                         <!-- Badge Terverifikasi -->
+                         <div class="flex items-center gap-1 text-blue-500 text-sm font-medium">
+                             <i class="fas fa-check-circle"></i>
+                             <span>Terverifikasi</span>
+                         </div>
+                     </div>
+                     <br>
                      <div class="city text-sm text-gray-600">
                          <i class="fa-solid fa-location-dot text-red-500"></i> {{ $workshop->city ?? '-' }}
                      </div>
@@ -34,12 +41,12 @@
                          <a href="https://www.google.com/maps?q={{ $workshop->latitude }},{{ $workshop->longitude }}"
                              target="_blank"
                              class="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 text-sm font-medium transition-colors">
-                             <i class="fa-solid fa-map-location-dot"></i> Lihat di Google Maps
+                             <i class="fa-solid fa-map-location-dot"></i>Maps
                          </a>
 
                          <a href="{{ route('workshops.show', $workshop->id) }}"
                              class="inline-flex items-center gap-2 bg-blue-600 text-white text-sm font-medium px-3 py-2 rounded-lg hover:bg-blue-700 transition-colors shadow-sm">
-                             <i class="fa-solid fa-info-circle"></i> Detail
+                             <i class="fa-solid fa-info-circle"></i> Detail & Booking
                          </a>
                      </div>
                  </div>
