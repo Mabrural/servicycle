@@ -27,9 +27,9 @@
 
         <!-- Workshops List -->
         <div class="workshop-list mt-6 md:mt-8" id="workshopList">
-            <div class="flex overflow-x-auto pb-4 gap-4 scrollbar-hide" id="workshopContainer">
+            <div class="flex overflow-x-auto pb-4 gap-4 scrollbar-hide scroll-smooth px-4 md:px-0" id="workshopContainer">
                 @forelse ($workshops as $workshop)
-                    <div class="card flex-shrink-0 w-80 bg-white rounded-xl shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300"
+                    <div class="card flex-shrink-0 w-[280px] md:w-80 bg-white rounded-xl shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300 mx-auto md:mx-0"
                         data-lat="{{ $workshop->latitude }}" data-lng="{{ $workshop->longitude }}"
                         data-id="{{ $workshop->id }}" data-name="{{ strtolower($workshop->name) }}"
                         data-city="{{ strtolower($workshop->city ?? '') }}">
@@ -111,7 +111,20 @@
     }
 
     .card {
-        scroll-snap-align: start;
+        scroll-snap-align: center;
+    }
+
+    /* Untuk mobile - pastikan card pertama tidak terlalu ke kiri */
+    @media (max-width: 768px) {
+        #workshopContainer {
+            padding-left: calc(50vw - 140px);
+            padding-right: 16px;
+        }
+        
+        #workshopContainer::after {
+            content: '';
+            flex: 0 0 16px;
+        }
     }
 </style>
 
@@ -164,6 +177,11 @@
                     workshopContainer.classList.add('hidden');
                 }
             }
+
+            // Scroll ke kiri setelah filter
+            if (workshopContainer.classList.contains('hidden') === false) {
+                workshopContainer.scrollLeft = 0;
+            }
         }
 
         // Event listener untuk input search
@@ -203,7 +221,6 @@
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    // Bisa ditambahkan lazy loading untuk gambar di sini
                     entry.target.style.opacity = '1';
                 }
             });
@@ -220,5 +237,15 @@
 
         // Inisialisasi tampilan awal
         filterWorkshops('');
+
+        // Handle resize untuk mobile centering
+        function handleResize() {
+            if (window.innerWidth < 768) {
+                workshopContainer.scrollLeft = 0;
+            }
+        }
+
+        window.addEventListener('resize', handleResize);
+        handleResize(); // Panggil sekali saat load
     });
 </script>
