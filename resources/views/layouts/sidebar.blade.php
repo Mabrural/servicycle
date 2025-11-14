@@ -47,19 +47,19 @@
 
 
             <!-- Manajemen Langganan -->
-            <li class="menu-item {{ Route::is('subscription-management') ? 'active' : '' }}">
+            {{-- <li class="menu-item {{ Route::is('subscription-management') ? 'active' : '' }}">
                 <a href="{{ route('subscription-management') }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-receipt"></i>
                     <div data-i18n="Analytics">Langganan</div>
                 </a>
-            </li>
+            </li> --}}
             <!-- Laporan & Analitik -->
-            <li class="menu-item {{ Route::is('report') ? 'active' : '' }}">
+            {{-- <li class="menu-item {{ Route::is('report') ? 'active' : '' }}">
                 <a href="{{ route('report') }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-bar-chart"></i>
                     <div data-i18n="Analytics">Laporan & Analitik</div>
                 </a>
-            </li>
+            </li> --}}
             <!-- Manajemen Notifikasi Sistem -->
             {{-- <li class="menu-item {{ Route::is('notification.management') ? 'active' : '' }}">
                 <a href="{{ route('notification.management') }}" class="menu-link">
@@ -137,12 +137,12 @@
 
 
             <!-- Upgrade Premium -->
-            <li class="menu-item {{ Route::is('upgrade-premium.user') ? 'active' : '' }}">
+            {{-- <li class="menu-item {{ Route::is('upgrade-premium.user') ? 'active' : '' }}">
                 <a href="{{ route('upgrade-premium.user') }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-crown"></i>
                     <div data-i18n="Analytics">Upgrade Premium</div>
                 </a>
-            </li>
+            </li> --}}
         @endif
         @if (Auth::check() && Auth::user()->role === 'workshop')
             <li class="menu-header small text-uppercase">
@@ -182,12 +182,12 @@
             </li> --}}
 
             <!-- Promosi Bengkel (Premium) -->
-            <li class="menu-item {{ Route::is('promote') ? 'active' : '' }}">
+            {{-- <li class="menu-item {{ Route::is('promote') ? 'active' : '' }}">
                 <a href="{{ route('promote') }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-gift"></i>
                     <div data-i18n="Analytics">Promosi Bengkel </div>
                 </a>
-            </li>
+            </li> --}}
         @endif
         <br>
         <br>
