@@ -21,7 +21,7 @@
          </div>
 
          <!-- Location Status -->
-         <div id="locationStatus" class="mt-6 md:mt-8 bg-blue-50 border border-blue-200 rounded-lg p-4">
+         <div id="locationStatus" class="mt-6 mb-6 md:mt-8 bg-blue-50 border border-blue-200 rounded-lg p-4">
              <p class="text-blue-700 text-center">Mengambil lokasi Anda...</p>
          </div>
 
