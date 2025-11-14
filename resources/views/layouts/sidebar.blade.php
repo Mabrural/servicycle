@@ -123,7 +123,7 @@
             </li> --}}
 
             <!-- Diagnosis Kendaraan -->
-            <li class="menu-item {{ Route::is('expert-system') ? 'active' : '' }}">
+            {{-- <li class="menu-item {{ Route::is('expert-system') ? 'active' : '' }}">
                 <a href="{{ route('expert-system') }}"
                     class="menu-link d-flex align-items-center justify-content-between">
                     <div class="d-flex align-items-center">
@@ -132,7 +132,7 @@
                     </div>
                     <span class="badge bg-label-warning ms-2" style="font-size: 0.7rem;">Coming Soon</span>
                 </a>
-            </li>
+            </li> --}}
 
 
 
