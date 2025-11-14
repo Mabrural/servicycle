@@ -6,8 +6,22 @@
              <p class="text-gray-600 text-sm md:text-base">Temukan bengkel terpercaya di dekat lokasi Anda</p>
          </div>
 
+         <!-- Search Bar -->
+         <div class="mt-6 max-w-md mx-auto">
+             <div class="relative">
+                 <input type="text" id="workshopSearch" placeholder="Cari nama bengkel atau kota..."
+                     class="w-full px-4 py-3 pl-10 pr-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 transition-all">
+                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                     <i class="fas fa-search text-gray-400"></i>
+                 </div>
+                 <div id="searchClear" class="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer hidden">
+                     <i class="fas fa-times text-gray-400 hover:text-gray-600"></i>
+                 </div>
+             </div>
+         </div>
+
          <!-- Location Status -->
-         <div id="locationStatus" class="mt-6 md:mt-8 bg-blue-50 border border-blue-200 rounded-lg p-4">
+         <div id="locationStatus" class="mt-6 mb-6 md:mt-8 bg-blue-50 border border-blue-200 rounded-lg p-4">
              <p class="text-blue-700 text-center">Mengambil lokasi Anda...</p>
          </div>
 
