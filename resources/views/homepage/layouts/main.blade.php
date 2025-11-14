@@ -5,13 +5,13 @@
 
 <body class="bg-gray-50 text-gray-800">
 
-    
 
-    
+
+
 
     @yield('container')
 
-    
+
 
     @include('homepage.layouts.footer')
 
@@ -209,6 +209,58 @@
                 document.getElementById('noWorkshopsMessage').querySelector('p').textContent =
                     "Browser Anda tidak mendukung deteksi lokasi.";
             }
+        });
+
+        // pencarian bengkel berdasarkan nama dan kota
+        document.addEventListener('DOMContentLoaded', () => {
+            const searchInput = document.getElementById('workshopSearch');
+            const searchClear = document.getElementById('searchClear');
+            const workshopCards = document.querySelectorAll('.card');
+            const noWorkshopsMessage = document.getElementById('noWorkshopsMessage');
+            const workshopList = document.getElementById('workshopList');
+
+            function filterWorkshops(term) {
+                term = term.toLowerCase().trim();
+                let found = false;
+
+                workshopCards.forEach(card => {
+                    const name = card.querySelector('.name').innerText.toLowerCase();
+                    const city = card.querySelector('.city').innerText.toLowerCase();
+
+                    if (term === "" || name.includes(term) || city.includes(term)) {
+                        card.style.display = "block";
+                        found = true;
+                    } else {
+                        card.style.display = "none";
+                    }
+                });
+
+                if (!found) {
+                    noWorkshopsMessage.classList.remove("hidden");
+                    workshopList.classList.add("hidden");
+                } else {
+                    noWorkshopsMessage.classList.add("hidden");
+                    workshopList.classList.remove("hidden");
+                }
+            }
+
+            searchInput.addEventListener("input", () => {
+                const value = searchInput.value;
+
+                if (value.length > 0) {
+                    searchClear.classList.remove("hidden");
+                } else {
+                    searchClear.classList.add("hidden");
+                }
+
+                filterWorkshops(value);
+            });
+
+            searchClear.addEventListener("click", () => {
+                searchInput.value = "";
+                searchClear.classList.add("hidden");
+                filterWorkshops("");
+            });
         });
     </script>
 
