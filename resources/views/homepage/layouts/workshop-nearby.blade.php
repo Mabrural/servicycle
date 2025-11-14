@@ -198,8 +198,8 @@
                 const name = card.dataset.name;
                 const city = card.dataset.city;
 
-                // Filter berdasarkan type
-                const typeMatch = currentType === 'all' || type === currentType;
+                // Filter berdasarkan type (HANYA type yang sesuai dengan tab aktif)
+                const typeMatch = type === currentType;
 
                 // Filter berdasarkan pencarian
                 const searchMatch = currentSearchTerm === '' ||
@@ -290,6 +290,7 @@
                 filterWorkshops();
             }
         });
+
 
 
         /* ==========================
