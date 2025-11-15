@@ -12,11 +12,11 @@
                 <span class="text-sm md:text-base">Platform Terbaik untuk Perawatan Kendaraan</span>
             </div>
             <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight">
-                Kelola Servis Kendaraan Jadi Lebih Mudah
+                Kelola Booking Servis Kendaraan dengan Lebih Praktis
             </h2>
             <p class="mt-4 text-base md:text-lg text-indigo-100 max-w-xl">
-                Catat, pantau, dan atur perawatan kendaraan Anda dengan ServiCycle.
-                Hemat biaya, terorganisir, dan selalu siap diingatkan servis berikutnya.
+                Temukan bengkel terdekat, pesan servis secara online, dan pantau statusnya langsung di ServiCycle.
+                Cepat, teratur, dan tanpa ribet.
             </p>
             <div class="mt-8 flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
                 <a href="#workshops"
@@ -41,8 +41,7 @@
             </div>
         </div>
         <div class="flex-1 mt-10 md:mt-0 animate-float">
-            <img src="{{ asset('img/mobil.png') }}" alt="Ilustrasi ServiCycle"
-                class="w-full rounded-xl" />
+            <img src="{{ asset('img/mobil.png') }}" alt="Ilustrasi ServiCycle" class="w-full rounded-xl" />
         </div>
     </div>
 </section>
