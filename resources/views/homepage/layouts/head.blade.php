@@ -369,5 +369,39 @@
         .map-link:hover {
             background: #0056b3;
         }
+
+        /* Styling untuk badge beta */
+        .beta-badge {
+            background-color: #f59e0b;
+            /* Warna oranye untuk beta */
+            color: white;
+            font-size: 0.75rem;
+            font-weight: bold;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            margin-left: 0.5rem;
+            vertical-align: super;
+            position: relative;
+            top: -5px;
+        }
+
+        /* Efek animasi untuk menarik perhatian */
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .beta-badge {
+            animation: pulse 2s infinite;
+        }
     </style>
 </head>

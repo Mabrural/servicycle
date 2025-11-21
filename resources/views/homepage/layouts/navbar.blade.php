@@ -5,7 +5,7 @@
             <div class="bg-primary p-2 rounded-lg mr-3">
                 <i class="fas fa-tools text-white text-xl"></i>
             </div>
-            <h1 class="text-2xl font-bold text-primary">ServiCycle</h1>
+            <h1 class="text-2xl font-bold text-primary">ServiCycle <span class="beta-badge">Beta</span></h1>
         </div>
 
         <!-- Desktop Navigation -->
