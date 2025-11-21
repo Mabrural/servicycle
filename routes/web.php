@@ -95,10 +95,6 @@ Route::middleware(['auth', 'verified', 'is_set_role', 'admin'])->group(function 
         return view('report.admin');
     })->name('report');
 
-    Route::get('/admin/notification-management', function () {
-        return view('notification-management.index');
-    })->name('notification.management');
-
     Route::get('admin/setting', function () {
         return view('setting.index');
     })->name('setting');
@@ -132,18 +128,6 @@ Route::middleware(['auth', 'verified', 'is_set_role', 'vehicle_owner'])->group(f
     })->name('diagnosis.result');
     // end expert system
 
-    Route::get('/user/schedule', function () {
-        return view('schedule.index');
-    })->name('schedule');
-
-    Route::get('/user/notification', function () {
-        return view('notification.user');
-    })->name('notification.user');
-
-    Route::get('/user/record', function () {
-        return view('record.index');
-    })->name('record');
-
     Route::get('/user/upgrade-premium', function () {
         return view('upgrade-premium.user');
     })->name('upgrade-premium.user');
@@ -158,14 +142,6 @@ Route::middleware(['auth', 'verified', 'is_set_role', 'workshop'])->group(functi
 
     Route::get('/workshops/booking', [BookingServiceController::class, 'index'])->name('workshop.booking');
     Route::post('/workshops/booking/{id}/status', [BookingServiceController::class, 'updateStatus'])->name('booking.updateStatus');
-
-    Route::get('/workshops/service-and-sparepart', function () {
-        return view('service-and-sparepart.index');
-    })->name('service-and-sparepart');
-
-    Route::get('/workshops/invoice', function () {
-        return view('invoice.index');
-    })->name('invoice');
 
     Route::get('/workshops/promote', function () {
         return view('promote.index');
