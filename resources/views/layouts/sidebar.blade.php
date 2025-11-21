@@ -98,6 +98,20 @@
                 </a>
             </li>
 
+            <!-- Perawatan (Premium) -->
+            {{-- <li class="menu-item {{ Route::is('maintenance') ? 'active' : '' }}">
+                <a href="{{ route('maintenance') }}" class="menu-link d-flex align-items-center justify-content-between">
+                    <div class="d-flex align-items-center">
+                        <i class="menu-icon tf-icons bx bx-health"></i>
+                        <div data-i18n="Analytics">Perawatan</div>
+                    </div>
+                    <!-- Ikon Mahkota Premium -->
+                    <i class="tf-icons bx bx-crown text-warning" style="font-size: 18px;"></i>
+                </a>
+            </li> --}}
+
+
+
             <!-- Jadwal Servis -->
             {{-- <li class="menu-item {{ Route::is('schedule') ? 'active' : '' }}">
                 <a href="{{ route('schedule') }}" class="menu-link">
