@@ -9,7 +9,7 @@
         <div class="flex-1">
             <div class="bg-white/10 backdrop-blur-sm rounded-lg px-4 py-2 inline-flex items-center mb-6">
                 <i class="fas fa-medal mr-2 text-yellow-300"></i>
-                <span class="text-sm md:text-base">Platform Terbaik untuk Perawatan Kendaraan</span>
+                <span class="text-sm md:text-base">Temukan Bengkel Terdekat dan Booking Servis Tanpa Ribet</span>
             </div>
             <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight">
                 Kelola Booking Servis Kendaraan dengan Lebih Praktis
