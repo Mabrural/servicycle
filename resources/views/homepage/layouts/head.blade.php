@@ -404,4 +404,6 @@
             animation: pulse 2s infinite;
         }
     </style>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9952863940172197"
+     crossorigin="anonymous"></script>
 </head>
